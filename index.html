@@ -145,9 +145,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </ul></li>
         <li><a href="#function-pointers"><span class="toc-section-number">1.4</span> Function Pointers</a><ul>
         <li><a href="#typedefs"><span class="toc-section-number">1.4.1</span> Typedefs</a></li>
-        <li><a href="#takeaways"><span class="toc-section-number">1.4.2</span> Takeaways</a></li>
         </ul></li>
-        <li><a href="#exercise-quick-and-dirty-key-value-store"><span class="toc-section-number">1.5</span> Exercise: Quick-and-dirty Key-Value Store</a></li>
+        <li><a href="#example-c-is-a-thin-language-layer-on-top-of-memory"><span class="toc-section-number">1.5</span> Example: C is a Thin Language Layer on Top of Memory</a><ul>
+        <li><a href="#takeaways"><span class="toc-section-number">1.5.1</span> Takeaways</a></li>
+        </ul></li>
+        <li><a href="#exercise-quick-and-dirty-key-value-store"><span class="toc-section-number">1.6</span> Exercise: Quick-and-dirty Key-Value Store</a></li>
         </ul></li>
         <li><a href="#c-memory-model-data-structures-and-apis"><span class="toc-section-number">2</span> C Memory Model, Data-structures, and APIs</a><ul>
         <li><a href="#memory-allocation-options"><span class="toc-section-number">2.1</span> Memory Allocation Options</a><ul>
@@ -372,7 +374,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x55cda2c64149
+Hex and pointers: 7fffffffffffffff, 0x55db81b75149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -492,8 +494,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffee3e5a850 == 0x7ffee3e5a850; 6 == 6
-nth index: 0x7ffee3e5a854 == 0x7ffee3e5a854; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffd1c19fb70 == 0x7ffd1c19fb70; 6 == 6
+nth index: 0x7ffd1c19fb74 == 0x7ffd1c19fb74; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -516,7 +518,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffcf90aa614 == 0x7ffcf90aa614; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffc37a41d24 == 0x7ffc37a41d24; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p>Pointer arithmetic should generally be avoided in favor of using the array syntax. One complication is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -540,10 +542,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffc30e92aa0 &amp; 0x7ffc30e92ab4
-idx 1 @ 0x7ffc30e92aa4 &amp; 0x7ffc30e92ab5
-idx 2 @ 0x7ffc30e92aa8 &amp; 0x7ffc30e92ab6
-idx 3 @ 0x7ffc30e92aac &amp; 0x7ffc30e92ab7</code></pre>
+<pre><code>idx 0 @ 0x7ffef37debe0 &amp; 0x7ffef37debf4
+idx 1 @ 0x7ffef37debe4 &amp; 0x7ffef37debf5
+idx 2 @ 0x7ffef37debe8 &amp; 0x7ffef37debf6
+idx 3 @ 0x7ffef37debec &amp; 0x7ffef37debf7</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -659,7 +661,8 @@ Gabe</code></pre>
 <p>Function pointer syntax is not natural in C. Thus, it is common to use a <code>typedef</code> to create the type name for a function pointer for a given API. The syntax for this is perhaps <em>even less natural</em>, but only needs be done once.</p>
 <pre><code>typedef int (*compare_fn_t)(const void *, const void *);
 void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compare_fn_t compar);</code></pre>
-<p>Now the function declaration is more clear, and the <code>_fn_t</code> postfix, by convention, denotes a function pointer. ## Example: C is a Thin Language Layer on Top of Memory</p>
+<p>Now the function declaration is more clear, and the <code>_fn_t</code> postfix, by convention, denotes a function pointer.</p>
+<h2 id="example-c-is-a-thin-language-layer-on-top-of-memory"><span class="header-section-number">1.5</span> Example: C is a Thin Language Layer on Top of Memory</h2>
 <p>We’re going to look at a set of variables as memory. When variables are created globally, they are simply allocated into subsequent addresses.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb34-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
 <a class="sourceLine" id="cb34-2" title="2"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
@@ -713,10 +716,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb34-50" title="50">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x55b9d207e010
-b   @ 0x55b9d207e014
-c   @ 0x55b9d207e020
-end @ 0x55b9d207e039
+a   @ 0x564012784010
+b   @ 0x564012784014
+c   @ 0x564012784020
+end @ 0x564012784039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -724,21 +727,21 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x55b9d207e014
+c.c_c = 0x564012784014
 
 Print out the variables as raw memory
 
 
 Post-`memset` values:</code></pre>
 <p><strong>Question</strong> Answer <em>Q1-4</em> in the code, then modify the code where appropriate to investigate them.</p>
-<h3 id="takeaways"><span class="header-section-number">1.4.2</span> Takeaways</h3>
+<h3 id="takeaways"><span class="header-section-number">1.5.1</span> Takeaways</h3>
 <ol type="1">
 <li>Each variable in C (including fields in structs) want to be aligned on a boundary equal to the variable’s type’s size. This means that a variable (<code>b</code>) with an integer type (<code>sizeof(int) == 4</code>) should always have an address that is a multiple of its size (<code>&amp;b % sizeof(b) == 0</code>, so an <code>int</code>’s address is always divisible by <code>4</code>, a <code>long</code>’s by <code>8</code>).</li>
 <li>The operation to figure out the size of all the variables, <code>&amp;end - &amp;a</code>, is <em>crazy</em>. We’re used to performing math operations values on things of the same type, but not on <em>pointers</em>. This is only possible because C sees the variables are chunks of memory that happen to be laid out in memory, one after the other.</li>
 <li>The <em>crazy</em> increases with <code>mem = &amp;a</code>, and our iteration through <code>mem[i]</code>. We’re able to completely ignore the types in C, and access memory directly!</li>
 </ol>
 <p><strong>Question</strong>: What would break if we changed <code>char a;</code> into <code>int a;</code>? C doesn’t let us do math on variables of <em>any type</em>. If you fixed compilation problems, would you still get the same output?</p>
-<h2 id="exercise-quick-and-dirty-key-value-store"><span class="header-section-number">1.5</span> Exercise: Quick-and-dirty Key-Value Store</h2>
+<h2 id="exercise-quick-and-dirty-key-value-store"><span class="header-section-number">1.6</span> Exercise: Quick-and-dirty Key-Value Store</h2>
 <p>Please read the <code>man</code> pages for <code>lsearch</code> and <code>lfind</code>. <code>man</code> pages can be pretty cryptic, and you are aiming to get <em>some idea</em> where to start with an implementation. An simplistic, and incomplete initial implementation:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb36-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
 <a class="sourceLine" id="cb36-2" title="2"><span class="pp">#include </span><span class="im">&lt;assert.h&gt;</span></a>
@@ -819,8 +822,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb36-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb36-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x560dce05b048
-1: 2 @ 0x560dce05b044
+<pre><code>0: 4 @ 0x555cb884c048
+1: 2 @ 0x555cb884c044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1130,16 +1133,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -970072169
+2: 1997810727
 3: 32766
-4: -970072170
+4: 1997810726
 5: 32766
-6: 2086085181
-7: 21914
-8: -519262264
-9: 32644
-10: 2086085104
-11: 21914</code></pre>
+6: -1506688451
+7: 21906
+8: 932392904
+9: 32648
+10: -1506688528
+11: 21906</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb54-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1478,7 +1481,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb67-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x55be930b9004 == 0x55be930b9004 != 0x55be930bb011</code></pre>
+0x56496e699004 == 0x56496e699004 != 0x56496e69b011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -1649,10 +1652,7 @@ ENOSPC 28 No space left on device</code></pre>
 <a class="sourceLine" id="cb73-22" title="22">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb73-23" title="23">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Lets get greedy: allocate 9223372036854775807 bytes!
-Error: errno value 12 and description: Cannot allocate memory
-Error allocating memory: Cannot allocate memory
-make[1]: *** [Makefile:22: inline_exec] Error 255</code></pre>
+<pre><code>no errors!</code></pre>
 <p>(Note: when you return from a program with a non-zero value, it designates that your <em>program</em> had an error. This is why we see the <code>make</code> error when it runs your program.)</p>
 <p>To understand the return value of UNIX library functions:</p>
 <ul>
@@ -1749,17 +1749,17 @@ ERRORS
 <a class="sourceLine" id="cb78-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 190771
+     parent pid 191970
 post-fork:
-    returned 190772,
-    current pid 190771
-    parent pid 190765
+    returned 191971,
+    current pid 191970
+    parent pid 191964
 pre-fork:
-     parent pid 190771
+     parent pid 191970
 post-fork:
     returned 0,
-    current pid 190772
-    parent pid 190771</code></pre>
+    current pid 191971
+    parent pid 191970</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -1817,14 +1817,14 @@ post-fork:
 <a class="sourceLine" id="cb80-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb80-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 190788 exiting with 0
-Child 190790 exiting with -2
-Child 190789 exiting with -1
-Child 190791 exiting with -3
-Child 190788 exited with exit status 0
-Child 190789 exited with exit status -1
-Child 190790 exited with exit status -2
-Child 190791 exited with exit status -3</code></pre>
+<pre><code>Child 191987 exiting with 0
+Child 191988 exiting with -1
+Child 191989 exiting with -2
+Child 191990 exiting with -3
+Child 191987 exited with exit status 0
+Child 191988 exited with exit status -1
+Child 191989 exited with exit status -2
+Child 191990 exited with exit status -3</code></pre>
 <h3 id="an-aside-concurrency"><span class="header-section-number">3.2.2</span> An Aside: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -2684,9 +2684,8 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb120-87" title="87">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb120-88" title="88">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>190960: We&#39;ve been asked to terminate. Exit!
-190959: Parent asking child to terminate
-190959: Child process has exited.</code></pre>
+<pre><code>192158: Parent asking child to terminate
+192158: Child process has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
