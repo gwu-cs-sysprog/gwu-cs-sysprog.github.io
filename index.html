@@ -169,7 +169,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#errors"><span class="toc-section-number">2.3.2</span> Errors</a></li>
         <li><a href="#memory-ownership"><span class="toc-section-number">2.3.3</span> Memory Ownership</a></li>
         </ul></li>
-        <li><a href="#exercises-1"><span class="toc-section-number">2.4</span> Exercises</a></li>
+        <li><a href="#exercises-1"><span class="toc-section-number">2.4</span> Exercises</a><ul>
+        <li><a href="#stack-allocation-1"><span class="toc-section-number">2.4.1</span> Stack Allocation</a></li>
+        <li><a href="#understanding-memory-ownership"><span class="toc-section-number">2.4.2</span> Understanding Memory Ownership</a></li>
+        </ul></li>
         </ul></li>
         <li><a href="#processes"><span class="toc-section-number">3</span> Processes</a><ul>
         <li><a href="#history-unix-posix-and-linux"><span class="toc-section-number">3.1</span> History: UNIX, POSIX, and Linux</a></li>
@@ -375,7 +378,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x564641f95149
+Hex and pointers: 7fffffffffffffff, 0x5577267f5149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -475,8 +478,8 @@ Size of struct: 16</code></pre>
 <a class="sourceLine" id="cb17-24" title="24">    <span class="cf">return</span> value - <span class="dv">1</span>;</a>
 <a class="sourceLine" id="cb17-25" title="25">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Size of union:  12
-Size of struct: 16</code></pre>
+<pre><code>value is initialized to 0
+value updated to 1</code></pre>
 <p>Pointers are <em>necessary</em> as they enable us to build <em>linked</em> data-structures (linked-lists, binary trees, etc…). Languages such as Java assume that <em>every single</em> object variable is a pointer, and since <em>all object variables</em> are pointers, they don’t need special syntax for them.</p>
 <p>Arrays are simple contiguous data items, all of the same type. <code>int a[4] = {6, 7, 8, 9}</code> should be imagined as:</p>
 <pre><code>a ---&gt; +---+---+---+---+
@@ -495,8 +498,8 @@ Size of struct: 16</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffd3efa44e0 == 0x7ffd3efa44e0; 6 == 6
-nth index: 0x7ffd3efa44e4 == 0x7ffd3efa44e4; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffdc4e814d0 == 0x7ffdc4e814d0; 6 == 6
+nth index: 0x7ffdc4e814d4 == 0x7ffdc4e814d4; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -519,7 +522,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffd4019a0a4 == 0x7ffd4019a0a4; 7 == 7</code></pre>
+<pre><code>nth index: 0x7fff2f939f94 == 0x7fff2f939f94; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -543,10 +546,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffda8bb3840 &amp; 0x7ffda8bb3854
-idx 1 @ 0x7ffda8bb3844 &amp; 0x7ffda8bb3855
-idx 2 @ 0x7ffda8bb3848 &amp; 0x7ffda8bb3856
-idx 3 @ 0x7ffda8bb384c &amp; 0x7ffda8bb3857</code></pre>
+<pre><code>idx 0 @ 0x7fffecbaa5b0 &amp; 0x7fffecbaa5c4
+idx 1 @ 0x7fffecbaa5b4 &amp; 0x7fffecbaa5c5
+idx 2 @ 0x7fffecbaa5b8 &amp; 0x7fffecbaa5c6
+idx 3 @ 0x7fffecbaa5bc &amp; 0x7fffecbaa5c7</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -671,7 +674,7 @@ Gabe</code></pre>
 <a class="sourceLine" id="cb34-4" title="4">main(<span class="dt">void</span>)</a>
 <a class="sourceLine" id="cb34-5" title="5">{</a>
 <a class="sourceLine" id="cb34-6" title="6">    <span class="dt">int</span> *a = malloc(<span class="kw">sizeof</span>(<span class="dt">int</span>));</a>
-<a class="sourceLine" id="cb34-7" title="7">    <span class="cf">if</span> (!a) <span class="cf">return</span> -<span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb34-7" title="7">    <span class="cf">if</span> (a == NULL) <span class="cf">return</span> -<span class="dv">1</span>;</a>
 <a class="sourceLine" id="cb34-8" title="8">    free(a);</a>
 <a class="sourceLine" id="cb34-9" title="9"></a>
 <a class="sourceLine" id="cb34-10" title="10">    <span class="co">/* Error: accessing what `a` points to after `free`! */</span></a>
@@ -770,7 +773,7 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-38" title="38">    memset(mem, <span class="dv">0</span>, vars_size);</a>
 <a class="sourceLine" id="cb42-39" title="39">    <span class="co">/* memset(a, b, c): set the memory starting at `a` of size `c` equal `b` */</span></a>
 <a class="sourceLine" id="cb42-40" title="40">    printf(<span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">Post-`memset` values:</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb42-41" title="41"><span class="co">//  print_values()</span></a>
+<a class="sourceLine" id="cb42-41" title="41"><span class="co">//  print_values();</span></a>
 <a class="sourceLine" id="cb42-42" title="42"></a>
 <a class="sourceLine" id="cb42-43" title="43">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb42-44" title="44">}</a>
@@ -783,10 +786,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x5556488db010
-b   @ 0x5556488db014
-c   @ 0x5556488db020
-end @ 0x5556488db039
+a   @ 0x5555f53ec010
+b   @ 0x5555f53ec014
+c   @ 0x5555f53ec020
+end @ 0x5555f53ec039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -794,7 +797,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x5556488db014
+c.c_c = 0x5555f53ec014
 
 Print out the variables as raw memory
 
@@ -870,7 +873,7 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-58" title="58"></a>
 <a class="sourceLine" id="cb44-59" title="59">    <span class="co">/* Insert the keys. */</span></a>
 <a class="sourceLine" id="cb44-60" title="60">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; num_kv; i++) {</a>
-<a class="sourceLine" id="cb44-61" title="61">        lsearch(&amp;keys[i], entries, &amp;num_items, <span class="kw">sizeof</span>(entries[<span class="dv">0</span>]), compare);</a>
+<a class="sourceLine" id="cb44-61" title="61">        lsearch(&amp;keys[i], entries, &amp;num_items, <span class="kw">sizeof</span>(entries) / <span class="kw">sizeof</span>(entries[<span class="dv">0</span>]), compare);</a>
 <a class="sourceLine" id="cb44-62" title="62">    }</a>
 <a class="sourceLine" id="cb44-63" title="63"></a>
 <a class="sourceLine" id="cb44-64" title="64">    <span class="co">/* Now lets lookup the keys. */</span></a>
@@ -889,8 +892,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x558cc2aed048
-1: 2 @ 0x558cc2aed044
+<pre><code>0: 4 @ 0x55cf3311804c
+1: 2 @ 0x55cf33118044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1218,16 +1221,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: 1680633495
-3: 32764
-4: 1680633494
-5: 32764
-6: -1334705603
-7: 22072
-8: -484057144
-9: 32677
-10: -1334705680
-11: 22072</code></pre>
+2: -1262006313
+3: 32765
+4: -1262006314
+5: 32765
+6: 2131296829
+7: 21991
+8: 275099592
+9: 32713
+10: 2131296752
+11: 21991</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1568,7 +1571,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x55f719a56004 == 0x55f719a56004 != 0x55f719a58011</code></pre>
+0x563371125004 == 0x563371125004 != 0x563371127011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -1788,6 +1791,13 @@ ERRORS
 </ul>
 <p>The memory ownership constraints are an agreement between the calling function, and a function being called.</p>
 <h2 id="exercises-1"><span class="header-section-number">2.4</span> Exercises</h2>
+<h3 id="stack-allocation-1"><span class="header-section-number">2.4.1</span> Stack Allocation</h3>
+<p>An old interview question:</p>
+<blockquote>
+<p>How can you write a function that determines if the execution stack grows upwards (from lower addresses to higher), or downwards?</p>
+</blockquote>
+<p>Write this function!</p>
+<h3 id="understanding-memory-ownership"><span class="header-section-number">2.4.2</span> Understanding Memory Ownership</h3>
 <p>Lets look at a simple key-value store that needs to learn to be more careful about memory. Above each function, we specify the ownership of pointers being passed – either passing ownership, or borrowing the memory. The current implementations do <em>not</em> adhere to these specifications.</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb85-1" title="1"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
 <a class="sourceLine" id="cb85-2" title="2"><span class="pp">#include </span><span class="im">&lt;malloc.h&gt;</span></a>
@@ -1802,104 +1812,96 @@ ERRORS
 <a class="sourceLine" id="cb85-11" title="11"><span class="dt">static</span> <span class="dt">char</span> *kv_value;</a>
 <a class="sourceLine" id="cb85-12" title="12"></a>
 <a class="sourceLine" id="cb85-13" title="13"><span class="co">/**</span></a>
-<a class="sourceLine" id="cb85-14" title="14"><span class="co"> * ...</span></a>
-<a class="sourceLine" id="cb85-15" title="15"><span class="co"> *</span></a>
-<a class="sourceLine" id="cb85-16" title="16"><span class="co"> * The returned value is not maintained in the data-structure</span></a>
-<a class="sourceLine" id="cb85-17" title="17"><span class="co"> * and should be `free`d by the caller.</span></a>
-<a class="sourceLine" id="cb85-18" title="18"><span class="co"> */</span></a>
-<a class="sourceLine" id="cb85-19" title="19"><span class="dt">char</span> *</a>
-<a class="sourceLine" id="cb85-20" title="20">get_pass_ownership(<span class="dt">int</span> key)</a>
-<a class="sourceLine" id="cb85-21" title="21">{</a>
-<a class="sourceLine" id="cb85-22" title="22">    <span class="cf">if</span> (key != kv_key) <span class="cf">return</span> NULL;</a>
-<a class="sourceLine" id="cb85-23" title="23"></a>
-<a class="sourceLine" id="cb85-24" title="24">    <span class="cf">return</span> kv_value;</a>
-<a class="sourceLine" id="cb85-25" title="25">}</a>
-<a class="sourceLine" id="cb85-26" title="26"></a>
-<a class="sourceLine" id="cb85-27" title="27"><span class="co">/**</span></a>
-<a class="sourceLine" id="cb85-28" title="28"><span class="co"> * ...</span></a>
-<a class="sourceLine" id="cb85-29" title="29"><span class="co"> *</span></a>
-<a class="sourceLine" id="cb85-30" title="30"><span class="co"> * Pointers to the returned value are maintained in the data-structure</span></a>
-<a class="sourceLine" id="cb85-31" title="31"><span class="co"> * and it will be `free`d by the data-structure.</span></a>
-<a class="sourceLine" id="cb85-32" title="32"><span class="co"> */</span></a>
-<a class="sourceLine" id="cb85-33" title="33"><span class="dt">char</span> *</a>
-<a class="sourceLine" id="cb85-34" title="34">get_borrow(<span class="dt">int</span> key)</a>
-<a class="sourceLine" id="cb85-35" title="35">{</a>
-<a class="sourceLine" id="cb85-36" title="36">    <span class="cf">if</span> (key != kv_key) <span class="cf">return</span> NULL;</a>
-<a class="sourceLine" id="cb85-37" title="37"></a>
-<a class="sourceLine" id="cb85-38" title="38">    <span class="cf">return</span> kv_value;</a>
-<a class="sourceLine" id="cb85-39" title="39">}</a>
-<a class="sourceLine" id="cb85-40" title="40"></a>
-<a class="sourceLine" id="cb85-41" title="41"><span class="co">/**</span></a>
-<a class="sourceLine" id="cb85-42" title="42"><span class="co"> * ...</span></a>
-<a class="sourceLine" id="cb85-43" title="43"><span class="co"> *</span></a>
-<a class="sourceLine" id="cb85-44" title="44"><span class="co"> * Pointers to the `value` passed as the second argument are maintained by</span></a>
-<a class="sourceLine" id="cb85-45" title="45"><span class="co"> * the caller, thus the `value` is borrowed here. The `value` will be `free`d</span></a>
-<a class="sourceLine" id="cb85-46" title="46"><span class="co"> * by the caller.</span></a>
-<a class="sourceLine" id="cb85-47" title="47"><span class="co"> */</span></a>
-<a class="sourceLine" id="cb85-48" title="48"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb85-49" title="49">set_borrow(<span class="dt">int</span> key, <span class="dt">char</span> *value)</a>
-<a class="sourceLine" id="cb85-50" title="50">{</a>
-<a class="sourceLine" id="cb85-51" title="51">    <span class="co">/* What do we do with `kv_value`? Do we `strdup` anything? */</span></a>
-<a class="sourceLine" id="cb85-52" title="52">    kv_key   = key;</a>
-<a class="sourceLine" id="cb85-53" title="53">    kv_value = value;</a>
-<a class="sourceLine" id="cb85-54" title="54"></a>
-<a class="sourceLine" id="cb85-55" title="55">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb85-56" title="56">}</a>
-<a class="sourceLine" id="cb85-57" title="57"></a>
-<a class="sourceLine" id="cb85-58" title="58"><span class="co">/**</span></a>
-<a class="sourceLine" id="cb85-59" title="59"><span class="co"> * ...</span></a>
-<a class="sourceLine" id="cb85-60" title="60"><span class="co"> *</span></a>
-<a class="sourceLine" id="cb85-61" title="61"><span class="co"> * Pointers to the `value` passed as the second argument are not maintained by</span></a>
-<a class="sourceLine" id="cb85-62" title="62"><span class="co"> * the caller, thus the `value` should be `free`d by the caller.</span></a>
-<a class="sourceLine" id="cb85-63" title="63"><span class="co"> */</span></a>
-<a class="sourceLine" id="cb85-64" title="64"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb85-65" title="65">set_pass_ownership(<span class="dt">int</span> key, <span class="dt">char</span> *value)</a>
-<a class="sourceLine" id="cb85-66" title="66">{</a>
-<a class="sourceLine" id="cb85-67" title="67">    <span class="co">/* What do we do with `kv_value`? Do we `strdup` anything? */</span></a>
-<a class="sourceLine" id="cb85-68" title="68">    kv_key   = key;</a>
-<a class="sourceLine" id="cb85-69" title="69">    kv_value = value;</a>
-<a class="sourceLine" id="cb85-70" title="70"></a>
-<a class="sourceLine" id="cb85-71" title="71">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb85-72" title="72">}</a>
-<a class="sourceLine" id="cb85-73" title="73"></a>
-<a class="sourceLine" id="cb85-74" title="74"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb85-75" title="75">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb85-76" title="76">{</a>
-<a class="sourceLine" id="cb85-77" title="77">    <span class="co">/* The values we pass in. */</span></a>
-<a class="sourceLine" id="cb85-78" title="78">    <span class="dt">char</span> *v_p2p = strdup(<span class="st">&quot;value1&quot;</span>); <span class="co">/* calls `malloc` ! */</span></a>
-<a class="sourceLine" id="cb85-79" title="79">    <span class="dt">char</span> *v_p2b = strdup(<span class="st">&quot;value2&quot;</span>);</a>
-<a class="sourceLine" id="cb85-80" title="80">    <span class="dt">char</span> *v_b2p = strdup(<span class="st">&quot;value3&quot;</span>);</a>
-<a class="sourceLine" id="cb85-81" title="81">    <span class="dt">char</span> *v_b2b = strdup(<span class="st">&quot;value4&quot;</span>);</a>
+<a class="sourceLine" id="cb85-14" title="14"><span class="co"> * The returned value should not be maintained in the data-structure</span></a>
+<a class="sourceLine" id="cb85-15" title="15"><span class="co"> * and should be `free`d by the caller.</span></a>
+<a class="sourceLine" id="cb85-16" title="16"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb85-17" title="17"><span class="dt">char</span> *</a>
+<a class="sourceLine" id="cb85-18" title="18">get_pass_ownership(<span class="dt">int</span> key)</a>
+<a class="sourceLine" id="cb85-19" title="19">{</a>
+<a class="sourceLine" id="cb85-20" title="20">    <span class="cf">if</span> (key != kv_key) <span class="cf">return</span> NULL;</a>
+<a class="sourceLine" id="cb85-21" title="21"></a>
+<a class="sourceLine" id="cb85-22" title="22">    <span class="cf">return</span> kv_value;</a>
+<a class="sourceLine" id="cb85-23" title="23">}</a>
+<a class="sourceLine" id="cb85-24" title="24"></a>
+<a class="sourceLine" id="cb85-25" title="25"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb85-26" title="26"><span class="co"> * Pointers to the returned value are maintained in this data-structure</span></a>
+<a class="sourceLine" id="cb85-27" title="27"><span class="co"> * and it will be `free`d by the data-structure, not by the caller</span></a>
+<a class="sourceLine" id="cb85-28" title="28"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb85-29" title="29"><span class="dt">char</span> *</a>
+<a class="sourceLine" id="cb85-30" title="30">get_borrow(<span class="dt">int</span> key)</a>
+<a class="sourceLine" id="cb85-31" title="31">{</a>
+<a class="sourceLine" id="cb85-32" title="32">    <span class="cf">if</span> (key != kv_key) <span class="cf">return</span> NULL;</a>
+<a class="sourceLine" id="cb85-33" title="33"></a>
+<a class="sourceLine" id="cb85-34" title="34">    <span class="cf">return</span> kv_value;</a>
+<a class="sourceLine" id="cb85-35" title="35">}</a>
+<a class="sourceLine" id="cb85-36" title="36"></a>
+<a class="sourceLine" id="cb85-37" title="37"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb85-38" title="38"><span class="co"> * Pointers to the `value` passed as the second argument are maintained by</span></a>
+<a class="sourceLine" id="cb85-39" title="39"><span class="co"> * the caller, thus the `value` is borrowed here. The `value` will be `free`d</span></a>
+<a class="sourceLine" id="cb85-40" title="40"><span class="co"> * by the caller.</span></a>
+<a class="sourceLine" id="cb85-41" title="41"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb85-42" title="42"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb85-43" title="43">set_borrow(<span class="dt">int</span> key, <span class="dt">char</span> *value)</a>
+<a class="sourceLine" id="cb85-44" title="44">{</a>
+<a class="sourceLine" id="cb85-45" title="45">    <span class="co">/* What do we do with `kv_value`? Do we `strdup` anything? */</span></a>
+<a class="sourceLine" id="cb85-46" title="46">    kv_key   = key;</a>
+<a class="sourceLine" id="cb85-47" title="47">    kv_value = value;</a>
+<a class="sourceLine" id="cb85-48" title="48"></a>
+<a class="sourceLine" id="cb85-49" title="49">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb85-50" title="50">}</a>
+<a class="sourceLine" id="cb85-51" title="51"></a>
+<a class="sourceLine" id="cb85-52" title="52"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb85-53" title="53"><span class="co"> * Pointers to the `value` passed as the second argument are not maintained by</span></a>
+<a class="sourceLine" id="cb85-54" title="54"><span class="co"> * the caller, thus the `value` should be `free`d by this data-structure.</span></a>
+<a class="sourceLine" id="cb85-55" title="55"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb85-56" title="56"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb85-57" title="57">set_pass_ownership(<span class="dt">int</span> key, <span class="dt">char</span> *value)</a>
+<a class="sourceLine" id="cb85-58" title="58">{</a>
+<a class="sourceLine" id="cb85-59" title="59">    <span class="co">/* What do we do with `kv_value`? Do we `strdup` anything? */</span></a>
+<a class="sourceLine" id="cb85-60" title="60">    kv_key   = key;</a>
+<a class="sourceLine" id="cb85-61" title="61">    kv_value = value;</a>
+<a class="sourceLine" id="cb85-62" title="62"></a>
+<a class="sourceLine" id="cb85-63" title="63">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb85-64" title="64">}</a>
+<a class="sourceLine" id="cb85-65" title="65"></a>
+<a class="sourceLine" id="cb85-66" title="66"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb85-67" title="67">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb85-68" title="68">{</a>
+<a class="sourceLine" id="cb85-69" title="69">    <span class="co">/* The values we pass in. */</span></a>
+<a class="sourceLine" id="cb85-70" title="70">    <span class="dt">char</span> *v_p2p = strdup(<span class="st">&quot;value1&quot;</span>); <span class="co">/* calls `malloc` ! */</span></a>
+<a class="sourceLine" id="cb85-71" title="71">    <span class="dt">char</span> *v_p2b = strdup(<span class="st">&quot;value2&quot;</span>);</a>
+<a class="sourceLine" id="cb85-72" title="72">    <span class="dt">char</span> *v_b2p = strdup(<span class="st">&quot;value3&quot;</span>);</a>
+<a class="sourceLine" id="cb85-73" title="73">    <span class="dt">char</span> *v_b2b = strdup(<span class="st">&quot;value4&quot;</span>);</a>
+<a class="sourceLine" id="cb85-74" title="74"></a>
+<a class="sourceLine" id="cb85-75" title="75">    <span class="co">/* The return values */</span></a>
+<a class="sourceLine" id="cb85-76" title="76">    <span class="dt">char</span> *r_p2p, *r_p2b, *r_b2p, *r_b2b;</a>
+<a class="sourceLine" id="cb85-77" title="77"></a>
+<a class="sourceLine" id="cb85-78" title="78">    <span class="co">/* p2p: passing ownership on set, passing ownership on get */</span></a>
+<a class="sourceLine" id="cb85-79" title="79">    set_pass_ownership(<span class="dv">0</span>, v_p2p);</a>
+<a class="sourceLine" id="cb85-80" title="80">    r_p2p = get_pass_ownership(<span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb85-81" title="81">    <span class="co">/* The question: should we `free(v_p2p)`?, `free(r_p2p)`? */</span></a>
 <a class="sourceLine" id="cb85-82" title="82"></a>
-<a class="sourceLine" id="cb85-83" title="83">    <span class="co">/* The return values */</span></a>
-<a class="sourceLine" id="cb85-84" title="84"> <span class="dt">char</span> *r_p2p, *r_p2b, *r_b2p, *r_b2b;</a>
-<a class="sourceLine" id="cb85-85" title="85"></a>
-<a class="sourceLine" id="cb85-86" title="86">    <span class="co">/* p2p: passing ownership on set, passing ownership on get */</span></a>
-<a class="sourceLine" id="cb85-87" title="87">    set_pass_ownership(<span class="dv">0</span>, v_p2p);</a>
-<a class="sourceLine" id="cb85-88" title="88">    r_p2p = get_pass_ownership(<span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb85-89" title="89">    <span class="co">/* The question: should we `free(v_p2p)`?, `free(r_p2p)`? */</span></a>
-<a class="sourceLine" id="cb85-90" title="90"></a>
-<a class="sourceLine" id="cb85-91" title="91">    <span class="co">/* p2b: passing ownership on set, borrowing memory for get */</span></a>
-<a class="sourceLine" id="cb85-92" title="92">    set_pass_ownership(<span class="dv">0</span>, v_p2b);</a>
-<a class="sourceLine" id="cb85-93" title="93">    r_p2b = get_borrow(<span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb85-94" title="94">    <span class="co">/* The question: should we `free(v_p2b)`?, `free(r_p2b)`? */</span></a>
-<a class="sourceLine" id="cb85-95" title="95"></a>
-<a class="sourceLine" id="cb85-96" title="96">    <span class="co">/* b2p: borrowing ownership on set, passing ownership on get */</span></a>
-<a class="sourceLine" id="cb85-97" title="97">    set_borrow(<span class="dv">0</span>, v_b2p);</a>
-<a class="sourceLine" id="cb85-98" title="98">    r_b2p = get_pass_ownership(<span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb85-99" title="99">    <span class="co">/* The question: should we `free(v_b2p)`?, `free(r_b2p)`? */</span></a>
-<a class="sourceLine" id="cb85-100" title="100"></a>
-<a class="sourceLine" id="cb85-101" title="101">    <span class="co">/* b2b: borrowing ownership on set, borrowing on get */</span></a>
-<a class="sourceLine" id="cb85-102" title="102">    set_borrow(<span class="dv">0</span>, v_b2b);</a>
-<a class="sourceLine" id="cb85-103" title="103">    r_b2b = get_borrow(<span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb85-104" title="104">    <span class="co">/* The question: should we `free(v_b2b)`?, `free(r_b2b)`? */</span></a>
-<a class="sourceLine" id="cb85-105" title="105"></a>
-<a class="sourceLine" id="cb85-106" title="106">    <span class="cf">if</span> (kv_value) free(kv_value);</a>
-<a class="sourceLine" id="cb85-107" title="107"></a>
-<a class="sourceLine" id="cb85-108" title="108">    printf(<span class="st">&quot;Looks like success!...but wait till we valgrind; then ;-(</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb85-109" title="109"></a>
-<a class="sourceLine" id="cb85-110" title="110">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb85-111" title="111">}</a></code></pre></div>
+<a class="sourceLine" id="cb85-83" title="83">    <span class="co">/* p2b: passing ownership on set, borrowing memory for get */</span></a>
+<a class="sourceLine" id="cb85-84" title="84">    set_pass_ownership(<span class="dv">0</span>, v_p2b);</a>
+<a class="sourceLine" id="cb85-85" title="85">    r_p2b = get_borrow(<span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb85-86" title="86">    <span class="co">/* The question: should we `free(v_p2b)`?, `free(r_p2b)`? */</span></a>
+<a class="sourceLine" id="cb85-87" title="87"></a>
+<a class="sourceLine" id="cb85-88" title="88">    <span class="co">/* b2p: borrowing ownership on set, passing ownership on get */</span></a>
+<a class="sourceLine" id="cb85-89" title="89">    set_borrow(<span class="dv">0</span>, v_b2p);</a>
+<a class="sourceLine" id="cb85-90" title="90">    r_b2p = get_pass_ownership(<span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb85-91" title="91">    <span class="co">/* The question: should we `free(v_b2p)`?, `free(r_b2p)`? */</span></a>
+<a class="sourceLine" id="cb85-92" title="92"></a>
+<a class="sourceLine" id="cb85-93" title="93">    <span class="co">/* b2b: borrowing ownership on set, borrowing on get */</span></a>
+<a class="sourceLine" id="cb85-94" title="94">    set_borrow(<span class="dv">0</span>, v_b2b);</a>
+<a class="sourceLine" id="cb85-95" title="95">    r_b2b = get_borrow(<span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb85-96" title="96">    <span class="co">/* The question: should we `free(v_b2b)`?, `free(r_b2b)`? */</span></a>
+<a class="sourceLine" id="cb85-97" title="97"></a>
+<a class="sourceLine" id="cb85-98" title="98">    <span class="cf">if</span> (kv_value) free(kv_value);</a>
+<a class="sourceLine" id="cb85-99" title="99"></a>
+<a class="sourceLine" id="cb85-100" title="100">    printf(<span class="st">&quot;Looks like success!...but wait till we valgrind; then ;-(</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb85-101" title="101"></a>
+<a class="sourceLine" id="cb85-102" title="102">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb85-103" title="103">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Looks like success!...but wait till we valgrind; then ;-(</code></pre>
 <p>The above code is hopelessly broken. Run it in valgrind to see.</p>
@@ -1960,7 +1962,18 @@ ERRORS
 <a class="sourceLine" id="cb88-14" title="14">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb88-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Looks like success!...but wait till we valgrind; then ;-(</code></pre>
+<pre><code>pre-fork:
+     parent pid 85306
+post-fork:
+    returned 85307,
+    current pid 85306
+    parent pid 85300
+pre-fork:
+     parent pid 85306
+post-fork:
+    returned 0,
+    current pid 85307
+    parent pid 85306</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2018,14 +2031,14 @@ ERRORS
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 229675 exiting with 0
-Child 229676 exiting with -1
-Child 229677 exiting with -2
-Child 229678 exiting with -3
-Child 229675 exited with exit status 0
-Child 229676 exited with exit status -1
-Child 229677 exited with exit status -2
-Child 229678 exited with exit status -3</code></pre>
+<pre><code>Child 85323 exiting with 0
+Child 85324 exiting with -1
+Child 85326 exiting with -3
+Child 85325 exiting with -2
+Child 85323 exited with exit status 0
+Child 85324 exited with exit status -1
+Child 85326 exited with exit status -3
+Child 85325 exited with exit status -2</code></pre>
 <h3 id="an-aside-concurrency"><span class="header-section-number">3.2.2</span> An Aside: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -2889,9 +2902,8 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb130-87" title="87">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb130-88" title="88">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>229847: We&#39;ve been asked to terminate. Exit!
-229846: Parent asking child to terminate
-229846: Child process has exited.</code></pre>
+<pre><code>85494: Parent asking child to terminate
+85494: Child process has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
