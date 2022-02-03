@@ -392,7 +392,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x55fc9a8bb149
+Hex and pointers: 7fffffffffffffff, 0x55f81eebc149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -512,8 +512,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffc296e4100 == 0x7ffc296e4100; 6 == 6
-nth index: 0x7ffc296e4104 == 0x7ffc296e4104; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffccbce4160 == 0x7ffccbce4160; 6 == 6
+nth index: 0x7ffccbce4164 == 0x7ffccbce4164; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -536,7 +536,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7fffbefbd6b4 == 0x7fffbefbd6b4; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffea0aa43c4 == 0x7ffea0aa43c4; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -560,10 +560,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7fff54b95ed0 &amp; 0x7fff54b95ee4
-idx 1 @ 0x7fff54b95ed4 &amp; 0x7fff54b95ee5
-idx 2 @ 0x7fff54b95ed8 &amp; 0x7fff54b95ee6
-idx 3 @ 0x7fff54b95edc &amp; 0x7fff54b95ee7</code></pre>
+<pre><code>idx 0 @ 0x7fffec2da150 &amp; 0x7fffec2da164
+idx 1 @ 0x7fffec2da154 &amp; 0x7fffec2da165
+idx 2 @ 0x7fffec2da158 &amp; 0x7fffec2da166
+idx 3 @ 0x7fffec2da15c &amp; 0x7fffec2da167</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -800,10 +800,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x5593b711d010
-b   @ 0x5593b711d014
-c   @ 0x5593b711d020
-end @ 0x5593b711d039
+a   @ 0x56522329e010
+b   @ 0x56522329e014
+c   @ 0x56522329e020
+end @ 0x56522329e039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -811,7 +811,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x5593b711d014
+c.c_c = 0x56522329e014
 
 Print out the variables as raw memory
 
@@ -906,8 +906,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x556d5247c04c
-1: 2 @ 0x556d5247c044
+<pre><code>0: 4 @ 0x5606766a504c
+1: 2 @ 0x5606766a5044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1236,16 +1236,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -651447033
-3: 32765
-4: -651447034
-5: 32765
-6: -1436773827
-7: 21906
-8: -363696184
-9: 32651
-10: -1436773904
-11: 21906</code></pre>
+2: 1050977319
+3: 32764
+4: 1050977318
+5: 32764
+6: 1577271869
+7: 22015
+8: -544362552
+9: 32761
+10: 1577271792
+11: 22015</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1586,7 +1586,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x5590cc4da004 == 0x5590cc4da004 != 0x5590cc4dc011</code></pre>
+0x557dbe4f6004 == 0x557dbe4f6004 != 0x557dbe4f8011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -1985,15 +1985,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 28488
+     parent pid 31309
 post-fork:
-    returned 28489,
-    current pid 28488
-    parent pid 28482
+    returned 31310,
+    current pid 31309
+    parent pid 31303
 post-fork:
     returned 0,
-    current pid 28489
-    parent pid 28488</code></pre>
+    current pid 31310
+    parent pid 31309</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2057,14 +2057,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 28505 exiting with 0
-Child 28506 exiting with -1
-Child 28507 exiting with -2
-Child 28508 exiting with -3
-Child 28505 exited with exit status 0
-Child 28506 exited with exit status -1
-Child 28507 exited with exit status -2
-Child 28508 exited with exit status -3</code></pre>
+<pre><code>Child 31327 exiting with -1
+Child 31326 exiting with 0
+Child 31328 exiting with -2
+Child 31329 exiting with -3
+Child 31326 exited with exit status 0
+Child 31327 exited with exit status -1
+Child 31328 exited with exit status -2
+Child 31329 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3096,7 +3096,7 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 7 milliseconds passed!
 8 milliseconds passed!
 9 milliseconds passed!</code></pre>
-<p><strong>Question</strong>: Again, track and explain the control flow through this program.</p>
+<p><strong>Question</strong>: Track and explain the control flow through this program.</p>
 <p><code>SIGKILL</code> and <code>SIGSTOP</code> are unique in that they <em>cannot be disabled</em>, and handlers for them cannot be defined. They enable non-optional control of a child by the parent.</p>
 <h3 id="parentchild-coordination-with-signals"><span class="header-section-number">4.3.2</span> Parent/Child Coordination with Signals</h3>
 <p>Another example of coordination between parent and child processes. We can use signals to get a notification that <em>a child has exited</em>! Additionally, we can send the <code>SIGTERM</code> signal to terminate a process (this is used to implement the <code>kill</code> command line program – see <code>man 1 kill</code>).</p>
@@ -3188,9 +3188,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>28723: We&#39;ve been asked to terminate. Exit!
-28722: Parent asking child (28723) to terminate
-28722: Child process 28723 has exited.</code></pre>
+<pre><code>31544: We&#39;ve been asked to terminate. Exit!
+31543: Parent asking child (31544) to terminate
+31543: Child process 31544 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -3198,7 +3198,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <li>We can use the <code>kill</code> function to <em>send a signal</em> to a another process owned by the same user (e.g. <code>gparmer</code>).</li>
 <li>The <code>pause</code> call says to stop execution (to pause) until a signal is triggered.</li>
 </ul>
-<p><strong>Question</strong>: Please try and explain the control flow through this program.</p>
+<figure>
+<img src="figures/sig_chld.png" alt="A high-level overview of the control flow between parent and child in this code." /><figcaption>A high-level overview of the control flow between parent and child in this code.</figcaption>
+</figure>
 <p>A couple of additional important functions:</p>
 <ul>
 <li><code>raise</code> will trigger a signal in the current process (it is effectively a <code>kill(getpid(), ...)</code>).</li>
