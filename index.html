@@ -205,8 +205,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#the-shell"><span class="toc-section-number">4.2.3</span> The Shell</a></li>
         </ul></li>
         <li><a href="#signals"><span class="toc-section-number">4.3</span> Signals</a><ul>
-        <li><a href="#parentchild-coordination-with-signals"><span class="toc-section-number">4.3.1</span> Parent/Child Coordination with Signals</a></li>
-        <li><a href="#tracking-time-with-signals"><span class="toc-section-number">4.3.2</span> Tracking Time with Signals</a></li>
+        <li><a href="#tracking-time-with-signals"><span class="toc-section-number">4.3.1</span> Tracking Time with Signals</a></li>
+        <li><a href="#parentchild-coordination-with-signals"><span class="toc-section-number">4.3.2</span> Parent/Child Coordination with Signals</a></li>
         <li><a href="#the-dark-side-of-signals"><span class="toc-section-number">4.3.3</span> The Dark Side of Signals</a></li>
         </ul></li>
         </ul></li>
@@ -392,7 +392,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x5634a1db8149
+Hex and pointers: 7fffffffffffffff, 0x55fc9a8bb149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -512,8 +512,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7fffae4dfe10 == 0x7fffae4dfe10; 6 == 6
-nth index: 0x7fffae4dfe14 == 0x7fffae4dfe14; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffc296e4100 == 0x7ffc296e4100; 6 == 6
+nth index: 0x7ffc296e4104 == 0x7ffc296e4104; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -536,7 +536,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffc2273ef74 == 0x7ffc2273ef74; 7 == 7</code></pre>
+<pre><code>nth index: 0x7fffbefbd6b4 == 0x7fffbefbd6b4; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -560,10 +560,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffc95e60340 &amp; 0x7ffc95e60354
-idx 1 @ 0x7ffc95e60344 &amp; 0x7ffc95e60355
-idx 2 @ 0x7ffc95e60348 &amp; 0x7ffc95e60356
-idx 3 @ 0x7ffc95e6034c &amp; 0x7ffc95e60357</code></pre>
+<pre><code>idx 0 @ 0x7fff54b95ed0 &amp; 0x7fff54b95ee4
+idx 1 @ 0x7fff54b95ed4 &amp; 0x7fff54b95ee5
+idx 2 @ 0x7fff54b95ed8 &amp; 0x7fff54b95ee6
+idx 3 @ 0x7fff54b95edc &amp; 0x7fff54b95ee7</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -800,10 +800,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x560cb6874010
-b   @ 0x560cb6874014
-c   @ 0x560cb6874020
-end @ 0x560cb6874039
+a   @ 0x5593b711d010
+b   @ 0x5593b711d014
+c   @ 0x5593b711d020
+end @ 0x5593b711d039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -811,7 +811,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x560cb6874014
+c.c_c = 0x5593b711d014
 
 Print out the variables as raw memory
 
@@ -906,8 +906,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x562b7d9a204c
-1: 2 @ 0x562b7d9a2044
+<pre><code>0: 4 @ 0x556d5247c04c
+1: 2 @ 0x556d5247c044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1236,16 +1236,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -1956135721
-3: 32767
-4: -1956135722
-5: 32767
-6: 863507005
-7: 22051
-8: -1176514616
-9: 32670
-10: 863506928
-11: 22051</code></pre>
+2: -651447033
+3: 32765
+4: -651447034
+5: 32765
+6: -1436773827
+7: 21906
+8: -363696184
+9: 32651
+10: -1436773904
+11: 21906</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1586,7 +1586,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x55b1c57e8004 == 0x55b1c57e8004 != 0x55b1c57ea011</code></pre>
+0x5590cc4da004 == 0x5590cc4da004 != 0x5590cc4dc011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -1985,15 +1985,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 26595
+     parent pid 28488
 post-fork:
-    returned 26596,
-    current pid 26595
-    parent pid 26589
+    returned 28489,
+    current pid 28488
+    parent pid 28482
 post-fork:
     returned 0,
-    current pid 26596
-    parent pid 26595</code></pre>
+    current pid 28489
+    parent pid 28488</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2057,14 +2057,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 26612 exiting with 0
-Child 26613 exiting with -1
-Child 26614 exiting with -2
-Child 26615 exiting with -3
-Child 26612 exited with exit status 0
-Child 26613 exited with exit status -1
-Child 26614 exited with exit status -2
-Child 26615 exited with exit status -3</code></pre>
+<pre><code>Child 28505 exiting with 0
+Child 28506 exiting with -1
+Child 28507 exiting with -2
+Child 28508 exiting with -3
+Child 28505 exited with exit status 0
+Child 28506 exited with exit status -1
+Child 28507 exited with exit status -2
+Child 28508 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -2958,6 +2958,7 @@ Child sent whole message!</code></pre>
 <figure>
 <img src="figures/pipe_proc.png" alt="A graphical sequence for the above code. Each image is a snapshot of the system after an operation is preformed. The red portions of each figure show what is changed in each operation. The parent creates a pipe, forks a child, which inherits a copy of all of the file descriptors (including the pipe), the parent and child close their stdin and stdout, respectively, the pipes descriptors are duped into those now vacant descriptors, and the pipe descriptors are closed. Now all processes are in a state where they can use their stdin/stdout/stderr descriptors as normal (scanf, printf), but the standard output from the child will get piped to the standard input of the parent. Shells do a similar set of operations, but in which a child has their standard output piped to the standard input of another child." /><figcaption>A graphical sequence for the above code. Each image is a snapshot of the system after an operation is preformed. The red portions of each figure show what is changed in each operation. The parent creates a pipe, forks a child, which inherits a copy of all of the file descriptors (including the pipe), the parent and child close their stdin and stdout, respectively, the pipes descriptors are <code>dup</code>ed into those now vacant descriptors, and the pipe descriptors are closed. Now all processes are in a state where they can use their stdin/stdout/stderr descriptors as normal (<code>scanf</code>, <code>printf</code>), but the standard output from the child will get piped to the standard input of the parent. Shells do a similar set of operations, but in which a child has their standard output piped to the standard input of another child.</figcaption>
 </figure>
+<p><strong>Question.</strong> If we wanted to have a parent, shell process setup two child connected by <code>|</code>, what would the <em>final</em> picture (in the image of the pictures above) look like?</p>
 <h2 id="signals"><span class="header-section-number">4.3</span> Signals</h2>
 <p>We’re used to <em>sequential</em> execution in our processes. Each instruction executes after the previous in the “instruction stream”. However, systems also require <em>exceptional</em> execution patterns. What happens when you access memory that doesn’t exist (e.g. <code>*(int *)NULL</code>); when you divide by <code>0</code>; when a user types <code>cntl-c</code>; when a process terminates; or when you make a call to access a descriptor which somehow is not accessible outside of the call<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>?</p>
 <p>UNIX’s <strong>signals</strong> provide <em>asynchronous</em> execution in a process. Regardless the previous instruction a process was executing, when a signal activates, a <em>signal handler</em> function will immediately activate. Lets see what this looks like:</p>
@@ -3029,167 +3030,61 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <li><code>SIGUSR1</code> &amp; <code>SIGUSR2</code> - User-defined signal handlers you can use for your own machinations</li>
 </ul>
 <p>Each signal has a <em>default</em> behavior that triggers if you <em>do not</em> define a handler. These are either to ignore the signal, terminate the process, to stop the process executing, and to continue its execution.</p>
-<h3 id="parentchild-coordination-with-signals"><span class="header-section-number">4.3.1</span> Parent/Child Coordination with Signals</h3>
-<p>Another example of coordination between parent and child processes:</p>
+<h3 id="tracking-time-with-signals"><span class="header-section-number">4.3.1</span> Tracking Time with Signals</h3>
+<p>Lets see <code>ualarm</code> in action:</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb138-1" title="1"><span class="pp">#include </span><span class="im">&lt;signal.h&gt;</span></a>
 <a class="sourceLine" id="cb138-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
 <a class="sourceLine" id="cb138-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
 <a class="sourceLine" id="cb138-4" title="4"><span class="pp">#include </span><span class="im">&lt;errno.h&gt;</span></a>
-<a class="sourceLine" id="cb138-5" title="5"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
-<a class="sourceLine" id="cb138-6" title="6"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span><span class="pp"> </span><span class="co">/* kill, pause */</span></a>
-<a class="sourceLine" id="cb138-7" title="7"><span class="pp">#include </span><span class="im">&lt;assert.h&gt;</span></a>
-<a class="sourceLine" id="cb138-8" title="8"><span class="pp">#include </span><span class="im">&lt;sys/wait.h&gt;</span></a>
-<a class="sourceLine" id="cb138-9" title="9"></a>
-<a class="sourceLine" id="cb138-10" title="10"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb138-11" title="11">sig_handler(<span class="dt">int</span> signal_number, siginfo_t *info, <span class="dt">void</span> *context)</a>
-<a class="sourceLine" id="cb138-12" title="12">{</a>
-<a class="sourceLine" id="cb138-13" title="13">    <span class="cf">switch</span>(signal_number) {</a>
-<a class="sourceLine" id="cb138-14" title="14">    <span class="cf">case</span> SIGCHLD: {</a>
-<a class="sourceLine" id="cb138-15" title="15">        <span class="co">/* see documentation on `siginfo_t` in `man sigaction` */</span></a>
-<a class="sourceLine" id="cb138-16" title="16">        printf(<span class="st">&quot;%d: Child process %d has exited.</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid(), info-&gt;si_pid);</a>
-<a class="sourceLine" id="cb138-17" title="17">        fflush(stdout);</a>
-<a class="sourceLine" id="cb138-18" title="18">        <span class="cf">break</span>;</a>
-<a class="sourceLine" id="cb138-19" title="19">    }</a>
-<a class="sourceLine" id="cb138-20" title="20">    <span class="cf">case</span> SIGTERM: {</a>
-<a class="sourceLine" id="cb138-21" title="21">        printf(<span class="st">&quot;%d: We&#39;ve been asked to terminate. Exit!</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
-<a class="sourceLine" id="cb138-22" title="22">        fflush(stdout);</a>
-<a class="sourceLine" id="cb138-23" title="23">        exit(EXIT_SUCCESS);</a>
-<a class="sourceLine" id="cb138-24" title="24">        <span class="cf">break</span>;</a>
-<a class="sourceLine" id="cb138-25" title="25">    }}</a>
-<a class="sourceLine" id="cb138-26" title="26"></a>
-<a class="sourceLine" id="cb138-27" title="27">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb138-28" title="28">}</a>
-<a class="sourceLine" id="cb138-29" title="29"></a>
-<a class="sourceLine" id="cb138-30" title="30"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb138-31" title="31">setup_signal(<span class="dt">int</span> signo, <span class="dt">void</span> (*fn)(<span class="dt">int</span> , siginfo_t *, <span class="dt">void</span> *))</a>
-<a class="sourceLine" id="cb138-32" title="32">{</a>
-<a class="sourceLine" id="cb138-33" title="33">    sigset_t masked;</a>
-<a class="sourceLine" id="cb138-34" title="34">    <span class="kw">struct</span> sigaction siginfo;</a>
-<a class="sourceLine" id="cb138-35" title="35">    <span class="dt">int</span> ret;</a>
-<a class="sourceLine" id="cb138-36" title="36"></a>
-<a class="sourceLine" id="cb138-37" title="37">    sigemptyset(&amp;masked);</a>
-<a class="sourceLine" id="cb138-38" title="38">    sigaddset(&amp;masked, signo);</a>
-<a class="sourceLine" id="cb138-39" title="39">    siginfo = (<span class="kw">struct</span> sigaction) {</a>
-<a class="sourceLine" id="cb138-40" title="40">        .sa_sigaction = fn,</a>
-<a class="sourceLine" id="cb138-41" title="41">        .sa_mask      = masked,</a>
-<a class="sourceLine" id="cb138-42" title="42">        .sa_flags     = SA_RESTART | SA_SIGINFO</a>
-<a class="sourceLine" id="cb138-43" title="43">    };</a>
-<a class="sourceLine" id="cb138-44" title="44"></a>
-<a class="sourceLine" id="cb138-45" title="45">    <span class="cf">if</span> (sigaction(signo, &amp;siginfo, NULL) == -<span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb138-46" title="46">        perror(<span class="st">&quot;sigaction error&quot;</span>);</a>
-<a class="sourceLine" id="cb138-47" title="47">        exit(EXIT_FAILURE);</a>
-<a class="sourceLine" id="cb138-48" title="48">    }</a>
-<a class="sourceLine" id="cb138-49" title="49">}</a>
-<a class="sourceLine" id="cb138-50" title="50"></a>
-<a class="sourceLine" id="cb138-51" title="51"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb138-52" title="52">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb138-53" title="53">{</a>
-<a class="sourceLine" id="cb138-54" title="54">    pid_t pid;</a>
-<a class="sourceLine" id="cb138-55" title="55">    <span class="dt">int</span> status;</a>
-<a class="sourceLine" id="cb138-56" title="56"></a>
-<a class="sourceLine" id="cb138-57" title="57">    setup_signal(SIGCHLD, sig_handler);</a>
-<a class="sourceLine" id="cb138-58" title="58">    setup_signal(SIGTERM, sig_handler);</a>
-<a class="sourceLine" id="cb138-59" title="59"></a>
-<a class="sourceLine" id="cb138-60" title="60">    <span class="co">/*</span></a>
-<a class="sourceLine" id="cb138-61" title="61"><span class="co">     * The signal infromation is inherited across a fork,</span></a>
-<a class="sourceLine" id="cb138-62" title="62"><span class="co">     * and is set the same for the parent and the child.</span></a>
-<a class="sourceLine" id="cb138-63" title="63"><span class="co">     */</span></a>
-<a class="sourceLine" id="cb138-64" title="64">    pid = fork();</a>
-<a class="sourceLine" id="cb138-65" title="65">    <span class="cf">if</span> (pid == -<span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb138-66" title="66">        perror(<span class="st">&quot;fork&quot;</span>);</a>
-<a class="sourceLine" id="cb138-67" title="67">        exit(EXIT_FAILURE);</a>
-<a class="sourceLine" id="cb138-68" title="68">    }</a>
-<a class="sourceLine" id="cb138-69" title="69"></a>
-<a class="sourceLine" id="cb138-70" title="70">    <span class="cf">if</span> (pid == <span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb138-71" title="71">        pause(); <span class="co">/* stop execution, wake upon signal */</span></a>
-<a class="sourceLine" id="cb138-72" title="72"></a>
-<a class="sourceLine" id="cb138-73" title="73">        exit(EXIT_SUCCESS);</a>
-<a class="sourceLine" id="cb138-74" title="74">    }</a>
-<a class="sourceLine" id="cb138-75" title="75"></a>
-<a class="sourceLine" id="cb138-76" title="76">    printf(<span class="st">&quot;%d: Parent asking child (%d) to terminate</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid(), pid);</a>
-<a class="sourceLine" id="cb138-77" title="77">    kill(pid, SIGTERM); <span class="co">/* send the child the TERM signal */</span></a>
-<a class="sourceLine" id="cb138-78" title="78"></a>
-<a class="sourceLine" id="cb138-79" title="79">    <span class="co">/* Wait for the sigchild notification of child termination! */</span></a>
-<a class="sourceLine" id="cb138-80" title="80">    pause();</a>
-<a class="sourceLine" id="cb138-81" title="81"></a>
-<a class="sourceLine" id="cb138-82" title="82">    <span class="co">/* this should return immediately because waited for sigchld! */</span></a>
-<a class="sourceLine" id="cb138-83" title="83">    assert(pid == wait(&amp;status));</a>
-<a class="sourceLine" id="cb138-84" title="84">    assert(WIFEXITED(status));</a>
-<a class="sourceLine" id="cb138-85" title="85"></a>
-<a class="sourceLine" id="cb138-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb138-87" title="87">}</a></code></pre></div>
-<p>Program output:</p>
-<pre><code>26815: We&#39;ve been asked to terminate. Exit!
-26814: Parent asking child (26815) to terminate
-26814: Child process 26815 has exited.</code></pre>
-<p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
-<p>We now see a couple of new features:</p>
-<ul>
-<li>The <code>SIGCHLD</code> signal is activated in the parent when a child process exits.</li>
-<li>We can use the <code>kill</code> function to <em>send a signal</em> to a another process owned by the same user (e.g. <code>gparmer</code>).</li>
-<li>The <code>pause</code> call says to stop execution (to pause) until a signal is triggered.</li>
-</ul>
-<p><strong>Question</strong>: Please explain the control flow through this program.</p>
-<p>A couple of additional important functions:</p>
-<ul>
-<li><code>raise</code> will trigger a signal in the current process (it is effectively a <code>kill(getpid(), ...)</code>).</li>
-<li><code>ualarm</code> will set a recurring <code>SIGALRM</code> signal. This can be quite useful if your program needs to keep track of time in some way.</li>
-</ul>
-<h3 id="tracking-time-with-signals"><span class="header-section-number">4.3.2</span> Tracking Time with Signals</h3>
-<p>Lets see <code>ualarm</code> in action:</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb140-1" title="1"><span class="pp">#include </span><span class="im">&lt;signal.h&gt;</span></a>
-<a class="sourceLine" id="cb140-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb140-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb140-4" title="4"><span class="pp">#include </span><span class="im">&lt;errno.h&gt;</span></a>
-<a class="sourceLine" id="cb140-5" title="5"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb140-6" title="6"></a>
-<a class="sourceLine" id="cb140-7" title="7"><span class="dt">volatile</span> <span class="dt">int</span> timers = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb140-8" title="8"></a>
-<a class="sourceLine" id="cb140-9" title="9"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb140-10" title="10">sig_handler(<span class="dt">int</span> signal_number, siginfo_t *info, <span class="dt">void</span> *context)</a>
-<a class="sourceLine" id="cb140-11" title="11">{</a>
-<a class="sourceLine" id="cb140-12" title="12">    timers++;</a>
-<a class="sourceLine" id="cb140-13" title="13"></a>
-<a class="sourceLine" id="cb140-14" title="14">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb140-15" title="15">}</a>
-<a class="sourceLine" id="cb140-16" title="16"></a>
-<a class="sourceLine" id="cb140-17" title="17"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb140-18" title="18">setup_signal(<span class="dt">int</span> signo)</a>
-<a class="sourceLine" id="cb140-19" title="19">{</a>
-<a class="sourceLine" id="cb140-20" title="20">    sigset_t masked;</a>
-<a class="sourceLine" id="cb140-21" title="21">    <span class="kw">struct</span> sigaction siginfo;</a>
-<a class="sourceLine" id="cb140-22" title="22">    <span class="dt">int</span> ret;</a>
-<a class="sourceLine" id="cb140-23" title="23"></a>
-<a class="sourceLine" id="cb140-24" title="24">    sigemptyset(&amp;masked);</a>
-<a class="sourceLine" id="cb140-25" title="25">    sigaddset(&amp;masked, signo);</a>
-<a class="sourceLine" id="cb140-26" title="26">    siginfo = (<span class="kw">struct</span> sigaction) {</a>
-<a class="sourceLine" id="cb140-27" title="27">        .sa_sigaction = sig_handler,</a>
-<a class="sourceLine" id="cb140-28" title="28">        .sa_mask      = masked,</a>
-<a class="sourceLine" id="cb140-29" title="29">        .sa_flags     = SA_RESTART | SA_SIGINFO</a>
-<a class="sourceLine" id="cb140-30" title="30">    };</a>
-<a class="sourceLine" id="cb140-31" title="31"></a>
-<a class="sourceLine" id="cb140-32" title="32">    <span class="cf">if</span> (sigaction(signo, &amp;siginfo, NULL) == -<span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb140-33" title="33">        perror(<span class="st">&quot;sigaction error&quot;</span>);</a>
-<a class="sourceLine" id="cb140-34" title="34">        exit(EXIT_FAILURE);</a>
-<a class="sourceLine" id="cb140-35" title="35">    }</a>
-<a class="sourceLine" id="cb140-36" title="36">}</a>
-<a class="sourceLine" id="cb140-37" title="37"></a>
-<a class="sourceLine" id="cb140-38" title="38"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb140-39" title="39">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb140-40" title="40">{</a>
-<a class="sourceLine" id="cb140-41" title="41">    <span class="dt">int</span> t = timers;</a>
-<a class="sourceLine" id="cb140-42" title="42"></a>
-<a class="sourceLine" id="cb140-43" title="43">    setup_signal(SIGALRM);</a>
-<a class="sourceLine" id="cb140-44" title="44">    ualarm(<span class="dv">1000</span>, <span class="dv">1000</span>); <span class="co">/* note: 1000 microseconds is a millisecond, 1000 milliseconds is a second */</span></a>
-<a class="sourceLine" id="cb140-45" title="45">    <span class="cf">while</span> (t &lt; <span class="dv">10</span>) {</a>
-<a class="sourceLine" id="cb140-46" title="46">        <span class="cf">if</span> (timers &gt; t) {</a>
-<a class="sourceLine" id="cb140-47" title="47">            printf(<span class="st">&quot;%d milliseconds passed!</span><span class="sc">\n</span><span class="st">&quot;</span>, t);</a>
-<a class="sourceLine" id="cb140-48" title="48">            t = timers;</a>
-<a class="sourceLine" id="cb140-49" title="49">        }</a>
-<a class="sourceLine" id="cb140-50" title="50">    }</a>
-<a class="sourceLine" id="cb140-51" title="51"></a>
-<a class="sourceLine" id="cb140-52" title="52">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb140-53" title="53">}</a></code></pre></div>
+<a class="sourceLine" id="cb138-5" title="5"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb138-6" title="6"></a>
+<a class="sourceLine" id="cb138-7" title="7"><span class="dt">volatile</span> <span class="dt">int</span> timers = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb138-8" title="8"></a>
+<a class="sourceLine" id="cb138-9" title="9"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb138-10" title="10">sig_handler(<span class="dt">int</span> signal_number, siginfo_t *info, <span class="dt">void</span> *context)</a>
+<a class="sourceLine" id="cb138-11" title="11">{</a>
+<a class="sourceLine" id="cb138-12" title="12">    timers++;</a>
+<a class="sourceLine" id="cb138-13" title="13"></a>
+<a class="sourceLine" id="cb138-14" title="14">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb138-15" title="15">}</a>
+<a class="sourceLine" id="cb138-16" title="16"></a>
+<a class="sourceLine" id="cb138-17" title="17"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb138-18" title="18">setup_signal(<span class="dt">int</span> signo)</a>
+<a class="sourceLine" id="cb138-19" title="19">{</a>
+<a class="sourceLine" id="cb138-20" title="20">    sigset_t masked;</a>
+<a class="sourceLine" id="cb138-21" title="21">    <span class="kw">struct</span> sigaction siginfo;</a>
+<a class="sourceLine" id="cb138-22" title="22">    <span class="dt">int</span> ret;</a>
+<a class="sourceLine" id="cb138-23" title="23"></a>
+<a class="sourceLine" id="cb138-24" title="24">    sigemptyset(&amp;masked);</a>
+<a class="sourceLine" id="cb138-25" title="25">    sigaddset(&amp;masked, signo);</a>
+<a class="sourceLine" id="cb138-26" title="26">    siginfo = (<span class="kw">struct</span> sigaction) {</a>
+<a class="sourceLine" id="cb138-27" title="27">        .sa_sigaction = sig_handler,</a>
+<a class="sourceLine" id="cb138-28" title="28">        .sa_mask      = masked,</a>
+<a class="sourceLine" id="cb138-29" title="29">        .sa_flags     = SA_RESTART | SA_SIGINFO</a>
+<a class="sourceLine" id="cb138-30" title="30">    };</a>
+<a class="sourceLine" id="cb138-31" title="31"></a>
+<a class="sourceLine" id="cb138-32" title="32">    <span class="cf">if</span> (sigaction(signo, &amp;siginfo, NULL) == -<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb138-33" title="33">        perror(<span class="st">&quot;sigaction error&quot;</span>);</a>
+<a class="sourceLine" id="cb138-34" title="34">        exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb138-35" title="35">    }</a>
+<a class="sourceLine" id="cb138-36" title="36">}</a>
+<a class="sourceLine" id="cb138-37" title="37"></a>
+<a class="sourceLine" id="cb138-38" title="38"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb138-39" title="39">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb138-40" title="40">{</a>
+<a class="sourceLine" id="cb138-41" title="41">    <span class="dt">int</span> t = timers;</a>
+<a class="sourceLine" id="cb138-42" title="42"></a>
+<a class="sourceLine" id="cb138-43" title="43">    setup_signal(SIGALRM);</a>
+<a class="sourceLine" id="cb138-44" title="44">    ualarm(<span class="dv">1000</span>, <span class="dv">1000</span>); <span class="co">/* note: 1000 microseconds is a millisecond, 1000 milliseconds is a second */</span></a>
+<a class="sourceLine" id="cb138-45" title="45">    <span class="cf">while</span> (t &lt; <span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb138-46" title="46">        <span class="cf">if</span> (timers &gt; t) {</a>
+<a class="sourceLine" id="cb138-47" title="47">            printf(<span class="st">&quot;%d milliseconds passed!</span><span class="sc">\n</span><span class="st">&quot;</span>, t);</a>
+<a class="sourceLine" id="cb138-48" title="48">            t = timers;</a>
+<a class="sourceLine" id="cb138-49" title="49">        }</a>
+<a class="sourceLine" id="cb138-50" title="50">    }</a>
+<a class="sourceLine" id="cb138-51" title="51"></a>
+<a class="sourceLine" id="cb138-52" title="52">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb138-53" title="53">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>0 milliseconds passed!
 1 milliseconds passed!
@@ -3203,6 +3098,112 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 9 milliseconds passed!</code></pre>
 <p><strong>Question</strong>: Again, track and explain the control flow through this program.</p>
 <p><code>SIGKILL</code> and <code>SIGSTOP</code> are unique in that they <em>cannot be disabled</em>, and handlers for them cannot be defined. They enable non-optional control of a child by the parent.</p>
+<h3 id="parentchild-coordination-with-signals"><span class="header-section-number">4.3.2</span> Parent/Child Coordination with Signals</h3>
+<p>Another example of coordination between parent and child processes. We can use signals to get a notification that <em>a child has exited</em>! Additionally, we can send the <code>SIGTERM</code> signal to terminate a process (this is used to implement the <code>kill</code> command line program – see <code>man 1 kill</code>).</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb140-1" title="1"><span class="pp">#include </span><span class="im">&lt;signal.h&gt;</span></a>
+<a class="sourceLine" id="cb140-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb140-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb140-4" title="4"><span class="pp">#include </span><span class="im">&lt;errno.h&gt;</span></a>
+<a class="sourceLine" id="cb140-5" title="5"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb140-6" title="6"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span><span class="pp"> </span><span class="co">/* kill, pause */</span></a>
+<a class="sourceLine" id="cb140-7" title="7"><span class="pp">#include </span><span class="im">&lt;assert.h&gt;</span></a>
+<a class="sourceLine" id="cb140-8" title="8"><span class="pp">#include </span><span class="im">&lt;sys/wait.h&gt;</span></a>
+<a class="sourceLine" id="cb140-9" title="9"></a>
+<a class="sourceLine" id="cb140-10" title="10"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb140-11" title="11">sig_handler(<span class="dt">int</span> signal_number, siginfo_t *info, <span class="dt">void</span> *context)</a>
+<a class="sourceLine" id="cb140-12" title="12">{</a>
+<a class="sourceLine" id="cb140-13" title="13">    <span class="cf">switch</span>(signal_number) {</a>
+<a class="sourceLine" id="cb140-14" title="14">    <span class="cf">case</span> SIGCHLD: {</a>
+<a class="sourceLine" id="cb140-15" title="15">        <span class="co">/* see documentation on `siginfo_t` in `man sigaction` */</span></a>
+<a class="sourceLine" id="cb140-16" title="16">        printf(<span class="st">&quot;%d: Child process %d has exited.</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid(), info-&gt;si_pid);</a>
+<a class="sourceLine" id="cb140-17" title="17">        fflush(stdout);</a>
+<a class="sourceLine" id="cb140-18" title="18">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb140-19" title="19">    }</a>
+<a class="sourceLine" id="cb140-20" title="20">    <span class="cf">case</span> SIGTERM: {</a>
+<a class="sourceLine" id="cb140-21" title="21">        printf(<span class="st">&quot;%d: We&#39;ve been asked to terminate. Exit!</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
+<a class="sourceLine" id="cb140-22" title="22">        fflush(stdout);</a>
+<a class="sourceLine" id="cb140-23" title="23">        exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb140-24" title="24">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb140-25" title="25">    }}</a>
+<a class="sourceLine" id="cb140-26" title="26"></a>
+<a class="sourceLine" id="cb140-27" title="27">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb140-28" title="28">}</a>
+<a class="sourceLine" id="cb140-29" title="29"></a>
+<a class="sourceLine" id="cb140-30" title="30"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb140-31" title="31">setup_signal(<span class="dt">int</span> signo, <span class="dt">void</span> (*fn)(<span class="dt">int</span> , siginfo_t *, <span class="dt">void</span> *))</a>
+<a class="sourceLine" id="cb140-32" title="32">{</a>
+<a class="sourceLine" id="cb140-33" title="33">    sigset_t masked;</a>
+<a class="sourceLine" id="cb140-34" title="34">    <span class="kw">struct</span> sigaction siginfo;</a>
+<a class="sourceLine" id="cb140-35" title="35">    <span class="dt">int</span> ret;</a>
+<a class="sourceLine" id="cb140-36" title="36"></a>
+<a class="sourceLine" id="cb140-37" title="37">    sigemptyset(&amp;masked);</a>
+<a class="sourceLine" id="cb140-38" title="38">    sigaddset(&amp;masked, signo);</a>
+<a class="sourceLine" id="cb140-39" title="39">    siginfo = (<span class="kw">struct</span> sigaction) {</a>
+<a class="sourceLine" id="cb140-40" title="40">        .sa_sigaction = fn,</a>
+<a class="sourceLine" id="cb140-41" title="41">        .sa_mask      = masked,</a>
+<a class="sourceLine" id="cb140-42" title="42">        .sa_flags     = SA_RESTART | SA_SIGINFO</a>
+<a class="sourceLine" id="cb140-43" title="43">    };</a>
+<a class="sourceLine" id="cb140-44" title="44"></a>
+<a class="sourceLine" id="cb140-45" title="45">    <span class="cf">if</span> (sigaction(signo, &amp;siginfo, NULL) == -<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb140-46" title="46">        perror(<span class="st">&quot;sigaction error&quot;</span>);</a>
+<a class="sourceLine" id="cb140-47" title="47">        exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb140-48" title="48">    }</a>
+<a class="sourceLine" id="cb140-49" title="49">}</a>
+<a class="sourceLine" id="cb140-50" title="50"></a>
+<a class="sourceLine" id="cb140-51" title="51"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb140-52" title="52">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb140-53" title="53">{</a>
+<a class="sourceLine" id="cb140-54" title="54">    pid_t pid;</a>
+<a class="sourceLine" id="cb140-55" title="55">    <span class="dt">int</span> status;</a>
+<a class="sourceLine" id="cb140-56" title="56"></a>
+<a class="sourceLine" id="cb140-57" title="57">    setup_signal(SIGCHLD, sig_handler);</a>
+<a class="sourceLine" id="cb140-58" title="58">    setup_signal(SIGTERM, sig_handler);</a>
+<a class="sourceLine" id="cb140-59" title="59"></a>
+<a class="sourceLine" id="cb140-60" title="60">    <span class="co">/*</span></a>
+<a class="sourceLine" id="cb140-61" title="61"><span class="co">     * The signal infromation is inherited across a fork,</span></a>
+<a class="sourceLine" id="cb140-62" title="62"><span class="co">     * and is set the same for the parent and the child.</span></a>
+<a class="sourceLine" id="cb140-63" title="63"><span class="co">     */</span></a>
+<a class="sourceLine" id="cb140-64" title="64">    pid = fork();</a>
+<a class="sourceLine" id="cb140-65" title="65">    <span class="cf">if</span> (pid == -<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb140-66" title="66">        perror(<span class="st">&quot;fork&quot;</span>);</a>
+<a class="sourceLine" id="cb140-67" title="67">        exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb140-68" title="68">    }</a>
+<a class="sourceLine" id="cb140-69" title="69"></a>
+<a class="sourceLine" id="cb140-70" title="70">    <span class="cf">if</span> (pid == <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb140-71" title="71">        pause(); <span class="co">/* stop execution, wake upon signal */</span></a>
+<a class="sourceLine" id="cb140-72" title="72"></a>
+<a class="sourceLine" id="cb140-73" title="73">        exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb140-74" title="74">    }</a>
+<a class="sourceLine" id="cb140-75" title="75"></a>
+<a class="sourceLine" id="cb140-76" title="76">    printf(<span class="st">&quot;%d: Parent asking child (%d) to terminate</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid(), pid);</a>
+<a class="sourceLine" id="cb140-77" title="77">    kill(pid, SIGTERM); <span class="co">/* send the child the TERM signal */</span></a>
+<a class="sourceLine" id="cb140-78" title="78"></a>
+<a class="sourceLine" id="cb140-79" title="79">    <span class="co">/* Wait for the sigchild notification of child termination! */</span></a>
+<a class="sourceLine" id="cb140-80" title="80">    pause();</a>
+<a class="sourceLine" id="cb140-81" title="81"></a>
+<a class="sourceLine" id="cb140-82" title="82">    <span class="co">/* this should return immediately because waited for sigchld! */</span></a>
+<a class="sourceLine" id="cb140-83" title="83">    assert(pid == wait(&amp;status));</a>
+<a class="sourceLine" id="cb140-84" title="84">    assert(WIFEXITED(status));</a>
+<a class="sourceLine" id="cb140-85" title="85"></a>
+<a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>28723: We&#39;ve been asked to terminate. Exit!
+28722: Parent asking child (28723) to terminate
+28722: Child process 28723 has exited.</code></pre>
+<p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
+<p>We now see a couple of new features:</p>
+<ul>
+<li>The <code>SIGCHLD</code> signal is activated in the parent when a child process exits.</li>
+<li>We can use the <code>kill</code> function to <em>send a signal</em> to a another process owned by the same user (e.g. <code>gparmer</code>).</li>
+<li>The <code>pause</code> call says to stop execution (to pause) until a signal is triggered.</li>
+</ul>
+<p><strong>Question</strong>: Please try and explain the control flow through this program.</p>
+<p>A couple of additional important functions:</p>
+<ul>
+<li><code>raise</code> will trigger a signal in the current process (it is effectively a <code>kill(getpid(), ...)</code>).</li>
+<li><code>ualarm</code> will set a recurring <code>SIGALRM</code> signal. This can be quite useful if your program needs to keep track of time in some way.</li>
+</ul>
 <h3 id="the-dark-side-of-signals"><span class="header-section-number">4.3.3</span> The Dark Side of Signals</h3>
 <p>Signals are dangerous mechanisms in some situations. It can be difficult to use them properly, and avoid bugs. Signals complication data-structures as only functionality that is <em>re-eentrant</em> should be used in signal handlers, and they complicate the logic around all system calls as they can <em>interrupt</em> slow system calls.</p>
 <p><strong>“Slow” system calls.</strong> Many library calls can <em>block</em>. These are calls that cannot necessarily complete immediately as they might require concurrent events to complete. For example, the <code>wait</code> call has to <em>block</em> and wait for the child to <code>exit</code>; and <code>read</code> has to block if there is no data available (yet) on a <code>pipe</code>.</p>
