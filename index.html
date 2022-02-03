@@ -392,7 +392,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x562533ab3149
+Hex and pointers: 7fffffffffffffff, 0x5634a1db8149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -512,8 +512,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffc8e186b30 == 0x7ffc8e186b30; 6 == 6
-nth index: 0x7ffc8e186b34 == 0x7ffc8e186b34; 7 == 7</code></pre>
+<pre><code>0th index: 0x7fffae4dfe10 == 0x7fffae4dfe10; 6 == 6
+nth index: 0x7fffae4dfe14 == 0x7fffae4dfe14; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -536,7 +536,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffe68246c64 == 0x7ffe68246c64; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffc2273ef74 == 0x7ffc2273ef74; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -560,10 +560,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffcbbf0ded0 &amp; 0x7ffcbbf0dee4
-idx 1 @ 0x7ffcbbf0ded4 &amp; 0x7ffcbbf0dee5
-idx 2 @ 0x7ffcbbf0ded8 &amp; 0x7ffcbbf0dee6
-idx 3 @ 0x7ffcbbf0dedc &amp; 0x7ffcbbf0dee7</code></pre>
+<pre><code>idx 0 @ 0x7ffc95e60340 &amp; 0x7ffc95e60354
+idx 1 @ 0x7ffc95e60344 &amp; 0x7ffc95e60355
+idx 2 @ 0x7ffc95e60348 &amp; 0x7ffc95e60356
+idx 3 @ 0x7ffc95e6034c &amp; 0x7ffc95e60357</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -800,10 +800,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x56503c696010
-b   @ 0x56503c696014
-c   @ 0x56503c696020
-end @ 0x56503c696039
+a   @ 0x560cb6874010
+b   @ 0x560cb6874014
+c   @ 0x560cb6874020
+end @ 0x560cb6874039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -811,7 +811,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x56503c696014
+c.c_c = 0x560cb6874014
 
 Print out the variables as raw memory
 
@@ -906,8 +906,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x5604f8eb804c
-1: 2 @ 0x5604f8eb8044
+<pre><code>0: 4 @ 0x562b7d9a204c
+1: 2 @ 0x562b7d9a2044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1236,16 +1236,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -513423065
-3: 32766
-4: -513423066
-5: 32766
-6: 1105121853
-7: 22005
-8: 856100808
-9: 32570
-10: 1105121776
-11: 22005</code></pre>
+2: -1956135721
+3: 32767
+4: -1956135722
+5: 32767
+6: 863507005
+7: 22051
+8: -1176514616
+9: 32670
+10: 863506928
+11: 22051</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1586,7 +1586,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x5586ef573004 == 0x5586ef573004 != 0x5586ef575011</code></pre>
+0x55b1c57e8004 == 0x55b1c57e8004 != 0x55b1c57ea011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -1985,15 +1985,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 65448
+     parent pid 26595
 post-fork:
-    returned 65449,
-    current pid 65448
-    parent pid 65442
+    returned 26596,
+    current pid 26595
+    parent pid 26589
 post-fork:
     returned 0,
-    current pid 65449
-    parent pid 65448</code></pre>
+    current pid 26596
+    parent pid 26595</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2057,14 +2057,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 65466 exiting with 0
-Child 65467 exiting with -1
-Child 65468 exiting with -2
-Child 65469 exiting with -3
-Child 65466 exited with exit status 0
-Child 65467 exited with exit status -1
-Child 65468 exited with exit status -2
-Child 65469 exited with exit status -3</code></pre>
+<pre><code>Child 26612 exiting with 0
+Child 26613 exiting with -1
+Child 26614 exiting with -2
+Child 26615 exiting with -3
+Child 26612 exited with exit status 0
+Child 26613 exited with exit status -1
+Child 26614 exited with exit status -2
+Child 26615 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -2591,7 +2591,7 @@ Environment variable BESTPUP -&gt; penny</code></pre>
 <p>Each process has a “working directory” which is used as the base for any <em>relative paths</em> in the file system. All file system paths are either <em>absolute paths</em> – in which case they begin with <code>/</code> and specify the path from the “root”, or <em>relative paths</em>. Relative paths are quite frequently used when we interact with the shell. Every time you type <code>cd blah/</code>, you’re saying "please change the current working directory to <code>blah/</code> which is a directory in the current working directory. Similarly, <code>cat penny_the_best_pup.md</code> looks up the file <code>penny_the_best_pup.md</code> in the current working directory.</p>
 <p>This is backed by a simple API:</p>
 <ul>
-<li><code>getcwd</code> which lets you check out the current process’ working directory, and</li>
+<li><code>getcwd</code> which lets you get the current process’ working directory, and</li>
 <li><code>chdir</code> which enable the process to change its working directory.</li>
 </ul>
 <div class="sourceCode" id="cb122"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb122-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
@@ -2796,21 +2796,20 @@ New descriptor @ 0</code></pre>
 <a class="sourceLine" id="cb130-39" title="39">        }</a>
 <a class="sourceLine" id="cb130-40" title="40"></a>
 <a class="sourceLine" id="cb130-41" title="41">        ret_r = read(pipe_fds[<span class="dv">0</span>], &amp;to[written], ret_w);</a>
-<a class="sourceLine" id="cb130-42" title="42">        <span class="co">/* Question: why should this always be the case? */</span></a>
-<a class="sourceLine" id="cb130-43" title="43">        assert(ret_r == ret_w);</a>
-<a class="sourceLine" id="cb130-44" title="44"></a>
-<a class="sourceLine" id="cb130-45" title="45">        <span class="co">/* Question: Describe at a high-level what `buf_sz` and `written` are doing here. */</span></a>
-<a class="sourceLine" id="cb130-46" title="46">        buf_sz  -= ret_w;</a>
-<a class="sourceLine" id="cb130-47" title="47">        written += ret_w;</a>
-<a class="sourceLine" id="cb130-48" title="48">    }</a>
-<a class="sourceLine" id="cb130-49" title="49"></a>
-<a class="sourceLine" id="cb130-50" title="50">    <span class="co">/* `memcmp` is like `strcmp`, but for general (non-string) memory */</span></a>
-<a class="sourceLine" id="cb130-51" title="51">    assert(memcmp(from, to, <span class="kw">sizeof</span>(from)) == <span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb130-52" title="52"></a>
-<a class="sourceLine" id="cb130-53" title="53">    printf(<span class="st">&quot;Successfully memcpyed through a pipe!</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb130-54" title="54"></a>
-<a class="sourceLine" id="cb130-55" title="55">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb130-56" title="56">}</a></code></pre></div>
+<a class="sourceLine" id="cb130-42" title="42">        assert(ret_r == ret_w);</a>
+<a class="sourceLine" id="cb130-43" title="43"></a>
+<a class="sourceLine" id="cb130-44" title="44">        <span class="co">/* Question: Describe at a high-level what `buf_sz` and `written` are doing here. */</span></a>
+<a class="sourceLine" id="cb130-45" title="45">        buf_sz  -= ret_w;</a>
+<a class="sourceLine" id="cb130-46" title="46">        written += ret_w;</a>
+<a class="sourceLine" id="cb130-47" title="47">    }</a>
+<a class="sourceLine" id="cb130-48" title="48"></a>
+<a class="sourceLine" id="cb130-49" title="49">    <span class="co">/* `memcmp` is like `strcmp`, but for general (non-string) memory */</span></a>
+<a class="sourceLine" id="cb130-50" title="50">    assert(memcmp(from, to, <span class="kw">sizeof</span>(from)) == <span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb130-51" title="51"></a>
+<a class="sourceLine" id="cb130-52" title="52">    printf(<span class="st">&quot;Successfully memcpyed through a pipe!</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb130-53" title="53"></a>
+<a class="sourceLine" id="cb130-54" title="54">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb130-55" title="55">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Successfully memcpyed through a pipe!</code></pre>
 <p>Pipes are really quite a bit more useful when they are used to coordinate between separate processes. Thus, lets combine them with <code>fork</code>:</p>
@@ -2956,6 +2955,9 @@ Child sent whole message!</code></pre>
 <pre><code>42 + 2a</code></pre>
 <p><strong>Closing pipes.</strong> <code>read</code>ing from a pipe will return that there is no more data on the pipe (i.e. return <code>0</code>) <em>only if all <code>write</code>-ends of the pipe are <code>close</code>d</em>. This makes sense because we think of a pipe as a potentially infinite stream of bytes, thus the only way the system can know that there are no more bytes to be <code>read</code>, is if the <code>write</code> end of the pipe cannot receive more data, i.e. if it is <code>close</code>d.</p>
 <p>This seems simple, in principle, but when implementing a shell, you use <code>dup</code> to make multiple copies of the <code>write</code> file descriptor. In this case, the shell must be very careful to close its own copies because <em>if any <code>write</code> end of a pipe is open, the reader will not realize when there is no more data left</em>. If you implement a shell, and it seems like commands are hanging, and not <code>exit</code>ing, this is likely why.</p>
+<figure>
+<img src="figures/pipe_proc.png" alt="A graphical sequence for the above code. Each image is a snapshot of the system after an operation is preformed. The red portions of each figure show what is changed in each operation. The parent creates a pipe, forks a child, which inherits a copy of all of the file descriptors (including the pipe), the parent and child close their stdin and stdout, respectively, the pipes descriptors are duped into those now vacant descriptors, and the pipe descriptors are closed. Now all processes are in a state where they can use their stdin/stdout/stderr descriptors as normal (scanf, printf), but the standard output from the child will get piped to the standard input of the parent. Shells do a similar set of operations, but in which a child has their standard output piped to the standard input of another child." /><figcaption>A graphical sequence for the above code. Each image is a snapshot of the system after an operation is preformed. The red portions of each figure show what is changed in each operation. The parent creates a pipe, forks a child, which inherits a copy of all of the file descriptors (including the pipe), the parent and child close their stdin and stdout, respectively, the pipes descriptors are <code>dup</code>ed into those now vacant descriptors, and the pipe descriptors are closed. Now all processes are in a state where they can use their stdin/stdout/stderr descriptors as normal (<code>scanf</code>, <code>printf</code>), but the standard output from the child will get piped to the standard input of the parent. Shells do a similar set of operations, but in which a child has their standard output piped to the standard input of another child.</figcaption>
+</figure>
 <h2 id="signals"><span class="header-section-number">4.3</span> Signals</h2>
 <p>We’re used to <em>sequential</em> execution in our processes. Each instruction executes after the previous in the “instruction stream”. However, systems also require <em>exceptional</em> execution patterns. What happens when you access memory that doesn’t exist (e.g. <code>*(int *)NULL</code>); when you divide by <code>0</code>; when a user types <code>cntl-c</code>; when a process terminates; or when you make a call to access a descriptor which somehow is not accessible outside of the call<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>?</p>
 <p>UNIX’s <strong>signals</strong> provide <em>asynchronous</em> execution in a process. Regardless the previous instruction a process was executing, when a signal activates, a <em>signal handler</em> function will immediately activate. Lets see what this looks like:</p>
@@ -3043,83 +3045,83 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb138-12" title="12">{</a>
 <a class="sourceLine" id="cb138-13" title="13">    <span class="cf">switch</span>(signal_number) {</a>
 <a class="sourceLine" id="cb138-14" title="14">    <span class="cf">case</span> SIGCHLD: {</a>
-<a class="sourceLine" id="cb138-15" title="15">        printf(<span class="st">&quot;%d: Child process has exited.</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
-<a class="sourceLine" id="cb138-16" title="16">        fflush(stdout);</a>
-<a class="sourceLine" id="cb138-17" title="17">        <span class="cf">break</span>;</a>
-<a class="sourceLine" id="cb138-18" title="18">    }</a>
-<a class="sourceLine" id="cb138-19" title="19">    <span class="cf">case</span> SIGTERM: {</a>
-<a class="sourceLine" id="cb138-20" title="20">        printf(<span class="st">&quot;%d: We&#39;ve been asked to terminate. Exit!</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
-<a class="sourceLine" id="cb138-21" title="21">        fflush(stdout);</a>
-<a class="sourceLine" id="cb138-22" title="22">        exit(EXIT_SUCCESS);</a>
-<a class="sourceLine" id="cb138-23" title="23">        <span class="cf">break</span>;</a>
-<a class="sourceLine" id="cb138-24" title="24">    }}</a>
-<a class="sourceLine" id="cb138-25" title="25"></a>
-<a class="sourceLine" id="cb138-26" title="26">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb138-27" title="27">}</a>
-<a class="sourceLine" id="cb138-28" title="28"></a>
-<a class="sourceLine" id="cb138-29" title="29"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb138-30" title="30">setup_signal(<span class="dt">int</span> signo)</a>
-<a class="sourceLine" id="cb138-31" title="31">{</a>
-<a class="sourceLine" id="cb138-32" title="32">    sigset_t masked;</a>
-<a class="sourceLine" id="cb138-33" title="33">    <span class="kw">struct</span> sigaction siginfo;</a>
-<a class="sourceLine" id="cb138-34" title="34">    <span class="dt">int</span> ret;</a>
-<a class="sourceLine" id="cb138-35" title="35"></a>
-<a class="sourceLine" id="cb138-36" title="36">    sigemptyset(&amp;masked);</a>
-<a class="sourceLine" id="cb138-37" title="37">    sigaddset(&amp;masked, signo);</a>
-<a class="sourceLine" id="cb138-38" title="38">    siginfo = (<span class="kw">struct</span> sigaction) {</a>
-<a class="sourceLine" id="cb138-39" title="39">        .sa_sigaction = sig_handler,</a>
-<a class="sourceLine" id="cb138-40" title="40">        .sa_mask      = masked,</a>
-<a class="sourceLine" id="cb138-41" title="41">        .sa_flags     = SA_RESTART | SA_SIGINFO</a>
-<a class="sourceLine" id="cb138-42" title="42">    };</a>
-<a class="sourceLine" id="cb138-43" title="43"></a>
-<a class="sourceLine" id="cb138-44" title="44">    <span class="cf">if</span> (sigaction(signo, &amp;siginfo, NULL) == -<span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb138-45" title="45">        perror(<span class="st">&quot;sigaction error&quot;</span>);</a>
-<a class="sourceLine" id="cb138-46" title="46">        exit(EXIT_FAILURE);</a>
-<a class="sourceLine" id="cb138-47" title="47">    }</a>
-<a class="sourceLine" id="cb138-48" title="48">}</a>
-<a class="sourceLine" id="cb138-49" title="49"></a>
-<a class="sourceLine" id="cb138-50" title="50"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb138-51" title="51">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb138-52" title="52">{</a>
-<a class="sourceLine" id="cb138-53" title="53">    pid_t pid;</a>
-<a class="sourceLine" id="cb138-54" title="54"></a>
-<a class="sourceLine" id="cb138-55" title="55">    setup_signal(SIGCHLD);</a>
-<a class="sourceLine" id="cb138-56" title="56">    setup_signal(SIGTERM);</a>
-<a class="sourceLine" id="cb138-57" title="57"></a>
-<a class="sourceLine" id="cb138-58" title="58">    <span class="co">/*</span></a>
-<a class="sourceLine" id="cb138-59" title="59"><span class="co">     * The signal infromation is inherited across a fork,</span></a>
-<a class="sourceLine" id="cb138-60" title="60"><span class="co">     * and is set the same for the parent and the child.</span></a>
-<a class="sourceLine" id="cb138-61" title="61"><span class="co">     */</span></a>
-<a class="sourceLine" id="cb138-62" title="62">    pid = fork();</a>
-<a class="sourceLine" id="cb138-63" title="63">    <span class="cf">if</span> (pid == -<span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb138-64" title="64">        perror(<span class="st">&quot;fork&quot;</span>);</a>
-<a class="sourceLine" id="cb138-65" title="65">        exit(EXIT_FAILURE);</a>
-<a class="sourceLine" id="cb138-66" title="66">    }</a>
-<a class="sourceLine" id="cb138-67" title="67"></a>
-<a class="sourceLine" id="cb138-68" title="68">    <span class="cf">if</span> (pid == <span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb138-69" title="69">        printf(<span class="st">&quot;%d - Heyo!</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
-<a class="sourceLine" id="cb138-70" title="70">        pause(); <span class="co">/* stop execution, wake upon signal */</span></a>
-<a class="sourceLine" id="cb138-71" title="71">        printf(<span class="st">&quot;%d - post-pause</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
-<a class="sourceLine" id="cb138-72" title="72">        fflush(stdout);</a>
-<a class="sourceLine" id="cb138-73" title="73"></a>
-<a class="sourceLine" id="cb138-74" title="74">        exit(EXIT_SUCCESS);</a>
-<a class="sourceLine" id="cb138-75" title="75">    }</a>
-<a class="sourceLine" id="cb138-76" title="76"></a>
-<a class="sourceLine" id="cb138-77" title="77">    printf(<span class="st">&quot;%d: Parent asking child (%d) to terminate</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid(), pid);</a>
-<a class="sourceLine" id="cb138-78" title="78">    kill(pid, SIGTERM); <span class="co">/* send the child the TERM signal */</span></a>
-<a class="sourceLine" id="cb138-79" title="79"></a>
-<a class="sourceLine" id="cb138-80" title="80">    <span class="co">/* Wait for the sigchild notification of child termination! */</span></a>
-<a class="sourceLine" id="cb138-81" title="81">    pause();</a>
-<a class="sourceLine" id="cb138-82" title="82"></a>
-<a class="sourceLine" id="cb138-83" title="83">    <span class="co">/* this should return immediately because waited for sigchld! */</span></a>
-<a class="sourceLine" id="cb138-84" title="84">    assert(pid == wait(NULL));</a>
+<a class="sourceLine" id="cb138-15" title="15">        <span class="co">/* see documentation on `siginfo_t` in `man sigaction` */</span></a>
+<a class="sourceLine" id="cb138-16" title="16">        printf(<span class="st">&quot;%d: Child process %d has exited.</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid(), info-&gt;si_pid);</a>
+<a class="sourceLine" id="cb138-17" title="17">        fflush(stdout);</a>
+<a class="sourceLine" id="cb138-18" title="18">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb138-19" title="19">    }</a>
+<a class="sourceLine" id="cb138-20" title="20">    <span class="cf">case</span> SIGTERM: {</a>
+<a class="sourceLine" id="cb138-21" title="21">        printf(<span class="st">&quot;%d: We&#39;ve been asked to terminate. Exit!</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
+<a class="sourceLine" id="cb138-22" title="22">        fflush(stdout);</a>
+<a class="sourceLine" id="cb138-23" title="23">        exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb138-24" title="24">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb138-25" title="25">    }}</a>
+<a class="sourceLine" id="cb138-26" title="26"></a>
+<a class="sourceLine" id="cb138-27" title="27">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb138-28" title="28">}</a>
+<a class="sourceLine" id="cb138-29" title="29"></a>
+<a class="sourceLine" id="cb138-30" title="30"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb138-31" title="31">setup_signal(<span class="dt">int</span> signo, <span class="dt">void</span> (*fn)(<span class="dt">int</span> , siginfo_t *, <span class="dt">void</span> *))</a>
+<a class="sourceLine" id="cb138-32" title="32">{</a>
+<a class="sourceLine" id="cb138-33" title="33">    sigset_t masked;</a>
+<a class="sourceLine" id="cb138-34" title="34">    <span class="kw">struct</span> sigaction siginfo;</a>
+<a class="sourceLine" id="cb138-35" title="35">    <span class="dt">int</span> ret;</a>
+<a class="sourceLine" id="cb138-36" title="36"></a>
+<a class="sourceLine" id="cb138-37" title="37">    sigemptyset(&amp;masked);</a>
+<a class="sourceLine" id="cb138-38" title="38">    sigaddset(&amp;masked, signo);</a>
+<a class="sourceLine" id="cb138-39" title="39">    siginfo = (<span class="kw">struct</span> sigaction) {</a>
+<a class="sourceLine" id="cb138-40" title="40">        .sa_sigaction = fn,</a>
+<a class="sourceLine" id="cb138-41" title="41">        .sa_mask      = masked,</a>
+<a class="sourceLine" id="cb138-42" title="42">        .sa_flags     = SA_RESTART | SA_SIGINFO</a>
+<a class="sourceLine" id="cb138-43" title="43">    };</a>
+<a class="sourceLine" id="cb138-44" title="44"></a>
+<a class="sourceLine" id="cb138-45" title="45">    <span class="cf">if</span> (sigaction(signo, &amp;siginfo, NULL) == -<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb138-46" title="46">        perror(<span class="st">&quot;sigaction error&quot;</span>);</a>
+<a class="sourceLine" id="cb138-47" title="47">        exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb138-48" title="48">    }</a>
+<a class="sourceLine" id="cb138-49" title="49">}</a>
+<a class="sourceLine" id="cb138-50" title="50"></a>
+<a class="sourceLine" id="cb138-51" title="51"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb138-52" title="52">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb138-53" title="53">{</a>
+<a class="sourceLine" id="cb138-54" title="54">    pid_t pid;</a>
+<a class="sourceLine" id="cb138-55" title="55">    <span class="dt">int</span> status;</a>
+<a class="sourceLine" id="cb138-56" title="56"></a>
+<a class="sourceLine" id="cb138-57" title="57">    setup_signal(SIGCHLD, sig_handler);</a>
+<a class="sourceLine" id="cb138-58" title="58">    setup_signal(SIGTERM, sig_handler);</a>
+<a class="sourceLine" id="cb138-59" title="59"></a>
+<a class="sourceLine" id="cb138-60" title="60">    <span class="co">/*</span></a>
+<a class="sourceLine" id="cb138-61" title="61"><span class="co">     * The signal infromation is inherited across a fork,</span></a>
+<a class="sourceLine" id="cb138-62" title="62"><span class="co">     * and is set the same for the parent and the child.</span></a>
+<a class="sourceLine" id="cb138-63" title="63"><span class="co">     */</span></a>
+<a class="sourceLine" id="cb138-64" title="64">    pid = fork();</a>
+<a class="sourceLine" id="cb138-65" title="65">    <span class="cf">if</span> (pid == -<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb138-66" title="66">        perror(<span class="st">&quot;fork&quot;</span>);</a>
+<a class="sourceLine" id="cb138-67" title="67">        exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb138-68" title="68">    }</a>
+<a class="sourceLine" id="cb138-69" title="69"></a>
+<a class="sourceLine" id="cb138-70" title="70">    <span class="cf">if</span> (pid == <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb138-71" title="71">        pause(); <span class="co">/* stop execution, wake upon signal */</span></a>
+<a class="sourceLine" id="cb138-72" title="72"></a>
+<a class="sourceLine" id="cb138-73" title="73">        exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb138-74" title="74">    }</a>
+<a class="sourceLine" id="cb138-75" title="75"></a>
+<a class="sourceLine" id="cb138-76" title="76">    printf(<span class="st">&quot;%d: Parent asking child (%d) to terminate</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid(), pid);</a>
+<a class="sourceLine" id="cb138-77" title="77">    kill(pid, SIGTERM); <span class="co">/* send the child the TERM signal */</span></a>
+<a class="sourceLine" id="cb138-78" title="78"></a>
+<a class="sourceLine" id="cb138-79" title="79">    <span class="co">/* Wait for the sigchild notification of child termination! */</span></a>
+<a class="sourceLine" id="cb138-80" title="80">    pause();</a>
+<a class="sourceLine" id="cb138-81" title="81"></a>
+<a class="sourceLine" id="cb138-82" title="82">    <span class="co">/* this should return immediately because waited for sigchld! */</span></a>
+<a class="sourceLine" id="cb138-83" title="83">    assert(pid == wait(&amp;status));</a>
+<a class="sourceLine" id="cb138-84" title="84">    assert(WIFEXITED(status));</a>
 <a class="sourceLine" id="cb138-85" title="85"></a>
 <a class="sourceLine" id="cb138-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb138-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>65669: We&#39;ve been asked to terminate. Exit!
-65668: Parent asking child (65669) to terminate
-65668: Child process has exited.</code></pre>
+<pre><code>26815: We&#39;ve been asked to terminate. Exit!
+26814: Parent asking child (26815) to terminate
+26814: Child process 26815 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
