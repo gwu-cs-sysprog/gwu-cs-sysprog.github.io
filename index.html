@@ -197,7 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#exercise-3-process-detective"><span class="toc-section-number">3.7.3</span> Exercise 3: Process Detective</a></li>
         </ul></li>
         </ul></li>
-        <li><a href="#programming-process-resources"><span class="toc-section-number">4</span> Programming Process Resources</a><ul>
+        <li><a href="#process-descriptors-and-signals"><span class="toc-section-number">4</span> Process Descriptors and Signals</a><ul>
         <li><a href="#current-working-directory"><span class="toc-section-number">4.1</span> Current Working Directory</a></li>
         <li><a href="#process-descriptors-and-pipes"><span class="toc-section-number">4.2</span> Process Descriptors and Pipes</a><ul>
         <li><a href="#file-descriptor-operations"><span class="toc-section-number">4.2.1</span> File Descriptor Operations</a></li>
@@ -402,7 +402,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x55e6f4c40149
+Hex and pointers: 7fffffffffffffff, 0x561fb0ef4149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -522,8 +522,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7fff28a8aab0 == 0x7fff28a8aab0; 6 == 6
-nth index: 0x7fff28a8aab4 == 0x7fff28a8aab4; 7 == 7</code></pre>
+<pre><code>0th index: 0x7fffa18c45b0 == 0x7fffa18c45b0; 6 == 6
+nth index: 0x7fffa18c45b4 == 0x7fffa18c45b4; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -546,7 +546,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7fffeaca00f4 == 0x7fffeaca00f4; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffcec91e8e4 == 0x7ffcec91e8e4; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -570,10 +570,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffd504be4e0 &amp; 0x7ffd504be4f4
-idx 1 @ 0x7ffd504be4e4 &amp; 0x7ffd504be4f5
-idx 2 @ 0x7ffd504be4e8 &amp; 0x7ffd504be4f6
-idx 3 @ 0x7ffd504be4ec &amp; 0x7ffd504be4f7</code></pre>
+<pre><code>idx 0 @ 0x7ffeb4361300 &amp; 0x7ffeb4361314
+idx 1 @ 0x7ffeb4361304 &amp; 0x7ffeb4361315
+idx 2 @ 0x7ffeb4361308 &amp; 0x7ffeb4361316
+idx 3 @ 0x7ffeb436130c &amp; 0x7ffeb4361317</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -810,10 +810,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x5617e8c1d010
-b   @ 0x5617e8c1d014
-c   @ 0x5617e8c1d020
-end @ 0x5617e8c1d039
+a   @ 0x556e7a09e010
+b   @ 0x556e7a09e014
+c   @ 0x556e7a09e020
+end @ 0x556e7a09e039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -821,7 +821,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x5617e8c1d014
+c.c_c = 0x556e7a09e014
 
 Print out the variables as raw memory
 
@@ -916,8 +916,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x5617c997404c
-1: 2 @ 0x5617c9974044
+<pre><code>0: 4 @ 0x55e7d2ce504c
+1: 2 @ 0x55e7d2ce5044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1246,16 +1246,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -2124237081
-3: 32764
-4: -2124237082
-5: 32764
-6: -216169923
-7: 21900
-8: -1206005816
-9: 32736
-10: -216170000
-11: 21900</code></pre>
+2: -184284537
+3: 32767
+4: -184284538
+5: 32767
+6: 1573081661
+7: 22024
+8: 884559816
+9: 32622
+10: 1573081584
+11: 22024</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1596,7 +1596,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x558ff1d27004 == 0x558ff1d27004 != 0x558ff1d29011</code></pre>
+0x55ac2855f004 == 0x55ac2855f004 != 0x55ac28561011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -1995,15 +1995,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 83430
+     parent pid 90290
 post-fork:
-    returned 83431,
-    current pid 83430
-    parent pid 83424
+    returned 90291,
+    current pid 90290
+    parent pid 90284
 post-fork:
     returned 0,
-    current pid 83431
-    parent pid 83430</code></pre>
+    current pid 90291
+    parent pid 90290</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2067,14 +2067,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 83447 exiting with 0
-Child 83448 exiting with -1
-Child 83449 exiting with -2
-Child 83450 exiting with -3
-Child 83447 exited with exit status 0
-Child 83448 exited with exit status -1
-Child 83449 exited with exit status -2
-Child 83450 exited with exit status -3</code></pre>
+<pre><code>Child 90308 exiting with -1
+Child 90307 exiting with 0
+Child 90309 exiting with -2
+Child 90310 exiting with -3
+Child 90307 exited with exit status 0
+Child 90308 exited with exit status -1
+Child 90309 exited with exit status -2
+Child 90310 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -2590,7 +2590,7 @@ Environment variable BESTPUP -&gt; penny</code></pre>
 <li><code>status</code></li>
 </ul>
 <p>Some of the files are <em>binary</em>, which means you might need to use <code>xxd</code> (a hexdecimal binary view program) to look at them. In <code>xxd</code>, pay attention to the right column here.</p>
-<h1 id="programming-process-resources"><span class="header-section-number">4</span> Programming Process Resources</h1>
+<h1 id="process-descriptors-and-signals"><span class="header-section-number">4</span> Process Descriptors and Signals</h1>
 <p>We’ve discussed the APIs for process manipulation and program execution, but now we’re going to start discussing how processes can manipulate the resources it has access to. Two of the key UNIX mechanisms that processes must use effectively are</p>
 <ul>
 <li>the current working directory (reported by <code>pwd</code>),</li>
@@ -2704,8 +2704,10 @@ $</code></pre>
 <a class="sourceLine" id="cb125-46" title="46">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb125-47" title="47">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Current directory: /home/ycombinator/repos/sp/lectures
-New current dir: /home/ycombinator/repos/sp</code></pre>
+<pre><code>hello world
+hello world
+in: 0, out: 1, err: 2, new: 3
+New descriptor @ 0</code></pre>
 <p>You can run this, and redirect the standard error to a file to see that writing to standard error is a different operation than writing to standard output. For example: <code>$ prog 2&gt; errors.txt</code> will redirect file descriptor <code>2</code> (stderr) to the file.</p>
 <p>Lets focus in a little bit on <code>read</code> and <code>write</code>. First, it is notable that the buffer they take as an argument (along with its length) is simply an array of bytes. It can be a string, or it could be the bytes that are part of an encoded video. Put another way, by default, <em>channels are just sequences of bytes</em>. It is up to our program to interpret those bytes properly. Second, we need to understand that the return value for <code>read</code>/<code>write</code> has four main, interesting conditions:</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb127-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
@@ -3196,9 +3198,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>83661: We&#39;ve been asked to terminate. Exit!
-83660: Parent asking child (83661) to terminate
-83660: Child process 83661 has exited.</code></pre>
+<pre><code>90525: We&#39;ve been asked to terminate. Exit!
+90524: Parent asking child (90525) to terminate
+90524: Child process 90525 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -3936,7 +3938,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - F inline_exec_tmp (21976)
 - D 07
 - D templates
-- F lectures.html (463186)
+- F lectures.html (464188)
 - F README.md (35)
 - F title.md (320)
 - F output_tmp.dat (0)
@@ -3946,7 +3948,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - D 04
 - D 06
 - F inline_exec_tmp.c (1658)
-- F aggregate.md (160648)
+- F aggregate.md (160620)
 - F .gitignore (520)
 - D .git</code></pre>
 <h3 id="task-2-file-and-directory-sizes"><span class="header-section-number">5.5.2</span> Task 2: File and Directory Sizes</h3>
