@@ -414,7 +414,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x559d1d337149
+Hex and pointers: 7fffffffffffffff, 0x563312fe9149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -534,8 +534,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffd77a89020 == 0x7ffd77a89020; 6 == 6
-nth index: 0x7ffd77a89024 == 0x7ffd77a89024; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffc0a1a1b40 == 0x7ffc0a1a1b40; 6 == 6
+nth index: 0x7ffc0a1a1b44 == 0x7ffc0a1a1b44; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -558,7 +558,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffe039ada84 == 0x7ffe039ada84; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffe12fe53d4 == 0x7ffe12fe53d4; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -582,10 +582,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffeb2b54df0 &amp; 0x7ffeb2b54e04
-idx 1 @ 0x7ffeb2b54df4 &amp; 0x7ffeb2b54e05
-idx 2 @ 0x7ffeb2b54df8 &amp; 0x7ffeb2b54e06
-idx 3 @ 0x7ffeb2b54dfc &amp; 0x7ffeb2b54e07</code></pre>
+<pre><code>idx 0 @ 0x7ffd022a62c0 &amp; 0x7ffd022a62d4
+idx 1 @ 0x7ffd022a62c4 &amp; 0x7ffd022a62d5
+idx 2 @ 0x7ffd022a62c8 &amp; 0x7ffd022a62d6
+idx 3 @ 0x7ffd022a62cc &amp; 0x7ffd022a62d7</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -822,10 +822,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x55ec495d0010
-b   @ 0x55ec495d0014
-c   @ 0x55ec495d0020
-end @ 0x55ec495d0039
+a   @ 0x555639553010
+b   @ 0x555639553014
+c   @ 0x555639553020
+end @ 0x555639553039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -833,7 +833,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x55ec495d0014
+c.c_c = 0x555639553014
 
 Print out the variables as raw memory
 
@@ -928,8 +928,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x55e875c1004c
-1: 2 @ 0x55e875c10044
+<pre><code>0: 4 @ 0x55d2cfb6c04c
+1: 2 @ 0x55d2cfb6c044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1258,16 +1258,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: 191955671
+2: -723400073
 3: 32764
-4: 191955670
+4: -723400074
 5: 32764
-6: -289557955
-7: 21919
-8: 1756696520
-9: 32692
-10: -289558032
-11: 21919</code></pre>
+6: 1159021117
+7: 22061
+8: 2102308808
+9: 32700
+10: 1159021040
+11: 22061</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1608,7 +1608,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x555b860af004 == 0x555b860af004 != 0x555b860b1011</code></pre>
+0x56109e2bf004 == 0x56109e2bf004 != 0x56109e2c1011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2007,15 +2007,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 102185
+     parent pid 108531
 post-fork:
-    returned 102186,
-    current pid 102185
-    parent pid 102179
+    returned 108532,
+    current pid 108531
+    parent pid 108525
 post-fork:
     returned 0,
-    current pid 102186
-    parent pid 102185</code></pre>
+    current pid 108532
+    parent pid 108531</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2079,14 +2079,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 102202 exiting with 0
-Child 102203 exiting with -1
-Child 102204 exiting with -2
-Child 102205 exiting with -3
-Child 102202 exited with exit status 0
-Child 102203 exited with exit status -1
-Child 102204 exited with exit status -2
-Child 102205 exited with exit status -3</code></pre>
+<pre><code>Child 108548 exiting with 0
+Child 108549 exiting with -1
+Child 108550 exiting with -2
+Child 108551 exiting with -3
+Child 108548 exited with exit status 0
+Child 108549 exited with exit status -1
+Child 108550 exited with exit status -2
+Child 108551 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3210,9 +3210,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>102421: We&#39;ve been asked to terminate. Exit!
-102420: Parent asking child (102421) to terminate
-102420: Child process 102421 has exited.</code></pre>
+<pre><code>108766: We&#39;ve been asked to terminate. Exit!
+108765: Parent asking child (108766) to terminate
+108765: Child process 108766 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -4018,30 +4018,12 @@ The two main ones we care about are directories and files. Subsequent calls to <
 <a class="sourceLine" id="cb175-87" title="87">    <span class="cf">return</span> finfo.st_size;</a>
 <a class="sourceLine" id="cb175-88" title="88">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>- D 02
-- D 03
-- D tools
-- D 05
-- D 01
-- D 09
-- D figures
-- F inline_exec_tmp (21976)
-- D 08
-- D 07
-- D templates
-- F lectures.html (526509)
-- F README.md (35)
-- F title.md (320)
-- F output_tmp.dat (0)
-- F LICENSE (1522)
-- F Makefile (1507)
-- D 99
-- D 04
-- D 06
-- F inline_exec_tmp.c (1658)
-- F aggregate.md (162205)
-- F .gitignore (520)
-- D .git</code></pre>
+<pre><code>If there were no errors, we
+    1. created a directory, 
+    2. a file in the directory, 
+    3. change the directory name,
+    4. removed the file, and
+    5. removed the directory</code></pre>
 <h3 id="task-2-file-and-directory-sizes"><span class="header-section-number">5.5.2</span> Task 2: File and Directory Sizes</h3>
 <p><strong>Task: Add output for the size of files, and the size of each directory – the sum of the size of all contained directories and files.</strong></p>
 <p>Again, if we run the program in the <code>05</code> directory:</p>
@@ -4369,8 +4351,8 @@ msg2: </code></pre>
 <a class="sourceLine" id="cb185-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb185-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>102698: 102698
-102699: 102699</code></pre>
+<pre><code>109038: 109038
+109039: 109039</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4517,16 +4499,16 @@ msg2: </code></pre>
 <a class="sourceLine" id="cb189-96" title="96">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb189-97" title="97">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>1. Client 102716 connected to server.
-2. Client 102716 request sent message to server.
-3. Client 102716 reply received from server: Citizen 102716: Penny for Pawsident!
+<pre><code>1. Client 109056 connected to server.
+2. Client 109056 request sent message to server.
+3. Client 109056 reply received from server: Citizen 109056: Penny for Pawsident!
 Server: New client connected with new file descriptor 4.
-Server received message (sz 37): &quot;Citizen 102716: Penny for Pawsident!&quot;. Replying!
+Server received message (sz 37): &quot;Citizen 109056: Penny for Pawsident!&quot;. Replying!
 Server: New client connected with new file descriptor 4.
-Server received message (sz 37): &quot;Citizen 102717: Penny for Pawsident!&quot;. Replying!
-1. Client 102717 connected to server.
-2. Client 102717 request sent message to server.
-3. Client 102717 reply received from server: Citizen 102717: Penny for Pawsident!</code></pre>
+Server received message (sz 37): &quot;Citizen 109057: Penny for Pawsident!&quot;. Replying!
+1. Client 109057 connected to server.
+2. Client 109057 request sent message to server.
+3. Client 109057 reply received from server: Citizen 109057: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -4540,13 +4522,15 @@ Server received message (sz 37): &quot;Citizen 102717: Penny for Pawsident!&quot
 <h2 id="ipc-exercises"><span class="header-section-number">6.6</span> IPC Exercises</h2>
 <p>Find the programs:</p>
 <ul>
-<li><code>06/domain_socket_server.c</code> - a sample server.</li>
-<li><code>06/domain_socket_client.c</code> - a sample client.</li>
+<li><a href="https://github.com/gwu-cs-sysprog/lectures/blob/main/06/domain_socket_server.c"><code>06/domain_socket_server.c</code></a> - a sample server.</li>
+<li><a href="https://github.com/gwu-cs-sysprog/lectures/blob/main/06/domain_socket_client.c"><code>06/domain_socket_client.c</code></a> - a sample client.</li>
 </ul>
+<p>Both require the <a href="https://github.com/gwu-cs-sysprog/lectures/blob/main/06/domain_sockets.h"><code>06/domain_sockets.h</code></a> header file.</p>
 <p>Your job is to try to figure what in the hey these do! Answer the following questions:</p>
 <ul>
 <li>How does the server handle each client request?</li>
-<li>How many clients can the server handle at a time? Is this limited by the server <code>wait</code>ing on client processes?</li>
+<li>How many clients can the server handle at a time?</li>
+<li>Is the number of clients limited by the server <code>wait</code>ing on client/child processes?</li>
 <li>Describe what the client does. What data does it send to the server?</li>
 <li>Describe the behavior when you use the client with the server.</li>
 </ul>
