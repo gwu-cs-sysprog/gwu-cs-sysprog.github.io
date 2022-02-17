@@ -414,7 +414,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x55a1b531b149
+Hex and pointers: 7fffffffffffffff, 0x55646cfe1149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -534,8 +534,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7fff7a767410 == 0x7fff7a767410; 6 == 6
-nth index: 0x7fff7a767414 == 0x7fff7a767414; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffdb2623cc0 == 0x7ffdb2623cc0; 6 == 6
+nth index: 0x7ffdb2623cc4 == 0x7ffdb2623cc4; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -558,7 +558,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffedac06014 == 0x7ffedac06014; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffdd59f0ae4 == 0x7ffdd59f0ae4; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -582,10 +582,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffc27ad1470 &amp; 0x7ffc27ad1484
-idx 1 @ 0x7ffc27ad1474 &amp; 0x7ffc27ad1485
-idx 2 @ 0x7ffc27ad1478 &amp; 0x7ffc27ad1486
-idx 3 @ 0x7ffc27ad147c &amp; 0x7ffc27ad1487</code></pre>
+<pre><code>idx 0 @ 0x7ffe48bd3f90 &amp; 0x7ffe48bd3fa4
+idx 1 @ 0x7ffe48bd3f94 &amp; 0x7ffe48bd3fa5
+idx 2 @ 0x7ffe48bd3f98 &amp; 0x7ffe48bd3fa6
+idx 3 @ 0x7ffe48bd3f9c &amp; 0x7ffe48bd3fa7</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -822,10 +822,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x557450951010
-b   @ 0x557450951014
-c   @ 0x557450951020
-end @ 0x557450951039
+a   @ 0x556d7e38f010
+b   @ 0x556d7e38f014
+c   @ 0x556d7e38f020
+end @ 0x556d7e38f039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -833,7 +833,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x557450951014
+c.c_c = 0x556d7e38f014
 
 Print out the variables as raw memory
 
@@ -928,8 +928,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x55fe32cde04c
-1: 2 @ 0x55fe32cde044
+<pre><code>0: 4 @ 0x5587bfdd104c
+1: 2 @ 0x5587bfdd1044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1258,16 +1258,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -1915619641
-3: 32767
-4: -1915619642
-5: 32767
-6: 1742987837
-7: 21996
-8: 1377763272
-9: 32562
-10: 1742987760
-11: 21996</code></pre>
+2: 2093638839
+3: 32766
+4: 2093638838
+5: 32766
+6: 575316541
+7: 21952
+8: -1458765880
+9: 32639
+10: 575316464
+11: 21952</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1608,7 +1608,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x563dad983004 == 0x563dad983004 != 0x563dad985011</code></pre>
+0x555dccd09004 == 0x555dccd09004 != 0x555dccd0b011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2007,15 +2007,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 136774
+     parent pid 4001
 post-fork:
-    returned 136775,
-    current pid 136774
-    parent pid 136768
+    returned 4002,
+    current pid 4001
+    parent pid 3995
 post-fork:
     returned 0,
-    current pid 136775
-    parent pid 136774</code></pre>
+    current pid 4002
+    parent pid 4001</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2079,14 +2079,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 136791 exiting with 0
-Child 136792 exiting with -1
-Child 136793 exiting with -2
-Child 136794 exiting with -3
-Child 136791 exited with exit status 0
-Child 136792 exited with exit status -1
-Child 136793 exited with exit status -2
-Child 136794 exited with exit status -3</code></pre>
+<pre><code>Child 4018 exiting with 0
+Child 4019 exiting with -1
+Child 4020 exiting with -2
+Child 4021 exiting with -3
+Child 4018 exited with exit status 0
+Child 4019 exited with exit status -1
+Child 4020 exited with exit status -2
+Child 4021 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3210,9 +3210,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>137009: We&#39;ve been asked to terminate. Exit!
-137008: Parent asking child (137009) to terminate
-137008: Child process 137009 has exited.</code></pre>
+<pre><code>4236: We&#39;ve been asked to terminate. Exit!
+4235: Parent asking child (4236) to terminate
+4235: Child process 4236 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -3433,18 +3433,7 @@ Child has exited.</code></pre>
 <a class="sourceLine" id="cb146-36" title="36">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb146-37" title="37">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>We want to say 6044 things...but the world doesn&#39;t value artistry.
-Lets cut down to 280 characters and tweet like it is 1915...
-
- The Love Song of J. Alfred Prufrock
- T.S. Elliot
-
-Sio credesse che mia risposta fosse
-A persona che mai tornasse al mondo,
-Questa fiamma staria senza piu scosse.
-Ma percioche giammai di questo fondo
-Non torno vivo alcun, siodo il vero,
-Senza tema dinfamia ti rispondo</code></pre>
+<pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Success&quot;</code></pre>
 <blockquote>
 <p>It is <em>really</em> important that quite a few interesting functions operate on <em>descriptors</em>, which might reference pipes, files, the terminal, or other resources. This means that processes can operate on descriptors and not care what resources back them. This enables shells to implement pipelines and the redirection of output to files, all without the processes knowing! It enables <code>fork</code>ed processes to inherit these resources from its parent. In this way, descriptors and the functions to operate on them are a <em>polymorphic</em> foundation (in the sense of object-oriented polymorphism) to accessing the system.</p>
 </blockquote>
@@ -4054,11 +4043,11 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - F a.out (17136)
 - F LICENSE (1522)
 - D 09
-- F lectures.html (531344)
+- F lectures.html (531442)
 - D 01
 - D 05
 - D 02
-- F aggregate.md (162826)
+- F aggregate.md (162450)
 - D 04
 - D .git
 - F inline_exec_tmp.c (1658)</code></pre>
@@ -4200,7 +4189,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 <a class="sourceLine" id="cb183-54" title="54">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>msg1: 
-msg2: america for good doggies</code></pre>
+msg2: </code></pre>
 <p>You can see that there are some problems here. If we run it many times, we can see that sometimes we don’t see any messages, sometimes we only see the first, sometimes we only see the second, and other times combinations of all three options. Thus, they are not useful for channel-based communication between multiple processes.</p>
 <p>On the other side, files have a very <em>useful</em> properti that we’d like to use in a good solution to IPC: they <em>have a location in the FS</em> that the communicating processes can both use to find the file, thus avoiding the need for a shared parent.</p>
 <ul>
@@ -4389,7 +4378,7 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>137305: 137305137306</code></pre>
+<pre><code>4524: 45254524</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4477,75 +4466,80 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb191-37" title="37"><span class="co">         */</span></a>
 <a class="sourceLine" id="cb191-38" title="38">        <span class="cf">if</span> ((new_client = accept(socket_desc, NULL, NULL)) == -<span class="dv">1</span>) exit(EXIT_FAILURE);</a>
 <a class="sourceLine" id="cb191-39" title="39">        printf(<span class="st">&quot;Server: New client connected with new file descriptor %d.</span><span class="sc">\n</span><span class="st">&quot;</span>, new_client);</a>
-<a class="sourceLine" id="cb191-40" title="40"></a>
-<a class="sourceLine" id="cb191-41" title="41">        amnt = read(new_client, buf, MAX_BUF_SZ - <span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb191-42" title="42">        <span class="cf">if</span> (amnt == -<span class="dv">1</span>) exit(EXIT_FAILURE);</a>
-<a class="sourceLine" id="cb191-43" title="43">        buf[amnt] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>; <span class="co">/* ensure null termination of the string */</span></a>
-<a class="sourceLine" id="cb191-44" title="44">        printf(<span class="st">&quot;Server received message (sz %d): </span><span class="sc">\&quot;</span><span class="st">%s</span><span class="sc">\&quot;</span><span class="st">. Replying!</span><span class="sc">\n</span><span class="st">&quot;</span>, amnt, buf);</a>
-<a class="sourceLine" id="cb191-45" title="45"></a>
-<a class="sourceLine" id="cb191-46" title="46">        <span class="co">/* send the client a reply */</span></a>
-<a class="sourceLine" id="cb191-47" title="47">        <span class="cf">if</span> (write(new_client, buf, amnt) &lt; <span class="dv">0</span>) exit(EXIT_FAILURE);</a>
-<a class="sourceLine" id="cb191-48" title="48">        <span class="co">/* Done with communication with this client */</span></a>
-<a class="sourceLine" id="cb191-49" title="49">        close(new_client);</a>
-<a class="sourceLine" id="cb191-50" title="50">    }</a>
-<a class="sourceLine" id="cb191-51" title="51">    close(socket_desc);</a>
-<a class="sourceLine" id="cb191-52" title="52"></a>
-<a class="sourceLine" id="cb191-53" title="53">    exit(EXIT_SUCCESS);</a>
-<a class="sourceLine" id="cb191-54" title="54">}</a>
-<a class="sourceLine" id="cb191-55" title="55"></a>
-<a class="sourceLine" id="cb191-56" title="56"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb191-57" title="57">client(<span class="dt">char</span> *filename)</a>
-<a class="sourceLine" id="cb191-58" title="58">{</a>
-<a class="sourceLine" id="cb191-59" title="59">    <span class="dt">char</span> msg[MAX_BUF_SZ];</a>
-<a class="sourceLine" id="cb191-60" title="60">    <span class="dt">int</span>  amnt = <span class="dv">0</span>, socket_desc;</a>
-<a class="sourceLine" id="cb191-61" title="61"></a>
-<a class="sourceLine" id="cb191-62" title="62">    socket_desc = domain_socket_client_create(filename);</a>
-<a class="sourceLine" id="cb191-63" title="63">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) exit(EXIT_FAILURE);</a>
-<a class="sourceLine" id="cb191-64" title="64">    printf(<span class="st">&quot;1. Client %d connected to server.</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
-<a class="sourceLine" id="cb191-65" title="65"></a>
-<a class="sourceLine" id="cb191-66" title="66">    snprintf(msg, MAX_BUF_SZ - <span class="dv">1</span>, <span class="st">&quot;Citizen %d: Penny for Pawsident!&quot;</span>, getpid());</a>
-<a class="sourceLine" id="cb191-67" title="67">    amnt = write(socket_desc, msg, strlen(msg) + <span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb191-68" title="68">    <span class="cf">if</span> (amnt &lt; <span class="dv">0</span>) exit(EXIT_FAILURE);</a>
-<a class="sourceLine" id="cb191-69" title="69">    printf(<span class="st">&quot;2. Client %d request sent message to server.</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
-<a class="sourceLine" id="cb191-70" title="70"></a>
-<a class="sourceLine" id="cb191-71" title="71">    <span class="cf">if</span> (read(socket_desc, msg, amnt) &lt; <span class="dv">0</span>) exit(EXIT_FAILURE);</a>
-<a class="sourceLine" id="cb191-72" title="72">    msg[amnt] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>;</a>
-<a class="sourceLine" id="cb191-73" title="73">    printf(<span class="st">&quot;3. Client %d reply received from server: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid(), msg);</a>
+<a class="sourceLine" id="cb191-40" title="40">        fflush(stdout);</a>
+<a class="sourceLine" id="cb191-41" title="41"></a>
+<a class="sourceLine" id="cb191-42" title="42">        amnt = read(new_client, buf, MAX_BUF_SZ - <span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb191-43" title="43">        <span class="cf">if</span> (amnt == -<span class="dv">1</span>) exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb191-44" title="44">        buf[amnt] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>; <span class="co">/* ensure null termination of the string */</span></a>
+<a class="sourceLine" id="cb191-45" title="45">        printf(<span class="st">&quot;Server received message (sz %d): </span><span class="sc">\&quot;</span><span class="st">%s</span><span class="sc">\&quot;</span><span class="st">. Replying!</span><span class="sc">\n</span><span class="st">&quot;</span>, amnt, buf);</a>
+<a class="sourceLine" id="cb191-46" title="46">        fflush(stdout);</a>
+<a class="sourceLine" id="cb191-47" title="47"></a>
+<a class="sourceLine" id="cb191-48" title="48">        <span class="co">/* send the client a reply */</span></a>
+<a class="sourceLine" id="cb191-49" title="49">        <span class="cf">if</span> (write(new_client, buf, amnt) &lt; <span class="dv">0</span>) exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb191-50" title="50">        <span class="co">/* Done with communication with this client */</span></a>
+<a class="sourceLine" id="cb191-51" title="51">        close(new_client);</a>
+<a class="sourceLine" id="cb191-52" title="52">    }</a>
+<a class="sourceLine" id="cb191-53" title="53">    close(socket_desc);</a>
+<a class="sourceLine" id="cb191-54" title="54"></a>
+<a class="sourceLine" id="cb191-55" title="55">    exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb191-56" title="56">}</a>
+<a class="sourceLine" id="cb191-57" title="57"></a>
+<a class="sourceLine" id="cb191-58" title="58"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb191-59" title="59">client(<span class="dt">char</span> *filename)</a>
+<a class="sourceLine" id="cb191-60" title="60">{</a>
+<a class="sourceLine" id="cb191-61" title="61">    <span class="dt">char</span> msg[MAX_BUF_SZ];</a>
+<a class="sourceLine" id="cb191-62" title="62">    <span class="dt">int</span>  amnt = <span class="dv">0</span>, socket_desc;</a>
+<a class="sourceLine" id="cb191-63" title="63"></a>
+<a class="sourceLine" id="cb191-64" title="64">    socket_desc = domain_socket_client_create(filename);</a>
+<a class="sourceLine" id="cb191-65" title="65">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb191-66" title="66">    printf(<span class="st">&quot;1. Client %d connected to server.</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
+<a class="sourceLine" id="cb191-67" title="67">    fflush(stdout);</a>
+<a class="sourceLine" id="cb191-68" title="68"></a>
+<a class="sourceLine" id="cb191-69" title="69">    snprintf(msg, MAX_BUF_SZ - <span class="dv">1</span>, <span class="st">&quot;Citizen %d: Penny for Pawsident!&quot;</span>, getpid());</a>
+<a class="sourceLine" id="cb191-70" title="70">    amnt = write(socket_desc, msg, strlen(msg) + <span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb191-71" title="71">    <span class="cf">if</span> (amnt &lt; <span class="dv">0</span>) exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb191-72" title="72">    printf(<span class="st">&quot;2. Client %d request sent message to server.</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid());</a>
+<a class="sourceLine" id="cb191-73" title="73">    fflush(stdout);</a>
 <a class="sourceLine" id="cb191-74" title="74"></a>
-<a class="sourceLine" id="cb191-75" title="75">    close(socket_desc);</a>
-<a class="sourceLine" id="cb191-76" title="76"></a>
-<a class="sourceLine" id="cb191-77" title="77">    exit(EXIT_SUCCESS);</a>
-<a class="sourceLine" id="cb191-78" title="78">}</a>
+<a class="sourceLine" id="cb191-75" title="75">    <span class="cf">if</span> (read(socket_desc, msg, amnt) &lt; <span class="dv">0</span>) exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb191-76" title="76">    msg[amnt] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>;</a>
+<a class="sourceLine" id="cb191-77" title="77">    printf(<span class="st">&quot;3. Client %d reply received from server: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid(), msg);</a>
+<a class="sourceLine" id="cb191-78" title="78">    fflush(stdout);</a>
 <a class="sourceLine" id="cb191-79" title="79"></a>
-<a class="sourceLine" id="cb191-80" title="80"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb191-81" title="81">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb191-82" title="82">{</a>
-<a class="sourceLine" id="cb191-83" title="83">    <span class="dt">char</span> *channel_name = <span class="st">&quot;pennys_channel&quot;</span>;</a>
-<a class="sourceLine" id="cb191-84" title="84">    <span class="dt">int</span> nclients = <span class="dv">2</span>;</a>
-<a class="sourceLine" id="cb191-85" title="85">    <span class="dt">int</span> i;</a>
-<a class="sourceLine" id="cb191-86" title="86"></a>
-<a class="sourceLine" id="cb191-87" title="87">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) server(nclients, channel_name);</a>
-<a class="sourceLine" id="cb191-88" title="88">    <span class="co">/* wait for the server to create the domain socket */</span></a>
-<a class="sourceLine" id="cb191-89" title="89">    sleep(<span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb191-90" title="90">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; nclients; i++) {</a>
-<a class="sourceLine" id="cb191-91" title="91">        <span class="cf">if</span> (fork() == <span class="dv">0</span>) client(channel_name);</a>
-<a class="sourceLine" id="cb191-92" title="92">    }</a>
-<a class="sourceLine" id="cb191-93" title="93">    <span class="co">/* wait for all of the children */</span></a>
-<a class="sourceLine" id="cb191-94" title="94">    <span class="cf">while</span> (wait(NULL) != -<span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb191-95" title="95"></a>
-<a class="sourceLine" id="cb191-96" title="96">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb191-97" title="97">}</a></code></pre></div>
+<a class="sourceLine" id="cb191-80" title="80">    close(socket_desc);</a>
+<a class="sourceLine" id="cb191-81" title="81"></a>
+<a class="sourceLine" id="cb191-82" title="82">    exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb191-83" title="83">}</a>
+<a class="sourceLine" id="cb191-84" title="84"></a>
+<a class="sourceLine" id="cb191-85" title="85"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb191-86" title="86">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb191-87" title="87">{</a>
+<a class="sourceLine" id="cb191-88" title="88">    <span class="dt">char</span> *channel_name = <span class="st">&quot;pennys_channel&quot;</span>;</a>
+<a class="sourceLine" id="cb191-89" title="89">    <span class="dt">int</span> nclients = <span class="dv">2</span>;</a>
+<a class="sourceLine" id="cb191-90" title="90">    <span class="dt">int</span> i;</a>
+<a class="sourceLine" id="cb191-91" title="91"></a>
+<a class="sourceLine" id="cb191-92" title="92">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) server(nclients, channel_name);</a>
+<a class="sourceLine" id="cb191-93" title="93">    <span class="co">/* wait for the server to create the domain socket */</span></a>
+<a class="sourceLine" id="cb191-94" title="94">    sleep(<span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb191-95" title="95">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; nclients; i++) {</a>
+<a class="sourceLine" id="cb191-96" title="96">        <span class="cf">if</span> (fork() == <span class="dv">0</span>) client(channel_name);</a>
+<a class="sourceLine" id="cb191-97" title="97">    }</a>
+<a class="sourceLine" id="cb191-98" title="98">    <span class="co">/* wait for all of the children */</span></a>
+<a class="sourceLine" id="cb191-99" title="99">    <span class="cf">while</span> (wait(NULL) != -<span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb191-100" title="100"></a>
+<a class="sourceLine" id="cb191-101" title="101">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>1. Client 137323 connected to server.
-2. Client 137323 request sent message to server.
-3. Client 137323 reply received from server: Citizen 137323: Penny for Pawsident!
+<pre><code>Server: New client connected with new file descriptor 4.
+1. Client 4543 connected to server.
+1. Client 4542 connected to server.
+2. Client 4543 request sent message to server.
+2. Client 4542 request sent message to server.
+Server received message (sz 35): &quot;Citizen 4542: Penny for Pawsident!&quot;. Replying!
+3. Client 4542 reply received from server: Citizen 4542: Penny for Pawsident!
 Server: New client connected with new file descriptor 4.
-Server received message (sz 37): &quot;Citizen 137324: Penny for Pawsident!&quot;. Replying!
-Server: New client connected with new file descriptor 4.
-Server received message (sz 37): &quot;Citizen 137323: Penny for Pawsident!&quot;. Replying!
-1. Client 137324 connected to server.
-2. Client 137324 request sent message to server.
-3. Client 137324 reply received from server: Citizen 137324: Penny for Pawsident!</code></pre>
+Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;. Replying!
+3. Client 4543 reply received from server: Citizen 4543: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
