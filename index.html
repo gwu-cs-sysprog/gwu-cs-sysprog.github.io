@@ -232,7 +232,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </ul></li>
         <li><a href="#ipc-exercises"><span class="toc-section-number">6.6</span> IPC Exercises</a></li>
         </ul></li>
-        <li><a href="#reinforcement-assorted-exercises"><span class="toc-section-number">7</span> Reinforcement: Assorted Exercises</a><ul>
+        <li><a href="#reinforcing-ideas-assorted-exercises-and-event-notification"><span class="toc-section-number">7</span> Reinforcing Ideas: Assorted Exercises and Event Notification</a><ul>
         <li><a href="#fork-and-stream-behavior"><span class="toc-section-number">7.0.1</span> <code>fork</code> and Stream Behavior</a></li>
         <li><a href="#wait-behavior"><span class="toc-section-number">7.0.2</span> Wait Behavior</a></li>
         <li><a href="#read-behavior"><span class="toc-section-number">7.0.3</span> <code>read</code> Behavior</a></li>
@@ -426,7 +426,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x558479682149
+Hex and pointers: 7fffffffffffffff, 0x55800a8da149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -546,8 +546,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffe1c21d1e0 == 0x7ffe1c21d1e0; 6 == 6
-nth index: 0x7ffe1c21d1e4 == 0x7ffe1c21d1e4; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffc9c1be830 == 0x7ffc9c1be830; 6 == 6
+nth index: 0x7ffc9c1be834 == 0x7ffc9c1be834; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -570,7 +570,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffdca9b3694 == 0x7ffdca9b3694; 7 == 7</code></pre>
+<pre><code>nth index: 0x7fff148e9c14 == 0x7fff148e9c14; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -594,10 +594,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffdc8f5e360 &amp; 0x7ffdc8f5e374
-idx 1 @ 0x7ffdc8f5e364 &amp; 0x7ffdc8f5e375
-idx 2 @ 0x7ffdc8f5e368 &amp; 0x7ffdc8f5e376
-idx 3 @ 0x7ffdc8f5e36c &amp; 0x7ffdc8f5e377</code></pre>
+<pre><code>idx 0 @ 0x7ffd03ce55b0 &amp; 0x7ffd03ce55c4
+idx 1 @ 0x7ffd03ce55b4 &amp; 0x7ffd03ce55c5
+idx 2 @ 0x7ffd03ce55b8 &amp; 0x7ffd03ce55c6
+idx 3 @ 0x7ffd03ce55bc &amp; 0x7ffd03ce55c7</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -834,10 +834,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x559af4828010
-b   @ 0x559af4828014
-c   @ 0x559af4828020
-end @ 0x559af4828039
+a   @ 0x55a37fe85010
+b   @ 0x55a37fe85014
+c   @ 0x55a37fe85020
+end @ 0x55a37fe85039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -845,7 +845,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x559af4828014
+c.c_c = 0x55a37fe85014
 
 Print out the variables as raw memory
 
@@ -940,8 +940,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x55e2755f204c
-1: 2 @ 0x55e2755f2044
+<pre><code>0: 4 @ 0x55df6211304c
+1: 2 @ 0x55df62113044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1270,16 +1270,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -1565428185
-3: 32767
-4: -1565428186
-5: 32767
-6: -335310275
-7: 21986
-8: 1415008200
-9: 32718
-10: -335310352
-11: 21986</code></pre>
+2: 1634173543
+3: 32764
+4: 1634173542
+5: 32764
+6: -62188995
+7: 21906
+8: 643461064
+9: 32586
+10: -62189072
+11: 21906</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1620,7 +1620,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x55c283c28004 == 0x55c283c28004 != 0x55c283c2a011</code></pre>
+0x558e69f0d004 == 0x558e69f0d004 != 0x558e69f0f011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2019,15 +2019,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 104481
+     parent pid 3996
 post-fork:
-    returned 104482,
-    current pid 104481
-    parent pid 104475
+    returned 3997,
+    current pid 3996
+    parent pid 3990
 post-fork:
     returned 0,
-    current pid 104482
-    parent pid 104481</code></pre>
+    current pid 3997
+    parent pid 3996</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2091,14 +2091,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 104498 exiting with 0
-Child 104499 exiting with -1
-Child 104501 exiting with -3
-Child 104500 exiting with -2
-Child 104498 exited with exit status 0
-Child 104499 exited with exit status -1
-Child 104501 exited with exit status -3
-Child 104500 exited with exit status -2</code></pre>
+<pre><code>Child 4013 exiting with 0
+Child 4014 exiting with -1
+Child 4015 exiting with -2
+Child 4016 exiting with -3
+Child 4013 exited with exit status 0
+Child 4014 exited with exit status -1
+Child 4015 exited with exit status -2
+Child 4016 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3222,9 +3222,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>104716: We&#39;ve been asked to terminate. Exit!
-104715: Parent asking child (104716) to terminate
-104715: Child process 104716 has exited.</code></pre>
+<pre><code>4231: We&#39;ve been asked to terminate. Exit!
+4230: Parent asking child (4231) to terminate
+4230: Child process 4231 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -4066,11 +4066,11 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - F a.out (17136)
 - F LICENSE (1522)
 - D 09
-- F lectures.html (531401)
+- F lectures.html (576306)
 - D 01
 - D 05
 - D 02
-- F aggregate.md (162966)
+- F aggregate.md (162923)
 - D 04
 - D .git
 - F inline_exec_tmp.c (1658)</code></pre>
@@ -4401,8 +4401,7 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>105009: 105009
-105010: 105010</code></pre>
+<pre><code>4524: 45254524</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4555,15 +4554,15 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 105029 connected to server.
-2. Client 105029 request sent message to server.
-Server received message (sz 37): &quot;Citizen 105029: Penny for Pawsident!&quot;. Replying!
-1. Client 105030 connected to server.
-2. Client 105030 request sent message to server.
+1. Client 4542 connected to server.
+1. Client 4543 connected to server.
+2. Client 4542 request sent message to server.
+2. Client 4543 request sent message to server.
+Server received message (sz 35): &quot;Citizen 4542: Penny for Pawsident!&quot;. Replying!
 Server: New client connected with new file descriptor 4.
-3. Client 105029 reply received from server: Citizen 105029: Penny for Pawsident!
-Server received message (sz 37): &quot;Citizen 105030: Penny for Pawsident!&quot;. Replying!
-3. Client 105030 reply received from server: Citizen 105030: Penny for Pawsident!</code></pre>
+3. Client 4542 reply received from server: Citizen 4542: Penny for Pawsident!
+Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;. Replying!
+3. Client 4543 reply received from server: Citizen 4543: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -4594,7 +4593,7 @@ Server received message (sz 37): &quot;Citizen 105030: Penny for Pawsident!&quot
 <li>How can you use the client and server programs to send data between them?</li>
 <li>How can you make multiple clients connect to the server?</li>
 </ul>
-<h1 id="reinforcement-assorted-exercises"><span class="header-section-number">7</span> Reinforcement: Assorted Exercises</h1>
+<h1 id="reinforcing-ideas-assorted-exercises-and-event-notification"><span class="header-section-number">7</span> Reinforcing Ideas: Assorted Exercises and Event Notification</h1>
 <p>In the following, if you aren’t <em>positive</em> of the answer, please run the program! Note that we’re omitting error checking in these programs to keep them terse. Remember that in your programs, you must check and react to all errors. This will require you to use the <code>man</code> pages to look up the required <code>#include</code>s. If the output doesn’t match a high-level intuition, how would you modify the program to match the intuition? What are all of the potential output of the following programs? Why?</p>
 <h3 id="fork-and-stream-behavior"><span class="header-section-number">7.0.1</span> <code>fork</code> and Stream Behavior</h3>
 <div class="sourceCode" id="cb193"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb193-1" title="1">fork();</a>
