@@ -232,7 +232,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </ul></li>
         <li><a href="#ipc-exercises"><span class="toc-section-number">6.6</span> IPC Exercises</a></li>
         </ul></li>
-        <li><a href="#system-services-daemons-and-bootup"><span class="toc-section-number">7</span> System Services, Daemons, and Bootup</a></li>
+        <li><a href="#reinforcement-assorted-exercises"><span class="toc-section-number">7</span> Reinforcement: Assorted Exercises</a><ul>
+        <li><a href="#fork-and-stream-behavior"><span class="toc-section-number">7.0.1</span> <code>fork</code> and Stream Behavior</a></li>
+        <li><a href="#wait-behavior"><span class="toc-section-number">7.0.2</span> Wait Behavior</a></li>
+        <li><a href="#read-behavior"><span class="toc-section-number">7.0.3</span> <code>read</code> Behavior</a></li>
+        <li><a href="#signals-1"><span class="toc-section-number">7.0.4</span> Signals</a></li>
+        <li><a href="#communication-with-multiple-clients"><span class="toc-section-number">7.0.5</span> Communication with Multiple Clients</a></li>
+        <li><a href="#revisiting-ipc-with-multiple-clients"><span class="toc-section-number">7.1</span> Revisiting IPC with Multiple Clients</a><ul>
+        <li><a href="#system-services"><span class="toc-section-number">7.1.1</span> System Services</a></li>
+        <li><a href="#understanding-descriptor-events-with-poll"><span class="toc-section-number">7.1.2</span> Understanding Descriptor Events with <code>poll</code></a></li>
+        <li><a href="#event-loops-and-poll"><span class="toc-section-number">7.1.3</span> Event Loops and <code>poll</code></a></li>
+        <li><a href="#example-poll-code"><span class="toc-section-number">7.1.4</span> Example <code>poll</code> Code</a></li>
+        </ul></li>
+        </ul></li>
         <li><a href="#libraries"><span class="toc-section-number">8</span> Libraries</a><ul>
         <li><a href="#libraries---goals-and-overview"><span class="toc-section-number">8.1</span> Libraries - Goals and Overview</a></li>
         <li><a href="#libraries---header-files"><span class="toc-section-number">8.2</span> Libraries - Header Files</a></li>
@@ -414,7 +426,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x55646cfe1149
+Hex and pointers: 7fffffffffffffff, 0x558479682149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -534,8 +546,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffdb2623cc0 == 0x7ffdb2623cc0; 6 == 6
-nth index: 0x7ffdb2623cc4 == 0x7ffdb2623cc4; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffe1c21d1e0 == 0x7ffe1c21d1e0; 6 == 6
+nth index: 0x7ffe1c21d1e4 == 0x7ffe1c21d1e4; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -558,7 +570,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffdd59f0ae4 == 0x7ffdd59f0ae4; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffdca9b3694 == 0x7ffdca9b3694; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -582,10 +594,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffe48bd3f90 &amp; 0x7ffe48bd3fa4
-idx 1 @ 0x7ffe48bd3f94 &amp; 0x7ffe48bd3fa5
-idx 2 @ 0x7ffe48bd3f98 &amp; 0x7ffe48bd3fa6
-idx 3 @ 0x7ffe48bd3f9c &amp; 0x7ffe48bd3fa7</code></pre>
+<pre><code>idx 0 @ 0x7ffdc8f5e360 &amp; 0x7ffdc8f5e374
+idx 1 @ 0x7ffdc8f5e364 &amp; 0x7ffdc8f5e375
+idx 2 @ 0x7ffdc8f5e368 &amp; 0x7ffdc8f5e376
+idx 3 @ 0x7ffdc8f5e36c &amp; 0x7ffdc8f5e377</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -822,10 +834,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x556d7e38f010
-b   @ 0x556d7e38f014
-c   @ 0x556d7e38f020
-end @ 0x556d7e38f039
+a   @ 0x559af4828010
+b   @ 0x559af4828014
+c   @ 0x559af4828020
+end @ 0x559af4828039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -833,7 +845,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x556d7e38f014
+c.c_c = 0x559af4828014
 
 Print out the variables as raw memory
 
@@ -928,8 +940,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x5587bfdd104c
-1: 2 @ 0x5587bfdd1044
+<pre><code>0: 4 @ 0x55e2755f204c
+1: 2 @ 0x55e2755f2044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1258,16 +1270,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: 2093638839
-3: 32766
-4: 2093638838
-5: 32766
-6: 575316541
-7: 21952
-8: -1458765880
-9: 32639
-10: 575316464
-11: 21952</code></pre>
+2: -1565428185
+3: 32767
+4: -1565428186
+5: 32767
+6: -335310275
+7: 21986
+8: 1415008200
+9: 32718
+10: -335310352
+11: 21986</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1608,7 +1620,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x555dccd09004 == 0x555dccd09004 != 0x555dccd0b011</code></pre>
+0x55c283c28004 == 0x55c283c28004 != 0x55c283c2a011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2007,15 +2019,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 4001
+     parent pid 104481
 post-fork:
-    returned 4002,
-    current pid 4001
-    parent pid 3995
+    returned 104482,
+    current pid 104481
+    parent pid 104475
 post-fork:
     returned 0,
-    current pid 4002
-    parent pid 4001</code></pre>
+    current pid 104482
+    parent pid 104481</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2079,14 +2091,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 4018 exiting with 0
-Child 4019 exiting with -1
-Child 4020 exiting with -2
-Child 4021 exiting with -3
-Child 4018 exited with exit status 0
-Child 4019 exited with exit status -1
-Child 4020 exited with exit status -2
-Child 4021 exited with exit status -3</code></pre>
+<pre><code>Child 104498 exiting with 0
+Child 104499 exiting with -1
+Child 104501 exiting with -3
+Child 104500 exiting with -2
+Child 104498 exited with exit status 0
+Child 104499 exited with exit status -1
+Child 104501 exited with exit status -3
+Child 104500 exited with exit status -2</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3210,9 +3222,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>4236: We&#39;ve been asked to terminate. Exit!
-4235: Parent asking child (4236) to terminate
-4235: Child process 4236 has exited.</code></pre>
+<pre><code>104716: We&#39;ve been asked to terminate. Exit!
+104715: Parent asking child (104716) to terminate
+104715: Child process 104716 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -3388,11 +3400,11 @@ Child has exited.</code></pre>
 <p>When everything is a file, it can all be manipulated and accessed using the exactly same functions and APIs as the normal files in the system. This means that all of the shell programs we’ve seen can be used not just to operate on files, but also <em>on processes</em> or <em>devices</em>!</p>
 <p>So what does it look like to access files? The relevant functions include:</p>
 <ul>
-<li><code>int open(path, flags)</code> - Open a file, identified by its <code>path</code>, and return a <em>file descriptor</em> that can be used to access that file. The <code>flags</code> must be include of the following: <code>O_RDONLY</code>, <code>O_WRONLY</code>, or <code>O_RDWR</code> – if you want to only read from the file, only write to the file, or have the ability to both read and write to the file. Another interesting <code>flag</code> value is <code>O_CREAT</code> which will <em>create</em> the file if it doesn’t already exist. Whenever you see “flags”, you should think of them as a set of bits, and each of the options as a single bit. Thus, when passing in flags, you can use bitwise operators to pass in multiple options, for example <code>open("penny_is_best.gif", O_RDWR | O_CREAT)</code> will open the file, creating it if it doesn’t already exist, and enable reading and writing to the file.</li>
+<li><code>int open(path, flags)</code> - Open a file, identified by its <code>path</code>, and return a <em>file descriptor</em> that can be used to access that file. The <code>flags</code> must be include of the following: <code>O_RDONLY</code>, <code>O_WRONLY</code>, or <code>O_RDWR</code> – if you want to only read from the file, only write to the file, or have the ability to both read and write to the file. Another interesting <code>flag</code> value is <code>O_CREAT</code> which will <em>create</em> the file if it doesn’t already exist. Whenever you see “flags”, you should think of them as a set of bits, and each of the options as a single bit. Thus, when passing in flags, you can use bitwise operators to pass in multiple options, for example <code>open("penny_is_best.gif", O_RDWR | O_CREAT, 0700)</code> will open the file, creating it if it doesn’t already exist, and enable reading and writing to the file. Note that when you pass in <code>O_CREAT</code>, you should pass in the third argument, the <code>mode</code>. For now, just always pass in <code>0700</code>!</li>
 <li><code>read</code> &amp;<code>write</code> - We’ve seen these before when we saw <code>pipe</code>s! They are the generic functions for getting data from, and pushing data to descriptors.</li>
 <li><code>close</code> - Remember that we can <code>close</code> any descriptor to release it (the <code>free</code> for descriptors, if you will), including those that reference files.</li>
 <li><code>int stat(path, struct stat *info)</code> - Get information about a file identified by <code>path</code> into the <code>info</code> structure. The structure is documented in the <code>man</code> page, but it includes, for example, the file size. <code>fstat</code> enables to you get stat info from an existing file descriptor.</li>
-<li><code>creat(path, mode)</code> - Create a new file at the <code>path</code> with the <code>mode</code> (specified identically to <code>open</code>). Later, we’ll learn about mode when we discuss security, for now, you can use a permissive mode of <code>0777</code>.</li>
+<li><code>creat(path, mode)</code> - Create a new file at the <code>path</code> with the <code>mode</code> (specified identically to <code>open</code>). Later, we’ll learn about mode when we discuss security, for now, you can use a permissive mode of <code>0700</code>.</li>
 <li><code>unlink(path)</code> - Try and remove a file! This is called, for example, by the <code>rm</code> program.</li>
 </ul>
 <div class="sourceCode" id="cb146"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb146-1" title="1"><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></a>
@@ -3433,7 +3445,18 @@ Child has exited.</code></pre>
 <a class="sourceLine" id="cb146-36" title="36">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb146-37" title="37">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Success&quot;</code></pre>
+<pre><code>We want to say 6044 things...but the world doesn&#39;t value artistry.
+Lets cut down to 280 characters and tweet like it is 1915...
+
+ The Love Song of J. Alfred Prufrock
+ T.S. Elliot
+
+Sio credesse che mia risposta fosse
+A persona che mai tornasse al mondo,
+Questa fiamma staria senza piu scosse.
+Ma percioche giammai di questo fondo
+Non torno vivo alcun, siodo il vero,
+Senza tema dinfamia ti rispondo</code></pre>
 <blockquote>
 <p>It is <em>really</em> important that quite a few interesting functions operate on <em>descriptors</em>, which might reference pipes, files, the terminal, or other resources. This means that processes can operate on descriptors and not care what resources back them. This enables shells to implement pipelines and the redirection of output to files, all without the processes knowing! It enables <code>fork</code>ed processes to inherit these resources from its parent. In this way, descriptors and the functions to operate on them are a <em>polymorphic</em> foundation (in the sense of object-oriented polymorphism) to accessing the system.</p>
 </blockquote>
@@ -3868,7 +3891,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
       File: prufrock.txt (size: 6044)
  Directory: test_directory
  Directory: .
-      File: 01_lecture.md (size: 21440)</code></pre>
+      File: 01_lecture.md (size: 21580)</code></pre>
 <p>To make <em>changes</em> in the first system hierarchy, we need an additional set of functions.</p>
 <ul>
 <li><code>mkdir(path, mode)</code> - This function is used in, for example, the <code>mkdir</code> program. Don’t confuse the program you use in the shell, with the function you can call from C.</li>
@@ -3888,9 +3911,9 @@ The two main ones we care about are directories and files. Subsequent calls to <
 <a class="sourceLine" id="cb173-11" title="11">    <span class="dt">int</span> ret;</a>
 <a class="sourceLine" id="cb173-12" title="12">    <span class="dt">int</span> fd;</a>
 <a class="sourceLine" id="cb173-13" title="13"></a>
-<a class="sourceLine" id="cb173-14" title="14">    ret = mkdir(<span class="st">&quot;05/newdir&quot;</span>, <span class="bn">0777</span>);</a>
+<a class="sourceLine" id="cb173-14" title="14">    ret = mkdir(<span class="st">&quot;05/newdir&quot;</span>, <span class="bn">0700</span>);</a>
 <a class="sourceLine" id="cb173-15" title="15">    assert(ret == <span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb173-16" title="16">    fd = open(<span class="st">&quot;05/newdir/newfile&quot;</span>, O_RDWR | O_CREAT);</a>
+<a class="sourceLine" id="cb173-16" title="16">    fd = open(<span class="st">&quot;05/newdir/newfile&quot;</span>, O_RDWR | O_CREAT, <span class="bn">0700</span>);</a>
 <a class="sourceLine" id="cb173-17" title="17">    assert(fd &gt;= <span class="dv">0</span>);</a>
 <a class="sourceLine" id="cb173-18" title="18">    ret = write(fd, <span class="st">&quot;new contents&quot;</span>, <span class="dv">13</span>);</a>
 <a class="sourceLine" id="cb173-19" title="19">    assert(ret == <span class="dv">13</span>);</a>
@@ -4029,10 +4052,10 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - D tools
 - D 03
 - D 06
-- F Makefile (1507)
+- F Makefile (1517)
 - D figures
 - D templates
-- F inline_exec_tmp (21976)
+- F inline_exec_tmp (60144)
 - F lectures.pdf (1182440)
 - F title.md (320)
 - F .gitignore (520)
@@ -4043,11 +4066,11 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - F a.out (17136)
 - F LICENSE (1522)
 - D 09
-- F lectures.html (531442)
+- F lectures.html (531401)
 - D 01
 - D 05
 - D 02
-- F aggregate.md (162450)
+- F aggregate.md (162966)
 - D 04
 - D .git
 - F inline_exec_tmp.c (1658)</code></pre>
@@ -4189,7 +4212,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 <a class="sourceLine" id="cb183-54" title="54">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>msg1: 
-msg2: </code></pre>
+msg2: america for good doggies</code></pre>
 <p>You can see that there are some problems here. If we run it many times, we can see that sometimes we don’t see any messages, sometimes we only see the first, sometimes we only see the second, and other times combinations of all three options. Thus, they are not useful for channel-based communication between multiple processes.</p>
 <p>On the other side, files have a very <em>useful</em> properti that we’d like to use in a good solution to IPC: they <em>have a location in the FS</em> that the communicating processes can both use to find the file, thus avoiding the need for a shared parent.</p>
 <ul>
@@ -4378,7 +4401,8 @@ msg2: </code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>4524: 45254524</code></pre>
+<pre><code>105009: 105009
+105010: 105010</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4531,15 +4555,15 @@ msg2: </code></pre>
 <a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 4543 connected to server.
-1. Client 4542 connected to server.
-2. Client 4543 request sent message to server.
-2. Client 4542 request sent message to server.
-Server received message (sz 35): &quot;Citizen 4542: Penny for Pawsident!&quot;. Replying!
-3. Client 4542 reply received from server: Citizen 4542: Penny for Pawsident!
+1. Client 105029 connected to server.
+2. Client 105029 request sent message to server.
+Server received message (sz 37): &quot;Citizen 105029: Penny for Pawsident!&quot;. Replying!
+1. Client 105030 connected to server.
+2. Client 105030 request sent message to server.
 Server: New client connected with new file descriptor 4.
-Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;. Replying!
-3. Client 4543 reply received from server: Citizen 4543: Penny for Pawsident!</code></pre>
+3. Client 105029 reply received from server: Citizen 105029: Penny for Pawsident!
+Server received message (sz 37): &quot;Citizen 105030: Penny for Pawsident!&quot;. Replying!
+3. Client 105030 reply received from server: Citizen 105030: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -4570,7 +4594,253 @@ Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;.
 <li>How can you use the client and server programs to send data between them?</li>
 <li>How can you make multiple clients connect to the server?</li>
 </ul>
-<h1 id="system-services-daemons-and-bootup"><span class="header-section-number">7</span> System Services, Daemons, and Bootup</h1>
+<h1 id="reinforcement-assorted-exercises"><span class="header-section-number">7</span> Reinforcement: Assorted Exercises</h1>
+<p>In the following, if you aren’t <em>positive</em> of the answer, please run the program! Note that we’re omitting error checking in these programs to keep them terse. Remember that in your programs, you must check and react to all errors. This will require you to use the <code>man</code> pages to look up the required <code>#include</code>s. If the output doesn’t match a high-level intuition, how would you modify the program to match the intuition? What are all of the potential output of the following programs? Why?</p>
+<h3 id="fork-and-stream-behavior"><span class="header-section-number">7.0.1</span> <code>fork</code> and Stream Behavior</h3>
+<div class="sourceCode" id="cb193"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb193-1" title="1">fork();</a>
+<a class="sourceLine" id="cb193-2" title="2">fork();</a>
+<a class="sourceLine" id="cb193-3" title="3">printf(<span class="st">&quot;z&quot;</span>);</a></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb194-1" title="1">printf(<span class="st">&quot;z&quot;</span>);</a>
+<a class="sourceLine" id="cb194-2" title="2">fork();</a>
+<a class="sourceLine" id="cb194-3" title="3">fork();</a></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb195-1" title="1">printf(<span class="st">&quot;z&quot;</span>);</a>
+<a class="sourceLine" id="cb195-2" title="2">fork();</a>
+<a class="sourceLine" id="cb195-3" title="3">write(STDOUT_FILENO, <span class="st">&quot;.&quot;</span>, <span class="dv">1</span>);</a></code></pre></div>
+<h3 id="wait-behavior"><span class="header-section-number">7.0.2</span> Wait Behavior</h3>
+<div class="sourceCode" id="cb196"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb196-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb196-2" title="2"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb196-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb196-4" title="4"><span class="pp">#include </span><span class="im">&lt;sys/wait.h&gt;</span></a>
+<a class="sourceLine" id="cb196-5" title="5"></a>
+<a class="sourceLine" id="cb196-6" title="6"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb196-7" title="7">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb196-8" title="8">{</a>
+<a class="sourceLine" id="cb196-9" title="9">    pid_t child;</a>
+<a class="sourceLine" id="cb196-10" title="10">    <span class="dt">int</span> i;</a>
+<a class="sourceLine" id="cb196-11" title="11">    <span class="dt">int</span> wait_param = <span class="dv">0</span>;     <span class="co">/* or WNOHANG */</span></a>
+<a class="sourceLine" id="cb196-12" title="12">    <span class="dt">int</span> output_w_write = <span class="dv">0</span>; <span class="co">/* or 1 */</span></a>
+<a class="sourceLine" id="cb196-13" title="13"></a>
+<a class="sourceLine" id="cb196-14" title="14">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dv">2</span>; i++) {</a>
+<a class="sourceLine" id="cb196-15" title="15">        child = fork();</a>
+<a class="sourceLine" id="cb196-16" title="16">        <span class="cf">if</span> (child == <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb196-17" title="17">            sleep(<span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb196-18" title="18">            <span class="cf">if</span> (output_w_write) write(STDOUT_FILENO, <span class="st">&quot;.</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="dv">2</span>);</a>
+<a class="sourceLine" id="cb196-19" title="19">            <span class="cf">else</span>                printf(<span class="st">&quot;.</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb196-20" title="20">            exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb196-21" title="21">        }</a>
+<a class="sourceLine" id="cb196-22" title="22">        waitpid(child, NULL, wait_param);</a>
+<a class="sourceLine" id="cb196-23" title="23">        write(STDOUT_FILENO, <span class="st">&quot;Post-fork</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="dv">10</span>);</a>
+<a class="sourceLine" id="cb196-24" title="24">    }</a>
+<a class="sourceLine" id="cb196-25" title="25">    <span class="co">/* ...are we done here? */</span></a>
+<a class="sourceLine" id="cb196-26" title="26"></a>
+<a class="sourceLine" id="cb196-27" title="27">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb196-28" title="28">}</a></code></pre></div>
+<ul>
+<li>What if change <code>wait_param</code> to equal <code>WNOHANG</code>?</li>
+<li>What if we change <code>output_w_write</code> to <code>1</code>?</li>
+<li>Why do we need to reap children? Why would this actually matter?</li>
+</ul>
+<h3 id="read-behavior"><span class="header-section-number">7.0.3</span> <code>read</code> Behavior</h3>
+<div class="sourceCode" id="cb197"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb197-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb197-2" title="2"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb197-3" title="3"><span class="pp">#include </span><span class="im">&lt;sys/wait.h&gt;</span></a>
+<a class="sourceLine" id="cb197-4" title="4"></a>
+<a class="sourceLine" id="cb197-5" title="5"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb197-6" title="6">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb197-7" title="7">{</a>
+<a class="sourceLine" id="cb197-8" title="8">    pid_t child;</a>
+<a class="sourceLine" id="cb197-9" title="9">    <span class="dt">int</span> fds[<span class="dv">2</span>];</a>
+<a class="sourceLine" id="cb197-10" title="10">    <span class="dt">char</span> *msg = <span class="st">&quot;What type of doggo is Penny?</span><span class="sc">\n</span><span class="st">&quot;</span>;</a>
+<a class="sourceLine" id="cb197-11" title="11"></a>
+<a class="sourceLine" id="cb197-12" title="12">    pipe(fds);</a>
+<a class="sourceLine" id="cb197-13" title="13"></a>
+<a class="sourceLine" id="cb197-14" title="14">    <span class="cf">if</span> ((child = fork()) == <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb197-15" title="15">        <span class="co">/* recall: `cat` reads its stdin, and outputs it to stdout */</span></a>
+<a class="sourceLine" id="cb197-16" title="16">        <span class="dt">char</span> *args[] = {<span class="st">&quot;cat&quot;</span>, NULL};</a>
+<a class="sourceLine" id="cb197-17" title="17"></a>
+<a class="sourceLine" id="cb197-18" title="18">        close(STDIN_FILENO);</a>
+<a class="sourceLine" id="cb197-19" title="19">        dup2(fds[<span class="dv">0</span>], STDIN_FILENO);</a>
+<a class="sourceLine" id="cb197-20" title="20">        execvp(args[<span class="dv">0</span>], args);</a>
+<a class="sourceLine" id="cb197-21" title="21">    }</a>
+<a class="sourceLine" id="cb197-22" title="22">    write(fds[<span class="dv">1</span>], msg, <span class="kw">sizeof</span>(msg));</a>
+<a class="sourceLine" id="cb197-23" title="23">    wait(NULL);</a>
+<a class="sourceLine" id="cb197-24" title="24">    printf(<span class="st">&quot;100%% good girl.&quot;</span>);</a>
+<a class="sourceLine" id="cb197-25" title="25"></a>
+<a class="sourceLine" id="cb197-26" title="26">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb197-27" title="27">}</a></code></pre></div>
+<ul>
+<li>There are <em>multiple</em> bugs here. Find them and squish ’em.</li>
+</ul>
+<h3 id="signals-1"><span class="header-section-number">7.0.4</span> Signals</h3>
+<p>What is the following doing?</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb198-1" title="1"><span class="pp">#include </span><span class="im">&lt;execinfo.h&gt;</span></a>
+<a class="sourceLine" id="cb198-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb198-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb198-4" title="4"><span class="pp">#include </span><span class="im">&lt;signal.h&gt;</span><span class="pp"> </span><span class="co">/* sigaction and SIG* */</span></a>
+<a class="sourceLine" id="cb198-5" title="5"></a>
+<a class="sourceLine" id="cb198-6" title="6"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb198-7" title="7">bt(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb198-8" title="8">{</a>
+<a class="sourceLine" id="cb198-9" title="9">    <span class="dt">void</span> *bt[<span class="dv">128</span>];</a>
+<a class="sourceLine" id="cb198-10" title="10">    <span class="dt">char</span> **symbs;</a>
+<a class="sourceLine" id="cb198-11" title="11">    <span class="dt">int</span> nfns, i;</a>
+<a class="sourceLine" id="cb198-12" title="12"></a>
+<a class="sourceLine" id="cb198-13" title="13">    nfns = backtrace(bt, <span class="dv">128</span>);</a>
+<a class="sourceLine" id="cb198-14" title="14">    symbs = backtrace_symbols(bt, nfns);</a>
+<a class="sourceLine" id="cb198-15" title="15">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; nfns; i++) {</a>
+<a class="sourceLine" id="cb198-16" title="16">        printf(<span class="st">&quot;%s</span><span class="sc">\n</span><span class="st">&quot;</span>, symbs[i]);</a>
+<a class="sourceLine" id="cb198-17" title="17">    }</a>
+<a class="sourceLine" id="cb198-18" title="18">    free(symbs);</a>
+<a class="sourceLine" id="cb198-19" title="19">}</a>
+<a class="sourceLine" id="cb198-20" title="20"></a>
+<a class="sourceLine" id="cb198-21" title="21"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb198-22" title="22">bar(<span class="dt">int</span> *val)</a>
+<a class="sourceLine" id="cb198-23" title="23">{</a>
+<a class="sourceLine" id="cb198-24" title="24">    *val = <span class="dv">42</span>;</a>
+<a class="sourceLine" id="cb198-25" title="25">    bt();</a>
+<a class="sourceLine" id="cb198-26" title="26">}</a>
+<a class="sourceLine" id="cb198-27" title="27"></a>
+<a class="sourceLine" id="cb198-28" title="28"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb198-29" title="29">foo(<span class="dt">int</span> *val)</a>
+<a class="sourceLine" id="cb198-30" title="30">{</a>
+<a class="sourceLine" id="cb198-31" title="31">    bar(val);</a>
+<a class="sourceLine" id="cb198-32" title="32">}</a>
+<a class="sourceLine" id="cb198-33" title="33"></a>
+<a class="sourceLine" id="cb198-34" title="34"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb198-35" title="35">sig_fault_handler(<span class="dt">int</span> signal_number, siginfo_t *info, <span class="dt">void</span> *context)</a>
+<a class="sourceLine" id="cb198-36" title="36">{</a>
+<a class="sourceLine" id="cb198-37" title="37">    printf(<span class="st">&quot;Fault triggered at address %p.</span><span class="sc">\n</span><span class="st">&quot;</span>, info-&gt;si_addr);</a>
+<a class="sourceLine" id="cb198-38" title="38">    bt();</a>
+<a class="sourceLine" id="cb198-39" title="39">    exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb198-40" title="40"></a>
+<a class="sourceLine" id="cb198-41" title="41">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb198-42" title="42">}</a>
+<a class="sourceLine" id="cb198-43" title="43"></a>
+<a class="sourceLine" id="cb198-44" title="44"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb198-45" title="45">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb198-46" title="46">{</a>
+<a class="sourceLine" id="cb198-47" title="47">    sigset_t masked;</a>
+<a class="sourceLine" id="cb198-48" title="48">    <span class="kw">struct</span> sigaction siginfo;</a>
+<a class="sourceLine" id="cb198-49" title="49">    <span class="dt">int</span> ret;</a>
+<a class="sourceLine" id="cb198-50" title="50">    <span class="dt">int</span> val;</a>
+<a class="sourceLine" id="cb198-51" title="51"></a>
+<a class="sourceLine" id="cb198-52" title="52">    sigemptyset(&amp;masked);</a>
+<a class="sourceLine" id="cb198-53" title="53">    sigaddset(&amp;masked, SIGSEGV);</a>
+<a class="sourceLine" id="cb198-54" title="54">    siginfo = (<span class="kw">struct</span> sigaction) {</a>
+<a class="sourceLine" id="cb198-55" title="55">        .sa_sigaction = sig_fault_handler,</a>
+<a class="sourceLine" id="cb198-56" title="56">        .sa_mask      = masked,</a>
+<a class="sourceLine" id="cb198-57" title="57">        .sa_flags     = SA_RESTART | SA_SIGINFO <span class="co">/* we&#39;ll see this later */</span></a>
+<a class="sourceLine" id="cb198-58" title="58">    };</a>
+<a class="sourceLine" id="cb198-59" title="59"></a>
+<a class="sourceLine" id="cb198-60" title="60">    <span class="cf">if</span> (sigaction(SIGSEGV, &amp;siginfo, NULL) == -<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb198-61" title="61">        perror(<span class="st">&quot;sigaction error&quot;</span>);</a>
+<a class="sourceLine" id="cb198-62" title="62">        exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb198-63" title="63">    }</a>
+<a class="sourceLine" id="cb198-64" title="64"></a>
+<a class="sourceLine" id="cb198-65" title="65">    foo(&amp;val);</a>
+<a class="sourceLine" id="cb198-66" title="66">    printf(<span class="st">&quot;---</span><span class="sc">\n</span><span class="st">Moving on...</span><span class="sc">\n</span><span class="st">---</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb198-67" title="67">    fflush(stdout);</a>
+<a class="sourceLine" id="cb198-68" title="68">    foo(NULL);</a>
+<a class="sourceLine" id="cb198-69" title="69"></a>
+<a class="sourceLine" id="cb198-70" title="70">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb198-71" title="71">}</a></code></pre></div>
+<ul>
+<li>What are the various aspects of the output? What do the numbers mean? What do the strings mean?</li>
+<li>Explain what is happening <em>before</em> the “Moving on…”.</li>
+<li>Explain what is happening <em>after</em> the “Moving on…”.</li>
+<li>There is a lot of information there (lines being output) that aren’t useful to the programmer. Make the output more useful by printing only the parts of the output that a programmer would find useful.</li>
+</ul>
+<h3 id="communication-with-multiple-clients"><span class="header-section-number">7.0.5</span> Communication with Multiple Clients</h3>
+<p>Communicating with multiple clients is hard. Domain sockets are complicated, but there are challenges around blocking on <code>read</code>s. What if one client is very “slow”, and we block waiting for them?</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb199-1" title="1"><span class="pp">#include </span><span class="im">&quot;06/domain_sockets.h&quot;</span></a>
+<a class="sourceLine" id="cb199-2" title="2"></a>
+<a class="sourceLine" id="cb199-3" title="3"><span class="pp">#include </span><span class="im">&lt;errno.h&gt;</span></a>
+<a class="sourceLine" id="cb199-4" title="4"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb199-5" title="5"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb199-6" title="6"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb199-7" title="7"><span class="pp">#include </span><span class="im">&lt;sys/wait.h&gt;</span></a>
+<a class="sourceLine" id="cb199-8" title="8"><span class="pp">#include </span><span class="im">&lt;assert.h&gt;</span></a>
+<a class="sourceLine" id="cb199-9" title="9"></a>
+<a class="sourceLine" id="cb199-10" title="10"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb199-11" title="11">panic(<span class="dt">char</span> *msg)</a>
+<a class="sourceLine" id="cb199-12" title="12">{</a>
+<a class="sourceLine" id="cb199-13" title="13">    perror(msg);</a>
+<a class="sourceLine" id="cb199-14" title="14">    exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb199-15" title="15">}</a>
+<a class="sourceLine" id="cb199-16" title="16"></a>
+<a class="sourceLine" id="cb199-17" title="17"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb199-18" title="18">client(<span class="dt">char</span> *filename, <span class="dt">int</span> slowdown)</a>
+<a class="sourceLine" id="cb199-19" title="19">{</a>
+<a class="sourceLine" id="cb199-20" title="20">    <span class="dt">int</span> i, socket_desc;</a>
+<a class="sourceLine" id="cb199-21" title="21">    <span class="dt">char</span> b;</a>
+<a class="sourceLine" id="cb199-22" title="22"></a>
+<a class="sourceLine" id="cb199-23" title="23">    socket_desc = domain_socket_client_create(filename);</a>
+<a class="sourceLine" id="cb199-24" title="24">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb199-25" title="25">        perror(<span class="st">&quot;domain socket client create&quot;</span>);</a>
+<a class="sourceLine" id="cb199-26" title="26">        exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb199-27" title="27">    }</a>
+<a class="sourceLine" id="cb199-28" title="28"></a>
+<a class="sourceLine" id="cb199-29" title="29">    sleep(slowdown);</a>
+<a class="sourceLine" id="cb199-30" title="30">    <span class="cf">if</span> (write(socket_desc, <span class="st">&quot;.&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client write&quot;</span>);</a>
+<a class="sourceLine" id="cb199-31" title="31">    <span class="cf">if</span> (read(socket_desc, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client read&quot;</span>);</a>
+<a class="sourceLine" id="cb199-32" title="32">    printf(<span class="st">&quot;c: %c</span><span class="sc">\n</span><span class="st">&quot;</span>, b);</a>
+<a class="sourceLine" id="cb199-33" title="33"></a>
+<a class="sourceLine" id="cb199-34" title="34">    close(socket_desc);</a>
+<a class="sourceLine" id="cb199-35" title="35">    exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb199-36" title="36">}</a>
+<a class="sourceLine" id="cb199-37" title="37"></a>
+<a class="sourceLine" id="cb199-38" title="38"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb199-39" title="39">client_slow(<span class="dt">char</span> *filename)</a>
+<a class="sourceLine" id="cb199-40" title="40">{</a>
+<a class="sourceLine" id="cb199-41" title="41">    client(filename, <span class="dv">3</span>);</a>
+<a class="sourceLine" id="cb199-42" title="42">}</a>
+<a class="sourceLine" id="cb199-43" title="43"></a>
+<a class="sourceLine" id="cb199-44" title="44"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb199-45" title="45">client_fast(<span class="dt">char</span> *filename)</a>
+<a class="sourceLine" id="cb199-46" title="46">{</a>
+<a class="sourceLine" id="cb199-47" title="47">    client(filename, <span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb199-48" title="48">}</a>
+<a class="sourceLine" id="cb199-49" title="49"></a>
+<a class="sourceLine" id="cb199-50" title="50"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb199-51" title="51">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb199-52" title="52">{</a>
+<a class="sourceLine" id="cb199-53" title="53">    <span class="dt">char</span> *ds = <span class="st">&quot;domain_socket&quot;</span>;</a>
+<a class="sourceLine" id="cb199-54" title="54">    <span class="dt">int</span> socket_desc, i;</a>
+<a class="sourceLine" id="cb199-55" title="55"></a>
+<a class="sourceLine" id="cb199-56" title="56">    socket_desc = domain_socket_server_create(ds);</a>
+<a class="sourceLine" id="cb199-57" title="57">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb199-58" title="58">        unlink(ds); <span class="co">/* remove the previous domain socket file if it exists */</span></a>
+<a class="sourceLine" id="cb199-59" title="59">        socket_desc = domain_socket_server_create(ds);</a>
+<a class="sourceLine" id="cb199-60" title="60">        <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) panic(<span class="st">&quot;server domain socket creation&quot;</span>);</a>
+<a class="sourceLine" id="cb199-61" title="61">    }</a>
+<a class="sourceLine" id="cb199-62" title="62"></a>
+<a class="sourceLine" id="cb199-63" title="63">    <span class="co">/* </span><span class="al">TODO</span><span class="co">: change this order. What changes? */</span></a>
+<a class="sourceLine" id="cb199-64" title="64">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client_fast(ds);</a>
+<a class="sourceLine" id="cb199-65" title="65">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client_slow(ds);</a>
+<a class="sourceLine" id="cb199-66" title="66"></a>
+<a class="sourceLine" id="cb199-67" title="67">    <span class="co">/* handle two clients, one after the other */</span></a>
+<a class="sourceLine" id="cb199-68" title="68">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dv">2</span>; i++) {</a>
+<a class="sourceLine" id="cb199-69" title="69">        <span class="dt">int</span> ret, new_client, i;</a>
+<a class="sourceLine" id="cb199-70" title="70">        <span class="dt">char</span> b;</a>
+<a class="sourceLine" id="cb199-71" title="71">        new_client = accept(socket_desc, NULL, NULL);</a>
+<a class="sourceLine" id="cb199-72" title="72">        <span class="cf">if</span> (new_client == -<span class="dv">1</span>) panic(<span class="st">&quot;server accept&quot;</span>);</a>
+<a class="sourceLine" id="cb199-73" title="73"></a>
+<a class="sourceLine" id="cb199-74" title="74">        <span class="co">/* read from, then write to the client! */</span></a>
+<a class="sourceLine" id="cb199-75" title="75">        <span class="cf">if</span> (read(new_client, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server read&quot;</span>);</a>
+<a class="sourceLine" id="cb199-76" title="76">        <span class="cf">if</span> (write(new_client, <span class="st">&quot;*&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server write&quot;</span>);</a>
+<a class="sourceLine" id="cb199-77" title="77">        close(new_client);</a>
+<a class="sourceLine" id="cb199-78" title="78">    }</a>
+<a class="sourceLine" id="cb199-79" title="79"></a>
+<a class="sourceLine" id="cb199-80" title="80">    close(socket_desc);</a>
+<a class="sourceLine" id="cb199-81" title="81"></a>
+<a class="sourceLine" id="cb199-82" title="82">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb199-83" title="83">}</a></code></pre></div>
+<ul>
+<li>See the TODO in the <code>main</code>. When you change the order, what do you see?</li>
+<li>Is there a problem when we use both fast and slow clients?</li>
+</ul>
+<h2 id="revisiting-ipc-with-multiple-clients"><span class="header-section-number">7.1</span> Revisiting IPC with Multiple Clients</h2>
+<h3 id="system-services"><span class="header-section-number">7.1.1</span> System Services</h3>
 <p>The <code>systemctl</code> command enables you to understand many of the services on the system (of which there are many: <code>systemctl --list-units | wc -l</code> yields <code>244</code> on my system).</p>
 <pre><code>$ systemctl --list-units
 ...
@@ -4592,7 +4862,169 @@ Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;.
 <li>NetworkManager that you interact with when you select which wifi hotspot to use.</li>
 <li>OpenVPN which handles your VPN logins to the school network. You can see that the service is currently “exited” as I’m not running VPN now.</li>
 </ul>
-<p>We’ll cover <em>services</em> later in the class, and here we’ll focus mainly on libraries.</p>
+<p>Each of these services communicates with many clients using domain sockets.</p>
+<h3 id="understanding-descriptor-events-with-poll"><span class="header-section-number">7.1.2</span> Understanding Descriptor Events with <code>poll</code></h3>
+<p>Each of these services is a process that any client send requests to. We’ve seen that domain sockets can help us to talk to many different clients as each is represented with a separate file descriptor. How does the service process know <em>which of the file descriptors</em> has information available on it? Imagine the following case:</p>
+<ol type="1">
+<li>a client, <em>A</em>, connects to a service.</li>
+<li>a client, <em>B</em>, connects to the same service.</li>
+<li><em>B</em> immediately sends a request, while <em>A</em> goes into a <code>sleep(100)</code> (or, more realistically, simply does some expensive computation).</li>
+</ol>
+<p>If the server issues a <code>read</code> on the descriptor for <em>A</em>, it will block for 100 seconds! Worse, it won’t service <em>B</em> despite it being available and making a request immediately. Yikes.</p>
+<p>We’d really like a facility that can tell us <em>which</em> descriptor’s have data and are ready to be read from, and which are ready to be written to! Luckily, UNIX comes to the rescue with its <em>event notification</em> APIs. These are APIs that let us understand when a file descriptor has an <em>event</em> (i.e. a client writes to it) and is now readable or writable. These include three functions: <code>poll</code>, <code>select</code>, and (the more modern) <code>epoll</code>. Lets look at how to use <code>poll</code>!</p>
+<ul>
+<li><code>int poll(struct pollfd *fds, nfds_t nfds, int timeout)</code> - We pass in an array of <code>struct pollfd</code>s of length <code>nfds</code>, with each entry corresponding to a single file descriptor we want to get information about. The <code>timeout</code> is in milliseconds, and enables <code>poll</code> to return after that amount of time returns even if none of the file descriptors has an event. A negative <code>timeout</code> is interpreted as “infinite”, while <code>0</code> means that <code>poll</code> will return immediately with any current events.</li>
+</ul>
+<p>Lets check out the <code>struct pollfd</code>:</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb201-1" title="1"><span class="kw">struct</span> pollfd {</a>
+<a class="sourceLine" id="cb201-2" title="2">    <span class="dt">int</span>   fd;         <span class="co">/* file descriptor */</span></a>
+<a class="sourceLine" id="cb201-3" title="3">    <span class="dt">short</span> events;     <span class="co">/* requested events */</span></a>
+<a class="sourceLine" id="cb201-4" title="4">    <span class="dt">short</span> revents;    <span class="co">/* returned events */</span></a>
+<a class="sourceLine" id="cb201-5" title="5">};</a></code></pre></div>
+<p>When we make the <code>poll</code> call, we populate the <code>events</code> field with which events we’re interested in retrieving. These include:</p>
+<ul>
+<li><code>POLLIN</code> - is there data available to be <code>read</code>? If the file descriptor is the domain socket that we use for <code>accept</code>, then this <code>POLLIN</code> means that a new client request is ready to <code>accept</code>.</li>
+<li><code>POLLOUT</code> - is there data available to be <code>write</code>n?</li>
+</ul>
+<p>We can almost always set <code>events = POLLIN | POLLOUT</code> as we wait to wait for both.</p>
+<p>When <code>poll</code> returns, we determine which events happened by looking at the contents of the <code>revents</code> field. In addition to <code>POLLIN</code> and <code>POLLOUT</code> which tell us if data is ready to be <code>read</code> or <code>written</code>, we have the following:</p>
+<ul>
+<li><code>POLLHUP</code> - The other side of the people closed its descriptor! Subsequent <code>read</code>s to the descriptor will return <code>0</code>. We can likely <code>close</code> our descriptor.</li>
+<li><code>POLLERR</code> - Again, there was some sort of a problem with the descriptor, and we should likely <code>close</code> it, terminating communication.</li>
+</ul>
+<h3 id="event-loops-and-poll"><span class="header-section-number">7.1.3</span> Event Loops and <code>poll</code></h3>
+<p>Lets look at some pseudocode for using <code>poll</code>.</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb202-1" title="1"><span class="cf">while</span> <span class="va">True</span>:</a>
+<a class="sourceLine" id="cb202-2" title="2">    poll(fds, <span class="bu">len</span>(fds), <span class="dv">-1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb202-3" title="3">    foreach fd <span class="kw">in</span> fds:</a>
+<a class="sourceLine" id="cb202-4" title="4">        <span class="cf">if</span> fd.revents <span class="op">&amp;</span> (POLLHUP <span class="op">|</span> POLLERR):</a>
+<a class="sourceLine" id="cb202-5" title="5">            <span class="co"># process closed fds</span></a>
+<a class="sourceLine" id="cb202-6" title="6">        <span class="cf">if</span> fd.revents <span class="op">&amp;</span> POLLIN:</a>
+<a class="sourceLine" id="cb202-7" title="7">            <span class="co"># read off of, or accept on the file desciptor</span></a>
+<a class="sourceLine" id="cb202-8" title="8">        <span class="cf">if</span> fd.revents <span class="op">&amp;</span> POLLOUT:</a>
+<a class="sourceLine" id="cb202-9" title="9">            <span class="co"># write to the file desciptor</span></a></code></pre></div>
+<p>This yields what is called an <em>event loop</em> – we loop, each time processing a single event. You see event loops in most GUIs (where each event is a key/mouse press), and in web programming where javascript callbacks are executed by the browser’s event loop. Importantly, <em>we only process descriptors that have events, thus can avoid blocking on descriptors that don’t have available data!</em> This solves our previous problem: a server won’t block awaiting communication with a client that is delayed, or never writes to a channel, instead only <code>read</code>ing/<code>write</code>ing to descriptors that are ready.</p>
+<h3 id="example-poll-code"><span class="header-section-number">7.1.4</span> Example <code>poll</code> Code</h3>
+<p>Lets put this all together. For simplicity, in this class, we’ll assume that we can always <code>write</code> to a descriptor without blocking. This isn’t generally true if you’re writing large amounts of data, and in “real code” you’d also want to handle <code>POLLOUT</code> appropriately.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb203-1" title="1"><span class="pp">#include </span><span class="im">&quot;06/domain_sockets.h&quot;</span></a>
+<a class="sourceLine" id="cb203-2" title="2"></a>
+<a class="sourceLine" id="cb203-3" title="3"><span class="pp">#include </span><span class="im">&lt;errno.h&gt;</span></a>
+<a class="sourceLine" id="cb203-4" title="4"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb203-5" title="5"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb203-6" title="6"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb203-7" title="7"><span class="pp">#include </span><span class="im">&lt;sys/wait.h&gt;</span></a>
+<a class="sourceLine" id="cb203-8" title="8"><span class="pp">#include </span><span class="im">&lt;assert.h&gt;</span></a>
+<a class="sourceLine" id="cb203-9" title="9"><span class="pp">#include </span><span class="im">&lt;poll.h&gt;</span></a>
+<a class="sourceLine" id="cb203-10" title="10"></a>
+<a class="sourceLine" id="cb203-11" title="11"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb203-12" title="12">panic(<span class="dt">char</span> *msg)</a>
+<a class="sourceLine" id="cb203-13" title="13">{</a>
+<a class="sourceLine" id="cb203-14" title="14">    perror(msg);</a>
+<a class="sourceLine" id="cb203-15" title="15">    exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb203-16" title="16">}</a>
+<a class="sourceLine" id="cb203-17" title="17"></a>
+<a class="sourceLine" id="cb203-18" title="18"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb203-19" title="19">client(<span class="dt">char</span> *filename)</a>
+<a class="sourceLine" id="cb203-20" title="20">{</a>
+<a class="sourceLine" id="cb203-21" title="21">    <span class="dt">int</span> i, socket_desc;</a>
+<a class="sourceLine" id="cb203-22" title="22"></a>
+<a class="sourceLine" id="cb203-23" title="23">    sleep(<span class="dv">1</span>); <span class="co">/* await the domain socket creation by the server */</span></a>
+<a class="sourceLine" id="cb203-24" title="24">    socket_desc = domain_socket_client_create(filename);</a>
+<a class="sourceLine" id="cb203-25" title="25">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb203-26" title="26">        perror(<span class="st">&quot;domain socket client create&quot;</span>);</a>
+<a class="sourceLine" id="cb203-27" title="27">        exit(EXIT_FAILURE);</a>
+<a class="sourceLine" id="cb203-28" title="28">    }</a>
+<a class="sourceLine" id="cb203-29" title="29"></a>
+<a class="sourceLine" id="cb203-30" title="30">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dv">5</span>; i++) {</a>
+<a class="sourceLine" id="cb203-31" title="31">        <span class="dt">char</span> b;</a>
+<a class="sourceLine" id="cb203-32" title="32">        <span class="cf">if</span> (write(socket_desc, <span class="st">&quot;.&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client write&quot;</span>);</a>
+<a class="sourceLine" id="cb203-33" title="33">        <span class="cf">if</span> (read(socket_desc, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client read&quot;</span>);</a>
+<a class="sourceLine" id="cb203-34" title="34">        printf(<span class="st">&quot;c: %c</span><span class="sc">\n</span><span class="st">&quot;</span>, b);</a>
+<a class="sourceLine" id="cb203-35" title="35">    }</a>
+<a class="sourceLine" id="cb203-36" title="36"></a>
+<a class="sourceLine" id="cb203-37" title="37">    close(socket_desc);</a>
+<a class="sourceLine" id="cb203-38" title="38">    exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb203-39" title="39">}</a>
+<a class="sourceLine" id="cb203-40" title="40"></a>
+<a class="sourceLine" id="cb203-41" title="41"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb203-42" title="42">server(<span class="dt">char</span> *filename)</a>
+<a class="sourceLine" id="cb203-43" title="43">{</a>
+<a class="sourceLine" id="cb203-44" title="44">    <span class="dt">int</span> socket_desc, num_fds = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb203-45" title="45">    <span class="kw">struct</span> pollfd poll_fds[<span class="dv">2</span>];</a>
+<a class="sourceLine" id="cb203-46" title="46"></a>
+<a class="sourceLine" id="cb203-47" title="47">    <span class="co">/*** Initialize the domain socket and its pollfd ***/</span></a>
+<a class="sourceLine" id="cb203-48" title="48">    socket_desc = domain_socket_server_create(filename);</a>
+<a class="sourceLine" id="cb203-49" title="49">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb203-50" title="50">        unlink(filename); <span class="co">/* remove the previous domain socket file if it exists */</span></a>
+<a class="sourceLine" id="cb203-51" title="51">        socket_desc = domain_socket_server_create(filename);</a>
+<a class="sourceLine" id="cb203-52" title="52">        <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) panic(<span class="st">&quot;server domain socket creation&quot;</span>);</a>
+<a class="sourceLine" id="cb203-53" title="53">    }</a>
+<a class="sourceLine" id="cb203-54" title="54"></a>
+<a class="sourceLine" id="cb203-55" title="55">    memset(poll_fds, <span class="dv">0</span>, <span class="kw">sizeof</span>(<span class="kw">struct</span> pollfd) * <span class="dv">2</span>);</a>
+<a class="sourceLine" id="cb203-56" title="56">    poll_fds[num_fds] = (<span class="kw">struct</span> pollfd) {</a>
+<a class="sourceLine" id="cb203-57" title="57">        .fd = socket_desc,</a>
+<a class="sourceLine" id="cb203-58" title="58">        .events = POLLIN,</a>
+<a class="sourceLine" id="cb203-59" title="59">    };</a>
+<a class="sourceLine" id="cb203-60" title="60">    num_fds++;</a>
+<a class="sourceLine" id="cb203-61" title="61"></a>
+<a class="sourceLine" id="cb203-62" title="62">    <span class="co">/*** The event loop ***/</span></a>
+<a class="sourceLine" id="cb203-63" title="63">    <span class="cf">while</span> (<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb203-64" title="64">        <span class="dt">int</span> ret, new_client, i;</a>
+<a class="sourceLine" id="cb203-65" title="65"></a>
+<a class="sourceLine" id="cb203-66" title="66">        <span class="co">/*** Poll; if we don&#39;t get a client for a second, exit ***/</span></a>
+<a class="sourceLine" id="cb203-67" title="67">        ret = poll(poll_fds, num_fds, <span class="dv">1000</span>);</a>
+<a class="sourceLine" id="cb203-68" title="68">        <span class="co">/* If we timeout or error, break out of the loop */</span></a>
+<a class="sourceLine" id="cb203-69" title="69">        <span class="cf">if</span> (ret == <span class="dv">0</span> || ret == -<span class="dv">1</span>) <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb203-70" title="70"></a>
+<a class="sourceLine" id="cb203-71" title="71">        <span class="co">/*** Accept file descriptor has a new client connecting! ***/</span></a>
+<a class="sourceLine" id="cb203-72" title="72">        <span class="cf">if</span> (poll_fds[<span class="dv">0</span>].revents &amp; POLLIN) {</a>
+<a class="sourceLine" id="cb203-73" title="73">            <span class="cf">if</span> ((new_client = accept(socket_desc, NULL, NULL)) == -<span class="dv">1</span>) panic(<span class="st">&quot;server accept&quot;</span>);</a>
+<a class="sourceLine" id="cb203-74" title="74">            <span class="co">/* add a new file descriptor! */</span></a>
+<a class="sourceLine" id="cb203-75" title="75">            poll_fds[num_fds] = (<span class="kw">struct</span> pollfd) {</a>
+<a class="sourceLine" id="cb203-76" title="76">                .fd = new_client,</a>
+<a class="sourceLine" id="cb203-77" title="77">                .events = POLLIN</a>
+<a class="sourceLine" id="cb203-78" title="78">            };</a>
+<a class="sourceLine" id="cb203-79" title="79">            num_fds++;</a>
+<a class="sourceLine" id="cb203-80" title="80">            poll_fds[<span class="dv">0</span>].revents = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb203-81" title="81">        }</a>
+<a class="sourceLine" id="cb203-82" title="82">        <span class="co">/*** Communicate with clients! ***/</span></a>
+<a class="sourceLine" id="cb203-83" title="83">        <span class="cf">for</span> (i = <span class="dv">1</span>; i &lt; num_fds; i++) {</a>
+<a class="sourceLine" id="cb203-84" title="84">            <span class="cf">if</span> (poll_fds[i].revents &amp; (POLLHUP | POLLERR)) {</a>
+<a class="sourceLine" id="cb203-85" title="85">                poll_fds[i].revents = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb203-86" title="86">                close(poll_fds[i].fd);</a>
+<a class="sourceLine" id="cb203-87" title="87">                <span class="co">/* replace the fd to fill the gap */</span></a>
+<a class="sourceLine" id="cb203-88" title="88">                poll_fds[i] = poll_fds[num_fds - <span class="dv">1</span>];</a>
+<a class="sourceLine" id="cb203-89" title="89">                num_fds--;</a>
+<a class="sourceLine" id="cb203-90" title="90">                printf(<span class="st">&quot;server: closing client connection</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb203-91" title="91"></a>
+<a class="sourceLine" id="cb203-92" title="92">                <span class="cf">continue</span>;</a>
+<a class="sourceLine" id="cb203-93" title="93">            }</a>
+<a class="sourceLine" id="cb203-94" title="94">            <span class="cf">if</span> (poll_fds[i].revents &amp; POLLIN) {</a>
+<a class="sourceLine" id="cb203-95" title="95">                <span class="dt">char</span> b;</a>
+<a class="sourceLine" id="cb203-96" title="96"></a>
+<a class="sourceLine" id="cb203-97" title="97">                <span class="co">/* our server is simply sending a &#39;*&#39; for each input character */</span></a>
+<a class="sourceLine" id="cb203-98" title="98">                <span class="cf">if</span> (read(poll_fds[i].fd, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server read&quot;</span>);</a>
+<a class="sourceLine" id="cb203-99" title="99">                printf(<span class="st">&quot;s: %c</span><span class="sc">\n</span><span class="st">&quot;</span>, b);</a>
+<a class="sourceLine" id="cb203-100" title="100">                <span class="cf">if</span> (write(new_client, <span class="st">&quot;*&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server write&quot;</span>);</a>
+<a class="sourceLine" id="cb203-101" title="101">            }</a>
+<a class="sourceLine" id="cb203-102" title="102">            poll_fds[i].revents = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb203-103" title="103">        }</a>
+<a class="sourceLine" id="cb203-104" title="104">    }</a>
+<a class="sourceLine" id="cb203-105" title="105">    close(socket_desc);</a>
+<a class="sourceLine" id="cb203-106" title="106"></a>
+<a class="sourceLine" id="cb203-107" title="107">    exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb203-108" title="108">}</a>
+<a class="sourceLine" id="cb203-109" title="109"></a>
+<a class="sourceLine" id="cb203-110" title="110"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb203-111" title="111">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb203-112" title="112">{</a>
+<a class="sourceLine" id="cb203-113" title="113">    <span class="dt">char</span> *ds = <span class="st">&quot;domain_socket&quot;</span>;</a>
+<a class="sourceLine" id="cb203-114" title="114"></a>
+<a class="sourceLine" id="cb203-115" title="115">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client(ds);</a>
+<a class="sourceLine" id="cb203-116" title="116">    server(ds);</a>
+<a class="sourceLine" id="cb203-117" title="117"></a>
+<a class="sourceLine" id="cb203-118" title="118">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb203-119" title="119">}</a></code></pre></div>
 <h1 id="libraries"><span class="header-section-number">8</span> Libraries</h1>
 <p>We’re used to writing our own programs, and like to think of the code we write being relatively self-contained. In contrast, quite a bit of <em>system programming</em> is about providing functionality that can be used by <em>any program on the system</em>. What if you wanted to implement the world’s best key-value store, and wanted to enable anyone to use your implementation!?</p>
 <p>We think of these <em>shared</em> functionalities as falling into one of two categories:</p>
@@ -4917,8 +5349,8 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <h2 id="headers-and-visibility"><span class="header-section-number">10.3</span> Headers and Visibility</h2>
 <p>C does not have classes and the rules therein to support per-class/object encapsulation. Instead, C views each <code>.c</code> file as a unit of visibility. Functions and global variables (known as “symbols”) can be hooked up with references to them in other objects by the linker. However, it is possible to write code in a <code>.c</code> file that is <em>not visible</em> outside of that file. In contrast to the linking error above emphasizing good naming, if a symbol is marked as <code>static</code>, no other <code>.c</code> file will be able to reference that symbol.</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb213-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
-<a class="sourceLine" id="cb213-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb223-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
+<a class="sourceLine" id="cb223-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
 <p>No other <code>.c</code> file can define code that will be able to access <code>global_var</code> nor call <code>foo</code>. You can see the list of all symbols within a <code>.c</code> file that are accessible outside of it by compiling into a <code>.o</code> file (using <code>gcc -c ...</code>), and <code>nm -g --defined-only x.o | awk '{print $3}'</code> (replace <code>x</code> with your object file name).</p>
 <blockquote>
 <p><strong>Convention.</strong> All functions and variables that are not part of the <em>public interface</em> with which to interact with the <code>.c</code> file should be <code>static</code> so that they cannot be used from other objects.</p>
@@ -4929,13 +5361,13 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>When we include a file, it just copies the file at the point of the <code>#include</code>. Thus, if the same header is included separately into two <code>.c</code> files, then it effectively replicates the header’s contents into the two <code>.o</code> files. This can cause problems if the two <code>.o</code> files are linked together. An example:</p>
 <p><code>a.c</code>:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb214-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb224-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
 <p><code>b.c</code>:</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb215-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
-<a class="sourceLine" id="cb215-2" title="2"></a>
-<a class="sourceLine" id="cb215-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb225-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
+<a class="sourceLine" id="cb225-2" title="2"></a>
+<a class="sourceLine" id="cb225-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
 <p><code>c.h</code>:</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb216-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb226-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
 <p>After compiling these files, we get</p>
 <pre><code>$ gcc -c a.c -o a.o
 $ gcc -c b.c -o b.o
@@ -4951,22 +5383,22 @@ collect2: error: ld returned 1 exit status</code></pre>
 <p>You <em>must</em> include the header files that provide the functionality that you rely on and use. This sounds obvious, but it is <em>very</em> easy to mess this up. A couple of examples:</p>
 <p><em>Example 1: Implementing a library.</em> You’re implementing a library, and you have a <code>.h</code> file for it that exposes the types of the library’s functions. You test your library, and it works wonderfully – victory! However, because it is a library, it might be used by other people’s code, and all they are going to do is <code>#include &lt;your_lib.h&gt;</code>, and expect everything to work.</p>
 <p>What if the following happened? Your <code>your_lib.h</code> file does this:</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb218-1" title="1"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb218-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb218-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb228-1" title="1"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb228-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb228-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
 <p>In your test file, you do this:</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb219-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
-<a class="sourceLine" id="cb219-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb219-3" title="3"></a>
-<a class="sourceLine" id="cb219-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb229-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
+<a class="sourceLine" id="cb229-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb229-3" title="3"></a>
+<a class="sourceLine" id="cb229-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>Your tests of your library work wonderfully! But if the user of your library simply does:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb220-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb220-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb230-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb230-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
 <p>The user will get a compiler error that says it doesn’t understand what <code>size_t</code> is! The core problem is that your library’s header file didn’t include all of the headers it relies on! Instead, it should updated to look like so:</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb221-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
-<a class="sourceLine" id="cb221-2" title="2"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb221-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb221-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb231-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
+<a class="sourceLine" id="cb231-2" title="2"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb231-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb231-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>A good way to defensively code to try to minimize the chance that this error happens, you should include your header files <em>before</em> the rest of the header files. The only real solution is to be very careful, and always include what headers are necessary for the functionality you depend on.</p>
 <p><em>Example 2: implementing a program or test.</em> A <code>.c</code> file, lets say <code>my_prog.c</code>, includes some header file, <code>head.h</code>. It compiles just fine. But if <code>my_prog.c</code> relies on some header file – lets say <code>dep.h</code> – that is only included itself in the <code>head.h</code> file, then if <code>head.h</code> is updated and removes the include, it will break any program that depends on it! In this case, <code>my_prog.c</code> should explicitly include <code>dep.h</code>: include the headers that are required for your functionality!</p>
 <p><em>How do you know which headers to include?</em> If you’re using a system function, the <code>man</code> page for it is explicit about which headers provide the necessary functionality. If you’re implementing a library in the class, we are explicit about what headers are required.</p>
@@ -4974,18 +5406,18 @@ collect2: error: ld returned 1 exit status</code></pre>
 <p>Syntactic nesting, or depth often significantly increase the cognitive complexity in C<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>. Two examples of this:</p>
 <p><strong>Depth through indentation nesting.</strong> Each additional nesting level (each nested set of <code>{}</code>) adds another condition that you must keep in your mind<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a> when understanding the code. This includes the conditions, or looping conditions associated with the nesting level. This is <em>a lot</em> to keep in your head, and makes developing and reading code quite a bit more difficult.</p>
 <p>What can you do to avoid this nesting? <em>First</em>, return early for errors. Instead of the following code…</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb222-1" title="1"><span class="cf">if</span> (a) {</a>
-<a class="sourceLine" id="cb222-2" title="2">    <span class="co">/* normal code */</span></a>
-<a class="sourceLine" id="cb222-3" title="3">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb222-4" title="4">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb222-5" title="5">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb222-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb232-1" title="1"><span class="cf">if</span> (a) {</a>
+<a class="sourceLine" id="cb232-2" title="2">    <span class="co">/* normal code */</span></a>
+<a class="sourceLine" id="cb232-3" title="3">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb232-4" title="4">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb232-5" title="5">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb232-6" title="6">}</a></code></pre></div>
 <p>…do the following…</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb223-1" title="1"><span class="cf">if</span> (!a) {</a>
-<a class="sourceLine" id="cb223-2" title="2">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb223-3" title="3">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb223-4" title="4">}</a>
-<a class="sourceLine" id="cb223-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb233-1" title="1"><span class="cf">if</span> (!a) {</a>
+<a class="sourceLine" id="cb233-2" title="2">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb233-3" title="3">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb233-4" title="4">}</a>
+<a class="sourceLine" id="cb233-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
 <p>Though seemingly trivial, it enables you to separate your understanding of error conditions from the complexity of the following code. Try to perform as much error checking as soon as it possibly can be done so that you can switch into “normal case” thinking.</p>
 <p><em>Second</em>, if you nest deeper than four levels of brackets, then pull code out into appropriately-named functions. Long functions aren’t necessarily bad, but <em>complex</em> functions are.</p>
 <blockquote>
@@ -4997,16 +5429,16 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>I use indentation levels in C of eight visual spaces to make it visually clear when I’m indenting too much.</p>
 <p><strong>Depth through field nesting.</strong> It can be quite difficult to follow code that nests access to fields. For example:</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb224-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb234-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
 <p>Of course, this is fake code, but even if it wasn’t, keeping track of the types of each of the levels of increasing depth of field reference is nearly impossible. This will make writing the code fickle and challenging, and reading the code, needlessly complex.</p>
 <p>The main means we have to remove this complexity is to</p>
 <ol type="1">
 <li><p>Create an set of typed variables</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb225-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
-<a class="sourceLine" id="cb225-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
-<a class="sourceLine" id="cb225-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
-<a class="sourceLine" id="cb225-4" title="4"></a>
-<a class="sourceLine" id="cb225-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb235-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
+<a class="sourceLine" id="cb235-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
+<a class="sourceLine" id="cb235-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
+<a class="sourceLine" id="cb235-4" title="4"></a>
+<a class="sourceLine" id="cb235-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
 It is up to you to decide where it is right to provide an “intermediate” type for a certain depth in the fields, and when to directly dive into a few fields.</li>
 <li><p>If any the structs (or sub-structs, or arrays) represents an API layer, then you can call a function that performs the necessary operation on that part of the data-structure. This both provide abstraction over the data access, and documents the types.</p></li>
 </ol>
