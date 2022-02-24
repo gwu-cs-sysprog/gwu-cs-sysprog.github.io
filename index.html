@@ -242,7 +242,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#system-services"><span class="toc-section-number">7.1.1</span> System Services</a></li>
         <li><a href="#understanding-descriptor-events-with-poll"><span class="toc-section-number">7.1.2</span> Understanding Descriptor Events with <code>poll</code></a></li>
         <li><a href="#event-loops-and-poll"><span class="toc-section-number">7.1.3</span> Event Loops and <code>poll</code></a></li>
-        <li><a href="#example-poll-code"><span class="toc-section-number">7.1.4</span> Example <code>poll</code> Code</a></li>
+        <li><a href="#poll-api"><span class="toc-section-number">7.1.4</span> <code>poll</code> API</a></li>
+        <li><a href="#example-poll-code"><span class="toc-section-number">7.1.5</span> Example <code>poll</code> Code</a></li>
         </ul></li>
         </ul></li>
         <li><a href="#libraries"><span class="toc-section-number">8</span> Libraries</a><ul>
@@ -426,7 +427,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x55800a8da149
+Hex and pointers: 7fffffffffffffff, 0x56234d813149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -546,8 +547,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffc9c1be830 == 0x7ffc9c1be830; 6 == 6
-nth index: 0x7ffc9c1be834 == 0x7ffc9c1be834; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffe6f3d0e60 == 0x7ffe6f3d0e60; 6 == 6
+nth index: 0x7ffe6f3d0e64 == 0x7ffe6f3d0e64; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -570,7 +571,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7fff148e9c14 == 0x7fff148e9c14; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffda567c9b4 == 0x7ffda567c9b4; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -594,10 +595,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffd03ce55b0 &amp; 0x7ffd03ce55c4
-idx 1 @ 0x7ffd03ce55b4 &amp; 0x7ffd03ce55c5
-idx 2 @ 0x7ffd03ce55b8 &amp; 0x7ffd03ce55c6
-idx 3 @ 0x7ffd03ce55bc &amp; 0x7ffd03ce55c7</code></pre>
+<pre><code>idx 0 @ 0x7ffd396dc7e0 &amp; 0x7ffd396dc7f4
+idx 1 @ 0x7ffd396dc7e4 &amp; 0x7ffd396dc7f5
+idx 2 @ 0x7ffd396dc7e8 &amp; 0x7ffd396dc7f6
+idx 3 @ 0x7ffd396dc7ec &amp; 0x7ffd396dc7f7</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -834,10 +835,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x55a37fe85010
-b   @ 0x55a37fe85014
-c   @ 0x55a37fe85020
-end @ 0x55a37fe85039
+a   @ 0x564d73dbd010
+b   @ 0x564d73dbd014
+c   @ 0x564d73dbd020
+end @ 0x564d73dbd039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -845,7 +846,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x55a37fe85014
+c.c_c = 0x564d73dbd014
 
 Print out the variables as raw memory
 
@@ -940,8 +941,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x55df6211304c
-1: 2 @ 0x55df62113044
+<pre><code>0: 4 @ 0x55b8da43c04c
+1: 2 @ 0x55b8da43c044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1270,16 +1271,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: 1634173543
+2: -904209465
 3: 32764
-4: 1634173542
+4: -904209466
 5: 32764
-6: -62188995
-7: 21906
-8: 643461064
-9: 32586
-10: -62189072
-11: 21906</code></pre>
+6: -413752771
+7: 22023
+8: 905473992
+9: 32655
+10: -413752848
+11: 22023</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1620,7 +1621,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x558e69f0d004 == 0x558e69f0d004 != 0x558e69f0f011</code></pre>
+0x55cf3a91d004 == 0x55cf3a91d004 != 0x55cf3a91f011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2019,15 +2020,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 3996
+     parent pid 52581
 post-fork:
-    returned 3997,
-    current pid 3996
-    parent pid 3990
+    returned 52582,
+    current pid 52581
+    parent pid 52575
 post-fork:
     returned 0,
-    current pid 3997
-    parent pid 3996</code></pre>
+    current pid 52582
+    parent pid 52581</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2091,14 +2092,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 4013 exiting with 0
-Child 4014 exiting with -1
-Child 4015 exiting with -2
-Child 4016 exiting with -3
-Child 4013 exited with exit status 0
-Child 4014 exited with exit status -1
-Child 4015 exited with exit status -2
-Child 4016 exited with exit status -3</code></pre>
+<pre><code>Child 52600 exiting with 0
+Child 52602 exiting with -2
+Child 52603 exiting with -3
+Child 52601 exiting with -1
+Child 52600 exited with exit status 0
+Child 52602 exited with exit status -2
+Child 52603 exited with exit status -3
+Child 52601 exited with exit status -1</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3222,9 +3223,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>4231: We&#39;ve been asked to terminate. Exit!
-4230: Parent asking child (4231) to terminate
-4230: Child process 4231 has exited.</code></pre>
+<pre><code>52818: We&#39;ve been asked to terminate. Exit!
+52817: Parent asking child (52818) to terminate
+52817: Child process 52818 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -4066,11 +4067,11 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - F a.out (17136)
 - F LICENSE (1522)
 - D 09
-- F lectures.html (576306)
+- F lectures.html (576336)
 - D 01
 - D 05
 - D 02
-- F aggregate.md (162923)
+- F aggregate.md (162944)
 - D 04
 - D .git
 - F inline_exec_tmp.c (1658)</code></pre>
@@ -4401,7 +4402,8 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>4524: 45254524</code></pre>
+<pre><code>53112: 53112
+53113: 53113</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4554,15 +4556,15 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 4542 connected to server.
-1. Client 4543 connected to server.
-2. Client 4542 request sent message to server.
-2. Client 4543 request sent message to server.
-Server received message (sz 35): &quot;Citizen 4542: Penny for Pawsident!&quot;. Replying!
+1. Client 53132 connected to server.
+1. Client 53133 connected to server.
+2. Client 53132 request sent message to server.
+2. Client 53133 request sent message to server.
+Server received message (sz 36): &quot;Citizen 53132: Penny for Pawsident!&quot;. Replying!
+3. Client 53132 reply received from server: Citizen 53132: Penny for Pawsident!
 Server: New client connected with new file descriptor 4.
-3. Client 4542 reply received from server: Citizen 4542: Penny for Pawsident!
-Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;. Replying!
-3. Client 4543 reply received from server: Citizen 4543: Penny for Pawsident!</code></pre>
+Server received message (sz 36): &quot;Citizen 53133: Penny for Pawsident!&quot;. Replying!
+3. Client 53133 reply received from server: Citizen 53133: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -4643,30 +4645,31 @@ Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;.
 <div class="sourceCode" id="cb197"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb197-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
 <a class="sourceLine" id="cb197-2" title="2"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
 <a class="sourceLine" id="cb197-3" title="3"><span class="pp">#include </span><span class="im">&lt;sys/wait.h&gt;</span></a>
-<a class="sourceLine" id="cb197-4" title="4"></a>
-<a class="sourceLine" id="cb197-5" title="5"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb197-6" title="6">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb197-7" title="7">{</a>
-<a class="sourceLine" id="cb197-8" title="8">    pid_t child;</a>
-<a class="sourceLine" id="cb197-9" title="9">    <span class="dt">int</span> fds[<span class="dv">2</span>];</a>
-<a class="sourceLine" id="cb197-10" title="10">    <span class="dt">char</span> *msg = <span class="st">&quot;What type of doggo is Penny?</span><span class="sc">\n</span><span class="st">&quot;</span>;</a>
-<a class="sourceLine" id="cb197-11" title="11"></a>
-<a class="sourceLine" id="cb197-12" title="12">    pipe(fds);</a>
-<a class="sourceLine" id="cb197-13" title="13"></a>
-<a class="sourceLine" id="cb197-14" title="14">    <span class="cf">if</span> ((child = fork()) == <span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb197-15" title="15">        <span class="co">/* recall: `cat` reads its stdin, and outputs it to stdout */</span></a>
-<a class="sourceLine" id="cb197-16" title="16">        <span class="dt">char</span> *args[] = {<span class="st">&quot;cat&quot;</span>, NULL};</a>
-<a class="sourceLine" id="cb197-17" title="17"></a>
-<a class="sourceLine" id="cb197-18" title="18">        close(STDIN_FILENO);</a>
-<a class="sourceLine" id="cb197-19" title="19">        dup2(fds[<span class="dv">0</span>], STDIN_FILENO);</a>
-<a class="sourceLine" id="cb197-20" title="20">        execvp(args[<span class="dv">0</span>], args);</a>
-<a class="sourceLine" id="cb197-21" title="21">    }</a>
-<a class="sourceLine" id="cb197-22" title="22">    write(fds[<span class="dv">1</span>], msg, <span class="kw">sizeof</span>(msg));</a>
-<a class="sourceLine" id="cb197-23" title="23">    wait(NULL);</a>
+<a class="sourceLine" id="cb197-4" title="4"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb197-5" title="5"></a>
+<a class="sourceLine" id="cb197-6" title="6"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb197-7" title="7">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb197-8" title="8">{</a>
+<a class="sourceLine" id="cb197-9" title="9">    pid_t child;</a>
+<a class="sourceLine" id="cb197-10" title="10">    <span class="dt">int</span> fds[<span class="dv">2</span>];</a>
+<a class="sourceLine" id="cb197-11" title="11">    <span class="dt">char</span> *msg = <span class="st">&quot;What type of doggo is Penny?</span><span class="sc">\n</span><span class="st">&quot;</span>;</a>
+<a class="sourceLine" id="cb197-12" title="12"></a>
+<a class="sourceLine" id="cb197-13" title="13">    pipe(fds);</a>
+<a class="sourceLine" id="cb197-14" title="14"></a>
+<a class="sourceLine" id="cb197-15" title="15">    <span class="cf">if</span> ((child = fork()) == <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb197-16" title="16">        <span class="co">/* recall: `cat` reads its stdin, and outputs it to stdout */</span></a>
+<a class="sourceLine" id="cb197-17" title="17">        <span class="dt">char</span> *args[] = {<span class="st">&quot;cat&quot;</span>, NULL};</a>
+<a class="sourceLine" id="cb197-18" title="18"></a>
+<a class="sourceLine" id="cb197-19" title="19">        close(STDIN_FILENO);</a>
+<a class="sourceLine" id="cb197-20" title="20">        dup2(fds[<span class="dv">0</span>], STDIN_FILENO);</a>
+<a class="sourceLine" id="cb197-21" title="21">        execvp(args[<span class="dv">0</span>], args);</a>
+<a class="sourceLine" id="cb197-22" title="22">    }</a>
+<a class="sourceLine" id="cb197-23" title="23">    write(fds[<span class="dv">1</span>], msg, strlen(msg));</a>
 <a class="sourceLine" id="cb197-24" title="24">    printf(<span class="st">&quot;100%% good girl.&quot;</span>);</a>
-<a class="sourceLine" id="cb197-25" title="25"></a>
-<a class="sourceLine" id="cb197-26" title="26">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb197-27" title="27">}</a></code></pre></div>
+<a class="sourceLine" id="cb197-25" title="25">    wait(NULL);</a>
+<a class="sourceLine" id="cb197-26" title="26"></a>
+<a class="sourceLine" id="cb197-27" title="27">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb197-28" title="28">}</a></code></pre></div>
 <ul>
 <li>There are <em>multiple</em> bugs here. Find them and squish ’em.</li>
 </ul>
@@ -4781,7 +4784,7 @@ Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;.
 <a class="sourceLine" id="cb199-28" title="28"></a>
 <a class="sourceLine" id="cb199-29" title="29">    sleep(slowdown);</a>
 <a class="sourceLine" id="cb199-30" title="30">    <span class="cf">if</span> (write(socket_desc, <span class="st">&quot;.&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client write&quot;</span>);</a>
-<a class="sourceLine" id="cb199-31" title="31">    <span class="cf">if</span> (read(socket_desc, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client read&quot;</span>);</a>
+<a class="sourceLine" id="cb199-31" title="31">    <span class="cf">if</span> (read(socket_desc, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>)   panic(<span class="st">&quot;client read&quot;</span>);</a>
 <a class="sourceLine" id="cb199-32" title="32">    printf(<span class="st">&quot;c: %c</span><span class="sc">\n</span><span class="st">&quot;</span>, b);</a>
 <a class="sourceLine" id="cb199-33" title="33"></a>
 <a class="sourceLine" id="cb199-34" title="34">    close(socket_desc);</a>
@@ -4808,35 +4811,38 @@ Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;.
 <a class="sourceLine" id="cb199-55" title="55"></a>
 <a class="sourceLine" id="cb199-56" title="56">    socket_desc = domain_socket_server_create(ds);</a>
 <a class="sourceLine" id="cb199-57" title="57">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb199-58" title="58">        unlink(ds); <span class="co">/* remove the previous domain socket file if it exists */</span></a>
-<a class="sourceLine" id="cb199-59" title="59">        socket_desc = domain_socket_server_create(ds);</a>
-<a class="sourceLine" id="cb199-60" title="60">        <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) panic(<span class="st">&quot;server domain socket creation&quot;</span>);</a>
-<a class="sourceLine" id="cb199-61" title="61">    }</a>
-<a class="sourceLine" id="cb199-62" title="62"></a>
-<a class="sourceLine" id="cb199-63" title="63">    <span class="co">/* </span><span class="al">TODO</span><span class="co">: change this order. What changes? */</span></a>
-<a class="sourceLine" id="cb199-64" title="64">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client_fast(ds);</a>
-<a class="sourceLine" id="cb199-65" title="65">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client_slow(ds);</a>
-<a class="sourceLine" id="cb199-66" title="66"></a>
-<a class="sourceLine" id="cb199-67" title="67">    <span class="co">/* handle two clients, one after the other */</span></a>
-<a class="sourceLine" id="cb199-68" title="68">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dv">2</span>; i++) {</a>
-<a class="sourceLine" id="cb199-69" title="69">        <span class="dt">int</span> ret, new_client, i;</a>
-<a class="sourceLine" id="cb199-70" title="70">        <span class="dt">char</span> b;</a>
-<a class="sourceLine" id="cb199-71" title="71">        new_client = accept(socket_desc, NULL, NULL);</a>
-<a class="sourceLine" id="cb199-72" title="72">        <span class="cf">if</span> (new_client == -<span class="dv">1</span>) panic(<span class="st">&quot;server accept&quot;</span>);</a>
-<a class="sourceLine" id="cb199-73" title="73"></a>
-<a class="sourceLine" id="cb199-74" title="74">        <span class="co">/* read from, then write to the client! */</span></a>
-<a class="sourceLine" id="cb199-75" title="75">        <span class="cf">if</span> (read(new_client, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server read&quot;</span>);</a>
-<a class="sourceLine" id="cb199-76" title="76">        <span class="cf">if</span> (write(new_client, <span class="st">&quot;*&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server write&quot;</span>);</a>
-<a class="sourceLine" id="cb199-77" title="77">        close(new_client);</a>
-<a class="sourceLine" id="cb199-78" title="78">    }</a>
-<a class="sourceLine" id="cb199-79" title="79"></a>
-<a class="sourceLine" id="cb199-80" title="80">    close(socket_desc);</a>
-<a class="sourceLine" id="cb199-81" title="81"></a>
-<a class="sourceLine" id="cb199-82" title="82">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb199-83" title="83">}</a></code></pre></div>
+<a class="sourceLine" id="cb199-58" title="58">        <span class="co">/* remove the previous domain socket file if it exists */</span></a>
+<a class="sourceLine" id="cb199-59" title="59">        unlink(ds);</a>
+<a class="sourceLine" id="cb199-60" title="60">        socket_desc = domain_socket_server_create(ds);</a>
+<a class="sourceLine" id="cb199-61" title="61">        <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) panic(<span class="st">&quot;server domain socket creation&quot;</span>);</a>
+<a class="sourceLine" id="cb199-62" title="62">    }</a>
+<a class="sourceLine" id="cb199-63" title="63"></a>
+<a class="sourceLine" id="cb199-64" title="64">    <span class="co">/* </span><span class="al">TODO</span><span class="co">: change this order. What changes? */</span></a>
+<a class="sourceLine" id="cb199-65" title="65">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client_fast(ds);</a>
+<a class="sourceLine" id="cb199-66" title="66">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client_slow(ds);</a>
+<a class="sourceLine" id="cb199-67" title="67"></a>
+<a class="sourceLine" id="cb199-68" title="68">    <span class="co">/* handle two clients, one after the other */</span></a>
+<a class="sourceLine" id="cb199-69" title="69">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dv">2</span>; i++) {</a>
+<a class="sourceLine" id="cb199-70" title="70">        <span class="dt">int</span> ret, new_client, i;</a>
+<a class="sourceLine" id="cb199-71" title="71">        <span class="dt">char</span> b;</a>
+<a class="sourceLine" id="cb199-72" title="72">        new_client = accept(socket_desc, NULL, NULL);</a>
+<a class="sourceLine" id="cb199-73" title="73">        <span class="cf">if</span> (new_client == -<span class="dv">1</span>) panic(<span class="st">&quot;server accept&quot;</span>);</a>
+<a class="sourceLine" id="cb199-74" title="74"></a>
+<a class="sourceLine" id="cb199-75" title="75">        <span class="co">/* read from, then write to the client! */</span></a>
+<a class="sourceLine" id="cb199-76" title="76">        <span class="cf">if</span> (read(new_client, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>)   panic(<span class="st">&quot;server read&quot;</span>);</a>
+<a class="sourceLine" id="cb199-77" title="77">        <span class="cf">if</span> (write(new_client, <span class="st">&quot;*&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server write&quot;</span>);</a>
+<a class="sourceLine" id="cb199-78" title="78">        close(new_client);</a>
+<a class="sourceLine" id="cb199-79" title="79">    }</a>
+<a class="sourceLine" id="cb199-80" title="80"></a>
+<a class="sourceLine" id="cb199-81" title="81">    close(socket_desc);</a>
+<a class="sourceLine" id="cb199-82" title="82">    <span class="co">/* reap all children */</span></a>
+<a class="sourceLine" id="cb199-83" title="83">    <span class="cf">while</span> (wait(NULL) != -<span class="dv">1</span>) ;</a>
+<a class="sourceLine" id="cb199-84" title="84"></a>
+<a class="sourceLine" id="cb199-85" title="85">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb199-86" title="86">}</a></code></pre></div>
 <ul>
 <li>See the TODO in the <code>main</code>. When you change the order, what do you see?</li>
-<li>Is there a problem when we use both fast and slow clients?</li>
+<li>Is there generally a problem when we use both fast and slow clients?</li>
 </ul>
 <h2 id="revisiting-ipc-with-multiple-clients"><span class="header-section-number">7.1</span> Revisiting IPC with Multiple Clients</h2>
 <h3 id="system-services"><span class="header-section-number">7.1.1</span> System Services</h3>
@@ -4869,18 +4875,35 @@ Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;.
 <li>a client, <em>B</em>, connects to the same service.</li>
 <li><em>B</em> immediately sends a request, while <em>A</em> goes into a <code>sleep(100)</code> (or, more realistically, simply does some expensive computation).</li>
 </ol>
-<p>If the server issues a <code>read</code> on the descriptor for <em>A</em>, it will block for 100 seconds! Worse, it won’t service <em>B</em> despite it being available and making a request immediately. Yikes.</p>
+<p>If the server issues a <code>read</code> on the descriptor for <em>A</em>, it will block for 100 seconds! Worse, it won’t service <em>B</em> despite it making a request immediately. Why are we waiting for a slow client when there is a fast client with data already available? Yikes.</p>
 <p>We’d really like a facility that can tell us <em>which</em> descriptor’s have data and are ready to be read from, and which are ready to be written to! Luckily, UNIX comes to the rescue with its <em>event notification</em> APIs. These are APIs that let us understand when a file descriptor has an <em>event</em> (i.e. a client writes to it) and is now readable or writable. These include three functions: <code>poll</code>, <code>select</code>, and (the more modern) <code>epoll</code>. Lets look at how to use <code>poll</code>!</p>
+<h3 id="event-loops-and-poll"><span class="header-section-number">7.1.3</span> Event Loops and <code>poll</code></h3>
+<p>Lets look at some pseudocode for using <code>poll</code>.</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb201-1" title="1">fdinfo[NUM_FDS] <span class="op">=</span> {</a>
+<a class="sourceLine" id="cb201-2" title="2">    <span class="co"># initialized to all fds of interest, listening for read and write events</span></a>
+<a class="sourceLine" id="cb201-3" title="3">}</a>
+<a class="sourceLine" id="cb201-4" title="4"><span class="cf">while</span> <span class="va">True</span>:</a>
+<a class="sourceLine" id="cb201-5" title="5">    poll(fdinfo, NUM_FDS, <span class="dv">-1</span>) <span class="co"># -1 = no timeout</span></a>
+<a class="sourceLine" id="cb201-6" title="6">    <span class="cf">for</span> fdi <span class="kw">in</span> fdinfo:</a>
+<a class="sourceLine" id="cb201-7" title="7">        <span class="co"># check and respond to each of the possible events</span></a>
+<a class="sourceLine" id="cb201-8" title="8">        <span class="cf">if</span> fdi.revents <span class="op">&amp;</span> (POLLHUP <span class="op">|</span> POLLERR):</a>
+<a class="sourceLine" id="cb201-9" title="9">            <span class="co"># process closed fds</span></a>
+<a class="sourceLine" id="cb201-10" title="10">        <span class="cf">if</span> fdi.revents <span class="op">&amp;</span> POLLIN:</a>
+<a class="sourceLine" id="cb201-11" title="11">            <span class="co"># read off of, or accept on the file desciptor</span></a>
+<a class="sourceLine" id="cb201-12" title="12">        <span class="cf">if</span> fdi.revents <span class="op">&amp;</span> POLLOUT:</a>
+<a class="sourceLine" id="cb201-13" title="13">            <span class="co"># write to the file desciptor</span></a></code></pre></div>
+<p>This yields what is called an <em>event loop</em> – we loop, each time processing a single event. You see event loops in most GUIs (where each event is a key/mouse press), and in web programming where javascript callbacks are executed by the browser’s event loop. Importantly, <em>we only process descriptors that have events, thus can avoid blocking on descriptors that don’t have available data!</em> This solves our previous problem: a server won’t block awaiting communication with a client that is delayed, or never writes to a channel, instead only <code>read</code>ing/<code>write</code>ing to descriptors that are ready.</p>
+<h3 id="poll-api"><span class="header-section-number">7.1.4</span> <code>poll</code> API</h3>
 <ul>
 <li><code>int poll(struct pollfd *fds, nfds_t nfds, int timeout)</code> - We pass in an array of <code>struct pollfd</code>s of length <code>nfds</code>, with each entry corresponding to a single file descriptor we want to get information about. The <code>timeout</code> is in milliseconds, and enables <code>poll</code> to return after that amount of time returns even if none of the file descriptors has an event. A negative <code>timeout</code> is interpreted as “infinite”, while <code>0</code> means that <code>poll</code> will return immediately with any current events.</li>
 </ul>
 <p>Lets check out the <code>struct pollfd</code>:</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb201-1" title="1"><span class="kw">struct</span> pollfd {</a>
-<a class="sourceLine" id="cb201-2" title="2">    <span class="dt">int</span>   fd;         <span class="co">/* file descriptor */</span></a>
-<a class="sourceLine" id="cb201-3" title="3">    <span class="dt">short</span> events;     <span class="co">/* requested events */</span></a>
-<a class="sourceLine" id="cb201-4" title="4">    <span class="dt">short</span> revents;    <span class="co">/* returned events */</span></a>
-<a class="sourceLine" id="cb201-5" title="5">};</a></code></pre></div>
-<p>When we make the <code>poll</code> call, we populate the <code>events</code> field with which events we’re interested in retrieving. These include:</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb202-1" title="1"><span class="kw">struct</span> pollfd {</a>
+<a class="sourceLine" id="cb202-2" title="2">    <span class="dt">int</span>   fd;         <span class="co">/* file descriptor */</span></a>
+<a class="sourceLine" id="cb202-3" title="3">    <span class="dt">short</span> events;     <span class="co">/* requested events */</span></a>
+<a class="sourceLine" id="cb202-4" title="4">    <span class="dt">short</span> revents;    <span class="co">/* returned events */</span></a>
+<a class="sourceLine" id="cb202-5" title="5">};</a></code></pre></div>
+<p>When we make the <code>poll</code> call, we populate the <code>fd</code> and <code>events</code> fields with the file descriptors we’re interested in, and which events we’re interested in retrieving. <code>events</code> is a “bitmap” which means each bit in the value denotes a different type of event, and we bitwise <em>or</em> event types together when writing them into <code>events</code>. These event types include:</p>
 <ul>
 <li><code>POLLIN</code> - is there data available to be <code>read</code>? If the file descriptor is the domain socket that we use for <code>accept</code>, then this <code>POLLIN</code> means that a new client request is ready to <code>accept</code>.</li>
 <li><code>POLLOUT</code> - is there data available to be <code>write</code>n?</li>
@@ -4888,23 +4911,11 @@ Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;.
 <p>We can almost always set <code>events = POLLIN | POLLOUT</code> as we wait to wait for both.</p>
 <p>When <code>poll</code> returns, we determine which events happened by looking at the contents of the <code>revents</code> field. In addition to <code>POLLIN</code> and <code>POLLOUT</code> which tell us if data is ready to be <code>read</code> or <code>written</code>, we have the following:</p>
 <ul>
-<li><code>POLLHUP</code> - The other side of the people closed its descriptor! Subsequent <code>read</code>s to the descriptor will return <code>0</code>. We can likely <code>close</code> our descriptor.</li>
+<li><code>POLLHUP</code> - The other side of the pipe closed its descriptor! Subsequent <code>read</code>s to the descriptor will return <code>0</code>. We can likely <code>close</code> our descriptor.</li>
 <li><code>POLLERR</code> - Again, there was some sort of a problem with the descriptor, and we should likely <code>close</code> it, terminating communication.</li>
 </ul>
-<h3 id="event-loops-and-poll"><span class="header-section-number">7.1.3</span> Event Loops and <code>poll</code></h3>
-<p>Lets look at some pseudocode for using <code>poll</code>.</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb202-1" title="1"><span class="cf">while</span> <span class="va">True</span>:</a>
-<a class="sourceLine" id="cb202-2" title="2">    poll(fds, <span class="bu">len</span>(fds), <span class="dv">-1</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb202-3" title="3">    foreach fd <span class="kw">in</span> fds:</a>
-<a class="sourceLine" id="cb202-4" title="4">        <span class="cf">if</span> fd.revents <span class="op">&amp;</span> (POLLHUP <span class="op">|</span> POLLERR):</a>
-<a class="sourceLine" id="cb202-5" title="5">            <span class="co"># process closed fds</span></a>
-<a class="sourceLine" id="cb202-6" title="6">        <span class="cf">if</span> fd.revents <span class="op">&amp;</span> POLLIN:</a>
-<a class="sourceLine" id="cb202-7" title="7">            <span class="co"># read off of, or accept on the file desciptor</span></a>
-<a class="sourceLine" id="cb202-8" title="8">        <span class="cf">if</span> fd.revents <span class="op">&amp;</span> POLLOUT:</a>
-<a class="sourceLine" id="cb202-9" title="9">            <span class="co"># write to the file desciptor</span></a></code></pre></div>
-<p>This yields what is called an <em>event loop</em> – we loop, each time processing a single event. You see event loops in most GUIs (where each event is a key/mouse press), and in web programming where javascript callbacks are executed by the browser’s event loop. Importantly, <em>we only process descriptors that have events, thus can avoid blocking on descriptors that don’t have available data!</em> This solves our previous problem: a server won’t block awaiting communication with a client that is delayed, or never writes to a channel, instead only <code>read</code>ing/<code>write</code>ing to descriptors that are ready.</p>
-<h3 id="example-poll-code"><span class="header-section-number">7.1.4</span> Example <code>poll</code> Code</h3>
-<p>Lets put this all together. For simplicity, in this class, we’ll assume that we can always <code>write</code> to a descriptor without blocking. This isn’t generally true if you’re writing large amounts of data, and in “real code” you’d also want to handle <code>POLLOUT</code> appropriately.</p>
+<h3 id="example-poll-code"><span class="header-section-number">7.1.5</span> Example <code>poll</code> Code</h3>
+<p>Lets put this all together. For simplicity, in this example, we’ll assume that we can always <code>write</code> to a descriptor without blocking. This isn’t generally true if you’re writing large amounts of data, and in “real code” you’d also want to handle <code>POLLOUT</code> appropriately.</p>
 <div class="sourceCode" id="cb203"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb203-1" title="1"><span class="pp">#include </span><span class="im">&quot;06/domain_sockets.h&quot;</span></a>
 <a class="sourceLine" id="cb203-2" title="2"></a>
 <a class="sourceLine" id="cb203-3" title="3"><span class="pp">#include </span><span class="im">&lt;errno.h&gt;</span></a>
@@ -4937,7 +4948,7 @@ Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;.
 <a class="sourceLine" id="cb203-30" title="30">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dv">5</span>; i++) {</a>
 <a class="sourceLine" id="cb203-31" title="31">        <span class="dt">char</span> b;</a>
 <a class="sourceLine" id="cb203-32" title="32">        <span class="cf">if</span> (write(socket_desc, <span class="st">&quot;.&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client write&quot;</span>);</a>
-<a class="sourceLine" id="cb203-33" title="33">        <span class="cf">if</span> (read(socket_desc, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client read&quot;</span>);</a>
+<a class="sourceLine" id="cb203-33" title="33">        <span class="cf">if</span> (read(socket_desc, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>)   panic(<span class="st">&quot;client read&quot;</span>);</a>
 <a class="sourceLine" id="cb203-34" title="34">        printf(<span class="st">&quot;c: %c</span><span class="sc">\n</span><span class="st">&quot;</span>, b);</a>
 <a class="sourceLine" id="cb203-35" title="35">    }</a>
 <a class="sourceLine" id="cb203-36" title="36"></a>
@@ -4945,85 +4956,96 @@ Server received message (sz 35): &quot;Citizen 4543: Penny for Pawsident!&quot;.
 <a class="sourceLine" id="cb203-38" title="38">    exit(EXIT_SUCCESS);</a>
 <a class="sourceLine" id="cb203-39" title="39">}</a>
 <a class="sourceLine" id="cb203-40" title="40"></a>
-<a class="sourceLine" id="cb203-41" title="41"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb203-42" title="42">server(<span class="dt">char</span> *filename)</a>
-<a class="sourceLine" id="cb203-43" title="43">{</a>
-<a class="sourceLine" id="cb203-44" title="44">    <span class="dt">int</span> socket_desc, num_fds = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb203-45" title="45">    <span class="kw">struct</span> pollfd poll_fds[<span class="dv">2</span>];</a>
-<a class="sourceLine" id="cb203-46" title="46"></a>
-<a class="sourceLine" id="cb203-47" title="47">    <span class="co">/*** Initialize the domain socket and its pollfd ***/</span></a>
-<a class="sourceLine" id="cb203-48" title="48">    socket_desc = domain_socket_server_create(filename);</a>
-<a class="sourceLine" id="cb203-49" title="49">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb203-50" title="50">        unlink(filename); <span class="co">/* remove the previous domain socket file if it exists */</span></a>
-<a class="sourceLine" id="cb203-51" title="51">        socket_desc = domain_socket_server_create(filename);</a>
-<a class="sourceLine" id="cb203-52" title="52">        <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) panic(<span class="st">&quot;server domain socket creation&quot;</span>);</a>
-<a class="sourceLine" id="cb203-53" title="53">    }</a>
-<a class="sourceLine" id="cb203-54" title="54"></a>
-<a class="sourceLine" id="cb203-55" title="55">    memset(poll_fds, <span class="dv">0</span>, <span class="kw">sizeof</span>(<span class="kw">struct</span> pollfd) * <span class="dv">2</span>);</a>
-<a class="sourceLine" id="cb203-56" title="56">    poll_fds[num_fds] = (<span class="kw">struct</span> pollfd) {</a>
-<a class="sourceLine" id="cb203-57" title="57">        .fd = socket_desc,</a>
-<a class="sourceLine" id="cb203-58" title="58">        .events = POLLIN,</a>
-<a class="sourceLine" id="cb203-59" title="59">    };</a>
-<a class="sourceLine" id="cb203-60" title="60">    num_fds++;</a>
-<a class="sourceLine" id="cb203-61" title="61"></a>
-<a class="sourceLine" id="cb203-62" title="62">    <span class="co">/*** The event loop ***/</span></a>
-<a class="sourceLine" id="cb203-63" title="63">    <span class="cf">while</span> (<span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb203-64" title="64">        <span class="dt">int</span> ret, new_client, i;</a>
+<a class="sourceLine" id="cb203-41" title="41"><span class="co">/* we can track max 16 fds */</span></a>
+<a class="sourceLine" id="cb203-42" title="42"><span class="pp">#define MAX_FDS 16</span></a>
+<a class="sourceLine" id="cb203-43" title="43"></a>
+<a class="sourceLine" id="cb203-44" title="44"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb203-45" title="45">server(<span class="dt">char</span> *filename)</a>
+<a class="sourceLine" id="cb203-46" title="46">{</a>
+<a class="sourceLine" id="cb203-47" title="47">    <span class="dt">int</span> socket_desc, num_fds = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb203-48" title="48">    <span class="kw">struct</span> pollfd poll_fds[MAX_FDS];</a>
+<a class="sourceLine" id="cb203-49" title="49"></a>
+<a class="sourceLine" id="cb203-50" title="50">    <span class="co">/*** Initialize the domain socket and its pollfd ***/</span></a>
+<a class="sourceLine" id="cb203-51" title="51">    socket_desc = domain_socket_server_create(filename);</a>
+<a class="sourceLine" id="cb203-52" title="52">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb203-53" title="53">        unlink(filename); <span class="co">/* remove the previous domain socket file if it exists */</span></a>
+<a class="sourceLine" id="cb203-54" title="54">        socket_desc = domain_socket_server_create(filename);</a>
+<a class="sourceLine" id="cb203-55" title="55">        <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) panic(<span class="st">&quot;server domain socket creation&quot;</span>);</a>
+<a class="sourceLine" id="cb203-56" title="56">    }</a>
+<a class="sourceLine" id="cb203-57" title="57"></a>
+<a class="sourceLine" id="cb203-58" title="58">    <span class="co">/* Initialize all pollfd structs to 0 */</span></a>
+<a class="sourceLine" id="cb203-59" title="59">    memset(poll_fds, <span class="dv">0</span>, <span class="kw">sizeof</span>(<span class="kw">struct</span> pollfd) * MAX_FDS);</a>
+<a class="sourceLine" id="cb203-60" title="60">    poll_fds[num_fds] = (<span class="kw">struct</span> pollfd) {</a>
+<a class="sourceLine" id="cb203-61" title="61">        .fd = socket_desc,</a>
+<a class="sourceLine" id="cb203-62" title="62">        .events = POLLIN,</a>
+<a class="sourceLine" id="cb203-63" title="63">    };</a>
+<a class="sourceLine" id="cb203-64" title="64">    num_fds++;</a>
 <a class="sourceLine" id="cb203-65" title="65"></a>
-<a class="sourceLine" id="cb203-66" title="66">        <span class="co">/*** Poll; if we don&#39;t get a client for a second, exit ***/</span></a>
-<a class="sourceLine" id="cb203-67" title="67">        ret = poll(poll_fds, num_fds, <span class="dv">1000</span>);</a>
-<a class="sourceLine" id="cb203-68" title="68">        <span class="co">/* If we timeout or error, break out of the loop */</span></a>
-<a class="sourceLine" id="cb203-69" title="69">        <span class="cf">if</span> (ret == <span class="dv">0</span> || ret == -<span class="dv">1</span>) <span class="cf">break</span>;</a>
-<a class="sourceLine" id="cb203-70" title="70"></a>
-<a class="sourceLine" id="cb203-71" title="71">        <span class="co">/*** Accept file descriptor has a new client connecting! ***/</span></a>
-<a class="sourceLine" id="cb203-72" title="72">        <span class="cf">if</span> (poll_fds[<span class="dv">0</span>].revents &amp; POLLIN) {</a>
-<a class="sourceLine" id="cb203-73" title="73">            <span class="cf">if</span> ((new_client = accept(socket_desc, NULL, NULL)) == -<span class="dv">1</span>) panic(<span class="st">&quot;server accept&quot;</span>);</a>
-<a class="sourceLine" id="cb203-74" title="74">            <span class="co">/* add a new file descriptor! */</span></a>
-<a class="sourceLine" id="cb203-75" title="75">            poll_fds[num_fds] = (<span class="kw">struct</span> pollfd) {</a>
-<a class="sourceLine" id="cb203-76" title="76">                .fd = new_client,</a>
-<a class="sourceLine" id="cb203-77" title="77">                .events = POLLIN</a>
-<a class="sourceLine" id="cb203-78" title="78">            };</a>
-<a class="sourceLine" id="cb203-79" title="79">            num_fds++;</a>
-<a class="sourceLine" id="cb203-80" title="80">            poll_fds[<span class="dv">0</span>].revents = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb203-81" title="81">        }</a>
-<a class="sourceLine" id="cb203-82" title="82">        <span class="co">/*** Communicate with clients! ***/</span></a>
-<a class="sourceLine" id="cb203-83" title="83">        <span class="cf">for</span> (i = <span class="dv">1</span>; i &lt; num_fds; i++) {</a>
-<a class="sourceLine" id="cb203-84" title="84">            <span class="cf">if</span> (poll_fds[i].revents &amp; (POLLHUP | POLLERR)) {</a>
-<a class="sourceLine" id="cb203-85" title="85">                poll_fds[i].revents = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb203-86" title="86">                close(poll_fds[i].fd);</a>
-<a class="sourceLine" id="cb203-87" title="87">                <span class="co">/* replace the fd to fill the gap */</span></a>
-<a class="sourceLine" id="cb203-88" title="88">                poll_fds[i] = poll_fds[num_fds - <span class="dv">1</span>];</a>
-<a class="sourceLine" id="cb203-89" title="89">                num_fds--;</a>
-<a class="sourceLine" id="cb203-90" title="90">                printf(<span class="st">&quot;server: closing client connection</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb203-91" title="91"></a>
-<a class="sourceLine" id="cb203-92" title="92">                <span class="cf">continue</span>;</a>
-<a class="sourceLine" id="cb203-93" title="93">            }</a>
-<a class="sourceLine" id="cb203-94" title="94">            <span class="cf">if</span> (poll_fds[i].revents &amp; POLLIN) {</a>
-<a class="sourceLine" id="cb203-95" title="95">                <span class="dt">char</span> b;</a>
-<a class="sourceLine" id="cb203-96" title="96"></a>
-<a class="sourceLine" id="cb203-97" title="97">                <span class="co">/* our server is simply sending a &#39;*&#39; for each input character */</span></a>
-<a class="sourceLine" id="cb203-98" title="98">                <span class="cf">if</span> (read(poll_fds[i].fd, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server read&quot;</span>);</a>
-<a class="sourceLine" id="cb203-99" title="99">                printf(<span class="st">&quot;s: %c</span><span class="sc">\n</span><span class="st">&quot;</span>, b);</a>
-<a class="sourceLine" id="cb203-100" title="100">                <span class="cf">if</span> (write(new_client, <span class="st">&quot;*&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server write&quot;</span>);</a>
-<a class="sourceLine" id="cb203-101" title="101">            }</a>
-<a class="sourceLine" id="cb203-102" title="102">            poll_fds[i].revents = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb203-103" title="103">        }</a>
-<a class="sourceLine" id="cb203-104" title="104">    }</a>
-<a class="sourceLine" id="cb203-105" title="105">    close(socket_desc);</a>
-<a class="sourceLine" id="cb203-106" title="106"></a>
-<a class="sourceLine" id="cb203-107" title="107">    exit(EXIT_SUCCESS);</a>
-<a class="sourceLine" id="cb203-108" title="108">}</a>
-<a class="sourceLine" id="cb203-109" title="109"></a>
-<a class="sourceLine" id="cb203-110" title="110"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb203-111" title="111">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb203-112" title="112">{</a>
-<a class="sourceLine" id="cb203-113" title="113">    <span class="dt">char</span> *ds = <span class="st">&quot;domain_socket&quot;</span>;</a>
-<a class="sourceLine" id="cb203-114" title="114"></a>
-<a class="sourceLine" id="cb203-115" title="115">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client(ds);</a>
-<a class="sourceLine" id="cb203-116" title="116">    server(ds);</a>
-<a class="sourceLine" id="cb203-117" title="117"></a>
-<a class="sourceLine" id="cb203-118" title="118">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb203-119" title="119">}</a></code></pre></div>
+<a class="sourceLine" id="cb203-66" title="66">    <span class="co">/*** The event loop ***/</span></a>
+<a class="sourceLine" id="cb203-67" title="67">    <span class="cf">while</span> (<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb203-68" title="68">        <span class="dt">int</span> ret, new_client, i;</a>
+<a class="sourceLine" id="cb203-69" title="69"></a>
+<a class="sourceLine" id="cb203-70" title="70">        <span class="co">/*** Poll; if we don&#39;t get a client for a second, exit ***/</span></a>
+<a class="sourceLine" id="cb203-71" title="71">        ret = poll(poll_fds, num_fds, <span class="dv">1000</span>);</a>
+<a class="sourceLine" id="cb203-72" title="72">        <span class="cf">if</span> (ret == -<span class="dv">1</span>) panic(<span class="st">&quot;poll error&quot;</span>);</a>
+<a class="sourceLine" id="cb203-73" title="73">        <span class="co">/*</span></a>
+<a class="sourceLine" id="cb203-74" title="74"><span class="co">         * If we timeout, break out of the loop.</span></a>
+<a class="sourceLine" id="cb203-75" title="75"><span class="co">         * This isn&#39;t what you&#39;d normally do as servers stick around!</span></a>
+<a class="sourceLine" id="cb203-76" title="76"><span class="co">         */</span></a>
+<a class="sourceLine" id="cb203-77" title="77">        <span class="cf">if</span> (ret == <span class="dv">0</span>) <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb203-78" title="78"></a>
+<a class="sourceLine" id="cb203-79" title="79">        <span class="co">/*** Accept file descriptor has a new client connecting! ***/</span></a>
+<a class="sourceLine" id="cb203-80" title="80">        <span class="cf">if</span> (poll_fds[<span class="dv">0</span>].revents &amp; POLLIN) {</a>
+<a class="sourceLine" id="cb203-81" title="81">            <span class="cf">if</span> ((new_client = accept(socket_desc, NULL, NULL)) == -<span class="dv">1</span>) panic(<span class="st">&quot;server accept&quot;</span>);</a>
+<a class="sourceLine" id="cb203-82" title="82">            <span class="co">/* add a new file descriptor! */</span></a>
+<a class="sourceLine" id="cb203-83" title="83">            poll_fds[num_fds] = (<span class="kw">struct</span> pollfd) {</a>
+<a class="sourceLine" id="cb203-84" title="84">                .fd = new_client,</a>
+<a class="sourceLine" id="cb203-85" title="85">                .events = POLLIN</a>
+<a class="sourceLine" id="cb203-86" title="86">            };</a>
+<a class="sourceLine" id="cb203-87" title="87">            num_fds++;</a>
+<a class="sourceLine" id="cb203-88" title="88">            poll_fds[<span class="dv">0</span>].revents = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb203-89" title="89">            printf(<span class="st">&quot;server: created client connection %d</span><span class="sc">\n</span><span class="st">&quot;</span>, new_client);</a>
+<a class="sourceLine" id="cb203-90" title="90">        }</a>
+<a class="sourceLine" id="cb203-91" title="91">        <span class="co">/*** Communicate with clients! ***/</span></a>
+<a class="sourceLine" id="cb203-92" title="92">        <span class="cf">for</span> (i = <span class="dv">1</span>; i &lt; num_fds; i++) {</a>
+<a class="sourceLine" id="cb203-93" title="93">            <span class="cf">if</span> (poll_fds[i].revents &amp; (POLLHUP | POLLERR)) {</a>
+<a class="sourceLine" id="cb203-94" title="94">                printf(<span class="st">&quot;server: closing client connection %d</span><span class="sc">\n</span><span class="st">&quot;</span>, poll_fds[i].fd);</a>
+<a class="sourceLine" id="cb203-95" title="95">                poll_fds[i].revents = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb203-96" title="96">                close(poll_fds[i].fd);</a>
+<a class="sourceLine" id="cb203-97" title="97">                <span class="co">/* replace the fd to fill the gap */</span></a>
+<a class="sourceLine" id="cb203-98" title="98">                poll_fds[i] = poll_fds[num_fds - <span class="dv">1</span>];</a>
+<a class="sourceLine" id="cb203-99" title="99">                num_fds--;</a>
+<a class="sourceLine" id="cb203-100" title="100">                <span class="co">/* make sure to check the fd we used to fill the gap */</span></a>
+<a class="sourceLine" id="cb203-101" title="101">                i--;</a>
+<a class="sourceLine" id="cb203-102" title="102"></a>
+<a class="sourceLine" id="cb203-103" title="103">                <span class="cf">continue</span>;</a>
+<a class="sourceLine" id="cb203-104" title="104">            }</a>
+<a class="sourceLine" id="cb203-105" title="105">            <span class="cf">if</span> (poll_fds[i].revents &amp; POLLIN) {</a>
+<a class="sourceLine" id="cb203-106" title="106">                <span class="dt">char</span> b;</a>
+<a class="sourceLine" id="cb203-107" title="107"></a>
+<a class="sourceLine" id="cb203-108" title="108">                poll_fds[i].revents = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb203-109" title="109">                <span class="co">/* our server is simply sending a &#39;*&#39; for each input character */</span></a>
+<a class="sourceLine" id="cb203-110" title="110">                <span class="cf">if</span> (read(poll_fds[i].fd, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server read&quot;</span>);</a>
+<a class="sourceLine" id="cb203-111" title="111">                <span class="cf">if</span> (write(poll_fds[i].fd, <span class="st">&quot;*&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server write&quot;</span>);</a>
+<a class="sourceLine" id="cb203-112" title="112">            }</a>
+<a class="sourceLine" id="cb203-113" title="113">        }</a>
+<a class="sourceLine" id="cb203-114" title="114">    }</a>
+<a class="sourceLine" id="cb203-115" title="115">    close(socket_desc);</a>
+<a class="sourceLine" id="cb203-116" title="116"></a>
+<a class="sourceLine" id="cb203-117" title="117">    exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb203-118" title="118">}</a>
+<a class="sourceLine" id="cb203-119" title="119"></a>
+<a class="sourceLine" id="cb203-120" title="120"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb203-121" title="121">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb203-122" title="122">{</a>
+<a class="sourceLine" id="cb203-123" title="123">    <span class="dt">char</span> *ds = <span class="st">&quot;domain_socket&quot;</span>;</a>
+<a class="sourceLine" id="cb203-124" title="124"></a>
+<a class="sourceLine" id="cb203-125" title="125">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client(ds);</a>
+<a class="sourceLine" id="cb203-126" title="126">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client(ds);</a>
+<a class="sourceLine" id="cb203-127" title="127">    server(ds);</a>
+<a class="sourceLine" id="cb203-128" title="128"></a>
+<a class="sourceLine" id="cb203-129" title="129">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb203-130" title="130">}</a></code></pre></div>
 <h1 id="libraries"><span class="header-section-number">8</span> Libraries</h1>
 <p>We’re used to writing our own programs, and like to think of the code we write being relatively self-contained. In contrast, quite a bit of <em>system programming</em> is about providing functionality that can be used by <em>any program on the system</em>. What if you wanted to implement the world’s best key-value store, and wanted to enable anyone to use your implementation!?</p>
 <p>We think of these <em>shared</em> functionalities as falling into one of two categories:</p>
