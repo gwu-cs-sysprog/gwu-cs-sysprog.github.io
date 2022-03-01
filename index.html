@@ -249,7 +249,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#libraries"><span class="toc-section-number">8</span> Libraries</a><ul>
         <li><a href="#libraries---goals-and-overview"><span class="toc-section-number">8.1</span> Libraries - Goals and Overview</a></li>
         <li><a href="#libraries---header-files"><span class="toc-section-number">8.2</span> Libraries - Header Files</a></li>
-        <li><a href="#linking-undefined-symbols-to-references-across-objects"><span class="toc-section-number">8.3</span> Linking Undefined Symbols to References Across Objects</a></li>
+        <li><a href="#linking-undefined-symbols-to-references-across-objects"><span class="toc-section-number">8.3</span> Linking Undefined Symbols to References Across Objects</a><ul>
+        <li><a href="#elf-object-format"><span class="toc-section-number">8.3.1</span> ELF Object Format</a></li>
+        <li><a href="#linking-summary"><span class="toc-section-number">8.3.2</span> Linking Summary</a></li>
+        </ul></li>
         <li><a href="#static-libraries"><span class="toc-section-number">8.4</span> Static Libraries</a><ul>
         <li><a href="#saving-memory-with-static-libraries"><span class="toc-section-number">8.4.1</span> Saving Memory with Static Libraries</a></li>
         </ul></li>
@@ -427,7 +430,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x56234d813149
+Hex and pointers: 7fffffffffffffff, 0x55e185dbe149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -547,8 +550,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffe6f3d0e60 == 0x7ffe6f3d0e60; 6 == 6
-nth index: 0x7ffe6f3d0e64 == 0x7ffe6f3d0e64; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffdd58e6860 == 0x7ffdd58e6860; 6 == 6
+nth index: 0x7ffdd58e6864 == 0x7ffdd58e6864; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -571,7 +574,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffda567c9b4 == 0x7ffda567c9b4; 7 == 7</code></pre>
+<pre><code>nth index: 0x7fff0dc000e4 == 0x7fff0dc000e4; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -595,10 +598,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffd396dc7e0 &amp; 0x7ffd396dc7f4
-idx 1 @ 0x7ffd396dc7e4 &amp; 0x7ffd396dc7f5
-idx 2 @ 0x7ffd396dc7e8 &amp; 0x7ffd396dc7f6
-idx 3 @ 0x7ffd396dc7ec &amp; 0x7ffd396dc7f7</code></pre>
+<pre><code>idx 0 @ 0x7ffd041570f0 &amp; 0x7ffd04157104
+idx 1 @ 0x7ffd041570f4 &amp; 0x7ffd04157105
+idx 2 @ 0x7ffd041570f8 &amp; 0x7ffd04157106
+idx 3 @ 0x7ffd041570fc &amp; 0x7ffd04157107</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -835,10 +838,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x564d73dbd010
-b   @ 0x564d73dbd014
-c   @ 0x564d73dbd020
-end @ 0x564d73dbd039
+a   @ 0x55bf7694a010
+b   @ 0x55bf7694a014
+c   @ 0x55bf7694a020
+end @ 0x55bf7694a039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -846,7 +849,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x564d73dbd014
+c.c_c = 0x55bf7694a014
 
 Print out the variables as raw memory
 
@@ -941,8 +944,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x55b8da43c04c
-1: 2 @ 0x55b8da43c044
+<pre><code>0: 4 @ 0x5637c3d6404c
+1: 2 @ 0x5637c3d64044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1271,16 +1274,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -904209465
-3: 32764
-4: -904209466
-5: 32764
-6: -413752771
-7: 22023
-8: 905473992
-9: 32655
-10: -413752848
-11: 22023</code></pre>
+2: -298219913
+3: 32766
+4: -298219914
+5: 32766
+6: 2047402557
+7: 22091
+8: 725438408
+9: 32592
+10: 2047402480
+11: 22091</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1621,7 +1624,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x55cf3a91d004 == 0x55cf3a91d004 != 0x55cf3a91f011</code></pre>
+0x5621257d2004 == 0x5621257d2004 != 0x5621257d4011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2020,15 +2023,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 52581
+     parent pid 166965
 post-fork:
-    returned 52582,
-    current pid 52581
-    parent pid 52575
+    returned 166966,
+    current pid 166965
+    parent pid 166959
 post-fork:
     returned 0,
-    current pid 52582
-    parent pid 52581</code></pre>
+    current pid 166966
+    parent pid 166965</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2092,14 +2095,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 52600 exiting with 0
-Child 52602 exiting with -2
-Child 52603 exiting with -3
-Child 52601 exiting with -1
-Child 52600 exited with exit status 0
-Child 52602 exited with exit status -2
-Child 52603 exited with exit status -3
-Child 52601 exited with exit status -1</code></pre>
+<pre><code>Child 166982 exiting with 0
+Child 166983 exiting with -1
+Child 166984 exiting with -2
+Child 166985 exiting with -3
+Child 166982 exited with exit status 0
+Child 166983 exited with exit status -1
+Child 166984 exited with exit status -2
+Child 166985 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3223,9 +3226,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>52818: We&#39;ve been asked to terminate. Exit!
-52817: Parent asking child (52818) to terminate
-52817: Child process 52818 has exited.</code></pre>
+<pre><code>167200: We&#39;ve been asked to terminate. Exit!
+167199: Parent asking child (167200) to terminate
+167199: Child process 167200 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -4067,11 +4070,11 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - F a.out (17136)
 - F LICENSE (1522)
 - D 09
-- F lectures.html (576336)
+- F lectures.html (579027)
 - D 01
 - D 05
 - D 02
-- F aggregate.md (162944)
+- F aggregate.md (162963)
 - D 04
 - D .git
 - F inline_exec_tmp.c (1658)</code></pre>
@@ -4213,7 +4216,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 <a class="sourceLine" id="cb183-54" title="54">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>msg1: 
-msg2: america for good doggies</code></pre>
+msg2: </code></pre>
 <p>You can see that there are some problems here. If we run it many times, we can see that sometimes we don’t see any messages, sometimes we only see the first, sometimes we only see the second, and other times combinations of all three options. Thus, they are not useful for channel-based communication between multiple processes.</p>
 <p>On the other side, files have a very <em>useful</em> properti that we’d like to use in a good solution to IPC: they <em>have a location in the FS</em> that the communicating processes can both use to find the file, thus avoiding the need for a shared parent.</p>
 <ul>
@@ -4402,8 +4405,7 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>53112: 53112
-53113: 53113</code></pre>
+<pre><code>167494: 167493167494</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4556,15 +4558,15 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 53132 connected to server.
-1. Client 53133 connected to server.
-2. Client 53132 request sent message to server.
-2. Client 53133 request sent message to server.
-Server received message (sz 36): &quot;Citizen 53132: Penny for Pawsident!&quot;. Replying!
-3. Client 53132 reply received from server: Citizen 53132: Penny for Pawsident!
+1. Client 167513 connected to server.
+2. Client 167513 request sent message to server.
+Server received message (sz 37): &quot;Citizen 167513: Penny for Pawsident!&quot;. Replying!
+1. Client 167514 connected to server.
 Server: New client connected with new file descriptor 4.
-Server received message (sz 36): &quot;Citizen 53133: Penny for Pawsident!&quot;. Replying!
-3. Client 53133 reply received from server: Citizen 53133: Penny for Pawsident!</code></pre>
+2. Client 167514 request sent message to server.
+Server received message (sz 37): &quot;Citizen 167514: Penny for Pawsident!&quot;. Replying!
+3. Client 167513 reply received from server: Citizen 167513: Penny for Pawsident!
+3. Client 167514 reply received from server: Citizen 167514: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -4782,64 +4784,66 @@ Server received message (sz 36): &quot;Citizen 53133: Penny for Pawsident!&quot;
 <a class="sourceLine" id="cb199-26" title="26">        exit(EXIT_FAILURE);</a>
 <a class="sourceLine" id="cb199-27" title="27">    }</a>
 <a class="sourceLine" id="cb199-28" title="28"></a>
-<a class="sourceLine" id="cb199-29" title="29">    sleep(slowdown);</a>
-<a class="sourceLine" id="cb199-30" title="30">    <span class="cf">if</span> (write(socket_desc, <span class="st">&quot;.&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client write&quot;</span>);</a>
-<a class="sourceLine" id="cb199-31" title="31">    <span class="cf">if</span> (read(socket_desc, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>)   panic(<span class="st">&quot;client read&quot;</span>);</a>
-<a class="sourceLine" id="cb199-32" title="32">    printf(<span class="st">&quot;c: %c</span><span class="sc">\n</span><span class="st">&quot;</span>, b);</a>
-<a class="sourceLine" id="cb199-33" title="33"></a>
-<a class="sourceLine" id="cb199-34" title="34">    close(socket_desc);</a>
-<a class="sourceLine" id="cb199-35" title="35">    exit(EXIT_SUCCESS);</a>
-<a class="sourceLine" id="cb199-36" title="36">}</a>
-<a class="sourceLine" id="cb199-37" title="37"></a>
-<a class="sourceLine" id="cb199-38" title="38"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb199-39" title="39">client_slow(<span class="dt">char</span> *filename)</a>
-<a class="sourceLine" id="cb199-40" title="40">{</a>
-<a class="sourceLine" id="cb199-41" title="41">    client(filename, <span class="dv">3</span>);</a>
-<a class="sourceLine" id="cb199-42" title="42">}</a>
-<a class="sourceLine" id="cb199-43" title="43"></a>
-<a class="sourceLine" id="cb199-44" title="44"><span class="dt">void</span></a>
-<a class="sourceLine" id="cb199-45" title="45">client_fast(<span class="dt">char</span> *filename)</a>
-<a class="sourceLine" id="cb199-46" title="46">{</a>
-<a class="sourceLine" id="cb199-47" title="47">    client(filename, <span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb199-48" title="48">}</a>
-<a class="sourceLine" id="cb199-49" title="49"></a>
-<a class="sourceLine" id="cb199-50" title="50"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb199-51" title="51">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb199-52" title="52">{</a>
-<a class="sourceLine" id="cb199-53" title="53">    <span class="dt">char</span> *ds = <span class="st">&quot;domain_socket&quot;</span>;</a>
-<a class="sourceLine" id="cb199-54" title="54">    <span class="dt">int</span> socket_desc, i;</a>
-<a class="sourceLine" id="cb199-55" title="55"></a>
-<a class="sourceLine" id="cb199-56" title="56">    socket_desc = domain_socket_server_create(ds);</a>
-<a class="sourceLine" id="cb199-57" title="57">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb199-58" title="58">        <span class="co">/* remove the previous domain socket file if it exists */</span></a>
-<a class="sourceLine" id="cb199-59" title="59">        unlink(ds);</a>
-<a class="sourceLine" id="cb199-60" title="60">        socket_desc = domain_socket_server_create(ds);</a>
-<a class="sourceLine" id="cb199-61" title="61">        <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) panic(<span class="st">&quot;server domain socket creation&quot;</span>);</a>
-<a class="sourceLine" id="cb199-62" title="62">    }</a>
-<a class="sourceLine" id="cb199-63" title="63"></a>
-<a class="sourceLine" id="cb199-64" title="64">    <span class="co">/* </span><span class="al">TODO</span><span class="co">: change this order. What changes? */</span></a>
-<a class="sourceLine" id="cb199-65" title="65">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client_fast(ds);</a>
+<a class="sourceLine" id="cb199-29" title="29">    <span class="co">/* delay after creating connection, but before communicating */</span></a>
+<a class="sourceLine" id="cb199-30" title="30">    sleep(slowdown);</a>
+<a class="sourceLine" id="cb199-31" title="31">    <span class="cf">if</span> (write(socket_desc, <span class="st">&quot;.&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client write&quot;</span>);</a>
+<a class="sourceLine" id="cb199-32" title="32">    <span class="cf">if</span> (read(socket_desc, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>)   panic(<span class="st">&quot;client read&quot;</span>);</a>
+<a class="sourceLine" id="cb199-33" title="33">    printf(<span class="st">&quot;c: %c</span><span class="sc">\n</span><span class="st">&quot;</span>, b);</a>
+<a class="sourceLine" id="cb199-34" title="34"></a>
+<a class="sourceLine" id="cb199-35" title="35">    close(socket_desc);</a>
+<a class="sourceLine" id="cb199-36" title="36">    exit(EXIT_SUCCESS);</a>
+<a class="sourceLine" id="cb199-37" title="37">}</a>
+<a class="sourceLine" id="cb199-38" title="38"></a>
+<a class="sourceLine" id="cb199-39" title="39"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb199-40" title="40">client_slow(<span class="dt">char</span> *filename)</a>
+<a class="sourceLine" id="cb199-41" title="41">{</a>
+<a class="sourceLine" id="cb199-42" title="42">    client(filename, <span class="dv">3</span>);</a>
+<a class="sourceLine" id="cb199-43" title="43">}</a>
+<a class="sourceLine" id="cb199-44" title="44"></a>
+<a class="sourceLine" id="cb199-45" title="45"><span class="dt">void</span></a>
+<a class="sourceLine" id="cb199-46" title="46">client_fast(<span class="dt">char</span> *filename)</a>
+<a class="sourceLine" id="cb199-47" title="47">{</a>
+<a class="sourceLine" id="cb199-48" title="48">    client(filename, <span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb199-49" title="49">}</a>
+<a class="sourceLine" id="cb199-50" title="50"></a>
+<a class="sourceLine" id="cb199-51" title="51"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb199-52" title="52">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb199-53" title="53">{</a>
+<a class="sourceLine" id="cb199-54" title="54">    <span class="dt">char</span> *ds = <span class="st">&quot;domain_socket&quot;</span>;</a>
+<a class="sourceLine" id="cb199-55" title="55">    <span class="dt">int</span> socket_desc, i;</a>
+<a class="sourceLine" id="cb199-56" title="56"></a>
+<a class="sourceLine" id="cb199-57" title="57">    socket_desc = domain_socket_server_create(ds);</a>
+<a class="sourceLine" id="cb199-58" title="58">    <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb199-59" title="59">        <span class="co">/* remove the previous domain socket file if it exists */</span></a>
+<a class="sourceLine" id="cb199-60" title="60">        unlink(ds);</a>
+<a class="sourceLine" id="cb199-61" title="61">        socket_desc = domain_socket_server_create(ds);</a>
+<a class="sourceLine" id="cb199-62" title="62">        <span class="cf">if</span> (socket_desc &lt; <span class="dv">0</span>) panic(<span class="st">&quot;server domain socket creation&quot;</span>);</a>
+<a class="sourceLine" id="cb199-63" title="63">    }</a>
+<a class="sourceLine" id="cb199-64" title="64"></a>
+<a class="sourceLine" id="cb199-65" title="65">    <span class="co">/* </span><span class="al">TODO</span><span class="co">: change this order. What changes? */</span></a>
 <a class="sourceLine" id="cb199-66" title="66">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client_slow(ds);</a>
-<a class="sourceLine" id="cb199-67" title="67"></a>
-<a class="sourceLine" id="cb199-68" title="68">    <span class="co">/* handle two clients, one after the other */</span></a>
-<a class="sourceLine" id="cb199-69" title="69">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dv">2</span>; i++) {</a>
-<a class="sourceLine" id="cb199-70" title="70">        <span class="dt">int</span> ret, new_client, i;</a>
-<a class="sourceLine" id="cb199-71" title="71">        <span class="dt">char</span> b;</a>
-<a class="sourceLine" id="cb199-72" title="72">        new_client = accept(socket_desc, NULL, NULL);</a>
-<a class="sourceLine" id="cb199-73" title="73">        <span class="cf">if</span> (new_client == -<span class="dv">1</span>) panic(<span class="st">&quot;server accept&quot;</span>);</a>
-<a class="sourceLine" id="cb199-74" title="74"></a>
-<a class="sourceLine" id="cb199-75" title="75">        <span class="co">/* read from, then write to the client! */</span></a>
-<a class="sourceLine" id="cb199-76" title="76">        <span class="cf">if</span> (read(new_client, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>)   panic(<span class="st">&quot;server read&quot;</span>);</a>
-<a class="sourceLine" id="cb199-77" title="77">        <span class="cf">if</span> (write(new_client, <span class="st">&quot;*&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server write&quot;</span>);</a>
-<a class="sourceLine" id="cb199-78" title="78">        close(new_client);</a>
-<a class="sourceLine" id="cb199-79" title="79">    }</a>
-<a class="sourceLine" id="cb199-80" title="80"></a>
-<a class="sourceLine" id="cb199-81" title="81">    close(socket_desc);</a>
-<a class="sourceLine" id="cb199-82" title="82">    <span class="co">/* reap all children */</span></a>
-<a class="sourceLine" id="cb199-83" title="83">    <span class="cf">while</span> (wait(NULL) != -<span class="dv">1</span>) ;</a>
-<a class="sourceLine" id="cb199-84" title="84"></a>
-<a class="sourceLine" id="cb199-85" title="85">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb199-86" title="86">}</a></code></pre></div>
+<a class="sourceLine" id="cb199-67" title="67">    <span class="cf">if</span> (fork() == <span class="dv">0</span>) client_fast(ds);</a>
+<a class="sourceLine" id="cb199-68" title="68"></a>
+<a class="sourceLine" id="cb199-69" title="69">    <span class="co">/* handle two clients, one after the other */</span></a>
+<a class="sourceLine" id="cb199-70" title="70">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dv">2</span>; i++) {</a>
+<a class="sourceLine" id="cb199-71" title="71">        <span class="dt">int</span> ret, new_client, i;</a>
+<a class="sourceLine" id="cb199-72" title="72">        <span class="dt">char</span> b;</a>
+<a class="sourceLine" id="cb199-73" title="73"></a>
+<a class="sourceLine" id="cb199-74" title="74">        new_client = accept(socket_desc, NULL, NULL);</a>
+<a class="sourceLine" id="cb199-75" title="75">        <span class="cf">if</span> (new_client == -<span class="dv">1</span>) panic(<span class="st">&quot;server accept&quot;</span>);</a>
+<a class="sourceLine" id="cb199-76" title="76"></a>
+<a class="sourceLine" id="cb199-77" title="77">        <span class="co">/* read from, then write to the client! */</span></a>
+<a class="sourceLine" id="cb199-78" title="78">        <span class="cf">if</span> (read(new_client, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>)   panic(<span class="st">&quot;server read&quot;</span>);</a>
+<a class="sourceLine" id="cb199-79" title="79">        <span class="cf">if</span> (write(new_client, <span class="st">&quot;*&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;server write&quot;</span>);</a>
+<a class="sourceLine" id="cb199-80" title="80">        close(new_client);</a>
+<a class="sourceLine" id="cb199-81" title="81">    }</a>
+<a class="sourceLine" id="cb199-82" title="82"></a>
+<a class="sourceLine" id="cb199-83" title="83">    close(socket_desc);</a>
+<a class="sourceLine" id="cb199-84" title="84">    <span class="co">/* reap all children */</span></a>
+<a class="sourceLine" id="cb199-85" title="85">    <span class="cf">while</span> (wait(NULL) != -<span class="dv">1</span>) ;</a>
+<a class="sourceLine" id="cb199-86" title="86"></a>
+<a class="sourceLine" id="cb199-87" title="87">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb199-88" title="88">}</a></code></pre></div>
 <ul>
 <li>See the TODO in the <code>main</code>. When you change the order, what do you see?</li>
 <li>Is there generally a problem when we use both fast and slow clients?</li>
@@ -4949,7 +4953,7 @@ Server received message (sz 36): &quot;Citizen 53133: Penny for Pawsident!&quot;
 <a class="sourceLine" id="cb203-31" title="31">        <span class="dt">char</span> b;</a>
 <a class="sourceLine" id="cb203-32" title="32">        <span class="cf">if</span> (write(socket_desc, <span class="st">&quot;.&quot;</span>, <span class="dv">1</span>) == -<span class="dv">1</span>) panic(<span class="st">&quot;client write&quot;</span>);</a>
 <a class="sourceLine" id="cb203-33" title="33">        <span class="cf">if</span> (read(socket_desc, &amp;b, <span class="dv">1</span>) == -<span class="dv">1</span>)   panic(<span class="st">&quot;client read&quot;</span>);</a>
-<a class="sourceLine" id="cb203-34" title="34">        printf(<span class="st">&quot;c: %c</span><span class="sc">\n</span><span class="st">&quot;</span>, b);</a>
+<a class="sourceLine" id="cb203-34" title="34">        printf(<span class="st">&quot;c %d: %c</span><span class="sc">\n</span><span class="st">&quot;</span>, getpid(), b);</a>
 <a class="sourceLine" id="cb203-35" title="35">    }</a>
 <a class="sourceLine" id="cb203-36" title="36"></a>
 <a class="sourceLine" id="cb203-37" title="37">    close(socket_desc);</a>
@@ -4975,8 +4979,8 @@ Server received message (sz 36): &quot;Citizen 53133: Penny for Pawsident!&quot;
 <a class="sourceLine" id="cb203-57" title="57"></a>
 <a class="sourceLine" id="cb203-58" title="58">    <span class="co">/* Initialize all pollfd structs to 0 */</span></a>
 <a class="sourceLine" id="cb203-59" title="59">    memset(poll_fds, <span class="dv">0</span>, <span class="kw">sizeof</span>(<span class="kw">struct</span> pollfd) * MAX_FDS);</a>
-<a class="sourceLine" id="cb203-60" title="60">    poll_fds[num_fds] = (<span class="kw">struct</span> pollfd) {</a>
-<a class="sourceLine" id="cb203-61" title="61">        .fd = socket_desc,</a>
+<a class="sourceLine" id="cb203-60" title="60">    poll_fds[<span class="dv">0</span>] = (<span class="kw">struct</span> pollfd) {</a>
+<a class="sourceLine" id="cb203-61" title="61">        .fd     = socket_desc,</a>
 <a class="sourceLine" id="cb203-62" title="62">        .events = POLLIN,</a>
 <a class="sourceLine" id="cb203-63" title="63">    };</a>
 <a class="sourceLine" id="cb203-64" title="64">    num_fds++;</a>
@@ -5047,14 +5051,31 @@ Server received message (sz 36): &quot;Citizen 53133: Penny for Pawsident!&quot;
 <a class="sourceLine" id="cb203-129" title="129">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb203-130" title="130">}</a></code></pre></div>
 <h1 id="libraries"><span class="header-section-number">8</span> Libraries</h1>
-<p>We’re used to writing our own programs, and like to think of the code we write being relatively self-contained. In contrast, quite a bit of <em>system programming</em> is about providing functionality that can be used by <em>any program on the system</em>. What if you wanted to implement the world’s best key-value store, and wanted to enable anyone to use your implementation!?</p>
+<p>Up till now, we’ve been focusing on UNIX programming APIs, and how to interact with various aspects of the system. Part of this discussion has been how various programs can be orchestrated to cooperate. Pipelines enable larger functionalities to be composed out of multiple programs in which the output of one goes to the input of the next. System servers provide services to clients that use IPC to harness their functionality. This enables servers that control system resources (like wifi) to let many clients have limited and controlled access to those resources.</p>
+<p>The next few chapters dive under the hood of processes. We’ll investigate</p>
+<ol type="1">
+<li>how programs are represented and how to understand their format,</li>
+<li>how programs are organized and can share code, and</li>
+<li>how they interact with the system.</li>
+</ol>
+<p>How do we think about our system’s programs? We’re used to writing our own programs, and like to think of the code we write being relatively self-contained. In contrast, quite a bit of <em>system programming</em> is about providing functionality that can be used by <em>any program on the system</em>. What if you wanted to implement the world’s best key-value store, and wanted to enable anyone to use your implementation!?</p>
 <p>We think of these <em>shared</em> functionalities as falling into one of two categories:</p>
 <ol type="1">
 <li><em>Libraries</em> that represent bodies of code that can be pull into our applications. You’re already quite used to these! <code>libc</code> is the core library that provides all of the functions that we use when we include many of the headers in the class, for example, <code>#include &lt;stdlib.h&gt;</code>, <code>#include &lt;stdio.h&gt;</code>, or <code>#include &lt;string.h&gt;</code>.</li>
-<li><em>Services</em> which track different aspects of the system, and provide information to our programs. They tend to be programs that are always running on your system, and your programs can communicate with them to harness their functionality. These include services that receive print requests, that service <code>ssh</code> sessions, that provide your <code>vpn</code> connection, and that display your graphical user interface, and many other functions. We’ll focus on these in a few weeks.</li>
+<li><em>Services</em> which track different aspects of the system, and provide information to our programs. They tend to be programs that are always running on your system, and your programs can communicate with them to harness their functionality. These include services that receive print requests, that service <code>ssh</code> sessions, that provide your <code>vpn</code> connection, and that display your graphical user interface, and many other functions. We’ve already seen many of the IPC and communication foundations that make these tick.</li>
 </ol>
-<p>This lecture, we’ll focus on libraries, but I want to give you a slightly more concrete understanding of services on a modern Linux system.</p>
+<p>This chapter, we’ll focus on libraries as a foundation for sharing software in systems.</p>
 <h2 id="libraries---goals-and-overview"><span class="header-section-number">8.1</span> Libraries - Goals and Overview</h2>
+<p>Before we start, consider:</p>
+<ul>
+<li>When you <code>#include</code> a ton of files, do you think that all of the related functionality is compiled into your program? That would mean that <em>every</em> program has the functionality compiled into it.</li>
+<li>If so, how much memory and disk space do you think that will take?</li>
+<li>Do you think there are other options? What might they be?</li>
+</ul>
+<p>Visually, this is what it would look like to compile with “libraries” that are defined as normal <code>*.o</code> files.</p>
+<figure>
+<img src="figures/08_naivelib.svg" alt="We know how to generate *.o files, and to combine them together as shown here. If some other people’s code that we depend on (e.g. string.h functionality) is provided as *.o files, we could compile with it as such. The questions above should let you think about the trade-offs with this approach." /><figcaption>We know how to generate <code>*.o</code> files, and to combine them together as shown here. If some other people’s code that we depend on (e.g. <code>string.h</code> functionality) is provided as <code>*.o</code> files, we could compile with it as such. The questions above should let you think about the trade-offs with this approach.</figcaption>
+</figure>
 <p>The <em>goals</em> of libraries are to:</p>
 <ul>
 <li>Enable programs to leverage shared implementations of specific functionality (e.g. the contents of <code>string.h</code>).</li>
@@ -5062,17 +5083,26 @@ Server received message (sz 36): &quot;Citizen 53133: Penny for Pawsident!&quot;
 <li>Attempt to save memory by making all programs in the system as small as possible by not taking memory for all of the library code in each program.</li>
 <li>Enable the system to upgrade both libraries and programs (for example, if a security compromise is found).</li>
 </ul>
-<p>Libraries have two core components that mirror what we understand about C: <em>header files</em> that share the types of the library API functions and data, and the <em>code to implement</em> those APIs. There are two main ways in which library code is integrated into programs:</p>
+<p>Libraries are collections of functionality that can be used by many different programs. They are code that expand the functionality of programs. This differs from services which are separate programs. Libraries have two core components that mirror what we understand about C:</p>
+<ol type="1">
+<li><em>header files</em> that share the types of the library API functions and data, and</li>
+<li>the <em>code to implement</em> those APIs.</li>
+</ol>
+<p>Lets set up some visual nomenclature.</p>
+<figure>
+<img src="figures/08_libfiles.svg" alt="We’ll talk about the files that are part of your normal programs (the *.c and *.o on the left), those that are part of the library, and files to represent the library." /><figcaption>We’ll talk about the files that are part of your normal programs (the <code>*.c</code> and <code>*.o</code> on the left), those that are part of the library, and files to represent the library.</figcaption>
+</figure>
+<p>There are two main ways library code is integrated into programs:</p>
 <ul>
 <li><strong>Static libraries.</strong> These are added into your program <em>when you compile it</em>.</li>
-<li><strong>Shared or dynamic libraries.</strong> These are integrated into your program <em>when you run the program</em>.</li>
+<li><strong>Shared or dynamic libraries.</strong> These are integrated into your program, dynamically, <em>when you run the program</em>.</li>
 </ul>
 <p>We’ll discuss each of these in subsequent sections</p>
 <h2 id="libraries---header-files"><span class="header-section-number">8.2</span> Libraries - Header Files</h2>
 <p>We can see most of the header files in <code>/usr/include</code>, within which you’ll find some familiar files:</p>
 <pre><code>$ ls /usr/include/std*
 /usr/include/stdc-predef.h  /usr/include/stdint.h  /usr/include/stdio_ext.h  /usr/include/stdio.h  /usr/include/stdlib.h</code></pre>
-<p>Yes, this means that you have the source code for much of the standard library at your fingertips! But how does <code>gcc</code> know to find all of these files when we use <code>#include &lt;&gt;</code>? The following <code>gcc</code> incantation gives us a good idea:</p>
+<p>Yes, this means that you have the source code for much of the standard library at your fingertips! But how does <code>gcc</code> know to find all of these files when we use <code>#include &lt;...&gt;</code>? The following <code>gcc</code> incantation gives us a good idea:</p>
 <pre><code>$ gcc -xc -E -v -
 ...
 #include &lt;...&gt; search starts here:
@@ -5094,8 +5124,8 @@ End of search list.
 <p>The include paths are searched in order, so you can see that when we explicitly tell <code>gcc</code> to include a directory <code>-I.</code> here, we’re asking to to check in the current directory (<code>.</code>) first.</p>
 </blockquote>
 <h2 id="linking-undefined-symbols-to-references-across-objects"><span class="header-section-number">8.3</span> Linking Undefined Symbols to References Across Objects</h2>
-<p>The answer to how the code for libraries is provided is complicated, and has multiple options that represent trade-offs. Before we can dive into that, we have to understand how object files (<code>*.o</code>) and binaries think about symbols and linking them together.</p>
-<p>When your program uses a library’s API, the library’s code is <em>linked</em> into your program. Linking is the act of taking any symbols (recall: functions and global variables) that are referenced, but not defined in your object (<code>*.o</code>) files, and the definition of those symbols in the objects that provide them. We have to understanding the linking operation to dive into how libraries can be added into, thus accessible from your program. We can see this process in action using the common set of programs for interpreting object files including <code>nm</code>, <code>objdump</code>, and <code>readelf</code>.</p>
+<p>Before we proceed to figure out how multiple <code>*.o</code> <em>objects</em> are combined into an executable, lets learn what it means for one object to depend on another for some functionality. To understand this, we have to understand how object files (<code>*.o</code>) and binaries think about symbols and linking them together.</p>
+<p>When your program uses a library’s API, the library’s code is <em>linked</em> into your program. Linking is the act of taking any symbols that are referenced, but not defined in your object (<code>*.o</code>) files, and the definition of those symbols in the objects that provide them. A <em>symbol</em> is a functions or global variable in your program. Each symbol has a representation in your object files so that they can be referenced across objects. We have to understanding the linking operation to dive into how libraries can be added into, thus accessible from your program. Lets peek into how our objects think about the world using a number of programs that can introspect on the objects including <code>nm</code>, <code>objdump</code>, and <code>readelf</code>.</p>
 <p>As an example, lets look at your <code>ptrie</code> implementation. We know that each of the tests (in <code>tests/0?-*.c</code>) depends on your ptrie implementation in <code>ptrie.c</code>. What does that look like?</p>
 <pre><code>$ nm tests/01-add.o
                  U _GLOBAL_OFFSET_TABLE_
@@ -5113,8 +5143,8 @@ End of search list.
 <ul>
 <li><code>T</code> - this symbol is part of the code of the <code>*.o</code> file, and is visible outside of the object (i.e. it isn’t <code>static</code>). Capital letters mean that the symbol is visible outside the object which simply means it can be linked with another object.</li>
 <li><code>t</code> - this symbol is part of the code, but is <em>not visible</em> outside of the object (it is <code>static</code>).</li>
-<li><code>d</code> - a global variable that is not visible.</li>
 <li><code>D</code> - a global variable that is visible.</li>
+<li><code>d</code> - a global variable that is not visible.</li>
 <li><code>U</code> - an <em>undefined symbol</em> that must be provided by another object file.</li>
 </ul>
 <p>For other symbol types, see <code>man nm</code>.</p>
@@ -5143,7 +5173,13 @@ End of search list.
 0000000000001566 T ptrie_allocate
 00000000000013ad T test_alloc</code></pre>
 <p>Now we can see that there are no longer any undefined references (<code>U</code>) to <code>ptrie_allocate</code>, so the test object has now found that symbol within the <code>ptrie.o</code> object. Additionally, we can see that some symbols (e.g. <code>calloc</code> here) are still undefined and have some mysterious <code>@@...</code> information associated with them. You might guess that this somehow tells us that the function should be provided by the standard C library (<code>glibc</code> on Ubuntu).</p>
+<p>Lets see another example visually using the <code>libexample/*</code> files:</p>
+<figure>
+<img src="figures/08_objectsymbs.svg" alt="The program on the left depends on the functionality of the object on the right, the library. We can see from the nm output that the left has undefined symbols for bar which is defined in the library. On the right, we can see the symbols defined in the object (with T, saying it is part of the text, or code, i.e. a function). Both are compiled together into an executable binary, prog_naive which shows that the reference from prog.o is resolved or linked with the definition in example.o." /><figcaption>The program on the left depends on the functionality of the object on the right, the library. We can see from the <code>nm</code> output that the left has undefined symbols for <code>bar</code> which is defined in the library. On the right, we can see the symbols defined in the object (with <code>T</code>, saying it is part of the text, or code, i.e. a function). Both are compiled together into an executable binary, <code>prog_naive</code> which shows that the reference from <code>prog.o</code> is <em>resolved</em> or linked with the definition in <code>example.o</code>.</figcaption>
+</figure>
 <p><em>Where are we?</em> OK, lets summarize so far. Objects can have <em>undefined symbol references</em> that get <em>linked</em> to the symbols when combined with the objects in which they are defined. How is this linking implemented?</p>
+<p><strong>Question: What does a file <em>format</em> mean?</strong> <strong>We talk about the format of webpages being <code>html</code>, images, being <code>png</code>, documents being <code>docx</code> or <code>pdf</code>.</strong> <strong>What do these formats mean?</strong> <strong>What is the format of object and executable binaries?</strong></p>
+<h3 id="elf-object-format"><span class="header-section-number">8.3.1</span> ELF Object Format</h3>
 <p>First, we have to understand something that is a little <em>amazing</em>: all of our objects and binaries have a defined file format called the <a href="https://en.wikipedia.org/wiki/Executable_and_Linkable_Format">Executable and Linkable Format</a> (ELF)<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>.</p>
 <figure>
 <img src="figures/elf.png" alt="A representation of the ELF binary program format by Ange_Albertini." /><figcaption>A representation of the ELF binary program format by <a href="https://github.com/corkami/pics">Ange_Albertini</a>.</figcaption>
@@ -5153,7 +5189,11 @@ End of search list.
 00000000: 7f45 4c46 0201 0100 0000 0000 0000 0000  .ELF............</code></pre>
 <p><code>xxd</code> dumps out a file in hexadecimal format, and <code>head</code> just lets us filter out only the first line (i.e. at the head). The first characters in most formats often denote the <em>type</em> of file, in this case an ELF file.</p>
 <p>This reveals a cool truth: <strong>programs are data</strong>, plain and simple. They happen to be data of a very specific format, ELF. <code>nm</code>, <code>readelf</code>, and <code>objdump</code> are all programs that simply understand how to dive into the ELF format, parse, and display the information.</p>
-<p>Now we get to an interesting part of the ELF objects:</p>
+<p>As programs are simply data encapsulated in the ELF format, we can start to understand what it means to <em>link</em> two objects together.</p>
+<figure>
+<img src="figures/08_linking.svg" alt="An example demonstrating what it means to link two objects together. In this case, we can see the ELF object tells us where in the prog.o binary the reference to bar is, and gcc patchs up prog.o as part of linking to reference bar in example.o." /><figcaption>An example demonstrating what it means to <em>link</em> two objects together. In this case, we can see the ELF object tells us where in the <code>prog.o</code> binary the reference to <code>bar</code> is, and gcc patchs up <code>prog.o</code> as part of linking to reference <code>bar</code> in <code>example.o</code>.</figcaption>
+</figure>
+<p>An in-depth explanation follows. Now we get to an interesting part of the ELF objects:</p>
 <pre><code>$ readelf -r tests/01_add.o | grep ptrie
 000000000151  001500000004 R_X86_64_PLT32    0000000000000000 ptrie_allocate - 4
 000000000179  001600000004 R_X86_64_PLT32    0000000000000000 ptrie_free - 4
@@ -5184,15 +5224,26 @@ test_alloc(void)
 <p><strong>What does a Linker do?</strong> A linker takes all of the undefined <em>references</em> to symbols from the <em>relocation records</em>, and rewrites the binary to populate those references with the address of that symbol (here updating <code>00 00 00 00</code> to the actual address of <code>test_alloc</code>).</p>
 </blockquote>
 <p>In our <code>Makefile</code>s, we always use <code>gcc</code> both for compiling <code>*.c</code> files into objects, but also linking objects together into a binary.</p>
+<h3 id="linking-summary"><span class="header-section-number">8.3.2</span> Linking Summary</h3>
+<p>Lets back up and collect our thoughts.</p>
+<ul>
+<li>Our programs are collections of a number of ELF object files.</li>
+<li>We’ve seen that some symbols in an object file are <em>undefined</em> if they are functions or variables that are not defined in a <code>.c</code> file.</li>
+<li>Though their types are defined in header files, their implementation must be found somewhere.</li>
+<li>Each reference to an undefined symbol has a <em>relation entry</em> that enables the linker to update the reference once it knows the ELF object that provides it.</li>
+<li>When another ELF exports the symbol that is undefined elsewhere, they can be <em>linked</em> to turn the function calls of undefined functions into function calls, and references to global variables be actual pointers to memory.</li>
+</ul>
+<p>This is the <em>foundation for creating large programs out of small pieces</em>, and to enable some of those pieces to be <em>shared between programs</em>.</p>
 <h2 id="static-libraries"><span class="header-section-number">8.4</span> Static Libraries</h2>
-<p>A static library is essentially a collection of object files. Static libraries have names of the form <code>lib*.a</code> and are created with the <code>ar</code> program from a collection of objects. An example from the <code>ptrie</code> library (expanded from its <code>Makefile</code>) that creates <code>libptrie.a</code>:</p>
+<p>A static library is simply a collection of ELF object (<code>*.o</code>) files created with <code>gcc -c</code>. They are collected together into a static library file that has the name <code>lib*.a</code>. You can think of these files as a <code>.zip</code> or <code>.tar</code> file containing the ELF objects.</p>
+<p>Static libraries of the form <code>lib*.a</code> and are created with the <code>ar</code> (archive) program from a collection of objects. An example from the <code>ptrie</code> library (expanded from its <code>Makefile</code>) that creates <code>libptrie.a</code>:</p>
 <pre><code>$ ar -crs libptrie.a *.o</code></pre>
-<p>A static library file (<code>lib*.a</code>) is really just a file that contains a set of objects (much like a <code>.zip</code> or <code>.tar</code>/<code>.tgz</code> file of objects). When we want to link a program to a static library, we need to use a few compiler flags:</p>
-<pre><code>gcc -o tests/01_add.test 01_add.o -L. -lptrie</code></pre>
+<p>So a static library is just a collection of ELF objects created by our compilation process. If we are writing a program that wants to <em>use</em> a library, first you make sure to include its header file(s). Then, when compiling, we have to tell the compiler which library we want to link with by using a few compiler flags:</p>
+<pre><code>$ gcc -o tests/01_add.test 01_add.o -L. -lptrie</code></pre>
 <p>The last two flags are the relevant ones:</p>
 <ul>
-<li><code>-L.</code> says “look for static libraries in the current directory (i.e. <code>.</code>)”, and</li>
-<li><code>-lptrie</code> says "please link me with the ptrie library (found in a file called <code>libptrie.a</code>).</li>
+<li><code>-L.</code> says “look for static libraries in the current directory (i.e. <code>.</code>)” – other directories can be included, and a few default directories are used, and</li>
+<li><code>-lptrie</code> says “please link me with the <code>ptrie</code> library” which should be found in one of the given directories and is found in a file called <code>libptrie.a</code>.</li>
 </ul>
 <p>Note that the linker already searches a few directories for libraries (i.e. default <code>-L</code> paths):</p>
 <pre><code>$ gcc -print-search-dirs | grep libraries | sed &#39;s/libraries: =//&#39; | tr -s &quot;:&quot; &#39;\n&#39;
@@ -5214,12 +5265,15 @@ test_alloc(void)
 /lib/
 /usr/lib/</code></pre>
 <p>As many of these paths are in directories that any user can access, this is how the functionality of these libraries can be accessed by any program wishing to use them. As we compile our <code>ptrie</code> library as a static library, you’ve already seen one example of these in use.</p>
+<figure>
+<img src="figures/08_staticlib.svg" alt="How static libraries are created, and interact with our programs." /><figcaption>How static libraries are created, and interact with our programs.</figcaption>
+</figure>
 <h3 id="saving-memory-with-static-libraries"><span class="header-section-number">8.4.1</span> Saving Memory with Static Libraries</h3>
 <p>Static libraries do provide some facilities for trying to shrink the amount of memory required for library code. If this was all done naively, then all of the object files in a static library could get loaded into a program with which it is linked. This means that for <span class="math inline"><em>N</em></span> programs that link with a library whose objects take <span class="math inline"><em>X</em></span> bytes, we’ll have <span class="math inline"><em>N</em> × <em>X</em></span> bytes devoted to storing programs on disk, and running the programs in memory (if they all run at the same time). Some static libraries can be quite large.</p>
 <p>Instead, static libraries are smarter. If a static library contains multiple <code>.o</code> files, <em>only those object files that define symbols that are undefined in the program being linked with, are compiled into the program</em>. This means that when designing a static library, you often want to break it into multiple <code>.o</code> files along the lines of different functionalities that separately used by different programs<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>.</p>
 <p>Some projects take this quite far. For example <a href="https://www.musl-libc.org/">musl libc</a> is a libc replacement, and it separates almost every single function into a separate object file (i.e. in a separate <code>.c</code> file!) so that only the exact functions that are called are linked into the program.</p>
 <h2 id="shareddynamic-libraries"><span class="header-section-number">8.5</span> Shared/Dynamic Libraries</h2>
-<p>Shared or dynamic libraries (for brevity, I’ll call them only “dynamic libraries”, but both terms are commonly used) are linked into a program <em>at runtime</em> when the program starts executing.</p>
+<p>Shared or dynamic libraries (for brevity, I’ll call them only “dynamic libraries”, but both terms are commonly used) are linked into a program <em>at runtime</em> when the program starts executing as part of <code>exec</code>.</p>
 <p>Recall that even executable binaries might still have undefined references to symbols. For example, see <code>calloc</code> in the example below:</p>
 <pre><code>$ nm tests/01_add.test | grep calloc
                  U calloc@@GLIBC_2.2.5</code></pre>
@@ -5511,7 +5565,7 @@ It is up to you to decide where it is right to provide an “intermediate” typ
 <li id="fn17"><p>This is useful to redirect shell output to if you don’t care about the output.<a href="#fnref17" class="footnote-back">↩</a></p></li>
 <li id="fn18"><p>I’ll try and call it a “file descriptor” when we know the descriptor is to a file.<a href="#fnref18" class="footnote-back">↩</a></p></li>
 <li id="fn19"><p>This is called a “race condition”. File “locking” helps solve this issue, but we’ll delay discussing locking until the OS class.<a href="#fnref19" class="footnote-back">↩</a></p></li>
-<li id="fn20"><p>ELF is a file format along side <code>html</code> for webpages, <code>.c</code> for C files, <a href="https://raw.githubusercontent.com/corkami/pics/master/binary/PNG.png"><code>.png</code></a> for images, and <a href="https://raw.githubusercontent.com/corkami/pics/master/binary/PDF.png"><code>.pdf</code></a> for documents. It just happens to contain all of the information necessary to link and execute a program! It may be surprising, but comparable formats even exist for <a href="https://github.com/corkami/pics/blob/master/binary/CLASS.png">java (<code>.class</code>) files</a> as well.<a href="#fnref20" class="footnote-back">↩</a></p></li>
+<li id="fn20"><p>ELF is a file format for binary programs in the same way that <code>html</code> is the data format for webpages, <code>.c</code> for C files, <a href="https://raw.githubusercontent.com/corkami/pics/master/binary/PNG.png"><code>.png</code></a> for images, and <a href="https://raw.githubusercontent.com/corkami/pics/master/binary/PDF.png"><code>.pdf</code></a> for documents. It just happens to contain all of the information necessary to link and execute a program! It may be surprising, but comparable formats even exist for <a href="https://github.com/corkami/pics/blob/master/binary/CLASS.png">java (<code>.class</code>) files</a> as well.<a href="#fnref20" class="footnote-back">↩</a></p></li>
 <li id="fn21"><p>Note: these are hexadecimal values, not base-10 digits.<a href="#fnref21" class="footnote-back">↩</a></p></li>
 <li id="fn22"><p>This is increasingly not true as many compilers support <a href="https://en.wikipedia.org/wiki/Interprocedural_optimization#WPO_and_LTO">Link-Time Optimization</a> (LTO). This goes beyond the scope of this class.<a href="#fnref22" class="footnote-back">↩</a></p></li>
 <li id="fn23"><p>We can even choose to use a different program interpreter, for example, <code>interp.so</code>, using <code>gcc -Wl,--dynamic-linker,interp.so</code>.<a href="#fnref23" class="footnote-back">↩</a></p></li>
