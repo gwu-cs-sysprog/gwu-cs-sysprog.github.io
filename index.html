@@ -257,13 +257,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#saving-memory-with-static-libraries"><span class="toc-section-number">8.4.1</span> Saving Memory with Static Libraries</a></li>
         </ul></li>
         <li><a href="#shareddynamic-libraries"><span class="toc-section-number">8.5</span> Shared/Dynamic Libraries</a><ul>
-        <li><a href="#dynamic-loading-summary"><span class="toc-section-number">8.5.1</span> Dynamic Loading Summary</a></li>
-        <li><a href="#saving-memory-with-dynamic-libraries"><span class="toc-section-number">8.5.2</span> Saving Memory with Dynamic Libraries</a></li>
-        <li><a href="#explicitly-managing-dynamic-libraries"><span class="toc-section-number">8.5.3</span> Explicitly Managing Dynamic Libraries</a></li>
+        <li><a href="#compiling-and-executing-with-dynamic-libraries"><span class="toc-section-number">8.5.1</span> Compiling and Executing with Dynamic Libraries</a></li>
+        <li><a href="#exec-with-dynamic-linking"><span class="toc-section-number">8.5.2</span> <code>exec</code> with Dynamic Linking</a></li>
+        <li><a href="#diving-into-dynamic-linking-at-exec"><span class="toc-section-number">8.5.3</span> Diving into Dynamic Linking at <code>exec</code></a></li>
+        <li><a href="#dynamic-loading-summary"><span class="toc-section-number">8.5.4</span> Dynamic Loading Summary</a></li>
+        <li><a href="#saving-memory-with-dynamic-libraries"><span class="toc-section-number">8.5.5</span> Saving Memory with Dynamic Libraries</a></li>
         </ul></li>
-        <li><a href="#exercises-questions"><span class="toc-section-number">8.6</span> Exercises &amp; Questions</a><ul>
-        <li><a href="#library-trade-offs"><span class="toc-section-number">8.6.1</span> Library Trade-offs</a></li>
-        <li><a href="#chaosmalloc"><span class="toc-section-number">8.6.2</span> <code>chaosmalloc</code></a></li>
+        <li><a href="#static-vs.-dynamic-library-memory-usage-summary"><span class="toc-section-number">8.6</span> Static vs. Dynamic Library Memory Usage Summary</a></li>
+        <li><a href="#exercise-understanding-library-memory-consumption"><span class="toc-section-number">8.7</span> Exercise: Understanding Library Memory Consumption</a><ul>
+        <li><a href="#libexample"><span class="toc-section-number">8.7.1</span> <code>libexample</code></a></li>
+        </ul></li>
+        <li><a href="#explicitly-managing-dynamic-libraries"><span class="toc-section-number">8.8</span> Explicitly Managing Dynamic Libraries</a></li>
+        <li><a href="#exercises-questions"><span class="toc-section-number">8.9</span> Exercises &amp; Questions</a><ul>
+        <li><a href="#library-trade-offs"><span class="toc-section-number">8.9.1</span> Library Trade-offs</a></li>
+        <li><a href="#chaosmalloc"><span class="toc-section-number">8.9.2</span> <code>chaosmalloc</code></a></li>
         </ul></li>
         </ul></li>
         <li><a href="#system-calls-and-ptrace"><span class="toc-section-number">9</span> System Calls and <code>ptrace</code></a></li>
@@ -430,7 +437,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x55e185dbe149
+Hex and pointers: 7fffffffffffffff, 0x55f148c43149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -550,8 +557,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffdd58e6860 == 0x7ffdd58e6860; 6 == 6
-nth index: 0x7ffdd58e6864 == 0x7ffdd58e6864; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffe22232140 == 0x7ffe22232140; 6 == 6
+nth index: 0x7ffe22232144 == 0x7ffe22232144; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -574,7 +581,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7fff0dc000e4 == 0x7fff0dc000e4; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffdec630f34 == 0x7ffdec630f34; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -598,10 +605,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffd041570f0 &amp; 0x7ffd04157104
-idx 1 @ 0x7ffd041570f4 &amp; 0x7ffd04157105
-idx 2 @ 0x7ffd041570f8 &amp; 0x7ffd04157106
-idx 3 @ 0x7ffd041570fc &amp; 0x7ffd04157107</code></pre>
+<pre><code>idx 0 @ 0x7ffdd2a68910 &amp; 0x7ffdd2a68924
+idx 1 @ 0x7ffdd2a68914 &amp; 0x7ffdd2a68925
+idx 2 @ 0x7ffdd2a68918 &amp; 0x7ffdd2a68926
+idx 3 @ 0x7ffdd2a6891c &amp; 0x7ffdd2a68927</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -838,10 +845,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x55bf7694a010
-b   @ 0x55bf7694a014
-c   @ 0x55bf7694a020
-end @ 0x55bf7694a039
+a   @ 0x55f6697b2010
+b   @ 0x55f6697b2014
+c   @ 0x55f6697b2020
+end @ 0x55f6697b2039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -849,7 +856,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x55bf7694a014
+c.c_c = 0x55f6697b2014
 
 Print out the variables as raw memory
 
@@ -944,8 +951,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x5637c3d6404c
-1: 2 @ 0x5637c3d64044
+<pre><code>0: 4 @ 0x55b8d231204c
+1: 2 @ 0x55b8d2312044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1274,16 +1281,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -298219913
-3: 32766
-4: -298219914
-5: 32766
-6: 2047402557
-7: 22091
-8: 725438408
-9: 32592
-10: 2047402480
-11: 22091</code></pre>
+2: -13445513
+3: 32764
+4: -13445514
+5: 32764
+6: -984829379
+7: 21891
+8: 834237160
+9: 32619
+10: -984829456
+11: 21891</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1624,7 +1631,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x5621257d2004 == 0x5621257d2004 != 0x5621257d4011</code></pre>
+0x55795201d004 == 0x55795201d004 != 0x55795201f011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2023,15 +2030,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 166965
+     parent pid 233980
 post-fork:
-    returned 166966,
-    current pid 166965
-    parent pid 166959
+    returned 233981,
+    current pid 233980
+    parent pid 233974
 post-fork:
     returned 0,
-    current pid 166966
-    parent pid 166965</code></pre>
+    current pid 233981
+    parent pid 233980</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2095,14 +2102,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 166982 exiting with 0
-Child 166983 exiting with -1
-Child 166984 exiting with -2
-Child 166985 exiting with -3
-Child 166982 exited with exit status 0
-Child 166983 exited with exit status -1
-Child 166984 exited with exit status -2
-Child 166985 exited with exit status -3</code></pre>
+<pre><code>Child 233997 exiting with 0
+Child 233998 exiting with -1
+Child 233999 exiting with -2
+Child 234000 exiting with -3
+Child 233997 exited with exit status 0
+Child 233998 exited with exit status -1
+Child 233999 exited with exit status -2
+Child 234000 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3226,9 +3233,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>167200: We&#39;ve been asked to terminate. Exit!
-167199: Parent asking child (167200) to terminate
-167199: Child process 167200 has exited.</code></pre>
+<pre><code>234215: We&#39;ve been asked to terminate. Exit!
+234214: Parent asking child (234215) to terminate
+234214: Child process 234215 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -4070,11 +4077,11 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - F a.out (17136)
 - F LICENSE (1522)
 - D 09
-- F lectures.html (579027)
+- F lectures.html (598411)
 - D 01
 - D 05
 - D 02
-- F aggregate.md (162963)
+- F aggregate.md (162961)
 - D 04
 - D .git
 - F inline_exec_tmp.c (1658)</code></pre>
@@ -4405,7 +4412,8 @@ msg2: </code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>167494: 167493167494</code></pre>
+<pre><code>234510: 234510
+234511: 234511</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4558,15 +4566,15 @@ msg2: </code></pre>
 <a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 167513 connected to server.
-2. Client 167513 request sent message to server.
-Server received message (sz 37): &quot;Citizen 167513: Penny for Pawsident!&quot;. Replying!
-1. Client 167514 connected to server.
+1. Client 234531 connected to server.
+1. Client 234532 connected to server.
+2. Client 234531 request sent message to server.
+2. Client 234532 request sent message to server.
+Server received message (sz 37): &quot;Citizen 234531: Penny for Pawsident!&quot;. Replying!
+3. Client 234531 reply received from server: Citizen 234531: Penny for Pawsident!
 Server: New client connected with new file descriptor 4.
-2. Client 167514 request sent message to server.
-Server received message (sz 37): &quot;Citizen 167514: Penny for Pawsident!&quot;. Replying!
-3. Client 167513 reply received from server: Citizen 167513: Penny for Pawsident!
-3. Client 167514 reply received from server: Citizen 167514: Penny for Pawsident!</code></pre>
+Server received message (sz 37): &quot;Citizen 234532: Penny for Pawsident!&quot;. Replying!
+3. Client 234532 reply received from server: Citizen 234532: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -5234,6 +5242,11 @@ test_alloc(void)
 <li>When another ELF exports the symbol that is undefined elsewhere, they can be <em>linked</em> to turn the function calls of undefined functions into function calls, and references to global variables be actual pointers to memory.</li>
 </ul>
 <p>This is the <em>foundation for creating large programs out of small pieces</em>, and to enable some of those pieces to be <em>shared between programs</em>.</p>
+<p>We’ll also see that libraries enable an opportunity to <em>save memory</em>. For example,</p>
+<ul>
+<li>static libraries enable only the object files that are needed by a program to be compiled into it, and</li>
+<li>dynamic libraries enable the code for a library to be <em>shared</em> between all processes that execute it in the system.</li>
+</ul>
 <h2 id="static-libraries"><span class="header-section-number">8.4</span> Static Libraries</h2>
 <p>A static library is simply a collection of ELF object (<code>*.o</code>) files created with <code>gcc -c</code>. They are collected together into a static library file that has the name <code>lib*.a</code>. You can think of these files as a <code>.zip</code> or <code>.tar</code> file containing the ELF objects.</p>
 <p>Static libraries of the form <code>lib*.a</code> and are created with the <code>ar</code> (archive) program from a collection of objects. An example from the <code>ptrie</code> library (expanded from its <code>Makefile</code>) that creates <code>libptrie.a</code>:</p>
@@ -5266,11 +5279,14 @@ test_alloc(void)
 /usr/lib/</code></pre>
 <p>As many of these paths are in directories that any user can access, this is how the functionality of these libraries can be accessed by any program wishing to use them. As we compile our <code>ptrie</code> library as a static library, you’ve already seen one example of these in use.</p>
 <figure>
-<img src="figures/08_staticlib.svg" alt="How static libraries are created, and interact with our programs." /><figcaption>How static libraries are created, and interact with our programs.</figcaption>
+<img src="figures/08_staticlib.svg" alt="How static libraries are created, and interact with our programs. The .a files include all library objects, but only those that are needed by the program are compiled into it.x" /><figcaption>How static libraries are created, and interact with our programs. The <code>.a</code> files include all library objects, but only those that are needed by the program are compiled into it.x</figcaption>
 </figure>
 <h3 id="saving-memory-with-static-libraries"><span class="header-section-number">8.4.1</span> Saving Memory with Static Libraries</h3>
 <p>Static libraries do provide some facilities for trying to shrink the amount of memory required for library code. If this was all done naively, then all of the object files in a static library could get loaded into a program with which it is linked. This means that for <span class="math inline"><em>N</em></span> programs that link with a library whose objects take <span class="math inline"><em>X</em></span> bytes, we’ll have <span class="math inline"><em>N</em> × <em>X</em></span> bytes devoted to storing programs on disk, and running the programs in memory (if they all run at the same time). Some static libraries can be quite large.</p>
 <p>Instead, static libraries are smarter. If a static library contains multiple <code>.o</code> files, <em>only those object files that define symbols that are undefined in the program being linked with, are compiled into the program</em>. This means that when designing a static library, you often want to break it into multiple <code>.o</code> files along the lines of different functionalities that separately used by different programs<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>.</p>
+<figure>
+<img src="figures/08_staticmem.svg" alt="A graphical depiction of how library memory gets added into a program using static libraries. The program is only dependent on a single object within the library, so we only need to compile that object into the resulting executable program." /><figcaption>A graphical depiction of how library memory gets added into a program using static libraries. The program is only dependent on a single object within the library, so we only need to compile that object into the resulting executable program.</figcaption>
+</figure>
 <p>Some projects take this quite far. For example <a href="https://www.musl-libc.org/">musl libc</a> is a libc replacement, and it separates almost every single function into a separate object file (i.e. in a separate <code>.c</code> file!) so that only the exact functions that are called are linked into the program.</p>
 <h2 id="shareddynamic-libraries"><span class="header-section-number">8.5</span> Shared/Dynamic Libraries</h2>
 <p>Shared or dynamic libraries (for brevity, I’ll call them only “dynamic libraries”, but both terms are commonly used) are linked into a program <em>at runtime</em> when the program starts executing as part of <code>exec</code>.</p>
@@ -5283,12 +5299,62 @@ test_alloc(void)
         linux-vdso.so.1 (0x00007ffff3734000)
         libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007fb502adf000)
         /lib64/ld-linux-x86-64.so.2 (0x00007fb502cfa000)</code></pre>
-<p><code>ldd</code> also simply parses through the ELF program, and . For now, we’ll ignore the <code>linux-vdso</code>, but the other two entries are interesting. We can see that the C standard library, <code>libc</code> is being provided by <code>/lib/x86_64-linux-gnu/libc.so.6</code>. These are both dynamic libraries, as are most <code>*.so.?*</code> and <code>*.so</code> files. If we check out that object we see that it provides <code>calloc</code>.</p>
+<p><code>ldd</code> also simply parses through the ELF program, and determines which dynamic libraries are required by the program. For now, we’ll ignore the <code>linux-vdso</code>, but the other two entries are interesting. We can see that the C standard library, <code>libc</code> is being provided by <code>/lib/x86_64-linux-gnu/libc.so.6</code>. These are both dynamic libraries, as are most <code>*.so.?*</code> and <code>*.so</code> files. If we check out that object we see that it provides <code>calloc</code>.</p>
 <pre><code>$ objdump -T /lib/x86_64-linux-gnu/libc.so.6  | grep calloc
 000000000009ec90 g    DF .text  0000000000000395  GLIBC_2.2.5 __libc_calloc
 000000000009ec90  w   DF .text  0000000000000395  GLIBC_2.2.5 calloc</code></pre>
 <p>So this library provides the symbols we require (i.e. the <code>calloc</code> function)!</p>
-<p>But how does the <code>libc.so</code> library get linked into our program? Diving in a little bit further, we see that <code>ld</code> is our program’s “interpreter”:</p>
+<h3 id="compiling-and-executing-with-dynamic-libraries"><span class="header-section-number">8.5.1</span> Compiling and Executing with Dynamic Libraries</h3>
+<p>If we want our program to use a dynamic library, we have to compile it quite similarly to when we wanted to use static libraries:</p>
+<pre><code>$ gcc -o dyn_prog *.o -L. -lptrie</code></pre>
+<p>So everything is somewhat normal here; we’re saying “look for the library in this directory”, and compile me with the <code>ptrie</code> library. To create the dynamic library:</p>
+<pre><code>$ gcc -Wall -Wextra -fpic -I. -c -o ptrie.o ptrie.c
+$ gcc -shared -o libptrie.so ptrie.o</code></pre>
+<p>The first line is the normal way to create an object file from C, but includes a new flag, <code>-fpic</code>. This tells the compiler to generate <a href="https://en.wikipedia.org/wiki/Position-independent_code">“Position Independent Code”, or PIC</a>, which is code that can, seemingly magically, be executed when the code is loaded into any address! The dynamic library cannot assume which addresses it will be loaded into as many dynamic libraries might be loaded into an executable, thus the PIC requirement.</p>
+<p>The second line creates the dynamic (shared) library. By convention, all dynamic libraries end with <code>.so</code> which you can think of as “shared object”. This is the line that is dynamic-library equivalent to the <code>ar</code> command for static libraries.</p>
+<p>Now we have a binary that has been told were the library is; lets execute it!</p>
+<pre><code>$ ./dyn_prog
+./dyn_prog: error while loading shared libraries: libptrie.so: cannot open shared object file: No such file or directory</code></pre>
+<p>Whaaaaaa? If we dive in a little bit, we can see:</p>
+<pre><code>$ nm ./dyn_prog | grep ptrie_alloc
+                 U ptrie_alloc</code></pre>
+<p>But I thought that we wanted all symbols to be defined when we create a binary? Why is the library’s <code>ptrie_alloc</code> not linked into the program? We can see that not all symbols are defined in a program when we are using dynamic libraries as they are <em>linked when we try and run the program</em>!</p>
+<p>We now can see the main practical difference between static and dynamic libraries:</p>
+<ul>
+<li>Static libraries are compiled into the program when you compile with the <code>-lptrie</code> directive.</li>
+<li>Dynamic libraries not <em>not</em> compiled into the program, and are instead <em>linked</em> into the program when it is executed (i.e. at the time of <code>exec</code>).</li>
+</ul>
+<p>We can start to see why the program wont execute when we look at its dynamic library dependencies:</p>
+<pre><code>$ ldd ./dyn_prog
+        linux-vdso.so.1 (0x00007ffdf3ca0000)
+        libptrie.so =&gt; not found
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007ff9921e8000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007ff9923f8000)</code></pre>
+<p>It isn’t finding <code>libptrie.so</code>!</p>
+<p>To execute the program, we have to properly set an <em>environment variable</em> that will tell the program, when it is executed, where to look for the dynamic library:</p>
+<pre><code>$ LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ./dyn_prog
+...success...</code></pre>
+<p>This is some strange shell syntax. <code>LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH</code> essentially says "The environment variable called <code>LD_LIBRARY_PATH</code> should be updated to prepend the diretory <code>./</code> onto the front of it. This is conceptually similar to something like <code>lib_path = "./:" + lib_path</code> in a language that supports string concatenation. When <code>./dyn_prog</code> is executed, the updated <code>LD_LIBRARY_PATH</code> environment variable is visible in that program using the normal <code>getenv</code>. So there is some part of the initialization of <code>./dyn_prog</code> that looks at this environment variable to figure out where to look for the dynamic library.</p>
+<p>To confirm why we can now execute the program, we can again look at the library dependencies:</p>
+<pre><code>$ LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ldd prog_dynamic
+        linux-vdso.so.1 (0x00007ffc939f8000)
+        libptrie.so =&gt; ./libptrie.so (0x00007f70d316f000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f70d2f66000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f70d3236000)</code></pre>
+<p>If we expand the <code>LD_LIBRARY_PATH</code> to include the current directory, the program can find the library.</p>
+<p>If we want to see the <a href="https://stackoverflow.com/questions/9922949/how-to-print-the-ldlinker-search-path">default paths</a> that are searched for dynamic libraries:</p>
+<pre><code>$ ldconfig -v 2&gt;/dev/null | grep -v ^$&#39;\t&#39;
+/usr/local/lib:
+/lib/x86_64-linux-gnu:
+/lib32:
+/libx32:
+/lib:</code></pre>
+<p>In fact, <code>ldconfig -v</code> will also print out all of the potential default dynamic libraries we can link with.</p>
+<figure>
+<img src="figures/08_dynamiclib.svg" alt="Using dynamic libraries to compile a program. Additional flags are required when compiling the library files (for PIC), and we must tell the system that the library is dynamic when compiling using the -shared flag. But even then, the executable doesn’t have the library functionality linked into it. Only when we execute the program does ld dynamically link in the library. For ld to know where to look for te library, we also have to tell it additional paths in which to look using an environment variable." /><figcaption>Using dynamic libraries to compile a program. Additional flags are required when compiling the library files (for PIC), and we must tell the system that the library is dynamic when compiling using the <code>-shared</code> flag. But even then, the executable doesn’t have the library functionality linked into it. Only when we execute the program does <code>ld</code> dynamically link in the library. For <code>ld</code> to know where to look for te library, we also have to tell it additional paths in which to look using an environment variable.</figcaption>
+</figure>
+<h3 id="exec-with-dynamic-linking"><span class="header-section-number">8.5.2</span> <code>exec</code> with Dynamic Linking</h3>
+<p>How does the <code>libc.so</code> library get linked into our program? Diving in a little bit further, we see that <code>ld</code> is our program’s “interpreter”:</p>
 <pre><code>$ readelf --program-headers tests/01_add.test
 Elf file type is DYN (Shared object file)
 Entry point 0x1180
@@ -5308,8 +5374,9 @@ Program Headers:
                  0x0000000000000e55 0x0000000000000e55  R E    0x1000
 ...</code></pre>
 <p>A lot is going on here, but we see the reference to <code>ld-linux-x86-64.so.2</code> that we saw previously in the <code>ldd</code> output. We can now see that the library (that I’ll call simply <code>ld</code>) is a “program interpreter” (see “<code>Requesting program interpreter: /lib64/ld-linux-x86-64.so.2</code>”) for our program<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>. This is the core of understanding how our program can execute while having undefined references to functions provided by another library.</p>
-<p>When we call <code>exec</code>, we believe that the program we execute takes over the current process and starts executing. This is not true! Instead, if a program interpreter is defined for our program (as we see: it is), the interpreter program’s memory is loaded along side our program, but then the interpreter is executed instead of our program! It is given access to our program’s ELF object, and <code>ld</code>’s job is to finish linking and loading our program.</p>
-<p>But wait. Why? Why load <code>ld</code> to link our program instead of just running our program? Because <code>ld</code> <em>also</em> loads and links all of the dynamic libraries (<code>.so</code>s) that our program depends on!!!</p>
+<p>When we call <code>exec</code>, we believe that the program we execute takes over the current process and starts executing. This is not true! Instead, if a program interpreter is defined for our program (as we see: it is), the interpreter program’s memory is loaded along side our program, but then the interpreter is executed instead of our program! It is given access to our program’s ELF object, and <code>ld</code>’s job is to finish linking and loading our program. We have to add <code>./</code> to the <code>LD_LIBRARY_PATH</code> to make the program execute because <strong><code>ld</code> reads that environment variable when it is trying to link and load in your program</strong>!</p>
+<h3 id="diving-into-dynamic-linking-at-exec"><span class="header-section-number">8.5.3</span> Diving into Dynamic Linking at <code>exec</code></h3>
+<p>But wait. Why does <code>exec</code> end up loading <code>ld</code>, which then loads our program? Why load <code>ld</code> to link our program instead of just running our program? Because <code>ld</code> <em>also</em> loads and links all of the dynamic libraries (<code>.so</code>s) that our program depends on!!!</p>
 <p>We can confirm that <code>ld</code> is loaded into our program by executing it in <code>gdb</code>, blocking it on breakpoint, and outputting its memory maps (<code>cat /proc/262648/maps</code> on my system):</p>
 <pre><code>555555554000-555555555000 r--p 00000000 08:02 527420                     /home/gparmer/repos/gwu-cs-sysprog/22/hw_solns/02/tests/01_add.test
 555555555000-555555556000 r-xp 00001000 08:02 527420                     /home/gparmer/repos/gwu-cs-sysprog/22/hw_solns/02/tests/01_add.test
@@ -5339,7 +5406,7 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <li><code>/usr/lib/x86_64-linux-gnu/libc-2.31.so</code> is present in the process so somehow got linked and loaded into the process.</li>
 <li><code>/usr/lib/x86_64-linux-gnu/ld-2.31.so</code> is also present in the process; indeed it was the first code to execute in the process!</li>
 </ul>
-<h3 id="dynamic-loading-summary"><span class="header-section-number">8.5.1</span> Dynamic Loading Summary</h3>
+<h3 id="dynamic-loading-summary"><span class="header-section-number">8.5.4</span> Dynamic Loading Summary</h3>
 <p>Lets summarize the algorithm for executing a dynamically loaded program.</p>
 <ol type="1">
 <li><code>exec</code> is called to execute a new program.</li>
@@ -5347,13 +5414,13 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <li>In most cases, the interpreter is <code>ld</code>, and it is loaded into the process along with the target program.</li>
 <li><p>Execution is started at <code>ld</code>, and it:</p>
 <ol type="1">
-<li>Loads all of the dynamic libraries required by the program.</li>
+<li>Loads all of the dynamic libraries required by the program, looking at the <code>LD_LIBRARY_PATH</code> environment variable to help look for them.</li>
 <li>Links the program such that all of its references to library symbols (i.e. <code>calloc</code> above) are set to point to library functions.</li>
 <li>Executes the initialization procedures (and eventually <code>main</code>) of our program.</li>
 </ol></li>
 </ol>
 <p>This is all quite complex. Why would we ever want all of this complexity over the simplicity of static libraries?</p>
-<h3 id="saving-memory-with-dynamic-libraries"><span class="header-section-number">8.5.2</span> Saving Memory with Dynamic Libraries</h3>
+<h3 id="saving-memory-with-dynamic-libraries"><span class="header-section-number">8.5.5</span> Saving Memory with Dynamic Libraries</h3>
 <p>First, lets look at how much memory a library takes up.</p>
 <pre><code>$ ls -lh /usr/lib/x86_64-linux-gnu/libc-2.31.so
 -rwxr-xr-x 1 root root 2.0M Dec 16  2020 /usr/lib/x86_64-linux-gnu/libc-2.31.so</code></pre>
@@ -5366,9 +5433,31 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 </ul>
 <p>If <span class="math inline"><em>N</em></span> programs must load in multiple libraries (totaling, say, <span class="math inline"><em>X</em></span> MiB), then <span class="math inline"><em>N</em> × <em>X</em></span> MiB is consumed. For context, my system is currently running 269 programs (<code>ps aux | wc -l</code>), so this memory can add up!</p>
 <p>Dynamic libraries enable us to do a lot better. The contents memory for the library is the same regardless the process it is present in, and an Operating System has a neat trick: it can make the same memory appear in multiple processes if it is identical <em>and</em> cannot be modified<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>. As such, dynamic libraries typically only require memory for each library <em>once</em> in the system (only <span class="math inline"><em>X</em></span>), as opposed for each process.</p>
-<p><strong>Static vs. dynamic library memory usage.</strong> When a program is linked with a static library, the result is relatively small as only the objects in the library that are necessary are linked into the program. In contrast, a program that uses a dynamic library links in the entire library. Thus, for a <em>single</em> program, a static library approach is almost always going to be more memory-efficient.</p>
-<p>However, in a system with <em>many</em> executing programs, the per-library memory, rather than per-process memory, will result in significantly less memory consumption. Requiring only a <em>single copy</em> of a <em>larger</em> dynamic library shared between all processes, uses less memory than <em>multiple copies</em> of <em>smaller</em> compilations of the library in each program.</p>
-<h3 id="explicitly-managing-dynamic-libraries"><span class="header-section-number">8.5.3</span> Explicitly Managing Dynamic Libraries</h3>
+<figure>
+<img src="figures/08_dynamicmem.svg" alt="A graphical depiction of how library memory gets added into a program using static libraries. The program is only dependent on a single object within the library, so we only need to compile that object into the resulting executable program." /><figcaption>A graphical depiction of how library memory gets added into a program using static libraries. The program is only dependent on a single object within the library, so we only need to compile that object into the resulting executable program.</figcaption>
+</figure>
+<h2 id="static-vs.-dynamic-library-memory-usage-summary"><span class="header-section-number">8.6</span> Static vs. Dynamic Library Memory Usage Summary</h2>
+<p>When a program is linked with a static library, the result is relatively small as only the objects in the library that are necessary are linked into the program. When executed as a process, the memory consumed will only include the necessary objects of the library. In contrast, a program that uses a dynamic library links in the entire library at runtime into a process. Thus, for a <em>single process</em>, a static library approach is almost always going to be more memory-efficient.</p>
+<p>However, in a system with <em>many</em> executing processes, the per-library memory, rather than per-process memory, will result in significantly less memory consumption. Requiring only a <em>single copy</em> of a <em>larger</em> dynamic library shared between all processes, uses less memory than <em>multiple copies</em> of <em>smaller</em> compilations of the library in each program.</p>
+<h2 id="exercise-understanding-library-memory-consumption"><span class="header-section-number">8.7</span> Exercise: Understanding Library Memory Consumption</h2>
+<h3 id="libexample"><span class="header-section-number">8.7.1</span> <code>libexample</code></h3>
+<p>See the <a href="https://github.com/gwu-cs-sysprog/lectures/tree/main/08/libexample"><code>08/libexample/</code></a> directory for examples of using normal linking (<code>make naive</code>), static library linking (<code>make static</code>), and dynamic library linking (<code>make dynamic</code>). The source includes:</p>
+<ul>
+<li><code>prog</code> and <code>prog2</code> that are programs that use libraries.</li>
+<li><code>example.c</code> is a single file that creates the first library.</li>
+<li><code>example2.c</code> and <code>example2b.c</code> are the files that create the second library.</li>
+</ul>
+<p>Each of the library objects uses around <em>750KB</em> of memory.</p>
+<ol type="1">
+<li>Use <code>nm</code> and <code>ldd</code> to understand which libraries and object files within those libraries each of the programs require.</li>
+<li>Use <code>ls -lh</code> to see the size of each of the resulting executable programs. Each plain the differences in sizes. x ### Library Trade-offs</li>
+</ol>
+<ul>
+<li><em>Question:</em> What types of systems might want to always use only static libraries?</li>
+<li><em>Question:</em> What types of systems might want to always use only dynamic libraries?</li>
+<li><em>Question:</em> OSX uses dynamically linked libraries for a few common and frequently used libraries (like <code>libc</code>), and static libraries for the rest. Why?</li>
+</ul>
+<h2 id="explicitly-managing-dynamic-libraries"><span class="header-section-number">8.8</span> Explicitly Managing Dynamic Libraries</h2>
 <p>Libraries are great for providing shared functionality to multiple programs. Dynamic libraries can also be used <em>explicitly</em> to enable additional capabilities.</p>
 <ol type="1">
 <li>The environment variable <code>LD_PRELOAD</code> can be used to specify a dynamic library to load into the process to <em>interpose</em> on any library calls. This enables you to write functions for common <code>libc</code> or other library APIs and have your functions be called by the program <em>instead</em> of the other library calls. You can then, if you choose, invoke the normal library calls, thus why this is known as <em>interposing</em> on the library calls. A trivial use of this might be to <em>log</em> (i.e. write out to a file) all of a set of library calls. I’ve used this to track all calls to the <code>malloc</code> API to implement a janky <code>valgrind</code> – you could write your own <code>valgrind</code> variant that watches only the memory allocation API by tracking all <code>malloc</code> and <code>free</code> calls in a hash table to make sure that each chunk of <code>malloc</code>ed memory is freed exactly once.</li>
@@ -5386,14 +5475,14 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <li><code>dlclose(handle)</code> - Close and unload a library that was previously loaded.</li>
 <li><code>symb_ptr = dlsym(handle, symbol)</code> - pass in a <code>symbol</code> which is a string holding a function or variable name in the dynamic library. It should return a pointer to that symbol, which you can then call (if it is a function pointer), or dereference if it is a variable.</li>
 </ul>
-<h2 id="exercises-questions"><span class="header-section-number">8.6</span> Exercises &amp; Questions</h2>
-<h3 id="library-trade-offs"><span class="header-section-number">8.6.1</span> Library Trade-offs</h3>
+<h2 id="exercises-questions"><span class="header-section-number">8.9</span> Exercises &amp; Questions</h2>
+<h3 id="library-trade-offs"><span class="header-section-number">8.9.1</span> Library Trade-offs</h3>
 <ul>
 <li><em>Question:</em> What types of systems might want to always use only static libraries?</li>
 <li><em>Question:</em> What types of systems might want to always use only dynamic libraries?</li>
 <li><em>Question:</em> OSX uses dynamically linked libraries for a few common and frequently used libraries (like <code>libc</code>), and static libraries for the rest. Why?</li>
 </ul>
-<h3 id="chaosmalloc"><span class="header-section-number">8.6.2</span> <code>chaosmalloc</code></h3>
+<h3 id="chaosmalloc"><span class="header-section-number">8.9.2</span> <code>chaosmalloc</code></h3>
 <p>Netflix popularized testing their distributed infrastructure by intentionally injecting faults into the system. This makes sense: most “error paths” in your code are often the least tested pieces of code because sometimes it is hard to cause the failures at the right time to test that code. They created <code>chaosmonkey</code> – a utility to add some chaos, and induce faults in the system to make sure the entire system doesn’t go down.</p>
 <p>Lets implement <code>chaosmalloc</code>! How can you test that all of your error paths that check the return value of <code>malloc</code> are working correctly? Cause random <code>malloc</code> failures, of course!</p>
 <p>We don’t want to modify malloc, so instead, we’ll use <code>LD_PRELOAD</code> to ask the loader to interpose our <code>chaosmalloc</code> library on all calls to <code>malloc</code>. Later, we’ll use this to implement our own <code>malloc</code>/<code>free</code> in a homework.</p>
@@ -5424,8 +5513,8 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <h2 id="headers-and-visibility"><span class="header-section-number">10.3</span> Headers and Visibility</h2>
 <p>C does not have classes and the rules therein to support per-class/object encapsulation. Instead, C views each <code>.c</code> file as a unit of visibility. Functions and global variables (known as “symbols”) can be hooked up with references to them in other objects by the linker. However, it is possible to write code in a <code>.c</code> file that is <em>not visible</em> outside of that file. In contrast to the linking error above emphasizing good naming, if a symbol is marked as <code>static</code>, no other <code>.c</code> file will be able to reference that symbol.</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb223-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
-<a class="sourceLine" id="cb223-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb231-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
+<a class="sourceLine" id="cb231-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
 <p>No other <code>.c</code> file can define code that will be able to access <code>global_var</code> nor call <code>foo</code>. You can see the list of all symbols within a <code>.c</code> file that are accessible outside of it by compiling into a <code>.o</code> file (using <code>gcc -c ...</code>), and <code>nm -g --defined-only x.o | awk '{print $3}'</code> (replace <code>x</code> with your object file name).</p>
 <blockquote>
 <p><strong>Convention.</strong> All functions and variables that are not part of the <em>public interface</em> with which to interact with the <code>.c</code> file should be <code>static</code> so that they cannot be used from other objects.</p>
@@ -5436,13 +5525,13 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>When we include a file, it just copies the file at the point of the <code>#include</code>. Thus, if the same header is included separately into two <code>.c</code> files, then it effectively replicates the header’s contents into the two <code>.o</code> files. This can cause problems if the two <code>.o</code> files are linked together. An example:</p>
 <p><code>a.c</code>:</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb224-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb232-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
 <p><code>b.c</code>:</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb225-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
-<a class="sourceLine" id="cb225-2" title="2"></a>
-<a class="sourceLine" id="cb225-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb233-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
+<a class="sourceLine" id="cb233-2" title="2"></a>
+<a class="sourceLine" id="cb233-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
 <p><code>c.h</code>:</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb226-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb234-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
 <p>After compiling these files, we get</p>
 <pre><code>$ gcc -c a.c -o a.o
 $ gcc -c b.c -o b.o
@@ -5458,22 +5547,22 @@ collect2: error: ld returned 1 exit status</code></pre>
 <p>You <em>must</em> include the header files that provide the functionality that you rely on and use. This sounds obvious, but it is <em>very</em> easy to mess this up. A couple of examples:</p>
 <p><em>Example 1: Implementing a library.</em> You’re implementing a library, and you have a <code>.h</code> file for it that exposes the types of the library’s functions. You test your library, and it works wonderfully – victory! However, because it is a library, it might be used by other people’s code, and all they are going to do is <code>#include &lt;your_lib.h&gt;</code>, and expect everything to work.</p>
 <p>What if the following happened? Your <code>your_lib.h</code> file does this:</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb228-1" title="1"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb228-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb228-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb236-1" title="1"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb236-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb236-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
 <p>In your test file, you do this:</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb229-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
-<a class="sourceLine" id="cb229-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb229-3" title="3"></a>
-<a class="sourceLine" id="cb229-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb237-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
+<a class="sourceLine" id="cb237-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb237-3" title="3"></a>
+<a class="sourceLine" id="cb237-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>Your tests of your library work wonderfully! But if the user of your library simply does:</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb230-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb230-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb238-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb238-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
 <p>The user will get a compiler error that says it doesn’t understand what <code>size_t</code> is! The core problem is that your library’s header file didn’t include all of the headers it relies on! Instead, it should updated to look like so:</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb231-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
-<a class="sourceLine" id="cb231-2" title="2"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb231-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb231-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb239-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
+<a class="sourceLine" id="cb239-2" title="2"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb239-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb239-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>A good way to defensively code to try to minimize the chance that this error happens, you should include your header files <em>before</em> the rest of the header files. The only real solution is to be very careful, and always include what headers are necessary for the functionality you depend on.</p>
 <p><em>Example 2: implementing a program or test.</em> A <code>.c</code> file, lets say <code>my_prog.c</code>, includes some header file, <code>head.h</code>. It compiles just fine. But if <code>my_prog.c</code> relies on some header file – lets say <code>dep.h</code> – that is only included itself in the <code>head.h</code> file, then if <code>head.h</code> is updated and removes the include, it will break any program that depends on it! In this case, <code>my_prog.c</code> should explicitly include <code>dep.h</code>: include the headers that are required for your functionality!</p>
 <p><em>How do you know which headers to include?</em> If you’re using a system function, the <code>man</code> page for it is explicit about which headers provide the necessary functionality. If you’re implementing a library in the class, we are explicit about what headers are required.</p>
@@ -5481,18 +5570,18 @@ collect2: error: ld returned 1 exit status</code></pre>
 <p>Syntactic nesting, or depth often significantly increase the cognitive complexity in C<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>. Two examples of this:</p>
 <p><strong>Depth through indentation nesting.</strong> Each additional nesting level (each nested set of <code>{}</code>) adds another condition that you must keep in your mind<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a> when understanding the code. This includes the conditions, or looping conditions associated with the nesting level. This is <em>a lot</em> to keep in your head, and makes developing and reading code quite a bit more difficult.</p>
 <p>What can you do to avoid this nesting? <em>First</em>, return early for errors. Instead of the following code…</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb232-1" title="1"><span class="cf">if</span> (a) {</a>
-<a class="sourceLine" id="cb232-2" title="2">    <span class="co">/* normal code */</span></a>
-<a class="sourceLine" id="cb232-3" title="3">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb232-4" title="4">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb232-5" title="5">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb232-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb240-1" title="1"><span class="cf">if</span> (a) {</a>
+<a class="sourceLine" id="cb240-2" title="2">    <span class="co">/* normal code */</span></a>
+<a class="sourceLine" id="cb240-3" title="3">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb240-4" title="4">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb240-5" title="5">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb240-6" title="6">}</a></code></pre></div>
 <p>…do the following…</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb233-1" title="1"><span class="cf">if</span> (!a) {</a>
-<a class="sourceLine" id="cb233-2" title="2">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb233-3" title="3">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb233-4" title="4">}</a>
-<a class="sourceLine" id="cb233-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb241-1" title="1"><span class="cf">if</span> (!a) {</a>
+<a class="sourceLine" id="cb241-2" title="2">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb241-3" title="3">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb241-4" title="4">}</a>
+<a class="sourceLine" id="cb241-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
 <p>Though seemingly trivial, it enables you to separate your understanding of error conditions from the complexity of the following code. Try to perform as much error checking as soon as it possibly can be done so that you can switch into “normal case” thinking.</p>
 <p><em>Second</em>, if you nest deeper than four levels of brackets, then pull code out into appropriately-named functions. Long functions aren’t necessarily bad, but <em>complex</em> functions are.</p>
 <blockquote>
@@ -5504,16 +5593,16 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>I use indentation levels in C of eight visual spaces to make it visually clear when I’m indenting too much.</p>
 <p><strong>Depth through field nesting.</strong> It can be quite difficult to follow code that nests access to fields. For example:</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb234-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb242-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
 <p>Of course, this is fake code, but even if it wasn’t, keeping track of the types of each of the levels of increasing depth of field reference is nearly impossible. This will make writing the code fickle and challenging, and reading the code, needlessly complex.</p>
 <p>The main means we have to remove this complexity is to</p>
 <ol type="1">
 <li><p>Create an set of typed variables</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb235-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
-<a class="sourceLine" id="cb235-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
-<a class="sourceLine" id="cb235-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
-<a class="sourceLine" id="cb235-4" title="4"></a>
-<a class="sourceLine" id="cb235-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb243-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
+<a class="sourceLine" id="cb243-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
+<a class="sourceLine" id="cb243-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
+<a class="sourceLine" id="cb243-4" title="4"></a>
+<a class="sourceLine" id="cb243-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
 It is up to you to decide where it is right to provide an “intermediate” type for a certain depth in the fields, and when to directly dive into a few fields.</li>
 <li><p>If any the structs (or sub-structs, or arrays) represents an API layer, then you can call a function that performs the necessary operation on that part of the data-structure. This both provide abstraction over the data access, and documents the types.</p></li>
 </ol>
