@@ -268,19 +268,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#organizing-software-with-dynamic-libraries-exercises-and-programming"><span class="toc-section-number">9</span> Organizing Software with Dynamic Libraries: Exercises and Programming</a><ul>
         <li><a href="#exercise-understanding-library-memory-consumption"><span class="toc-section-number">9.1</span> Exercise: Understanding Library Memory Consumption</a></li>
         <li><a href="#library-trade-offs"><span class="toc-section-number">9.2</span> Library Trade-offs</a></li>
-        <li><a href="#programming-dynamic-libraries-and-system-calls"><span class="toc-section-number">9.3</span> Programming Dynamic Libraries and System Calls</a><ul>
+        <li><a href="#programming-dynamic-libraries"><span class="toc-section-number">9.3</span> Programming Dynamic Libraries</a><ul>
         <li><a href="#plugins-and-dynamic-library-apis"><span class="toc-section-number">9.3.1</span> Plugins and Dynamic Library APIs</a></li>
         <li><a href="#interposing-libraries-on-library-apis"><span class="toc-section-number">9.3.2</span> Interposing Libraries on Library APIs</a></li>
-        <li><a href="#system-calls"><span class="toc-section-number">9.3.3</span> System Calls</a></li>
         </ul></li>
         </ul></li>
-        <li><a href="#appendix-c-programming-conventions"><span class="toc-section-number">10</span> Appendix: C Programming Conventions</a><ul>
-        <li><a href="#naming-conventions"><span class="toc-section-number">10.1</span> Naming Conventions</a></li>
-        <li><a href="#namespacing"><span class="toc-section-number">10.2</span> Namespacing</a></li>
-        <li><a href="#headers-and-visibility"><span class="toc-section-number">10.3</span> Headers and Visibility</a></li>
-        <li><a href="#what-to-include"><span class="toc-section-number">10.4</span> What to Include?</a></li>
-        <li><a href="#depth-complexity"><span class="toc-section-number">10.5</span> Depth = Complexity</a></li>
-        <li><a href="#object-orientation-initialization-destruction-and-methods"><span class="toc-section-number">10.6</span> Object Orientation: Initialization, Destruction, and Methods</a></li>
+        <li><a href="#system-calls-and-memory-management"><span class="toc-section-number">10</span> System Calls and Memory Management</a><ul>
+        <li><a href="#system-calls"><span class="toc-section-number">10.1</span> System Calls</a></li>
+        </ul></li>
+        <li><a href="#appendix-c-programming-conventions"><span class="toc-section-number">11</span> Appendix: C Programming Conventions</a><ul>
+        <li><a href="#naming-conventions"><span class="toc-section-number">11.1</span> Naming Conventions</a></li>
+        <li><a href="#namespacing"><span class="toc-section-number">11.2</span> Namespacing</a></li>
+        <li><a href="#headers-and-visibility"><span class="toc-section-number">11.3</span> Headers and Visibility</a></li>
+        <li><a href="#what-to-include"><span class="toc-section-number">11.4</span> What to Include?</a></li>
+        <li><a href="#depth-complexity"><span class="toc-section-number">11.5</span> Depth = Complexity</a></li>
+        <li><a href="#object-orientation-initialization-destruction-and-methods"><span class="toc-section-number">11.6</span> Object Orientation: Initialization, Destruction, and Methods</a></li>
         </ul></li>
         </ul>
 
@@ -437,7 +439,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x55950be04149
+Hex and pointers: 7fffffffffffffff, 0x55f02367d149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -557,8 +559,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7fff9c3dc790 == 0x7fff9c3dc790; 6 == 6
-nth index: 0x7fff9c3dc794 == 0x7fff9c3dc794; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffc978bd730 == 0x7ffc978bd730; 6 == 6
+nth index: 0x7ffc978bd734 == 0x7ffc978bd734; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -581,7 +583,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffdacf100a4 == 0x7ffdacf100a4; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffe6591c704 == 0x7ffe6591c704; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -605,10 +607,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffcfb862e50 &amp; 0x7ffcfb862e64
-idx 1 @ 0x7ffcfb862e54 &amp; 0x7ffcfb862e65
-idx 2 @ 0x7ffcfb862e58 &amp; 0x7ffcfb862e66
-idx 3 @ 0x7ffcfb862e5c &amp; 0x7ffcfb862e67</code></pre>
+<pre><code>idx 0 @ 0x7fff7290d930 &amp; 0x7fff7290d944
+idx 1 @ 0x7fff7290d934 &amp; 0x7fff7290d945
+idx 2 @ 0x7fff7290d938 &amp; 0x7fff7290d946
+idx 3 @ 0x7fff7290d93c &amp; 0x7fff7290d947</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -845,10 +847,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x5649bbbe2010
-b   @ 0x5649bbbe2014
-c   @ 0x5649bbbe2020
-end @ 0x5649bbbe2039
+a   @ 0x55d472cdc010
+b   @ 0x55d472cdc014
+c   @ 0x55d472cdc020
+end @ 0x55d472cdc039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -856,7 +858,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x5649bbbe2014
+c.c_c = 0x55d472cdc014
 
 Print out the variables as raw memory
 
@@ -951,8 +953,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x55572e31f04c
-1: 2 @ 0x55572e31f044
+<pre><code>0: 4 @ 0x563c4a61104c
+1: 2 @ 0x563c4a611044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1281,16 +1283,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: 768336535
-3: 32767
-4: 768336534
-5: 32767
-6: -1401421251
-7: 21892
-8: 945443560
-9: 32751
-10: -1401421328
-11: 21892</code></pre>
+2: -6511385
+3: 32766
+4: -6511386
+5: 32766
+6: 1774752317
+7: 22026
+8: 1814364904
+9: 32668
+10: 1774752240
+11: 22026</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1631,7 +1633,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x561903dcb004 == 0x561903dcb004 != 0x561903dcd011</code></pre>
+0x559c2f666004 == 0x559c2f666004 != 0x559c2f668011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2030,15 +2032,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 9867
+     parent pid 74075
 post-fork:
-    returned 9868,
-    current pid 9867
-    parent pid 9858
+    returned 74076,
+    current pid 74075
+    parent pid 74066
 post-fork:
     returned 0,
-    current pid 9868
-    parent pid 9867</code></pre>
+    current pid 74076
+    parent pid 74075</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2102,14 +2104,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 9887 exiting with 0
-Child 9890 exiting with -3
-Child 9889 exiting with -2
-Child 9888 exiting with -1
-Child 9887 exited with exit status 0
-Child 9890 exited with exit status -3
-Child 9889 exited with exit status -2
-Child 9888 exited with exit status -1</code></pre>
+<pre><code>Child 74096 exiting with -1
+Child 74095 exiting with 0
+Child 74097 exiting with -2
+Child 74098 exiting with -3
+Child 74095 exited with exit status 0
+Child 74096 exited with exit status -1
+Child 74097 exited with exit status -2
+Child 74098 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -2918,8 +2920,8 @@ New descriptor @ 0</code></pre>
 <a class="sourceLine" id="cb132-58" title="58">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb132-59" title="59">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Parent got the message!
-Child sent whole message!</code></pre>
+<pre><code>Child sent whole message!
+Parent got the message!</code></pre>
 <p>The <em>concurrency</em> of the system enables separate processes to be active at the same time, thus for the <code>write</code> and <code>read</code> to be transferring data through the pipe <em>at the same time</em>. This simplifies our code as we don’t need to worry about sending chunks of our data.</p>
 <p>Note that we’re <code>close</code>ing the end of the pipe that we aren’t using in the corresponding processes. Though the file descriptors are identical in each process following <code>fork</code>, each process does have a <em>separate</em> set of those descriptors. Thus closing in one, doesn’t impact the other. Remember, processes provide <em>isolation</em>!</p>
 <h3 id="the-shell"><span class="header-section-number">4.2.3</span> The Shell</h3>
@@ -3233,9 +3235,9 @@ make[1]: *** [Makefile:28: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>10147: We&#39;ve been asked to terminate. Exit!
-10146: Parent asking child (10147) to terminate
-10146: Child process 10147 has exited.</code></pre>
+<pre><code>74355: We&#39;ve been asked to terminate. Exit!
+74354: Parent asking child (74355) to terminate
+74354: Child process 74355 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -4073,13 +4075,15 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - D 99
 - F output_tmp.dat (0)
 - D 08
+- D 10
 - F a.out (17136)
 - F LICENSE (1522)
 - D 09
+- F lectures.html (610653)
 - D 01
 - D 05
 - D 02
-- F aggregate.md (162930)
+- F aggregate.md (162941)
 - D 04
 - D .git
 - F inline_exec_tmp.c (1658)</code></pre>
@@ -4221,7 +4225,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 <a class="sourceLine" id="cb183-54" title="54">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>msg1: 
-msg2: </code></pre>
+msg2: america for good doggies</code></pre>
 <p>You can see that there are some problems here. If we run it many times, we can see that sometimes we don’t see any messages, sometimes we only see the first, sometimes we only see the second, and other times combinations of all three options. Thus, they are not useful for channel-based communication between multiple processes.</p>
 <p>On the other side, files have a very <em>useful</em> properti that we’d like to use in a good solution to IPC: they <em>have a location in the FS</em> that the communicating processes can both use to find the file, thus avoiding the need for a shared parent.</p>
 <ul>
@@ -4410,8 +4414,7 @@ msg2: </code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>10497: 10497
-10498: 10498</code></pre>
+<pre><code>74705: 74705</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4564,15 +4567,15 @@ msg2: </code></pre>
 <a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 10518 connected to server.
-2. Client 10518 request sent message to server.
-1. Client 10519 connected to server.
-Server received message (sz 36): &quot;Citizen 10518: Penny for Pawsident!&quot;. Replying!
-2. Client 10519 request sent message to server.
-3. Client 10518 reply received from server: Citizen 10518: Penny for Pawsident!
+1. Client 74727 connected to server.
+2. Client 74727 request sent message to server.
+Server received message (sz 36): &quot;Citizen 74727: Penny for Pawsident!&quot;. Replying!
+1. Client 74728 connected to server.
+2. Client 74728 request sent message to server.
 Server: New client connected with new file descriptor 4.
-Server received message (sz 36): &quot;Citizen 10519: Penny for Pawsident!&quot;. Replying!
-3. Client 10519 reply received from server: Citizen 10519: Penny for Pawsident!</code></pre>
+Server received message (sz 36): &quot;Citizen 74728: Penny for Pawsident!&quot;. Replying!
+3. Client 74728 reply received from server: Citizen 74728: Penny for Pawsident!
+3. Client 74727 reply received from server: Citizen 74727: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -5432,7 +5435,7 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <p>If <span class="math inline"><em>N</em></span> programs must load in multiple libraries (totaling, say, <span class="math inline"><em>X</em></span> MiB), then <span class="math inline"><em>N</em> × <em>X</em></span> MiB is consumed. For context, my system is currently running 269 programs (<code>ps aux | wc -l</code>), so this memory can add up!</p>
 <p>Dynamic libraries enable us to do a lot better. The contents memory for the library is the same regardless the process it is present in, and an Operating System has a neat trick: it can make the same memory appear in multiple processes if it is identical <em>and</em> cannot be modified<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>. As such, dynamic libraries typically only require memory for each library <em>once</em> in the system (only <span class="math inline"><em>X</em></span>), as opposed for each process.</p>
 <figure>
-<img src="figures/08_staticmem.svg" alt="A graphical depiction of how library memory gets added into a program using static libraries. The program is only dependent on a single object within the library, so we only need to compile that object into the resulting executable program." /><figcaption>A graphical depiction of how library memory gets added into a program using static libraries. The program is only dependent on a single object within the library, so we only need to compile that object into the resulting executable program.</figcaption>
+<img src="figures/08_dynamicmem.svg" alt="A graphical depiction of how library memory gets added into a program using dynamic libraries. The libraries are only linked into the processes when they are executed. When that happens, the same memory for the library is mmaped into each process, thus the system only requires memory for a single copy of the library." /><figcaption>A graphical depiction of how library memory gets added into a program using dynamic libraries. The libraries are only linked into the processes when they are executed. When that happens, the same memory for the library is <code>mmap</code>ed into each process, thus the system only requires memory for a <em>single</em> copy of the library.</figcaption>
 </figure>
 <h2 id="static-vs.-dynamic-library-memory-usage-summary"><span class="header-section-number">8.6</span> Static vs. Dynamic Library Memory Usage Summary</h2>
 <p>When a program is linked with a static library, the result is relatively small as only the objects in the library that are necessary are linked into the program. When executed as a process, the memory consumed will only include the necessary objects of the library. In contrast, a program that uses a dynamic library links in the entire library at runtime into a process. Thus, for a <em>single process</em>, a static library approach is almost always going to be more memory-efficient.</p>
@@ -5458,7 +5461,7 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <li><em>Question:</em> What types of systems might want to always use only dynamic libraries?</li>
 <li><em>Question:</em> OSX uses dynamically linked libraries for a few common and frequently used libraries (like <code>libc</code>), and static libraries for the rest. Why?</li>
 </ul>
-<h2 id="programming-dynamic-libraries-and-system-calls"><span class="header-section-number">9.3</span> Programming Dynamic Libraries and System Calls</h2>
+<h2 id="programming-dynamic-libraries"><span class="header-section-number">9.3</span> Programming Dynamic Libraries</h2>
 <p>We saw how libraries enable the sharing of functionality between programs. Static libraries are convenient, and only required objects are linked with your program at compile time. In contrast, dynamic libraries are linked at runtime <em>before</em> the <code>main</code> of your program executes.</p>
 <h3 id="plugins-and-dynamic-library-apis"><span class="header-section-number">9.3.1</span> Plugins and Dynamic Library APIs</h3>
 <p>In addition to enabling shared library code, dynamic libraries also enable explicit means to load libraries programmatically. Namely, UNIX provdes an API that enables your process to <em>load</em> a dynamic library into itself. This is kinda crazy: a running process with a set of code and data can add a library with more code and data into itself dynamically. This effectively means that your program can change its own code as it executes by adding and removing dynamic libraries. Being able to load library code into your process as your program executes (at runtime) is an instance of <em>self-modifying code</em>, and it enables a few very cool features including:</p>
@@ -5567,22 +5570,29 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <a class="sourceLine" id="cb235-23" title="23"></a>
 <a class="sourceLine" id="cb235-24" title="24">    <span class="cf">return</span> mem;</a>
 <a class="sourceLine" id="cb235-25" title="25">}</a></code></pre></div>
-<p>We do the same for <code>free</code>.</p>
+<p>We do the same for <code>free</code>, and should do the same also for <code>calloc</code> and other memory allocation functions.</p>
 <p><strong>Question:</strong> Why can’t we just call <code>malloc</code> directly instead of doing this complex thing with <code>dlsym</code>?</p>
 <p>We can use it on a simple program that simply calls <code>malloc</code> and <code>free</code> on the allocated memory. To test this out, in <a href="https://github.com/gwu-cs-sysprog/lectures/tree/main/09/malloclog/"><code>malloclog</code></a>:</p>
 <pre><code>$ make
 $ LD_PRELOAD=./libmalloclog.so ./main.bin
 malloc(4) -&gt; 0x55fe6cd492a0
-free(0x55fe6cd492a0)</code></pre>
+free(0x55fe6cd492a0)
+...</code></pre>
 <p>This shows us that dynamic libraries are <em>programmable</em> and that we can use them in interesting ways to coordinate between libraries, provide new functionalities, and to interpose on functionalities. For example, many of the largest companies use <code>LD_PRELOAD</code> to swap out the <code>malloc</code> implementation for one that is higher performance.</p>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>What else can you think to do with the ability to interpose on <em>any</em> library functions?</li>
+<li>How might we implement some of the <code>valgrind</code> functionality using the ability to interpose on library functions?</li>
+</ul>
 <p>Note that running a program that uses <code>LD_PRELOAD</code> environment variables are more difficult to use in <code>gdb</code>. The <a href="https://github.com/gwu-cs-sysprog/lectures/tree/main/09/malloclog/ldpreload_w_gdb.sh"><code>ldpreload_w_gdb.sh</code></a> script demonstrates how to use both technologies together.</p>
-<h3 id="system-calls"><span class="header-section-number">9.3.3</span> System Calls</h3>
+<h1 id="system-calls-and-memory-management"><span class="header-section-number">10</span> System Calls and Memory Management</h1>
+<h2 id="system-calls"><span class="header-section-number">10.1</span> System Calls</h2>
 <p>We’ve talked about the many resources that are provided by the <em>system</em>. These include files, pipes, and domain sockets. But we’ve been vague about what the system is. Though we’ll leave the details for a later course, lets dive in to what constitutes the “system” a little bit.</p>
-<h1 id="appendix-c-programming-conventions"><span class="header-section-number">10</span> Appendix: C Programming Conventions</h1>
+<h1 id="appendix-c-programming-conventions"><span class="header-section-number">11</span> Appendix: C Programming Conventions</h1>
 <p>C gives you quite a bit of freedom in how you write your code. Conventions are <em>necessary</em> in C because they bring order to the unrestricted freedom that allows code that is too complicated to debug, too clever to understand, and completely unmaintainable. Conventions are a set of rules that we follow that inherently <em>limit</em> the way in which we write code. The intention is to put <a href="https://en.wikipedia.org/wiki/Guard_rail">guard rails</a> onto our development process and to only deviate from the conventions in exceptional cases. An important aspect of this is that once you understand the conventions, it is <em>drastically easier to read the code</em> because you only have to consider how convention-based code is written. This means that there is a significant importance to uniformly applying conventions. Because of this, it is less important if one likes the conventions, than it is to adhere to them for uniformity.</p>
 <p>Put another way, it is easy for <em>any</em> programmer to code themself into a corner where the program is more complex than our brains can handle. Being an experienced programmer is <em>much less</em> about being able to handle more complexity, and much more about understanding that you need to spend significant development time <em>simplifying</em> your code. Conventions are a set of codified simplifications, in some sense. They provide your a set of rules (that you don’t need to think about, you just do) to simplify the structure of your code.</p>
 <p>OK, onward to conventions!</p>
-<h2 id="naming-conventions"><span class="header-section-number">10.1</span> Naming Conventions</h2>
+<h2 id="naming-conventions"><span class="header-section-number">11.1</span> Naming Conventions</h2>
 <p>There are many potential naming conventions, for example, <a href="https://en.wikipedia.org/wiki/Camel_case">camel case</a>, <a href="https://en.wikipedia.org/wiki/Snake_case">snake case</a>, and <a href="https://en.wikipedia.org/wiki/Hungarian_notation">hungarian notiation</a>. Some are antiquated (hungarian), but most are a matter of taste and convention.</p>
 <blockquote>
 <p><strong>Convention.</strong> Most C uses lower-case <code>snake_case</code> for variables, types, and functions, capital <code>SNAKE_CASE</code> for constants and macros.</p>
@@ -5593,7 +5603,7 @@ free(0x55fe6cd492a0)</code></pre>
 <li><code>ret</code> is a variable that stores a return value (i.e. a value that will later be used as in <code>return ret;</code>).</li>
 <li><code>i</code>, <code>j</code>, <code>k</code>, <code>l</code> are iterator variables.</li>
 </ul>
-<h2 id="namespacing"><span class="header-section-number">10.2</span> Namespacing</h2>
+<h2 id="namespacing"><span class="header-section-number">11.2</span> Namespacing</h2>
 <p>When you create a global variable, type, or function, you’re creating a symbol that can be accessed for any <code>.c</code> file. This has a significant downside: if you choose a name that is already used in a library, or that is common, you might get a linker error along the lines of:</p>
 <pre><code>multiple definition of `foo&#39;; /tmp/ccrvA8in.o:a.c:(.text+0x0): first defined here
 ...
@@ -5602,7 +5612,7 @@ collect2: error: ld returned 1 exit status</code></pre>
 <blockquote>
 <p><strong>Convention.</strong> Thus, the convention is that you should “namespace” your functions and variables by pre-pending them with a functionality-specific prefix. For example, a key-value store might have all of its types, variables, and functions prefixed with <code>kv_</code>, for example, <code>kv_get</code>.</p>
 </blockquote>
-<h2 id="headers-and-visibility"><span class="header-section-number">10.3</span> Headers and Visibility</h2>
+<h2 id="headers-and-visibility"><span class="header-section-number">11.3</span> Headers and Visibility</h2>
 <p>C does not have classes and the rules therein to support per-class/object encapsulation. Instead, C views each <code>.c</code> file as a unit of visibility. Functions and global variables (known as “symbols”) can be hooked up with references to them in other objects by the linker. However, it is possible to write code in a <code>.c</code> file that is <em>not visible</em> outside of that file. In contrast to the linking error above emphasizing good naming, if a symbol is marked as <code>static</code>, no other <code>.c</code> file will be able to reference that symbol.</p>
 <div class="sourceCode" id="cb238"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb238-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
 <a class="sourceLine" id="cb238-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
@@ -5634,7 +5644,7 @@ collect2: error: ld returned 1 exit status</code></pre>
 <blockquote>
 <p><strong>Convention.</strong> Never put global data in a <code>.h</code> file. Only put type information (e.g. function declarations) in <code>.h</code> files<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>.</p>
 </blockquote>
-<h2 id="what-to-include"><span class="header-section-number">10.4</span> What to Include?</h2>
+<h2 id="what-to-include"><span class="header-section-number">11.4</span> What to Include?</h2>
 <p>You <em>must</em> include the header files that provide the functionality that you rely on and use. This sounds obvious, but it is <em>very</em> easy to mess this up. A couple of examples:</p>
 <p><em>Example 1: Implementing a library.</em> You’re implementing a library, and you have a <code>.h</code> file for it that exposes the types of the library’s functions. You test your library, and it works wonderfully – victory! However, because it is a library, it might be used by other people’s code, and all they are going to do is <code>#include &lt;your_lib.h&gt;</code>, and expect everything to work.</p>
 <p>What if the following happened? Your <code>your_lib.h</code> file does this:</p>
@@ -5657,7 +5667,7 @@ collect2: error: ld returned 1 exit status</code></pre>
 <p>A good way to defensively code to try to minimize the chance that this error happens, you should include your header files <em>before</em> the rest of the header files. The only real solution is to be very careful, and always include what headers are necessary for the functionality you depend on.</p>
 <p><em>Example 2: implementing a program or test.</em> A <code>.c</code> file, lets say <code>my_prog.c</code>, includes some header file, <code>head.h</code>. It compiles just fine. But if <code>my_prog.c</code> relies on some header file – lets say <code>dep.h</code> – that is only included itself in the <code>head.h</code> file, then if <code>head.h</code> is updated and removes the include, it will break any program that depends on it! In this case, <code>my_prog.c</code> should explicitly include <code>dep.h</code>: include the headers that are required for your functionality!</p>
 <p><em>How do you know which headers to include?</em> If you’re using a system function, the <code>man</code> page for it is explicit about which headers provide the necessary functionality. If you’re implementing a library in the class, we are explicit about what headers are required.</p>
-<h2 id="depth-complexity"><span class="header-section-number">10.5</span> Depth = Complexity</h2>
+<h2 id="depth-complexity"><span class="header-section-number">11.5</span> Depth = Complexity</h2>
 <p>Syntactic nesting, or depth often significantly increase the cognitive complexity in C<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>. Two examples of this:</p>
 <p><strong>Depth through indentation nesting.</strong> Each additional nesting level (each nested set of <code>{}</code>) adds another condition that you must keep in your mind<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a> when understanding the code. This includes the conditions, or looping conditions associated with the nesting level. This is <em>a lot</em> to keep in your head, and makes developing and reading code quite a bit more difficult.</p>
 <p>What can you do to avoid this nesting? <em>First</em>, return early for errors. Instead of the following code…</p>
@@ -5700,7 +5710,7 @@ It is up to you to decide where it is right to provide an “intermediate” typ
 <blockquote>
 <p><strong>Convention.</strong> When faced with walking through nested composite data-structures, use intermediate variables to make types explicit, or functions to abstract operations.</p>
 </blockquote>
-<h2 id="object-orientation-initialization-destruction-and-methods"><span class="header-section-number">10.6</span> Object Orientation: Initialization, Destruction, and Methods</h2>
+<h2 id="object-orientation-initialization-destruction-and-methods"><span class="header-section-number">11.6</span> Object Orientation: Initialization, Destruction, and Methods</h2>
 <p>C is an imperative programming language as it came before Object Orientation (OO) took hold. That said, the OO concept of <a href="https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)">encapsulation</a> behind an <a href="https://en.wikipedia.org/wiki/Abstract_data_type">abstract data type</a> is a universal requirement of programming in complex environments. Though C doesn’t support this explicitly, conventions can provide much of the same benefit. Such an abstraction requires</p>
 <ol type="1">
 <li>a <em>datatype</em> that stores the information required for the abstraction (think: a list, a key-value store, etc…),</li>
