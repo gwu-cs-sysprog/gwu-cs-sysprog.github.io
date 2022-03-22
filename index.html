@@ -257,23 +257,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#saving-memory-with-static-libraries"><span class="toc-section-number">8.4.1</span> Saving Memory with Static Libraries</a></li>
         </ul></li>
         <li><a href="#shareddynamic-libraries"><span class="toc-section-number">8.5</span> Shared/Dynamic Libraries</a><ul>
-        <li><a href="#dynamic-loading-summary"><span class="toc-section-number">8.5.1</span> Dynamic Loading Summary</a></li>
-        <li><a href="#saving-memory-with-dynamic-libraries"><span class="toc-section-number">8.5.2</span> Saving Memory with Dynamic Libraries</a></li>
-        <li><a href="#explicitly-managing-dynamic-libraries"><span class="toc-section-number">8.5.3</span> Explicitly Managing Dynamic Libraries</a></li>
+        <li><a href="#compiling-and-executing-with-dynamic-libraries"><span class="toc-section-number">8.5.1</span> Compiling and Executing with Dynamic Libraries</a></li>
+        <li><a href="#exec-with-dynamic-linking"><span class="toc-section-number">8.5.2</span> <code>exec</code> with Dynamic Linking</a></li>
+        <li><a href="#diving-into-dynamic-linking-at-exec"><span class="toc-section-number">8.5.3</span> Diving into Dynamic Linking at <code>exec</code></a></li>
+        <li><a href="#dynamic-loading-summary"><span class="toc-section-number">8.5.4</span> Dynamic Loading Summary</a></li>
+        <li><a href="#saving-memory-with-dynamic-libraries"><span class="toc-section-number">8.5.5</span> Saving Memory with Dynamic Libraries</a></li>
         </ul></li>
-        <li><a href="#exercises-questions"><span class="toc-section-number">8.6</span> Exercises &amp; Questions</a><ul>
-        <li><a href="#library-trade-offs"><span class="toc-section-number">8.6.1</span> Library Trade-offs</a></li>
-        <li><a href="#chaosmalloc"><span class="toc-section-number">8.6.2</span> <code>chaosmalloc</code></a></li>
+        <li><a href="#static-vs.-dynamic-library-memory-usage-summary"><span class="toc-section-number">8.6</span> Static vs. Dynamic Library Memory Usage Summary</a></li>
+        </ul></li>
+        <li><a href="#organizing-software-with-dynamic-libraries-exercises-and-programming"><span class="toc-section-number">9</span> Organizing Software with Dynamic Libraries: Exercises and Programming</a><ul>
+        <li><a href="#exercise-understanding-library-memory-consumption"><span class="toc-section-number">9.1</span> Exercise: Understanding Library Memory Consumption</a></li>
+        <li><a href="#library-trade-offs"><span class="toc-section-number">9.2</span> Library Trade-offs</a></li>
+        <li><a href="#programming-dynamic-libraries"><span class="toc-section-number">9.3</span> Programming Dynamic Libraries</a><ul>
+        <li><a href="#plugins-and-dynamic-library-apis"><span class="toc-section-number">9.3.1</span> Plugins and Dynamic Library APIs</a></li>
+        <li><a href="#interposing-libraries-on-library-apis"><span class="toc-section-number">9.3.2</span> Interposing Libraries on Library APIs</a></li>
         </ul></li>
         </ul></li>
-        <li><a href="#system-calls-and-ptrace"><span class="toc-section-number">9</span> System Calls and <code>ptrace</code></a></li>
-        <li><a href="#appendix-c-programming-conventions"><span class="toc-section-number">10</span> Appendix: C Programming Conventions</a><ul>
-        <li><a href="#naming-conventions"><span class="toc-section-number">10.1</span> Naming Conventions</a></li>
-        <li><a href="#namespacing"><span class="toc-section-number">10.2</span> Namespacing</a></li>
-        <li><a href="#headers-and-visibility"><span class="toc-section-number">10.3</span> Headers and Visibility</a></li>
-        <li><a href="#what-to-include"><span class="toc-section-number">10.4</span> What to Include?</a></li>
-        <li><a href="#depth-complexity"><span class="toc-section-number">10.5</span> Depth = Complexity</a></li>
-        <li><a href="#object-orientation-initialization-destruction-and-methods"><span class="toc-section-number">10.6</span> Object Orientation: Initialization, Destruction, and Methods</a></li>
+        <li><a href="#system-calls-and-memory-management"><span class="toc-section-number">10</span> System Calls and Memory Management</a><ul>
+        <li><a href="#system-calls"><span class="toc-section-number">10.1</span> System Calls</a><ul>
+        <li><a href="#system-calls-and-processes"><span class="toc-section-number">10.1.1</span> System Calls and Processes</a></li>
+        </ul></li>
+        <li><a href="#observing-system-calls"><span class="toc-section-number">10.2</span> Observing System Calls</a></li>
+        <li><a href="#system-call-overhead"><span class="toc-section-number">10.3</span> System Call Overhead</a></li>
+        </ul></li>
+        <li><a href="#unix-security-users-groups-and-filesystem-permissions"><span class="toc-section-number">11</span> UNIX Security: Users, Groups, and Filesystem Permissions</a><ul>
+        <li><a href="#file-and-directory-permissions"><span class="toc-section-number">11.1</span> File and Directory Permissions</a><ul>
+        <li><a href="#file-ownership-and-groups"><span class="toc-section-number">11.1.1</span> File Ownership and Groups</a></li>
+        <li><a href="#the-password-and-group-file"><span class="toc-section-number">11.1.2</span> The password and group file</a></li>
+        <li><a href="#file-permissions"><span class="toc-section-number">11.1.3</span> File Permissions</a></li>
+        <li><a href="#changing-file-ownership-and-group"><span class="toc-section-number">11.1.4</span> Changing File Ownership and Group</a></li>
+        </ul></li>
+        <li><a href="#security-and-programming-with-users-and-groups"><span class="toc-section-number">11.2</span> Security and Programming with Users and Groups</a><ul>
+        <li><a href="#users-and-groups"><span class="toc-section-number">11.2.1</span> Users and Groups</a></li>
+        <li><a href="#permissions"><span class="toc-section-number">11.2.2</span> Permissions</a></li>
+        <li><a href="#terminal-login-and-password-checking"><span class="toc-section-number">11.2.3</span> Terminal Login and Password Checking</a></li>
+        <li><a href="#usersgroup-capabilities-of-programs"><span class="toc-section-number">11.2.4</span> Users/Group Capabilities of Programs</a></li>
+        <li><a href="#sudo-and-su"><span class="toc-section-number">11.2.5</span> <code>sudo</code> and <code>su</code></a></li>
+        </ul></li>
+        </ul></li>
+        <li><a href="#security-attacks-on-system-programs"><span class="toc-section-number">12</span> Security: Attacks on System Programs</a><ul>
+        <li><a href="#path-attacks"><span class="toc-section-number">12.1</span> Path Attacks</a><ul>
+        <li><a href="#system"><span class="toc-section-number">12.1.1</span> <code>system()</code></a></li>
+        <li><a href="#path-attacks-with-set-user-id-bits"><span class="toc-section-number">12.1.2</span> Path attacks with set-user-id bits</a></li>
+        </ul></li>
+        <li><a href="#injection-attacks"><span class="toc-section-number">12.2</span> Injection Attacks</a></li>
+        <li><a href="#overflow-attacks"><span class="toc-section-number">12.3</span> Overflow Attacks</a></li>
+        <li><a href="#headers-and-visibility"><span class="toc-section-number">12.4</span> Headers and Visibility</a></li>
+        <li><a href="#what-to-include"><span class="toc-section-number">12.5</span> What to Include?</a></li>
+        <li><a href="#depth-complexity"><span class="toc-section-number">12.6</span> Depth = Complexity</a></li>
+        <li><a href="#object-orientation-initialization-destruction-and-methods"><span class="toc-section-number">12.7</span> Object Orientation: Initialization, Destruction, and Methods</a></li>
         </ul></li>
         </ul>
 
@@ -311,7 +343,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 inline_exec_tmp.c:6:7: error: variable or field a declared void
     6 |  void a;
       |       ^
-make[1]: *** [Makefile:25: inline_exec_tmp] Error 1</code></pre>
+make[1]: *** [Makefile:31: inline_exec_tmp] Error 1</code></pre>
 <ul>
 <li><code>enum</code> - an <code>int</code> or <code>short int</code> with some “named” values.</li>
 </ul>
@@ -430,7 +462,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x563723800149
+Hex and pointers: 7fffffffffffffff, 0x56549fc62149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -550,8 +582,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffd9f54ef80 == 0x7ffd9f54ef80; 6 == 6
-nth index: 0x7ffd9f54ef84 == 0x7ffd9f54ef84; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffc6587d8a0 == 0x7ffc6587d8a0; 6 == 6
+nth index: 0x7ffc6587d8a4 == 0x7ffc6587d8a4; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -574,7 +606,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffcdaaee004 == 0x7ffcdaaee004; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffd69200554 == 0x7ffd69200554; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -598,10 +630,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffd5fb28dd0 &amp; 0x7ffd5fb28de4
-idx 1 @ 0x7ffd5fb28dd4 &amp; 0x7ffd5fb28de5
-idx 2 @ 0x7ffd5fb28dd8 &amp; 0x7ffd5fb28de6
-idx 3 @ 0x7ffd5fb28ddc &amp; 0x7ffd5fb28de7</code></pre>
+<pre><code>idx 0 @ 0x7ffd210e7810 &amp; 0x7ffd210e7824
+idx 1 @ 0x7ffd210e7814 &amp; 0x7ffd210e7825
+idx 2 @ 0x7ffd210e7818 &amp; 0x7ffd210e7826
+idx 3 @ 0x7ffd210e781c &amp; 0x7ffd210e7827</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -769,7 +801,7 @@ Gabe</code></pre>
 <a class="sourceLine" id="cb38-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>free(): double free detected in tcache 2
-make[1]: *** [Makefile:22: inline_exec] Aborted (core dumped)</code></pre>
+make[1]: *** [Makefile:28: inline_exec] Aborted (core dumped)</code></pre>
 <p><code>valgrind</code> will help you debug the last three of these issues, and later in the class, we’ll develop a library to help debug the first.</p>
 <h2 id="function-pointers"><span class="header-section-number">1.4</span> Function Pointers</h2>
 <p>It is not uncommon for programs to require some <em>dynamic</em> behavior. A data structure might need to do different types of comparisons between its data (depending on what data is being stored). This means that a generic data-structure (think: a hash-table) needs to somehow compare equality of the data objects it stores <em>without knowing what they are</em>! In Java, think about the <code>equals</code> method. Each object can define its own <code>equals</code> method to compare between objects of the same type.</p>
@@ -838,10 +870,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x558e373aa010
-b   @ 0x558e373aa014
-c   @ 0x558e373aa020
-end @ 0x558e373aa039
+a   @ 0x55bd0385f010
+b   @ 0x55bd0385f014
+c   @ 0x55bd0385f020
+end @ 0x55bd0385f039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -849,7 +881,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x558e373aa014
+c.c_c = 0x55bd0385f014
 
 Print out the variables as raw memory
 
@@ -944,8 +976,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x558d24b6c04c
-1: 2 @ 0x558d24b6c044
+<pre><code>0: 4 @ 0x55fad9f4a04c
+1: 2 @ 0x55fad9f4a044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1274,16 +1306,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -96844361
-3: 32764
-4: -96844362
-5: 32764
-6: -1137331651
-7: 21972
-8: -502202424
-9: 32630
-10: -1137331728
-11: 21972</code></pre>
+2: 714998055
+3: 32765
+4: 714998054
+5: 32765
+6: 331846205
+7: 21917
+8: -1981963544
+9: 32729
+10: 331846128
+11: 21917</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1327,7 +1359,7 @@ inline_exec_tmp.c:10:9: warning: function returns address of local variable [-Wr
    10 |  return &amp;a;            /* Return the address of a local variable. */
       |         ^~
 Save address of local variable, and dereference it: 42
-make[1]: *** [Makefile:22: inline_exec] Segmentation fault (core dumped)</code></pre>
+make[1]: *** [Makefile:28: inline_exec] Segmentation fault (core dumped)</code></pre>
 <p>You can see a few interesting facts from the output.</p>
 <ol type="1">
 <li>The value referenced by <code>*ptr</code> after <code>foo</code> is a random value, and dereferencing the return value from<code>bar</code> causes a segmentation fault.</li>
@@ -1536,7 +1568,7 @@ str ---&gt; +---+---+---+---+
 <p>Program output:</p>
 <pre><code>zzz
 *** stack smashing detected ***: terminated
-make[1]: *** [Makefile:22: inline_exec] Aborted (core dumped)</code></pre>
+make[1]: *** [Makefile:28: inline_exec] Aborted (core dumped)</code></pre>
 <h4 id="parsing-strings"><span class="header-section-number">2.2.1.2</span> Parsing Strings</h4>
 <p>While many of the previous functions have to do with creating and modifying strings, computers frequently need to “parse”, or try to understand the different parts of, a string. Some examples:</p>
 <ul>
@@ -1624,7 +1656,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x5572148cf004 == 0x5572148cf004 != 0x5572148d1011</code></pre>
+0x55ea30efe004 == 0x55ea30efe004 != 0x55ea30f00011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -1798,7 +1830,7 @@ ENOSPC 28 No space left on device</code></pre>
 <pre><code>Lets get greedy: allocate 9223372036854775807 bytes!
 Error: errno value 12 and description: Cannot allocate memory
 Error allocating memory: Cannot allocate memory
-make[1]: *** [Makefile:22: inline_exec] Error 255</code></pre>
+make[1]: *** [Makefile:28: inline_exec] Error 255</code></pre>
 <p>(Note: when you return from a program with a non-zero value, it designates that your <em>program</em> had an error. This is why we see the <code>make</code> error when it runs your program.)</p>
 <p>To understand the return value of UNIX library functions:</p>
 <ul>
@@ -2023,15 +2055,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 176247
+     parent pid 161696
 post-fork:
-    returned 176248,
-    current pid 176247
-    parent pid 176241
+    returned 161697,
+    current pid 161696
+    parent pid 161687
 post-fork:
     returned 0,
-    current pid 176248
-    parent pid 176247</code></pre>
+    current pid 161697
+    parent pid 161696</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2095,14 +2127,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 176264 exiting with 0
-Child 176265 exiting with -1
-Child 176266 exiting with -2
-Child 176267 exiting with -3
-Child 176264 exited with exit status 0
-Child 176265 exited with exit status -1
-Child 176266 exited with exit status -2
-Child 176267 exited with exit status -3</code></pre>
+<pre><code>Child 161716 exiting with 0
+Child 161718 exiting with -2
+Child 161717 exiting with -1
+Child 161719 exiting with -3
+Child 161716 exited with exit status 0
+Child 161717 exited with exit status -1
+Child 161718 exited with exit status -2
+Child 161719 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3047,7 +3079,7 @@ Child sent whole message!</code></pre>
 <p>Program output:</p>
 <pre><code>Lets live dangerously
 My downfall is the forbidden fruit at address (nil).
-make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
+make[1]: *** [Makefile:28: inline_exec] Error 1</code></pre>
 <p>This is kind-of crazy. We can actually execute in the signal handler when we access invalid memory! We can write code to execute in response to a segmentation fault. This is how Java prints out a backtrace – something we will do in C soon. The concepts in the above code:</p>
 <ul>
 <li><code>sigset_t</code> this is a bitmap with a bit per signal. It is used to program the <em>signal mask</em>. While a specific signal is executing, which signals can occur during its execution? If a bit is set to <code>1</code>, then the signal will wait for the specific signal to <em>complete</em> execution, before its handler is called. However, if a signal’s bit is set to <code>0</code>, then signals can <em>nest</em>: you can run a signal handler while you’re in the middle of executing another signal handler. <code>sigemptyset</code> initializes all bits to <code>0</code>, while <code>sigaddset</code> sets the bit corresponding to a signal number (<code>SIGSEGV</code> in this case).</li>
@@ -3226,9 +3258,9 @@ make[1]: *** [Makefile:22: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>176484: We&#39;ve been asked to terminate. Exit!
-176483: Parent asking child (176484) to terminate
-176483: Child process 176484 has exited.</code></pre>
+<pre><code>161976: We&#39;ve been asked to terminate. Exit!
+161975: Parent asking child (161976) to terminate
+161975: Child process 161976 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -3721,7 +3753,7 @@ hello world</code></pre>
 <a class="sourceLine" id="cb163-13" title="13">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb163-14" title="14">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>make[1]: *** [Makefile:22: inline_exec] Segmentation fault (core dumped)</code></pre>
+<pre><code>make[1]: *** [Makefile:28: inline_exec] Segmentation fault (core dumped)</code></pre>
 <p>Even though we fault <em>after</em> the <code>printf</code>, we don’t see the <code>printf</code>’s output! We now know why: the <code>printf</code> wrote into a buffer, and didn’t yet <code>write</code> to the system. Thus the segmentation fault, which terminates the process, happens before the buffer is actually written!</p>
 <p><strong>Flushing the stream buffers.</strong> It is imperative that streams give us some means to force the buffer to be output! Thus, streams provide a means of <em>flushing</em> the stream’s buffers, and sending them out to the system (e.g. using <code>write</code>).</p>
 <ul>
@@ -4059,21 +4091,24 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - D 01
 - D 09
 - D figures
+- D 10
 - F inline_exec_tmp (60152)
+- D 11
 - D 08
 - D 07
 - D templates
-- F lectures.html (583912)
+- F lectures.html (706972)
 - F README.md (35)
 - F title.md (320)
 - F output_tmp.dat (0)
 - F LICENSE (1522)
-- F Makefile (1517)
+- F Makefile (1672)
 - D 99
+- D 12
 - D 04
 - D 06
 - F inline_exec_tmp.c (1658)
-- F aggregate.md (162984)
+- F aggregate.md (162981)
 - F .gitignore (520)
 - D .git</code></pre>
 <h3 id="task-2-file-and-directory-sizes"><span class="header-section-number">5.5.2</span> Task 2: File and Directory Sizes</h3>
@@ -4214,7 +4249,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 <a class="sourceLine" id="cb183-54" title="54">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>msg1: 
-msg2: america for good doggies</code></pre>
+msg2: </code></pre>
 <p>You can see that there are some problems here. If we run it many times, we can see that sometimes we don’t see any messages, sometimes we only see the first, sometimes we only see the second, and other times combinations of all three options. Thus, they are not useful for channel-based communication between multiple processes.</p>
 <p>On the other side, files have a very <em>useful</em> properti that we’d like to use in a good solution to IPC: they <em>have a location in the FS</em> that the communicating processes can both use to find the file, thus avoiding the need for a shared parent.</p>
 <ul>
@@ -4403,8 +4438,7 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>176777: 176777
-176778: 176778</code></pre>
+<pre><code>162328: 162327162328</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4557,15 +4591,15 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 176902 connected to server.
-2. Client 176902 request sent message to server.
-1. Client 176903 connected to server.
-Server received message (sz 37): &quot;Citizen 176902: Penny for Pawsident!&quot;. Replying!
-2. Client 176903 request sent message to server.
+1. Client 162351 connected to server.
+2. Client 162351 request sent message to server.
+1. Client 162352 connected to server.
+2. Client 162352 request sent message to server.
+Server received message (sz 37): &quot;Citizen 162351: Penny for Pawsident!&quot;. Replying!
 Server: New client connected with new file descriptor 4.
-Server received message (sz 37): &quot;Citizen 176903: Penny for Pawsident!&quot;. Replying!
-3. Client 176902 reply received from server: Citizen 176902: Penny for Pawsident!
-3. Client 176903 reply received from server: Citizen 176903: Penny for Pawsident!</code></pre>
+3. Client 162351 reply received from server: Citizen 162351: Penny for Pawsident!
+Server received message (sz 37): &quot;Citizen 162352: Penny for Pawsident!&quot;. Replying!
+3. Client 162352 reply received from server: Citizen 162352: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -5188,7 +5222,11 @@ End of search list.
 00000000: 7f45 4c46 0201 0100 0000 0000 0000 0000  .ELF............</code></pre>
 <p><code>xxd</code> dumps out a file in hexadecimal format, and <code>head</code> just lets us filter out only the first line (i.e. at the head). The first characters in most formats often denote the <em>type</em> of file, in this case an ELF file.</p>
 <p>This reveals a cool truth: <strong>programs are data</strong>, plain and simple. They happen to be data of a very specific format, ELF. <code>nm</code>, <code>readelf</code>, and <code>objdump</code> are all programs that simply understand how to dive into the ELF format, parse, and display the information.</p>
-<p>Now we get to an interesting part of the ELF objects:</p>
+<p>As programs are simply data encapsulated in the ELF format, we can start to understand what it means to <em>link</em> two objects together.</p>
+<figure>
+<img src="figures/08_linking.svg" alt="An example demonstrating what it means to link two objects together. In this case, we can see the ELF object tells us where in the prog.o binary the reference to bar is, and gcc patchs up prog.o as part of linking to reference bar in example.o." /><figcaption>An example demonstrating what it means to <em>link</em> two objects together. In this case, we can see the ELF object tells us where in the <code>prog.o</code> binary the reference to <code>bar</code> is, and gcc patchs up <code>prog.o</code> as part of linking to reference <code>bar</code> in <code>example.o</code>.</figcaption>
+</figure>
+<p>An in-depth explanation follows. Now we get to an interesting part of the ELF objects:</p>
 <pre><code>$ readelf -r tests/01_add.o | grep ptrie
 000000000151  001500000004 R_X86_64_PLT32    0000000000000000 ptrie_allocate - 4
 000000000179  001600000004 R_X86_64_PLT32    0000000000000000 ptrie_free - 4
@@ -5229,6 +5267,11 @@ test_alloc(void)
 <li>When another ELF exports the symbol that is undefined elsewhere, they can be <em>linked</em> to turn the function calls of undefined functions into function calls, and references to global variables be actual pointers to memory.</li>
 </ul>
 <p>This is the <em>foundation for creating large programs out of small pieces</em>, and to enable some of those pieces to be <em>shared between programs</em>.</p>
+<p>We’ll also see that libraries enable an opportunity to <em>save memory</em>. For example,</p>
+<ul>
+<li>static libraries enable only the object files that are needed by a program to be compiled into it, and</li>
+<li>dynamic libraries enable the code for a library to be <em>shared</em> between all processes that execute it in the system.</li>
+</ul>
 <h2 id="static-libraries"><span class="header-section-number">8.4</span> Static Libraries</h2>
 <p>A static library is simply a collection of ELF object (<code>*.o</code>) files created with <code>gcc -c</code>. They are collected together into a static library file that has the name <code>lib*.a</code>. You can think of these files as a <code>.zip</code> or <code>.tar</code> file containing the ELF objects.</p>
 <p>Static libraries of the form <code>lib*.a</code> and are created with the <code>ar</code> (archive) program from a collection of objects. An example from the <code>ptrie</code> library (expanded from its <code>Makefile</code>) that creates <code>libptrie.a</code>:</p>
@@ -5260,9 +5303,15 @@ test_alloc(void)
 /lib/
 /usr/lib/</code></pre>
 <p>As many of these paths are in directories that any user can access, this is how the functionality of these libraries can be accessed by any program wishing to use them. As we compile our <code>ptrie</code> library as a static library, you’ve already seen one example of these in use.</p>
+<figure>
+<img src="figures/08_staticlib.svg" alt="How static libraries are created, and interact with our programs. The .a files include all library objects, but only those that are needed by the program are compiled into it.x" /><figcaption>How static libraries are created, and interact with our programs. The <code>.a</code> files include all library objects, but only those that are needed by the program are compiled into it.x</figcaption>
+</figure>
 <h3 id="saving-memory-with-static-libraries"><span class="header-section-number">8.4.1</span> Saving Memory with Static Libraries</h3>
 <p>Static libraries do provide some facilities for trying to shrink the amount of memory required for library code. If this was all done naively, then all of the object files in a static library could get loaded into a program with which it is linked. This means that for <span class="math inline"><em>N</em></span> programs that link with a library whose objects take <span class="math inline"><em>X</em></span> bytes, we’ll have <span class="math inline"><em>N</em> × <em>X</em></span> bytes devoted to storing programs on disk, and running the programs in memory (if they all run at the same time). Some static libraries can be quite large.</p>
 <p>Instead, static libraries are smarter. If a static library contains multiple <code>.o</code> files, <em>only those object files that define symbols that are undefined in the program being linked with, are compiled into the program</em>. This means that when designing a static library, you often want to break it into multiple <code>.o</code> files along the lines of different functionalities that separately used by different programs<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>.</p>
+<figure>
+<img src="figures/08_staticmem.svg" alt="A graphical depiction of how library memory gets added into a program using static libraries. The program is only dependent on a single object within the library, so we only need to compile that object into the resulting executable program." /><figcaption>A graphical depiction of how library memory gets added into a program using static libraries. The program is only dependent on a single object within the library, so we only need to compile that object into the resulting executable program.</figcaption>
+</figure>
 <p>Some projects take this quite far. For example <a href="https://www.musl-libc.org/">musl libc</a> is a libc replacement, and it separates almost every single function into a separate object file (i.e. in a separate <code>.c</code> file!) so that only the exact functions that are called are linked into the program.</p>
 <h2 id="shareddynamic-libraries"><span class="header-section-number">8.5</span> Shared/Dynamic Libraries</h2>
 <p>Shared or dynamic libraries (for brevity, I’ll call them only “dynamic libraries”, but both terms are commonly used) are linked into a program <em>at runtime</em> when the program starts executing as part of <code>exec</code>.</p>
@@ -5275,12 +5324,62 @@ test_alloc(void)
         linux-vdso.so.1 (0x00007ffff3734000)
         libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007fb502adf000)
         /lib64/ld-linux-x86-64.so.2 (0x00007fb502cfa000)</code></pre>
-<p><code>ldd</code> also simply parses through the ELF program, and . For now, we’ll ignore the <code>linux-vdso</code>, but the other two entries are interesting. We can see that the C standard library, <code>libc</code> is being provided by <code>/lib/x86_64-linux-gnu/libc.so.6</code>. These are both dynamic libraries, as are most <code>*.so.?*</code> and <code>*.so</code> files. If we check out that object we see that it provides <code>calloc</code>.</p>
+<p><code>ldd</code> also simply parses through the ELF program, and determines which dynamic libraries are required by the program. For now, we’ll ignore the <code>linux-vdso</code>, but the other two entries are interesting. We can see that the C standard library, <code>libc</code> is being provided by <code>/lib/x86_64-linux-gnu/libc.so.6</code>. These are both dynamic libraries, as are most <code>*.so.?*</code> and <code>*.so</code> files. If we check out that object we see that it provides <code>calloc</code>.</p>
 <pre><code>$ objdump -T /lib/x86_64-linux-gnu/libc.so.6  | grep calloc
 000000000009ec90 g    DF .text  0000000000000395  GLIBC_2.2.5 __libc_calloc
 000000000009ec90  w   DF .text  0000000000000395  GLIBC_2.2.5 calloc</code></pre>
 <p>So this library provides the symbols we require (i.e. the <code>calloc</code> function)!</p>
-<p>But how does the <code>libc.so</code> library get linked into our program? Diving in a little bit further, we see that <code>ld</code> is our program’s “interpreter”:</p>
+<h3 id="compiling-and-executing-with-dynamic-libraries"><span class="header-section-number">8.5.1</span> Compiling and Executing with Dynamic Libraries</h3>
+<p>If we want our program to use a dynamic library, we have to compile it quite similarly to when we wanted to use static libraries:</p>
+<pre><code>$ gcc -o dyn_prog *.o -L. -lptrie</code></pre>
+<p>So everything is somewhat normal here; we’re saying “look for the library in this directory”, and compile me with the <code>ptrie</code> library. To create the dynamic library:</p>
+<pre><code>$ gcc -Wall -Wextra -fpic -I. -c -o ptrie.o ptrie.c
+$ gcc -shared -o libptrie.so ptrie.o</code></pre>
+<p>The first line is the normal way to create an object file from C, but includes a new flag, <code>-fpic</code>. This tells the compiler to generate <a href="https://en.wikipedia.org/wiki/Position-independent_code">“Position Independent Code”, or PIC</a>, which is code that can, seemingly magically, be executed when the code is loaded into any address! The dynamic library cannot assume which addresses it will be loaded into as many dynamic libraries might be loaded into an executable, thus the PIC requirement.</p>
+<p>The second line creates the dynamic (shared) library. By convention, all dynamic libraries end with <code>.so</code> which you can think of as “shared object”. This is the line that is dynamic-library equivalent to the <code>ar</code> command for static libraries.</p>
+<p>Now we have a binary that has been told were the library is; lets execute it!</p>
+<pre><code>$ ./dyn_prog
+./dyn_prog: error while loading shared libraries: libptrie.so: cannot open shared object file: No such file or directory</code></pre>
+<p>Whaaaaaa? If we dive in a little bit, we can see:</p>
+<pre><code>$ nm ./dyn_prog | grep ptrie_alloc
+                 U ptrie_alloc</code></pre>
+<p>But I thought that we wanted all symbols to be defined when we create a binary? Why is the library’s <code>ptrie_alloc</code> not linked into the program? We can see that not all symbols are defined in a program when we are using dynamic libraries as they are <em>linked when we try and run the program</em>!</p>
+<p>We now can see the main practical difference between static and dynamic libraries:</p>
+<ul>
+<li>Static libraries are compiled into the program when you compile with the <code>-lptrie</code> directive.</li>
+<li>Dynamic libraries not <em>not</em> compiled into the program, and are instead <em>linked</em> into the program when it is executed (i.e. at the time of <code>exec</code>).</li>
+</ul>
+<p>We can start to see why the program wont execute when we look at its dynamic library dependencies:</p>
+<pre><code>$ ldd ./dyn_prog
+        linux-vdso.so.1 (0x00007ffdf3ca0000)
+        libptrie.so =&gt; not found
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007ff9921e8000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007ff9923f8000)</code></pre>
+<p>It isn’t finding <code>libptrie.so</code>!</p>
+<p>To execute the program, we have to properly set an <em>environment variable</em> that will tell the program, when it is executed, where to look for the dynamic library:</p>
+<pre><code>$ LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ./dyn_prog
+...success...</code></pre>
+<p>This is some strange shell syntax. <code>LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH</code> essentially says "The environment variable called <code>LD_LIBRARY_PATH</code> should be updated to prepend the diretory <code>./</code> onto the front of it. This is conceptually similar to something like <code>lib_path = "./:" + lib_path</code> in a language that supports string concatenation. When <code>./dyn_prog</code> is executed, the updated <code>LD_LIBRARY_PATH</code> environment variable is visible in that program using the normal <code>getenv</code>. So there is some part of the initialization of <code>./dyn_prog</code> that looks at this environment variable to figure out where to look for the dynamic library.</p>
+<p>To confirm why we can now execute the program, we can again look at the library dependencies:</p>
+<pre><code>$ LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ldd prog_dynamic
+        linux-vdso.so.1 (0x00007ffc939f8000)
+        libptrie.so =&gt; ./libptrie.so (0x00007f70d316f000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f70d2f66000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f70d3236000)</code></pre>
+<p>If we expand the <code>LD_LIBRARY_PATH</code> to include the current directory, the program can find the library.</p>
+<p>If we want to see the <a href="https://stackoverflow.com/questions/9922949/how-to-print-the-ldlinker-search-path">default paths</a> that are searched for dynamic libraries:</p>
+<pre><code>$ ldconfig -v 2&gt;/dev/null | grep -v ^$&#39;\t&#39;
+/usr/local/lib:
+/lib/x86_64-linux-gnu:
+/lib32:
+/libx32:
+/lib:</code></pre>
+<p>In fact, <code>ldconfig -v</code> will also print out all of the potential default dynamic libraries we can link with.</p>
+<figure>
+<img src="figures/08_dynamiclib.svg" alt="Using dynamic libraries to compile a program. Additional flags are required when compiling the library files (for PIC), and we must tell the system that the library is dynamic when compiling using the -shared flag. But even then, the executable doesn’t have the library functionality linked into it. Only when we execute the program does ld dynamically link in the library. For ld to know where to look for te library, we also have to tell it additional paths in which to look using an environment variable." /><figcaption>Using dynamic libraries to compile a program. Additional flags are required when compiling the library files (for PIC), and we must tell the system that the library is dynamic when compiling using the <code>-shared</code> flag. But even then, the executable doesn’t have the library functionality linked into it. Only when we execute the program does <code>ld</code> dynamically link in the library. For <code>ld</code> to know where to look for te library, we also have to tell it additional paths in which to look using an environment variable.</figcaption>
+</figure>
+<h3 id="exec-with-dynamic-linking"><span class="header-section-number">8.5.2</span> <code>exec</code> with Dynamic Linking</h3>
+<p>How does the <code>libc.so</code> library get linked into our program? Diving in a little bit further, we see that <code>ld</code> is our program’s “interpreter”:</p>
 <pre><code>$ readelf --program-headers tests/01_add.test
 Elf file type is DYN (Shared object file)
 Entry point 0x1180
@@ -5300,8 +5399,9 @@ Program Headers:
                  0x0000000000000e55 0x0000000000000e55  R E    0x1000
 ...</code></pre>
 <p>A lot is going on here, but we see the reference to <code>ld-linux-x86-64.so.2</code> that we saw previously in the <code>ldd</code> output. We can now see that the library (that I’ll call simply <code>ld</code>) is a “program interpreter” (see “<code>Requesting program interpreter: /lib64/ld-linux-x86-64.so.2</code>”) for our program<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>. This is the core of understanding how our program can execute while having undefined references to functions provided by another library.</p>
-<p>When we call <code>exec</code>, we believe that the program we execute takes over the current process and starts executing. This is not true! Instead, if a program interpreter is defined for our program (as we see: it is), the interpreter program’s memory is loaded along side our program, but then the interpreter is executed instead of our program! It is given access to our program’s ELF object, and <code>ld</code>’s job is to finish linking and loading our program.</p>
-<p>But wait. Why? Why load <code>ld</code> to link our program instead of just running our program? Because <code>ld</code> <em>also</em> loads and links all of the dynamic libraries (<code>.so</code>s) that our program depends on!!!</p>
+<p>When we call <code>exec</code>, we believe that the program we execute takes over the current process and starts executing. This is not true! Instead, if a program interpreter is defined for our program (as we see: it is), the interpreter program’s memory is loaded along side our program, but then the interpreter is executed instead of our program! It is given access to our program’s ELF object, and <code>ld</code>’s job is to finish linking and loading our program. We have to add <code>./</code> to the <code>LD_LIBRARY_PATH</code> to make the program execute because <strong><code>ld</code> reads that environment variable when it is trying to link and load in your program</strong>!</p>
+<h3 id="diving-into-dynamic-linking-at-exec"><span class="header-section-number">8.5.3</span> Diving into Dynamic Linking at <code>exec</code></h3>
+<p>But wait. Why does <code>exec</code> end up loading <code>ld</code>, which then loads our program? Why load <code>ld</code> to link our program instead of just running our program? Because <code>ld</code> <em>also</em> loads and links all of the dynamic libraries (<code>.so</code>s) that our program depends on!!!</p>
 <p>We can confirm that <code>ld</code> is loaded into our program by executing it in <code>gdb</code>, blocking it on breakpoint, and outputting its memory maps (<code>cat /proc/262648/maps</code> on my system):</p>
 <pre><code>555555554000-555555555000 r--p 00000000 08:02 527420                     /home/gparmer/repos/gwu-cs-sysprog/22/hw_solns/02/tests/01_add.test
 555555555000-555555556000 r-xp 00001000 08:02 527420                     /home/gparmer/repos/gwu-cs-sysprog/22/hw_solns/02/tests/01_add.test
@@ -5331,7 +5431,7 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <li><code>/usr/lib/x86_64-linux-gnu/libc-2.31.so</code> is present in the process so somehow got linked and loaded into the process.</li>
 <li><code>/usr/lib/x86_64-linux-gnu/ld-2.31.so</code> is also present in the process; indeed it was the first code to execute in the process!</li>
 </ul>
-<h3 id="dynamic-loading-summary"><span class="header-section-number">8.5.1</span> Dynamic Loading Summary</h3>
+<h3 id="dynamic-loading-summary"><span class="header-section-number">8.5.4</span> Dynamic Loading Summary</h3>
 <p>Lets summarize the algorithm for executing a dynamically loaded program.</p>
 <ol type="1">
 <li><code>exec</code> is called to execute a new program.</li>
@@ -5339,13 +5439,13 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <li>In most cases, the interpreter is <code>ld</code>, and it is loaded into the process along with the target program.</li>
 <li><p>Execution is started at <code>ld</code>, and it:</p>
 <ol type="1">
-<li>Loads all of the dynamic libraries required by the program.</li>
+<li>Loads all of the dynamic libraries required by the program, looking at the <code>LD_LIBRARY_PATH</code> environment variable to help look for them.</li>
 <li>Links the program such that all of its references to library symbols (i.e. <code>calloc</code> above) are set to point to library functions.</li>
 <li>Executes the initialization procedures (and eventually <code>main</code>) of our program.</li>
 </ol></li>
 </ol>
 <p>This is all quite complex. Why would we ever want all of this complexity over the simplicity of static libraries?</p>
-<h3 id="saving-memory-with-dynamic-libraries"><span class="header-section-number">8.5.2</span> Saving Memory with Dynamic Libraries</h3>
+<h3 id="saving-memory-with-dynamic-libraries"><span class="header-section-number">8.5.5</span> Saving Memory with Dynamic Libraries</h3>
 <p>First, lets look at how much memory a library takes up.</p>
 <pre><code>$ ls -lh /usr/lib/x86_64-linux-gnu/libc-2.31.so
 -rwxr-xr-x 1 root root 2.0M Dec 16  2020 /usr/lib/x86_64-linux-gnu/libc-2.31.so</code></pre>
@@ -5358,66 +5458,1353 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 </ul>
 <p>If <span class="math inline"><em>N</em></span> programs must load in multiple libraries (totaling, say, <span class="math inline"><em>X</em></span> MiB), then <span class="math inline"><em>N</em> × <em>X</em></span> MiB is consumed. For context, my system is currently running 269 programs (<code>ps aux | wc -l</code>), so this memory can add up!</p>
 <p>Dynamic libraries enable us to do a lot better. The contents memory for the library is the same regardless the process it is present in, and an Operating System has a neat trick: it can make the same memory appear in multiple processes if it is identical <em>and</em> cannot be modified<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>. As such, dynamic libraries typically only require memory for each library <em>once</em> in the system (only <span class="math inline"><em>X</em></span>), as opposed for each process.</p>
-<p><strong>Static vs. dynamic library memory usage.</strong> When a program is linked with a static library, the result is relatively small as only the objects in the library that are necessary are linked into the program. In contrast, a program that uses a dynamic library links in the entire library. Thus, for a <em>single</em> program, a static library approach is almost always going to be more memory-efficient.</p>
-<p>However, in a system with <em>many</em> executing programs, the per-library memory, rather than per-process memory, will result in significantly less memory consumption. Requiring only a <em>single copy</em> of a <em>larger</em> dynamic library shared between all processes, uses less memory than <em>multiple copies</em> of <em>smaller</em> compilations of the library in each program.</p>
-<h3 id="explicitly-managing-dynamic-libraries"><span class="header-section-number">8.5.3</span> Explicitly Managing Dynamic Libraries</h3>
-<p>Libraries are great for providing shared functionality to multiple programs. Dynamic libraries can also be used <em>explicitly</em> to enable additional capabilities.</p>
+<figure>
+<img src="figures/08_dynamicmem.svg" alt="A graphical depiction of how library memory gets added into a program using dynamic libraries. The libraries are only linked into the processes when they are executed. When that happens, the same memory for the library is mmaped into each process, thus the system only requires memory for a single copy of the library." /><figcaption>A graphical depiction of how library memory gets added into a program using dynamic libraries. The libraries are only linked into the processes when they are executed. When that happens, the same memory for the library is <code>mmap</code>ed into each process, thus the system only requires memory for a <em>single</em> copy of the library.</figcaption>
+</figure>
+<h2 id="static-vs.-dynamic-library-memory-usage-summary"><span class="header-section-number">8.6</span> Static vs. Dynamic Library Memory Usage Summary</h2>
+<p>When a program is linked with a static library, the result is relatively small as only the objects in the library that are necessary are linked into the program. When executed as a process, the memory consumed will only include the necessary objects of the library. In contrast, a program that uses a dynamic library links in the entire library at runtime into a process. Thus, for a <em>single process</em>, a static library approach is almost always going to be more memory-efficient.</p>
+<p>However, in a system with <em>many</em> executing processes, the per-library memory, rather than per-process memory, will result in significantly less memory consumption. Requiring only a <em>single copy</em> of a <em>larger</em> dynamic library shared between all processes, uses less memory than <em>multiple copies</em> of <em>smaller</em> compilations of the library in each program.</p>
+<h1 id="organizing-software-with-dynamic-libraries-exercises-and-programming"><span class="header-section-number">9</span> Organizing Software with Dynamic Libraries: Exercises and Programming</h1>
+<p>Lets dive a little deeper into how software is structured on our system, and the trade-offs that different libraries make in the system.</p>
+<h2 id="exercise-understanding-library-memory-consumption"><span class="header-section-number">9.1</span> Exercise: Understanding Library Memory Consumption</h2>
+<p>Lets investigate the <code>libexample</code> from the figures in last week’s lectures. See the <a href="https://github.com/gwu-cs-sysprog/lectures/tree/main/08/libexample"><code>08/libexample/</code> directory</a> for examples of using normal linking (<code>make naive</code>), static library linking (<code>make static</code>), and dynamic library linking (<code>make dynamic</code>). The source includes:</p>
+<ul>
+<li><code>prog</code> and <code>prog2</code> that are programs that use libraries.</li>
+<li><code>example.c</code> is a single file that creates the first library which generates <code>libexample.a</code> and <code>libexample.so</code>.</li>
+<li><code>example2.c</code> and <code>example2b.c</code> are the files that create the second library which generates <code>libexample2.a</code> and <code>libexample2.so</code>.</li>
+</ul>
+<p>Each of the library objects uses around <em>750KB</em> of memory. To help you set the <code>LD_LIBRARY_PATH</code> to execute the dynamic libraries, you can run the dynamic library examples using</p>
+<pre><code>$ ./run_dyn.sh ./prog_dynamic</code></pre>
 <ol type="1">
-<li>The environment variable <code>LD_PRELOAD</code> can be used to specify a dynamic library to load into the process to <em>interpose</em> on any library calls. This enables you to write functions for common <code>libc</code> or other library APIs and have your functions be called by the program <em>instead</em> of the other library calls. You can then, if you choose, invoke the normal library calls, thus why this is known as <em>interposing</em> on the library calls. A trivial use of this might be to <em>log</em> (i.e. write out to a file) all of a set of library calls. I’ve used this to track all calls to the <code>malloc</code> API to implement a janky <code>valgrind</code> – you could write your own <code>valgrind</code> variant that watches only the memory allocation API by tracking all <code>malloc</code> and <code>free</code> calls in a hash table to make sure that each chunk of <code>malloc</code>ed memory is freed exactly once.</li>
-<li>An API enables your process to <em>load</em> a dynamic library into itself. This is kinda crazy: a running process with a set of code and data can add a library with more code and data into itself dynamically.</li>
+<li>Use <code>nm</code> and <code>ldd</code> to understand which libraries and object files within those libraries each of the programs require.</li>
+<li>Use <code>ls -lh</code> to see the size of each of the resulting executable programs. Explain the differences in sizes.</li>
 </ol>
-<p>Being able to load library code into your process as your program executes (at runtime) is an instance of <em>self-modifying code</em>, and it enables a few very cool features including:</p>
-<ul>
-<li><em>dynamic update of services</em> in which new versions of a service can be dynamically loaded in (and old versions eventually removed),</li>
-<li><em>plugin architectures</em> enable different interesting functionalities to be loaded into a process to provide unique functionalities – some of the most popular image and video processing programs (e.g. <code>ffmpeg</code>) enable different formats to be handled with separate libraries, thus enabling the processing of any image or video by simply loading a new library, and</li>
-<li><em>languages</em>, such as <code>python</code>, dynamically load libraries (many or most are written in C) into a process when the python code <code>import</code>s them. This enables your dynamic (slow) python code to load and leverage fast C libraries.</li>
-</ul>
-<p>This API is provided by the linker (<code>ld.so</code>) that loaded the elf object for the currently executing process. What does the API that enables this dynamic loaded look like?</p>
-<ul>
-<li><code>handle = dlopen(filename, flags)</code> - Open and load in a dynamic library. This returns a handle to the library that you should pass into the latter functions. You can read about the <code>flags</code> in <code>man dlopen</code>, but I’d recommend using <code>RTLD_NOW | RTLD_LOCAL</code><a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>.</li>
-<li><code>dlclose(handle)</code> - Close and unload a library that was previously loaded.</li>
-<li><code>symb_ptr = dlsym(handle, symbol)</code> - pass in a <code>symbol</code> which is a string holding a function or variable name in the dynamic library. It should return a pointer to that symbol, which you can then call (if it is a function pointer), or dereference if it is a variable.</li>
-</ul>
-<h2 id="exercises-questions"><span class="header-section-number">8.6</span> Exercises &amp; Questions</h2>
-<h3 id="library-trade-offs"><span class="header-section-number">8.6.1</span> Library Trade-offs</h3>
+<h2 id="library-trade-offs"><span class="header-section-number">9.2</span> Library Trade-offs</h2>
 <ul>
 <li><em>Question:</em> What types of systems might want to always use only static libraries?</li>
 <li><em>Question:</em> What types of systems might want to always use only dynamic libraries?</li>
 <li><em>Question:</em> OSX uses dynamically linked libraries for a few common and frequently used libraries (like <code>libc</code>), and static libraries for the rest. Why?</li>
 </ul>
-<h3 id="chaosmalloc"><span class="header-section-number">8.6.2</span> <code>chaosmalloc</code></h3>
-<p>Netflix popularized testing their distributed infrastructure by intentionally injecting faults into the system. This makes sense: most “error paths” in your code are often the least tested pieces of code because sometimes it is hard to cause the failures at the right time to test that code. They created <code>chaosmonkey</code> – a utility to add some chaos, and induce faults in the system to make sure the entire system doesn’t go down.</p>
-<p>Lets implement <code>chaosmalloc</code>! How can you test that all of your error paths that check the return value of <code>malloc</code> are working correctly? Cause random <code>malloc</code> failures, of course!</p>
-<p>We don’t want to modify malloc, so instead, we’ll use <code>LD_PRELOAD</code> to ask the loader to interpose our <code>chaosmalloc</code> library on all calls to <code>malloc</code>. Later, we’ll use this to implement our own <code>malloc</code>/<code>free</code> in a homework.</p>
-<h1 id="system-calls-and-ptrace"><span class="header-section-number">9</span> System Calls and <code>ptrace</code></h1>
-<h1 id="appendix-c-programming-conventions"><span class="header-section-number">10</span> Appendix: C Programming Conventions</h1>
-<p>C gives you quite a bit of freedom in how you write your code. Conventions are <em>necessary</em> in C because they bring order to the unrestricted freedom that allows code that is too complicated to debug, too clever to understand, and completely unmaintainable. Conventions are a set of rules that we follow that inherently <em>limit</em> the way in which we write code. The intention is to put <a href="https://en.wikipedia.org/wiki/Guard_rail">guard rails</a> onto our development process and to only deviate from the conventions in exceptional cases. An important aspect of this is that once you understand the conventions, it is <em>drastically easier to read the code</em> because you only have to consider how convention-based code is written. This means that there is a significant importance to uniformly applying conventions. Because of this, it is less important if one likes the conventions, than it is to adhere to them for uniformity.</p>
-<p>Put another way, it is easy for <em>any</em> programmer to code themself into a corner where the program is more complex than our brains can handle. Being an experienced programmer is <em>much less</em> about being able to handle more complexity, and much more about understanding that you need to spend significant development time <em>simplifying</em> your code. Conventions are a set of codified simplifications, in some sense. They provide your a set of rules (that you don’t need to think about, you just do) to simplify the structure of your code.</p>
-<p>OK, onward to conventions!</p>
-<h2 id="naming-conventions"><span class="header-section-number">10.1</span> Naming Conventions</h2>
-<p>There are many potential naming conventions, for example, <a href="https://en.wikipedia.org/wiki/Camel_case">camel case</a>, <a href="https://en.wikipedia.org/wiki/Snake_case">snake case</a>, and <a href="https://en.wikipedia.org/wiki/Hungarian_notation">hungarian notiation</a>. Some are antiquated (hungarian), but most are a matter of taste and convention.</p>
-<blockquote>
-<p><strong>Convention.</strong> Most C uses lower-case <code>snake_case</code> for variables, types, and functions, capital <code>SNAKE_CASE</code> for constants and macros.</p>
-</blockquote>
-<p>Stick to this convention. A new convention will likely not feel “right” because it is new and different. Remember that they are subjective, but the aim to apply them uniformly.</p>
-<p>For names that are visible across <code>.c</code> files (i.e. functions in a <code>.h</code> file), use names that are the shortest they can be to convey the functionality. Within functions, names can be short, and here there are a few conventions as well:</p>
+<h2 id="programming-dynamic-libraries"><span class="header-section-number">9.3</span> Programming Dynamic Libraries</h2>
+<p>We saw how libraries enable the sharing of functionality between programs. Static libraries are convenient, and only required objects are linked with your program at compile time. In contrast, dynamic libraries are linked at runtime <em>before</em> the <code>main</code> of your program executes.</p>
+<h3 id="plugins-and-dynamic-library-apis"><span class="header-section-number">9.3.1</span> Plugins and Dynamic Library APIs</h3>
+<p>In addition to enabling shared library code, dynamic libraries also enable explicit means to load libraries programmatically. Namely, UNIX provdes an API that enables your process to <em>load</em> a dynamic library into itself. This is kinda crazy: a running process with a set of code and data can add a library with more code and data into itself dynamically. This effectively means that your program can change its own code as it executes by adding and removing dynamic libraries. Being able to load library code into your process as your program executes (at runtime) is an instance of <em>self-modifying code</em>, and it enables a few very cool features including:</p>
 <ul>
-<li><code>ret</code> is a variable that stores a return value (i.e. a value that will later be used as in <code>return ret;</code>).</li>
-<li><code>i</code>, <code>j</code>, <code>k</code>, <code>l</code> are iterator variables.</li>
+<li><em>dynamic update of services</em> in which new versions of key computations in a service can be dynamically loaded in (and old versions eventually removed),</li>
+<li><em>plugin architectures</em> enable different interesting functionalities to be loaded into a process to provide unique functionalities – some of the most popular image and video processing programs (e.g. <code>ffmpeg</code>) enable different formats to be handled with separate dynamic libraries, thus enabling the processing of any image or video by simply loading a new library, and</li>
+<li><em>languages</em>, such as <code>python</code>, dynamically load libraries (many or most are written in C) into a process when the python code <code>import</code>s them. Since the <code>import</code>s are part of the code, the corresponding dynamic libraries must be loaded by the python runtime dynamically. This enables your dynamic (slow) python code to load and leverage fast C libraries.</li>
 </ul>
-<h2 id="namespacing"><span class="header-section-number">10.2</span> Namespacing</h2>
-<p>When you create a global variable, type, or function, you’re creating a symbol that can be accessed for any <code>.c</code> file. This has a significant downside: if you choose a name that is already used in a library, or that is common, you might get a linker error along the lines of:</p>
-<pre><code>multiple definition of `foo&#39;; /tmp/ccrvA8in.o:a.c:(.text+0x0): first defined here
+<figure>
+<img src="figures/09_dl_uses.svg" alt="Example programmatic uses of dynamic libraries." /><figcaption>Example programmatic uses of dynamic libraries.</figcaption>
+</figure>
+<p>This API is provided by the linker (<code>ld.so</code>) that loaded the elf object for the currently executing process. What does the API that enables this dynamic loading look like?</p>
+<ul>
+<li><code>handle = dlopen(file_path, flags)</code> - Open and load in a dynamic library. This returns a handle to the library that you should pass into the latter functions. You can read about the <code>flags</code> in <code>man dlopen</code>. Unless otherwise noted, I’d recommend using <code>RTLD_NOW | RTLD_LOCAL</code><a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>. Returns <code>NULL</code> if it cannot find the dynamic library.</li>
+<li><code>dlclose(handle)</code> - Close and unload a library that was previously loaded.</li>
+<li><code>symb_ptr = dlsym(handle, symbol)</code> - pass in a <code>symbol</code> which is a string holding a function or variable name in the dynamic library. It should return a pointer to that symbol, which you can then call (if it is a function pointer), or dereference if it is a variable.</li>
+</ul>
+<div class="sourceCode" id="cb231"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb231-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb231-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb231-3" title="3"><span class="pp">#include </span><span class="im">&lt;dlfcn.h&gt;</span></a>
+<a class="sourceLine" id="cb231-4" title="4"></a>
+<a class="sourceLine" id="cb231-5" title="5"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb231-6" title="6">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb231-7" title="7">{</a>
+<a class="sourceLine" id="cb231-8" title="8">    <span class="dt">void</span> *handle;</a>
+<a class="sourceLine" id="cb231-9" title="9">    <span class="kw">typedef</span> <span class="dt">int</span> *(*bar_fn_t)(<span class="dt">int</span> a);</a>
+<a class="sourceLine" id="cb231-10" title="10">    bar_fn_t bar;</a>
+<a class="sourceLine" id="cb231-11" title="11">    <span class="dt">int</span> *ret;</a>
+<a class="sourceLine" id="cb231-12" title="12"></a>
+<a class="sourceLine" id="cb231-13" title="13">    <span class="co">/* Open a dynamic library: the example is in ../08/libexample/ */</span></a>
+<a class="sourceLine" id="cb231-14" title="14">    handle = dlopen(<span class="st">&quot;08/libexample/libexample.so&quot;</span>, RTLD_NOW | RTLD_LOCAL);</a>
+<a class="sourceLine" id="cb231-15" title="15">    <span class="cf">if</span> (!handle) <span class="cf">return</span> EXIT_FAILURE;</a>
+<a class="sourceLine" id="cb231-16" title="16"></a>
+<a class="sourceLine" id="cb231-17" title="17">    <span class="co">/*</span></a>
+<a class="sourceLine" id="cb231-18" title="18"><span class="co">     * Lets find the function &quot;bar&quot; in that dynamic library.</span></a>
+<a class="sourceLine" id="cb231-19" title="19"><span class="co">     * We know that `bar` is the function: int *bar(int a)</span></a>
+<a class="sourceLine" id="cb231-20" title="20"><span class="co">     */</span></a>
+<a class="sourceLine" id="cb231-21" title="21">    bar = dlsym(handle, <span class="st">&quot;bar&quot;</span>);</a>
+<a class="sourceLine" id="cb231-22" title="22">    <span class="cf">if</span> (!bar) <span class="cf">return</span> EXIT_FAILURE;</a>
+<a class="sourceLine" id="cb231-23" title="23"></a>
+<a class="sourceLine" id="cb231-24" title="24">    <span class="co">/* bar allocates an int, populates it with the argument + 2 and returns it */</span></a>
+<a class="sourceLine" id="cb231-25" title="25">    ret = bar(<span class="dv">40</span>);</a>
+<a class="sourceLine" id="cb231-26" title="26">    printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, *ret);</a>
+<a class="sourceLine" id="cb231-27" title="27">    free(ret);</a>
+<a class="sourceLine" id="cb231-28" title="28"></a>
+<a class="sourceLine" id="cb231-29" title="29">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb231-30" title="30">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>42</code></pre>
+<p>As <code>dlsym</code> returns a pointer to the symbol passed in (as a string), it means that you end up seeing a <em>lot</em> of function pointers when you’re using plugin infrastructures. See (a) in the image below.</p>
+<p>We can also use <code>dlsym</code> to ask for a symbol in <em>any of the installed libraries</em>. To do so, we pass in the “special pseudo-handles” <code>RTLD_DEFAULT</code> or <code>RTLD_NEXT</code>.</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb233-1" title="1"><span class="pp">#define _GNU_SOURCE </span><span class="co">/* added this due to `man 3 dlsym` */</span></a>
+<a class="sourceLine" id="cb233-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb233-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb233-4" title="4"><span class="pp">#include </span><span class="im">&lt;dlfcn.h&gt;</span></a>
+<a class="sourceLine" id="cb233-5" title="5"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb233-6" title="6"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb233-7" title="7"></a>
+<a class="sourceLine" id="cb233-8" title="8"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb233-9" title="9">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb233-10" title="10">{</a>
+<a class="sourceLine" id="cb233-11" title="11">    <span class="kw">typedef</span> <span class="dt">int</span> (*write_fn_t)(<span class="dt">int</span> fd, <span class="dt">char</span> *buf, <span class="dt">size_t</span> s);</a>
+<a class="sourceLine" id="cb233-12" title="12">    write_fn_t w;</a>
+<a class="sourceLine" id="cb233-13" title="13">    <span class="dt">char</span> *buf = <span class="st">&quot;Look at me! Diving into your dynamic libraries...pulling out the symbols</span><span class="sc">\n</span><span class="st">&quot;</span>;</a>
+<a class="sourceLine" id="cb233-14" title="14"></a>
+<a class="sourceLine" id="cb233-15" title="15">    <span class="co">/* Now lets find `write`! */</span></a>
+<a class="sourceLine" id="cb233-16" title="16">    w = dlsym(RTLD_DEFAULT, <span class="st">&quot;write&quot;</span>);</a>
+<a class="sourceLine" id="cb233-17" title="17">    <span class="cf">if</span> (!w) <span class="cf">return</span> EXIT_FAILURE;</a>
+<a class="sourceLine" id="cb233-18" title="18">    w(STDOUT_FILENO, buf, strlen(buf));</a>
+<a class="sourceLine" id="cb233-19" title="19"></a>
+<a class="sourceLine" id="cb233-20" title="20">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb233-21" title="21">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>Look at me! Diving into your dynamic libraries...pulling out the symbols</code></pre>
+<p>Though this example doesn’t have much of a point, as we can directly call <code>write</code>, thus have to go through the symbol we retrieved from <code>dlsym</code>, See (b) in the image below.</p>
+<figure>
+<img src="figures/09_dl_api.svg" alt="Three programmatic means to interact with dynamic libraries." /><figcaption>Three programmatic means to interact with dynamic libraries.</figcaption>
+</figure>
+<h3 id="interposing-libraries-on-library-apis"><span class="header-section-number">9.3.2</span> Interposing Libraries on Library APIs</h3>
+<p>One powerful mechanism that dynamic libraries enable is to <em>interpose</em> on library function calls. Your program might believe that it calls <code>malloc</code> when it invokes the function “malloc”, but you can orchestrate it so that it instead calls a <code>malloc</code> in your library! You can then, if you choose, invoke the normal library calls, thus why this is known as <em>interposing</em> on the library calls. But how?</p>
+<p>The environment variable <code>LD_PRELOAD</code> can be used to specify a dynamic library to load into the process to <em>interpose</em> on any library calls. A trivial use of this might be to <em>log</em> (i.e. write out to a file) all of a set of library calls. We’ll use it to add intelligence on the memory allocation paths.</p>
+<p>When we use <code>LD_PRELOAD=lib</code>, the symbols in the dynamic library that we specify in <code>lib</code> have priority over those of other libraries. Thus, if we include a <code>malloc</code> function definition, when the application calls <code>malloc</code>, it will call <em>our</em> malloc! In the image above, (c) demonstrates using <code>LD_PRELOAD</code>.</p>
+<p>In <a href="https://github.com/gwu-cs-sysprog/lectures/tree/main/09/malloclog/"><code>malloclog</code></a>, we can see a library that interposes on <code>malloc</code> and <code>free</code>, and prints information to standard error. This includes the following:</p>
+<div class="sourceCode" id="cb235"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb235-1" title="1"><span class="kw">typedef</span> <span class="dt">void</span> *(*malloc_fn_t)(<span class="dt">size_t</span> s);</a>
+<a class="sourceLine" id="cb235-2" title="2"><span class="dt">static</span> malloc_fn_t malloc_fn;</a>
+<a class="sourceLine" id="cb235-3" title="3"></a>
+<a class="sourceLine" id="cb235-4" title="4"><span class="co">/* This `malloc` will override libc&#39;s `malloc` */</span></a>
+<a class="sourceLine" id="cb235-5" title="5"><span class="dt">void</span> *</a>
+<a class="sourceLine" id="cb235-6" title="6">malloc(<span class="dt">size_t</span> sz)</a>
+<a class="sourceLine" id="cb235-7" title="7">{</a>
+<a class="sourceLine" id="cb235-8" title="8">    <span class="dt">void</span> *mem;</a>
+<a class="sourceLine" id="cb235-9" title="9"></a>
+<a class="sourceLine" id="cb235-10" title="10">    <span class="co">/* if we don&#39;t yet know where libc&#39;s malloc is, look it up! */</span></a>
+<a class="sourceLine" id="cb235-11" title="11">    <span class="cf">if</span> (malloc_fn == NULL) {</a>
+<a class="sourceLine" id="cb235-12" title="12">        <span class="co">/*</span></a>
+<a class="sourceLine" id="cb235-13" title="13"><span class="co">         * Lets find the `malloc` function in libc! The `RTLD_NEXT`s</span></a>
+<a class="sourceLine" id="cb235-14" title="14"><span class="co">         * specify that we don&#39;t want to find our *own* `malloc`, we&#39;d like to</span></a>
+<a class="sourceLine" id="cb235-15" title="15"><span class="co">         * search starting with the *next* library.</span></a>
+<a class="sourceLine" id="cb235-16" title="16"><span class="co">         */</span></a>
+<a class="sourceLine" id="cb235-17" title="17">        malloc_fn = dlsym(RTLD_NEXT, <span class="st">&quot;malloc&quot;</span>);</a>
+<a class="sourceLine" id="cb235-18" title="18">        assert(malloc_fn);</a>
+<a class="sourceLine" id="cb235-19" title="19">    }</a>
+<a class="sourceLine" id="cb235-20" title="20">    <span class="co">/* call libc&#39;s `malloc` here! */</span></a>
+<a class="sourceLine" id="cb235-21" title="21">    mem = malloc_fn(sz);</a>
+<a class="sourceLine" id="cb235-22" title="22">    fprintf(stderr, <span class="st">&quot;malloc(%ld) -&gt; %p</span><span class="sc">\n</span><span class="st">&quot;</span>, sz, mem);</a>
+<a class="sourceLine" id="cb235-23" title="23"></a>
+<a class="sourceLine" id="cb235-24" title="24">    <span class="cf">return</span> mem;</a>
+<a class="sourceLine" id="cb235-25" title="25">}</a></code></pre></div>
+<p>We do the same for <code>free</code>, and should do the same also for <code>calloc</code> and other memory allocation functions.</p>
+<p><strong>Question:</strong> Why can’t we just call <code>malloc</code> directly instead of doing this complex thing with <code>dlsym</code>?</p>
+<p>We can use it on a simple program that simply calls <code>malloc</code> and <code>free</code> on the allocated memory. To test this out, in <a href="https://github.com/gwu-cs-sysprog/lectures/tree/main/09/malloclog/"><code>malloclog</code></a>:</p>
+<pre><code>$ make
+$ LD_PRELOAD=./libmalloclog.so ./main.bin
+malloc(4) -&gt; 0x55fe6cd492a0
+free(0x55fe6cd492a0)
+...</code></pre>
+<p>This shows us that dynamic libraries are <em>programmable</em> and that we can use them in interesting ways to coordinate between libraries, provide new functionalities, and to interpose on functionalities. For example, many of the largest companies use <code>LD_PRELOAD</code> to swap out the <code>malloc</code> implementation for one that is higher performance.</p>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>What else can you think to do with the ability to interpose on <em>any</em> library functions?</li>
+<li>How might we implement some of the <code>valgrind</code> functionality using the ability to interpose on library functions?</li>
+</ul>
+<p>Note that running a program that uses <code>LD_PRELOAD</code> environment variables are more difficult to use in <code>gdb</code>. The <a href="https://github.com/gwu-cs-sysprog/lectures/tree/main/09/malloclog/ldpreload_w_gdb.sh"><code>ldpreload_w_gdb.sh</code></a> script demonstrates how to use both technologies together.</p>
+<h1 id="system-calls-and-memory-management"><span class="header-section-number">10</span> System Calls and Memory Management</h1>
+<p>We’ve talked about the many resources that are provided by the <em>system</em>. These include files, pipes, and domain sockets. But we’ve been vague about what the system is. Though we’ll leave the details for a later course, lets dive in to what constitutes the “system” a little bit.</p>
+<h2 id="system-calls"><span class="header-section-number">10.1</span> System Calls</h2>
+<p>We’ve claimed many times that <em>the system</em> provides pipes, domain sockets, files, the file system, etc… What is “the system”? First, lets start from what we know: is this system just a dynamic library? To some extent this makes sense.</p>
+<p><strong>Question:</strong></p>
+<ul>
+<li>The dynamic libraries we’ve seen provide many of the functions we’ve used, so why <em>couldn’t</em> they provide all of the functionality we require!? For example, why can’t <code>read</code>, <code>open</code>, etc… all be simply provided by dynamic libraries?</li>
+</ul>
+<p>A few observations:</p>
+<ol type="1">
+<li>Dynamic libraries are loaded into a process, but <em>what provides the process itself</em>?</li>
+<li>Some resources, like <code>pipe</code>s, <em>involve multiple processes</em>, thus there must be something in the system beyond specific processes.</li>
+<li><em>Hardware is limited</em> – a system only has a limited amount of DRAM (memory) – and something has to determine how to hand it out to processes.</li>
+</ol>
+<figure>
+<img src="figures/10_kernel_syscalls.svg" alt="The OS kernel’s relationship to processes and libraries. Each OS has a kernel, in this case the Linux Kernel. The kernel provides resources such as file systems, channels (domain sockets, pipes, etc…), and it implements processes (including fork, exec, wait, etc…). The kernel is separated from processes so that a failure in a process won’t spread beyond the process. This means that when a process wants to interact with the kernel, it must make a special system call. This behaves like a function call, but it maintains isolation of the kernel from the process. This is a system with four processes. The second is making a write system call, the third is using printf which is implemented in libc as part of the stream API in stdio.h. The stream implementation makes a write system call to send the data to the kernel (e.g. to display on our terminal). On the far right, we can see a process that doesn’t even have any libraries and makes system calls directly." /><figcaption>The OS kernel’s relationship to processes and libraries. Each OS has a kernel, in this case the Linux Kernel. The kernel provides resources such as file systems, channels (domain sockets, <code>pipe</code>s, etc…), and it implements processes (including <code>fork</code>, <code>exec</code>, <code>wait</code>, etc…). The kernel is separated from processes so that a failure in a process won’t spread beyond the process. This means that when a process wants to interact with the kernel, it must make a special <em>system call</em>. This behaves like a function call, but it maintains isolation of the kernel from the process. This is a system with four processes. The second is making a <code>write</code> system call, the third is using <code>printf</code> which is implemented in <code>libc</code> as part of the stream API in <code>stdio.h</code>. The stream implementation makes a <code>write</code> system call to send the data to the kernel (e.g. to display on our terminal). On the far right, we can see a process that doesn’t even have any libraries and makes system calls directly.</figcaption>
+</figure>
+<p>The <em>system</em>, as we’ve discussed it so far, is called the <em>kernel</em>. One of the main components of every operating system is the kernel. Every process in the system uses the kernel’s functionality. It provides the logic for <em>most</em> of the calls we’ve learned in the class, <code>fork</code>, <code>exec</code>, <code>pipe</code>, <code>read</code>, <code>write</code>, <code>open</code>, <code>creat</code>, etc… and also most of the resources we’ve discussed including channels, domain sockets, pipes, files, and the filesystem. It is some of the most trusted code on the system. If it has a bug, the whole system can crash – or worse!</p>
+<p>We have to be able to call functions in the kernel from any process. This means we want to make what seem like function calls to the kernel. And we want to make sure that the faults of one process don’t spread to another! This means that somehow the kernel must be isolated from each process.</p>
+<p><strong>System calls</strong> are the mechanism that behaves like a function call (and looks like one to us!), but that switches over to the kernel. System calls are a special instruction in the instruction set architecture (Intel x86 or ARM) that triggers the switch to the kernel. When the kernel’s done with its functionality, it can return (via a special instruction) to the process.</p>
+<p>So system calls <em>behave</em> like function calls, but inherently involves <em>switches</em> from the process and to the kernel and back.</p>
+<p><strong>Question:</strong></p>
+<ul>
+<li>So why does UNIX decide what functionality to put in a library, and what to put in the kernel?</li>
+</ul>
+<h3 id="system-calls-and-processes"><span class="header-section-number">10.1.1</span> System Calls and Processes</h3>
+<p>In UNIX, system calls are available in <code>unistd.h</code>, so whenever you include that file to use a function, you know the function is likely a direct system call! You can also tell if a UNIX function is a system call by looking at the <em>sections</em> of <code>man</code> (from <code>man man</code>):</p>
+<pre><code>MANUAL SECTIONS
+    The standard sections of the manual include:
+
+    1      User Commands
+    2      System Calls
+    3      C Library Functions
+    4      Devices and Special Files
+    5      File Formats and Conventions
+    6      Games et. al.
+    7      Miscellanea
+    8      System Administration tools and Daemons</code></pre>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>Do <code>man write</code>. What is this documentation for?</li>
+<li><p>Do <code>man 2 write</code>. What is this documentation for? What does the <code>2</code> mean?</p>
+<p>You can always tell which section you’re looking at in the header line of the <code>man</code> output: <code>WRITE(2)</code> shows that we’re reading about <code>write</code> in the “System Calls” section.</p></li>
+<li><p>Is <code>malloc</code> a system call or a C Library Function?</p></li>
+</ul>
+<p>We know what a system call looks like, as we’ve used them many times throughout the class. Lets look at the various ways to make the same system call. First, the normal way:</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb238-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb238-2" title="2"></a>
+<a class="sourceLine" id="cb238-3" title="3"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb238-4" title="4">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb238-5" title="5">{</a>
+<a class="sourceLine" id="cb238-6" title="6">    write(<span class="dv">1</span>, <span class="st">&quot;hello world</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="dv">12</span>);</a>
+<a class="sourceLine" id="cb238-7" title="7"></a>
+<a class="sourceLine" id="cb238-8" title="8">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb238-9" title="9">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>hello world</code></pre>
+<p>The C standard library even provides you a “generic” way to invoke <em>any</em> system call. The <code>syscall</code> function lets you make an integer-identified system call. Each system call on the system is identified with a unique integer. In this case, we’ll use <code>SYS_write</code>.</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb240-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb240-2" title="2"><span class="pp">#include </span><span class="im">&lt;sys/syscall.h&gt;</span></a>
+<a class="sourceLine" id="cb240-3" title="3"></a>
+<a class="sourceLine" id="cb240-4" title="4"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb240-5" title="5">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb240-6" title="6">{</a>
+<a class="sourceLine" id="cb240-7" title="7">    syscall(SYS_write, <span class="dv">1</span>, <span class="st">&quot;hello world</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="dv">12</span>);</a>
+<a class="sourceLine" id="cb240-8" title="8"></a>
+<a class="sourceLine" id="cb240-9" title="9">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb240-10" title="10">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>hello world</code></pre>
+<p>Lets look at a few of these integer values to see what’s happening here:</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb242-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb242-2" title="2"><span class="pp">#include </span><span class="im">&lt;sys/syscall.h&gt;</span></a>
+<a class="sourceLine" id="cb242-3" title="3"></a>
+<a class="sourceLine" id="cb242-4" title="4"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb242-5" title="5">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb242-6" title="6">{</a>
+<a class="sourceLine" id="cb242-7" title="7">    printf(<span class="st">&quot;write: %d</span><span class="sc">\n</span><span class="st">read:  %d</span><span class="sc">\n</span><span class="st">open:  %d</span><span class="sc">\n</span><span class="st">close: %d</span><span class="sc">\n</span><span class="st">&quot;</span>,</a>
+<a class="sourceLine" id="cb242-8" title="8">        SYS_write, SYS_read, SYS_open, SYS_close);</a>
+<a class="sourceLine" id="cb242-9" title="9"></a>
+<a class="sourceLine" id="cb242-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb242-11" title="11">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>write: 1
+read:  0
+open:  2
+close: 3</code></pre>
+<p>Note, these integer values are <em>not</em> related to descriptors (e.g. <code>STDIN_FILENO == 0</code>). The system calls in Linux (and in all operating systems!) are each assigned an integer with which to identify them. You can see all of the <a href="https://filippo.io/linux-syscall-table/">system calls and their integer numbers</a>, and some documentation in <a href="https://manpages.debian.org/unstable/manpages-dev/syscalls.2.en.html"><code>man syscalls</code> (link)</a>.</p>
+<p><strong>Exercise:</strong></p>
+<ul>
+<li>Find three interesting system calls that you didn’t know about.</li>
+</ul>
+<p>OK, now lets do a little more of a deep-dive. You won’t be familiar with the Intel’s/AMD’s x86-64 assembly language that follows, but the comments on the right give you the jist.</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode asm"><code class="sourceCode fasm"><a class="sourceLine" id="cb244-1" title="1">.<span class="bu">data</span>                <span class="co">; Add some global variables - our &quot;hello world&quot; message</span></a>
+<a class="sourceLine" id="cb244-2" title="2"><span class="fu">msg:</span></a>
+<a class="sourceLine" id="cb244-3" title="3">    .ascii <span class="st">&quot;hello world\n&quot;</span></a>
+<a class="sourceLine" id="cb244-4" title="4">    len = . - msg    <span class="co">; magic length computation &quot;here&quot; - start of `msg`</span></a>
+<a class="sourceLine" id="cb244-5" title="5"></a>
+<a class="sourceLine" id="cb244-6" title="6">.text                <span class="co">; The code starts here!</span></a>
+<a class="sourceLine" id="cb244-7" title="7">    .global _start</a>
+<a class="sourceLine" id="cb244-8" title="8"></a>
+<a class="sourceLine" id="cb244-9" title="9"><span class="fu">_start:</span>              <span class="co">; Note: the %rxx values are registers, $x are constants</span></a>
+<a class="sourceLine" id="cb244-10" title="10">    <span class="bu">movq</span><span class="bn">  $1,   </span>%<span class="kw">rax</span> <span class="co">; Syscall&#39;s integer value, 1 == write, now set up the arguments...</span></a>
+<a class="sourceLine" id="cb244-11" title="11">    <span class="bu">movq</span><span class="bn">  $1,   </span>%<span class="kw">rdi</span> <span class="co">; Arg 1: file descriptor 1</span></a>
+<a class="sourceLine" id="cb244-12" title="12">    <span class="bu">movq</span>  <span class="dv">$</span>msg, %<span class="kw">rsi</span> <span class="co">; Arg 2: the string!</span></a>
+<a class="sourceLine" id="cb244-13" title="13">    <span class="bu">movq</span>  <span class="dv">$</span>len, %<span class="kw">rdx</span> <span class="co">; Arg 3: the length of the string</span></a>
+<a class="sourceLine" id="cb244-14" title="14">    <span class="bu">syscall</span>          <span class="co">; Kick off the system call instruction!</span></a>
+<a class="sourceLine" id="cb244-15" title="15"></a>
+<a class="sourceLine" id="cb244-16" title="16">    <span class="bu">movq</span><span class="bn">  $60,  </span>%<span class="kw">rax</span> <span class="co">; System call #60 == exit</span></a>
+<a class="sourceLine" id="cb244-17" title="17">    xorq  %<span class="kw">rdi</span>, %<span class="kw">rdi</span> <span class="co">; Arg 1: xor(x, x) == 0, pass NULL as argument!</span></a>
+<a class="sourceLine" id="cb244-18" title="18">    <span class="bu">syscall</span></a></code></pre></div>
+<p>We compile this assembly with <code>make</code> (in <code>10/</code>).</p>
+<p>How does this work? Recall that ELF, the file format for objects and programs includes many pieces of information necessary to execute the program. Among them, the <em>starting or entry address</em> which is the initial instruction to start executing when the program runs.</p>
+<pre><code>$ readelf -a ./asm_syscall  | grep &quot;Entry&quot;
+  Entry point address:               0x401000
+$ readelf -a ./asm_syscall  | grep &quot;401000&quot;
+  Entry point address:               0x401000
 ...
-collect2: error: ld returned 1 exit status</code></pre>
+     6: 0000000000401000     0 NOTYPE  GLOBAL DEFAULT    1 _start</code></pre>
+<p>We can see that the “entry point address” is <code>0x401000</code>, and we can see that the <code>_start</code> symbol has that address.</p>
+<p>Note that this same analysis rings true for the normal C system call code above (not the assembly)! The <code>_start</code> function is where all execution starts in each program. This explains why our program above labels its code with <code>_start</code>!</p>
+<h2 id="observing-system-calls"><span class="header-section-number">10.2</span> Observing System Calls</h2>
+<p>The <code>strace</code> program lets us monitor the system calls a program makes. Running int on the assembly program above:</p>
+<pre><code>$ strace ./asm_syscall
+execve(&quot;./asm_syscall&quot;, [&quot;./asm_syscall&quot;], 0x7fff3c06ae10 /* 50 vars */) = 0
+write(1, &quot;hello world\n&quot;, 12hello world
+)           = 12
+exit(0)                                 = ?
++++ exited with 0 +++</code></pre>
+<p>This likely has what you’d expect: We see the <code>exec</code> that kicks off the program, the <code>write</code>, and, finally, the <code>exit</code>. You’d likely expect the same from the normal C program that also writes out <code>hello world</code>.</p>
+<pre><code>$ trace ./normal_syscall
+execve(&quot;./normal_syscall&quot;, [&quot;./normal_syscall&quot;], 0x7ffc036c1520 /* 50 vars */) = 0
+brk(NULL)                               = 0x5638ed59d000
+arch_prctl(0x3001 /* ARCH_??? */, 0x7ffd8bfb49c0) = -1 EINVAL (Invalid argument)
+access(&quot;/etc/ld.so.preload&quot;, R_OK)      = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, &quot;/etc/ld.so.cache&quot;, O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=138102, ...}) = 0
+mmap(NULL, 138102, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7efddf831000
+close(3)                                = 0
+openat(AT_FDCWD, &quot;/lib/x86_64-linux-gnu/libc.so.6&quot;, O_RDONLY|O_CLOEXEC) = 3
+read(3, &quot;\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0\360A\2\0\0\0\0\0&quot;..., 832) = 832
+pread64(3, &quot;\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0&quot;..., 784, 64) = 784
+pread64(3, &quot;\4\0\0\0\20\0\0\0\5\0\0\0GNU\0\2\0\0\300\4\0\0\0\3\0\0\0\0\0\0\0&quot;, 32, 848) = 32
+pread64(3, &quot;\4\0\0\0\24\0\0\0\3\0\0\0GNU\0\237\333t\347\262\27\320l\223\27*\202C\370T\177&quot;..., 68, 880) = 68
+fstat(3, {st_mode=S_IFREG|0755, st_size=2029560, ...}) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7efddf82f000
+pread64(3, &quot;\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0&quot;..., 784, 64) = 784
+pread64(3, &quot;\4\0\0\0\20\0\0\0\5\0\0\0GNU\0\2\0\0\300\4\0\0\0\3\0\0\0\0\0\0\0&quot;, 32, 848) = 32
+pread64(3, &quot;\4\0\0\0\24\0\0\0\3\0\0\0GNU\0\237\333t\347\262\27\320l\223\27*\202C\370T\177&quot;..., 68, 880) = 68
+mmap(NULL, 2037344, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7efddf63d000
+mmap(0x7efddf65f000, 1540096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x22000) = 0x7efddf65f000
+mmap(0x7efddf7d7000, 319488, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19a000) = 0x7efddf7d7000
+mmap(0x7efddf825000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e7000) = 0x7efddf825000
+mmap(0x7efddf82b000, 13920, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7efddf82b000
+close(3)                                = 0
+arch_prctl(ARCH_SET_FS, 0x7efddf830540) = 0
+mprotect(0x7efddf825000, 16384, PROT_READ) = 0
+mprotect(0x5638eb775000, 4096, PROT_READ) = 0
+mprotect(0x7efddf880000, 4096, PROT_READ) = 0
+munmap(0x7efddf831000, 138102)          = 0
+write(1, &quot;hello world\n&quot;, 12hello world
+)           = 12
+exit_group(0)                           = ?
++++ exited with 0 +++</code></pre>
+<p>Whaaaaa!? If you look carefully, at the bottom we see the expected output. But we also see a <em>lot</em> of system calls previous to that. Between when we start execution at <code>_start</code>, and when we execute in <code>main</code>, quite a lot happens.</p>
+<p><strong>Question:</strong></p>
+<ul>
+<li>What do you think is causing all of these system calls? What is the program doing before running <code>main</code>?</li>
+</ul>
+<figure>
+<img src="figures/10_bootup_syscalls.svg" alt="Why are there so many system calls in a simple C program? Lets compare what happens in the C versus assembly programs. The process on the left is normal_syscall above, while asm_syscall is on the right. The assembly system call avoids much of the C runtime support, thus starts execution at _start, and makes system calls directly. In contrast, the C program starts execution in the dynamic linker ld (i.e. at _start in ld) – step (1). ld links in the libc dynamic library (2), then executes _start in our program (3). Our program actually calls libc (4) before executing main to do library initialization, which then calls main. After main returns (5), it returns into libc, which then terminates our program with the _exit system call. So why are there so many system calls made in the C program? There’s a lot of execution that happens outside of our logic! Most of the system calls are from ld." /><figcaption>Why are there so many system calls in a simple C program? Lets compare what happens in the C versus assembly programs. The process on the left is <code>normal_syscall</code> above, while <code>asm_syscall</code> is on the right. The assembly system call avoids much of the C runtime support, thus starts execution at <code>_start</code>, and makes system calls directly. In contrast, the C program starts execution in the dynamic linker <code>ld</code> (i.e. at <code>_start</code> in <code>ld</code>) – step (1). <code>ld</code> links in the <code>libc</code> dynamic library (2), then executes <code>_start</code> in our program (3). Our program actually calls <code>libc</code> (4) before executing <code>main</code> to do library initialization, which then calls <code>main</code>. After <code>main</code> returns (5), it returns into <code>libc</code>, which then terminates our program with the <code>_exit</code> system call. So why are there so many system calls made in the C program? There’s a lot of execution that happens outside of our logic! Most of the system calls are from <code>ld</code>.</figcaption>
+</figure>
+<h2 id="system-call-overhead"><span class="header-section-number">10.3</span> System Call Overhead</h2>
+<p>There are many reasons why some functionality might be in a library, and accessed via function calls, or in the kernel, and accessed with system calls.</p>
+<p>Lets look at an example of memory allocation. We can, of course, use <code>malloc</code> and <code>free</code> to allocate and free memory. But we can also call <code>mmap</code> and <code>munmap</code> that make <em>system calls</em> to allocate and free memory.</p>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>Which will be <em>faster</em>, <code>malloc</code>/<code>free</code> or <code>mmap</code>/<code>munmap</code>?</li>
+<li>How much overhead would you <em>guess</em> a system call has?</li>
+</ul>
+<div class="sourceCode" id="cb248"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb248-1" title="1"><span class="pp">#include </span><span class="im">&quot;10/timer.h&quot;</span></a>
+<a class="sourceLine" id="cb248-2" title="2"></a>
+<a class="sourceLine" id="cb248-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb248-4" title="4"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb248-5" title="5"><span class="pp">#include </span><span class="im">&lt;sys/mman.h&gt;</span></a>
+<a class="sourceLine" id="cb248-6" title="6"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb248-7" title="7"></a>
+<a class="sourceLine" id="cb248-8" title="8"><span class="pp">#define ITER 256</span></a>
+<a class="sourceLine" id="cb248-9" title="9"></a>
+<a class="sourceLine" id="cb248-10" title="10"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb248-11" title="11">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb248-12" title="12">{</a>
+<a class="sourceLine" id="cb248-13" title="13">    <span class="dt">int</span> i;</a>
+<a class="sourceLine" id="cb248-14" title="14">    <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> start, end;</a>
+<a class="sourceLine" id="cb248-15" title="15">    <span class="dt">int</span> *mem;</a>
+<a class="sourceLine" id="cb248-16" title="16"></a>
+<a class="sourceLine" id="cb248-17" title="17">    <span class="co">/* How many cycles does `write` take? */</span></a>
+<a class="sourceLine" id="cb248-18" title="18">    start = cycles();</a>
+<a class="sourceLine" id="cb248-19" title="19">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; ITER; i++) {</a>
+<a class="sourceLine" id="cb248-20" title="20">        mem = malloc(<span class="dv">256</span>);</a>
+<a class="sourceLine" id="cb248-21" title="21">        mem[<span class="dv">0</span>] = <span class="dv">42</span>;</a>
+<a class="sourceLine" id="cb248-22" title="22">        free(mem);</a>
+<a class="sourceLine" id="cb248-23" title="23">    }</a>
+<a class="sourceLine" id="cb248-24" title="24">    end = cycles();</a>
+<a class="sourceLine" id="cb248-25" title="25">    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">malloc + free overhead (cycles): %lld</span><span class="sc">\n</span><span class="st">&quot;</span>, (end - start) / ITER);</a>
+<a class="sourceLine" id="cb248-26" title="26"></a>
+<a class="sourceLine" id="cb248-27" title="27">    <span class="co">/* How many cycles does `fwrite` take? */</span></a>
+<a class="sourceLine" id="cb248-28" title="28">    start = cycles();</a>
+<a class="sourceLine" id="cb248-29" title="29">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; ITER; i++) {</a>
+<a class="sourceLine" id="cb248-30" title="30">        mem = mmap(NULL, <span class="dv">256</span>, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, <span class="dv">0</span>, <span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb248-31" title="31">        mem[<span class="dv">0</span>] = <span class="dv">42</span>;</a>
+<a class="sourceLine" id="cb248-32" title="32">        munmap(mem, <span class="dv">256</span>);</a>
+<a class="sourceLine" id="cb248-33" title="33">    }</a>
+<a class="sourceLine" id="cb248-34" title="34">    end = cycles();</a>
+<a class="sourceLine" id="cb248-35" title="35">    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">mmap + munmap overhead (cycles): %lld</span><span class="sc">\n</span><span class="st">&quot;</span>, (end - start) / ITER);</a>
+<a class="sourceLine" id="cb248-36" title="36"></a>
+<a class="sourceLine" id="cb248-37" title="37">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb248-38" title="38">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>
+malloc + free overhead (cycles): 433
+
+mmap + munmap overhead (cycles): 9220</code></pre>
+<blockquote>
+<p>What is a “cycle”? When you read that you have a 3GHz, that essentially says that the internal “clock” that drives the logic in the processor cycles by at 3 billion cycles per second. That’s a <em>lot</em>. Each cycle is 1/3 a nanosecond. A cycle is the smallest unit of measurement on a processor, and the <code>cycles</code> function we implement here gives us how many cycles have elapsed since the system boots.</p>
+</blockquote>
+<p>We can also look at the output APIs like <code>write</code> and compare them to the stream APIs that buffer their output.</p>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>If we write a byte to a file using <code>write</code> or to a stream (via a <code>FILE</code>) using <code>fwrite</code>, what performance would you expect?</li>
+<li>How about if we did an <code>fflush</code> after the <code>fwrite</code>?</li>
+</ul>
+<div class="sourceCode" id="cb250"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb250-1" title="1"><span class="pp">#include </span><span class="im">&quot;10/timer.h&quot;</span></a>
+<a class="sourceLine" id="cb250-2" title="2"></a>
+<a class="sourceLine" id="cb250-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb250-4" title="4"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb250-5" title="5"></a>
+<a class="sourceLine" id="cb250-6" title="6"><span class="pp">#define ITER 256</span></a>
+<a class="sourceLine" id="cb250-7" title="7"></a>
+<a class="sourceLine" id="cb250-8" title="8"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb250-9" title="9">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb250-10" title="10">{</a>
+<a class="sourceLine" id="cb250-11" title="11">    <span class="dt">int</span> i;</a>
+<a class="sourceLine" id="cb250-12" title="12">    <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> start, end;</a>
+<a class="sourceLine" id="cb250-13" title="13"></a>
+<a class="sourceLine" id="cb250-14" title="14">    <span class="co">/* How many cycles does `write` take? */</span></a>
+<a class="sourceLine" id="cb250-15" title="15">    start = cycles();</a>
+<a class="sourceLine" id="cb250-16" title="16">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; ITER; i++) write(<span class="dv">1</span>, <span class="st">&quot; &quot;</span>, <span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb250-17" title="17">    end = cycles();</a>
+<a class="sourceLine" id="cb250-18" title="18">    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">write overhead (cycles): %lld</span><span class="sc">\n</span><span class="st">&quot;</span>, (end - start) / ITER);</a>
+<a class="sourceLine" id="cb250-19" title="19"></a>
+<a class="sourceLine" id="cb250-20" title="20">    <span class="co">/* How many cycles does `fwrite` take? */</span></a>
+<a class="sourceLine" id="cb250-21" title="21">    start = cycles();</a>
+<a class="sourceLine" id="cb250-22" title="22">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; ITER; i++) fwrite(<span class="st">&quot; &quot;</span>, <span class="dv">1</span>, <span class="dv">1</span>, stdout);</a>
+<a class="sourceLine" id="cb250-23" title="23">    end = cycles();</a>
+<a class="sourceLine" id="cb250-24" title="24">    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">fwrite (stream) overhead (cycles): %lld</span><span class="sc">\n</span><span class="st">&quot;</span>, (end - start) / ITER);</a>
+<a class="sourceLine" id="cb250-25" title="25"></a>
+<a class="sourceLine" id="cb250-26" title="26">    <span class="co">/* How many cycles does `fwrite + fflush` take? */</span></a>
+<a class="sourceLine" id="cb250-27" title="27">    start = cycles();</a>
+<a class="sourceLine" id="cb250-28" title="28">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; ITER; i++) {</a>
+<a class="sourceLine" id="cb250-29" title="29">        fwrite(<span class="st">&quot; &quot;</span>, <span class="dv">1</span>, <span class="dv">1</span>, stdout);</a>
+<a class="sourceLine" id="cb250-30" title="30">        fflush(stdout);</a>
+<a class="sourceLine" id="cb250-31" title="31">    }</a>
+<a class="sourceLine" id="cb250-32" title="32">    end = cycles();</a>
+<a class="sourceLine" id="cb250-33" title="33">    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">fwrite + fflush overhead (cycles): %lld</span><span class="sc">\n</span><span class="st">&quot;</span>, (end - start) / ITER);</a>
+<a class="sourceLine" id="cb250-34" title="34"></a>
+<a class="sourceLine" id="cb250-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb250-36" title="36">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>                                                                                                                                                                                                                                                                
+write overhead (cycles): 4000
+                                                                                                                                                                                                                                                                
+fwrite (stream) overhead (cycles): 41
+                                                                                                                                                                                                                                                                
+fwrite + fflush overhead (cycles): 3797</code></pre>
+<h1 id="unix-security-users-groups-and-filesystem-permissions"><span class="header-section-number">11</span> UNIX Security: Users, Groups, and Filesystem Permissions</h1>
+<blockquote>
+<p><strong>This material directly adapted from Prof. Aviv’s <a href="https://classes.adamaviv.com/ic221/s18/units/01/unit.html#org26c0ea7">material</a>.</strong></p>
+</blockquote>
+<p>We’ve seen how the filesystem is used to store and name files and channels, and we’ve seen the APIs to access directories and files. If everyone had access to every else’s files, then there would be no way to secure your information. Thus, systems provide means to control different user’s <em>access</em> to different files and directories.</p>
+<p>To understand the core concept of <em>access control</em> in UNIX, we have to understand</p>
+<ol type="1">
+<li>how UNIX thinks, implements, and organizes users,</li>
+<li>how files and directories provide various access permissions to different users and how to alter those permissions, and</li>
+<li>how services, even when executed by a user, can have heightened access to system resources.</li>
+</ol>
+<h2 id="file-and-directory-permissions"><span class="header-section-number">11.1</span> File and Directory Permissions</h2>
+<p>Lets first remind ourselves of the properties of a file that are returned by running <code>ls -l</code>:</p>
+<pre><code>.- Directory?
+|    .-------Permissions                   .- Directory Name
+| ___|___     .----- Owner                 |
+v/       \    V     ,---- Group            V
+drwxr-x--x 4 aviv scs 4096 Dec 17 15:14 imma_directory
+-rw------- 1 aviv scs 400  Dec 19  2013 .ssh/id_rsa.pub
+                       ^   \__________/    ^
+File Size -------------&#39;       |           &#39;- File Name
+  in bytes                     |
+                               |
+   Last Modified --------------&#39;</code></pre>
+<p>An example from the class’ server, we create a file, a directory, and see the results:</p>
+<pre><code>$ echo hi &gt; file.txt
+$ mkdir hello
+$ ls -l
+-rw-r--r-- 1 gparmer dialout    3 Mar 18 12:19 file.txt
+drwxr-xr-x 2 gparmer dialout 4096 Mar 18 12:20 hello</code></pre>
+<p>There are two important parts to this discussion: the owner/group and the permissions. The owner and the permissions are directly related to each other. Often permissions are assigned based on user status to the file, either being the owner or part of a group of users who have certain access to the file.</p>
+<h3 id="file-ownership-and-groups"><span class="header-section-number">11.1.1</span> File Ownership and Groups</h3>
+<p>The owner of a file is the user that is directly responsible for the file and has special status with respect to the file permission. Users can also be grouped together in group, a collection of users who posses the same permissions. A file also has a group designation to specify which permission should apply.</p>
+<p>You all are already aware of your username. You use it all the time, and it should be a part of your command prompt. To have UNIX tell you your username and connection information on this machine, use the command, who am i:</p>
+<pre><code>$ who
+gparmer  pts/1        2022-03-18 12:12 (128.164...)</code></pre>
+<p>You can use the whoami (no spaces) command to print only your username:</p>
+<pre><code>$ whoami
+gparmer</code></pre>
+<p>The first part of the output is the username, for me that is aviv, for you it will be your username. The rest of the information in the output refers to the terminal, the time the terminal was created, and from which host you are connected.</p>
+<p>You can determine which groups you are in using the groups command.</p>
+<pre><code>$ groups
+dialout CS_Admins</code></pre>
+<p>On the class’ server, I’m in the <code>dialout</code> and <code>CS_Admins</code> groups. On my work computer, I’m in a few more groups:</p>
+<pre><code>$ groups
+ycombinator adm cdrom sudo dip plugdev lpadmin sambashare</code></pre>
+<p>The good news is that I can use my <code>cdrom</code>. Fantastic. Cool.</p>
+<h3 id="the-password-and-group-file"><span class="header-section-number">11.1.2</span> The password and group file</h3>
+<p>Groupings are defined in two places. The first is a file called /etc/passwd which manages all the users of the system. Here is the <code>/etc/passwd</code> entry on my local system (the server uses another means to store user info):</p>
+<pre><code>$ cat /etc/passwd | grep gparmer
+gparmer:x:1000:1000:Gabe Parmer,,,:/home/ycombinator:/bin/bash
+   |    |   |     |      |                 |             |
+   V    |   V     |      V                 V             V
+ user   | user id |  human-readable id  home directory  shell to use upon login
+        V         V
+    password    group id</code></pre>
+<p>We can lookup our username and associate it with a numerical user id, and a group id for that user. These numbers are what the system uses to track users, but UNIX nicely converts these numbers into names for our convenience. The file additionally holds the path to the user’s home directory, and their shell. These are used upon the user logging in: the login logic will switch to the user’s home directory, and execute their shell. The <code>password</code> entry is deprecated. The translation between userid and username is in the password file. The translation between groupid and group name is in the group file, <code>/etc/group</code>. Here is the entry for the administrators on the class’ server:</p>
+<pre><code>$ grep CS_Admins /etc/group
+CS_Admins:x:1004:aaviv,timwood,gparmer,...</code></pre>
+<p>There you can see that the users <code>aaviv</code>, <code>timwood</code>, and <code>gparmer</code> are all in the group of administrators.</p>
+<p><strong>Question:</strong> Take a moment to explore these files and the commands. See what groups you are in.</p>
+<h3 id="file-permissions"><span class="header-section-number">11.1.3</span> File Permissions</h3>
+<p>We can now turn our attention to the permission string. A permission is simply a sequence of 9 bits broken into 3 octets of 3 bits each. An octet is a base 8 number that goes from 0 to 7, and 3 bits uniquely define an octet since all the numbers between 0 and 7 can be represented in 3 bits.</p>
+<p>Within an octet, there are three permission flags, read, write and execute. These are often referred to by their short hand, r, w, and x. The setting of a permission to on means that the bit is 1. Thus for a set of possible permission states, we can uniquely define it by an octal number:</p>
+<pre><code>rwx -&gt; 1 1 1 -&gt; 7
+r-x -&gt; 1 0 1 -&gt; 5
+--x -&gt; 0 0 1 -&gt; 1
+rw- -&gt; 1 1 0 -&gt; 6</code></pre>
+<p>A full file permission consists of the octet set in order of user, group, and global permission.</p>
+<pre><code> .-- Directory Bit
+|
+|       ,--- Global Permission (i.e. &quot;every else&quot;)
+v      / \
+-rwxr-xr-x
+ \_/\_/
+  |  `--Group Permission
+  |
+   `-- Owner Permission</code></pre>
+<p>These define the permission for the user of the file, what users in the same group of the file, and what everyone else can do. For a full permission, we can now define it as 3 octal numbers:</p>
+<pre><code>-rwxrwxrwx -&gt; 111 111 111 -&gt; 7 7 7
+-rwxrw-rw- -&gt; 111 110 110 -&gt; 7 6 6
+-rwxr-xr-x -&gt; 111 101 101 -&gt; 7 5 5</code></pre>
+<p>To change a file permission, you use the chmod command and indicate the new permission through the octal. For example, in part5 directory, there is an executable file hello_world. Let’s try and execute it. To do so, we insert a <code>./</code> in the front to tell the shell to execute the local file.</p>
+<pre><code>$ gcc helloworld.c -o helloworld
+$ chmod 600 hello world
+$ ./helloworld
+-bash: ./helloworld: Permission denied</code></pre>
+<p>The shell returns with a permission denied. That’s because the execute bit is not set.</p>
+<pre><code>$ ls -l helloworld
+-rw------- 1 ycombinator ycombinator 16704 Mar 18 13:28 helloworld</code></pre>
+<p>Let’s start by making the file just executable by the user, the permission 700. And now we can execute the file:</p>
+<pre><code>$ chmod 700 helloworld
+$ ls -l helloworld
+-rwx------ 1 ycombinator ycombinator 16704 Mar 18 13:28 helloworld
+$ ./helloworld
+Hello World!</code></pre>
+<p>This file can only be executed by the user, not by anyone else because the permissions for the group and the world are still <code>0</code>. To add group and world permission to execute, we use the permission setting <code>711</code>:</p>
+<pre><code>$ chmod 711 helloworld
+$ ls -l helloworld
+-rwx--x--x 1 aviv scs 7856 Dec 23 13:51 helloworld</code></pre>
+<p>At times using octets can be cumbersome, for example, when you want to set all the execute or read bits but don’t want to calculate the octet. In those cases you can use shorthands.</p>
+<ul>
+<li><code>r</code>, <code>w</code>, <code>x</code> shorthands for permission bit read, write and execute</li>
+<li>The <code>+</code> indicates to add a permission, as in <code>+x</code> or <code>+w</code></li>
+<li>The <code>-</code> indicates to remove a permission, as in <code>-x</code> or <code>-w</code></li>
+<li><code>u</code>, <code>g</code>, <code>o</code> shorthands for permission bit user, group, and other</li>
+<li>a shorthand refers to all, applying the permission to user, group, and other</li>
+</ul>
+<p>Then we can change the permission</p>
+<pre><code>chmod +x file   &lt;-- set all the execute bits
+chmod a+r file  &lt;-- set the file world readable
+chmod -r  file  &lt;-- unset all the read bits
+chmod gu+w file &lt;-- set the group and user write bits to true</code></pre>
+<p>Depending on the situation, either the octets or the shorthands are preferred.</p>
+<h3 id="changing-file-ownership-and-group"><span class="header-section-number">11.1.4</span> Changing File Ownership and Group</h3>
+<p>The last piece of the puzzle is how do we change the ownership and group of a file. Two commands:</p>
+<ul>
+<li><code>chown &lt;user&gt; &lt;file/directory&gt;</code> - change owner of the file/directory to the user</li>
+<li><code>chgrp &lt;group&gt; &lt;file/directory&gt;</code> - change group of the file to the group</li>
+</ul>
+<p>Permission to change the owner of a file is reserved only for the super user for security reasons. However, changing the group of the file is reserved only for the owner.</p>
+<pre><code>$ ls -l
+total 16
+-rwxr-x--- 1 aviv scs 9133 Dec 29 10:39 helloworld
+-rw-r----- 1 aviv scs   99 Dec 29 10:39 helloworld.cpp
+$ chgrp mids helloworld
+$ ls -l
+total 16
+-rwxr-x--- 1 aviv mids 9133 Dec 29 10:39 helloworld
+-rw-r----- 1 aviv scs    99 Dec 29 10:39 helloworld.cpp</code></pre>
+<p>Note now the hello world program is in the mids group. I can still execute it because I am the owner:</p>
+<pre><code>$ ./helloworld
+Hello World</code></pre>
+<p>However if I were to change the owner, to say, <code>pepin</code>, we get the following error:</p>
+<pre><code>$ chown pepin helloworld
+chown: changing ownership of ‘helloworld’: Operation not permitted</code></pre>
+<p>Consider why this might be. If any user can change the ownership of a file, then they could potentially upgrade or downgrade the permissions of files inadvertently, violating a security requirement. As such, only the super user, or the administrator, can change ownership settings.</p>
+<h2 id="security-and-programming-with-users-and-groups"><span class="header-section-number">11.2</span> Security and Programming with Users and Groups</h2>
+<p>Through this class we have seen a number of security settings provided by the operating system. Formost, we discussed users and groups, file permissions, the terminal login, and finally the concept of system calls generally and how that system is designed to protect the user from itself.</p>
+<p>Let’s take a moment to review some of these concepts and the O.S. security settings thereof.</p>
+<h3 id="users-and-groups"><span class="header-section-number">11.2.1</span> Users and Groups</h3>
+<p>All users are defined in the /etc/passwd file with lines like such:</p>
+<pre><code>.-- user name         .-- full name   .--- home directory
+|                     |               |
+v                     v               v
+aviv:x:35001:10120:Adam Aviv {}:/home/scs/aviv:/bin/bash
+        ^     ^                                   ^
+uid ----&#39;     &#39;--- gid (Default)                  &#39;--- default shell</code></pre>
+<p>This is my passwd entry. It stores my user name, my user id, my default group id, my full name, my home directory, and my default shell. Every user has a unique username, user id, and default group; however, a user can be assigned to multiple groups. Group information is fined in the /etc/group directory, and here is entry for my default group:</p>
+<pre><code>.-- group name
+|
+v
+scs:*:10120:webadmin,www-data,lucas,slack
+       ^    \___________________________/
+gid ---&#39;                |
+                        &#39;- Additional users in that group</code></pre>
+<p>From the command line, the tool id will print this information, as well as groups</p>
+<pre><code>aviv@saddleback: ~ $ id
+uid=35001(aviv) gid=10120(scs) groups=10120(scs),27(sudo),15000(mids)
+aviv@saddleback: ~ $ groups
+scs sudo mids</code></pre>
+<p>One thing you might notice is that I am in the sudo group … on this computer, at least. We’ll come back to this later.</p>
+<h3 id="permissions"><span class="header-section-number">11.2.2</span> Permissions</h3>
+<p>Access to files are permission-ed based on the user and group designation of the accessing agent. Typically, this is a user, but the same designations are assigned to running processes. The permissions of a file can be observed using ls -l or stat:</p>
+<pre><code>aviv@saddleback: demo $ ls -l
+total 4
+-rwxr--r-- 1 aviv scs    0 Mar 27 09:41 a
+-rw--wx--- 1 aviv scs    0 Mar 27 09:41 b
+-------rwx 1 aviv scs    0 Mar 27 09:41 c
+drwxr-x--- 2 aviv scs 4096 Mar 27 09:41 d
+aviv@saddleback: demo $ stat b
+  File: ‘b’
+  Size: 0           Blocks: 0          IO Block: 524288 regular empty file
+Device: 1ch/28d Inode: 34996239    Links: 1
+Access: (0630/-rw--wx---)  Uid: (35001/    aviv)   Gid: (10120/     scs)
+Access: 2015-03-27 09:41:22.884094861 -0400
+Modify: 2015-03-27 09:41:22.884094861 -0400
+Change: 2015-03-27 09:41:41.292753637 -0400</code></pre>
+<p>And if we look at a particular mode portion, let’s recall how the permissions are identified:</p>
+<pre><code>user   other       .- group
+  |     |          |
+ .-.   .-.         v
+-rwxr--r-- 1 aviv scs    0 Mar 27 09:41 a
+^   &#39;-&#39;       ^
+|    |        &#39;-- user/owner
+|   group
+|
+&#39;- Directory Bit</code></pre>
+<p>When an operation is performed on the file, such as reading, writing, or executing, the user taking the action is compared to the permission. If the right permissions are set, and the user matches those permissions, the action can be taken. For example, a user that is not aviv may still read the file if they are in group scs. More, even a user who meets neither criteria, the owner or group of the file, can still read the file because the other read permission is set.</p>
+<p>Permissions of files can be changed using three commands:</p>
+<ul>
+<li><code>chmod</code> : change the permissions string of the file which can only be done by the owner of the file (or super user).</li>
+<li><code>chgrp</code> : change the group of the file which can only be done by the owner of the file (or super user).</li>
+<li><code>chown</code> : change the owner of the file which can only be done by the super user.</li>
+</ul>
+<p>The super user for unix systems is referred as <code>root</code>. It has full privileges and can do whatever it wants. Creating multiple levels of permissions by dividing users from one privilege to another is a key security concept. A key question is how does this occur? To understand this process, we have to start with when the user logs in.</p>
+<h3 id="terminal-login-and-password-checking"><span class="header-section-number">11.2.3</span> Terminal Login and Password Checking</h3>
+<p>The log procedure is not a huge focus of this lesson; however, what happens after login is incredibly relevant. Recall from the lectures on the tty that when a user “calls” a tty the program getty will execute login. Following the diagram:</p>
+<pre><code> runs as root
+.......................................
+:  .-------.                          :
+:  | getty |                          :
+:  &#39;-------&#39;                          :
+:      |                              :
+:    exec() &lt;-------.                 :
+:      |            |                 :
+: (1)  v            | (failed)        :
+:  .--------.       |     ............:
+:  | login  | ------&#39;     :
+:  &#39;--------&#39;             :                    runs as the user
+:      | (success)        :   ..................................
+:      |      ............:   :                                :
+:      |      :   ............: .-------. (3)                  :
+:     fork() -:---:- exec() --&gt; | shell |                      :
+:.............: ^ :             &#39;-------&#39;                      :
+ (2)            | :                  |                  .----. :
+  changes ______| :               fork() --- exec() --&gt; | ls | :
+    user          :                                     &#39;----&#39; :
+                  :............................................:</code></pre>
+<p>At (1), the log procedure is going to authentic a user by asking for a password. While it would seem logical for passwords to be stored in /etc/passwd, it isn’t. The reason /etc/passwd is named such is that it used to store password; however, that is no longer the case. Now passwords are stored are in the file /etc/shadow which is carefully protected, and passwords are not stored in plain text in /etc/shadow but rather stored using secure hashes.</p>
+<p>Of more interest to this lesson is what happens if the user successfully logs into the system. The log in procedure needs to run in a privileged state so that passwords can be checked from /etc/shadow. Only the root user has access to read/write the file, but we do not want it to be the case that when the user’s shell starts up he/she gets the same permissions as the root user. To prevent that, there is a deescalation of privilege level by setting the effective user of the shell program to the user the that just logged onto the system – occurring at step (2). By the time the shell executes commands, the user is running — occurring at step (3).</p>
+<h3 id="usersgroup-capabilities-of-programs"><span class="header-section-number">11.2.4</span> Users/Group Capabilities of Programs</h3>
+<p>Running programs inherit the permissions of the user who execute it, but we will see how that might change. To start, let us first look at the system programming constructs for observing and testing the users permission, and the errors associated with permission. Following, we can look at how to escalate or change the permission settings.</p>
+<h4 id="observing-the-privilege-settings-of-programs"><span class="header-section-number">11.2.4.1</span> Observing the privilege settings of programs</h4>
+<p>There are two basic system calls for retrieving useer and group information for an execution program.</p>
+<ul>
+<li><code>uid_t getuid(void)</code> - Returns the real user id of the calling process.</li>
+<li><code>gid_t getgid(void)</code> - Returns the real group id of the calling process.</li>
+</ul>
+<p>Let’s look at an example program.</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb277-1" title="1"><span class="co">/*get_uidgid.c*/</span></a>
+<a class="sourceLine" id="cb277-2" title="2"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb277-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb277-4" title="4"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb277-5" title="5"></a>
+<a class="sourceLine" id="cb277-6" title="6"><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[]){</a>
+<a class="sourceLine" id="cb277-7" title="7"></a>
+<a class="sourceLine" id="cb277-8" title="8">  uid_t uid;</a>
+<a class="sourceLine" id="cb277-9" title="9">  gid_t gid;</a>
+<a class="sourceLine" id="cb277-10" title="10"></a>
+<a class="sourceLine" id="cb277-11" title="11">  uid = getuid();</a>
+<a class="sourceLine" id="cb277-12" title="12"></a>
+<a class="sourceLine" id="cb277-13" title="13">  gid = getgid();</a>
+<a class="sourceLine" id="cb277-14" title="14"></a>
+<a class="sourceLine" id="cb277-15" title="15">  printf(<span class="st">&quot;uid=%d gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, uid, gid);</a>
+<a class="sourceLine" id="cb277-16" title="16"></a>
+<a class="sourceLine" id="cb277-17" title="17">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>uid=1000 gid=1000</code></pre>
+<p>When executing, my user id and group id is printed to the terminal:</p>
+<pre><code>m179998@saddleback: git $ ~aviv/lec-23-demo/get_uidgid
+uid=179998 gid=15000</code></pre>
+<p>These values are mine. If you were to run the same program, you would get a different value. For example, I have a test student account m17998 and if I run this program as that user:</p>
+<pre><code>m159998@saddleback: git $ ~aviv/lec-23-demo/get_uidgid
+uid=35013 gid=15000
+m159998@saddleback: git $ ls -l ~aviv/lec-23-demo/get_uidgid
+-rwxr-x--x 1 aviv scs 8622 Mar 30 10:40 /home/scs/aviv/lec-23-demo/get_uidgid</code></pre>
+<p>Even though the program is owned by the user aviv, the execution of the program as the process takes on the permissions of the user that runs the program, which is m179998 in this demo. However, this could be changed.</p>
+<h4 id="extra-permission-modes-for-set-user-idset-group-id"><span class="header-section-number">11.2.4.2</span> Extra permission modes for set-user-id/set-group-id</h4>
+<p>There is also an obvious need to be able to set the user/group privileges of a running program. For example, consider the submission system we have been using all semester. You all run a program in my home directory:</p>
+<pre><code>~aviv/bin/ic221-submit</code></pre>
+<p>This program, run by you, has your user and group permissions, but it is able to take your submission and copy/save those submissions to my home directory, with my permissions at a location where you do not have access to write. How is that possible?</p>
+<p>If you could somehow change the user/group setting of the running program to my user/group priviledge, then you could write to my home directory. This is essentially how the submission system works.</p>
+<p>To have a program run with a different user’s capabilities requires additional permissions on the program beyond just that the user can execute the program. These permissions are called the set-bit and if we look at the man page for chmod, the set-bit is composed of three permission bits we previously ignored:</p>
+<p>A numeric mode is from one to four octal digits (0-7), derived by adding up the bits with values 4, 2, and 1. Omitted digits are assumed to be leading zeros. <em>The first digit selects the set user ID (4) and set group ID (2) and restricted deletion or sticky (1) attributes.</em> The second digit selects permissions for the user who owns the file: read (4), write (2), and execute (1); the third selects permissions for other users in the file’s group, with the same values; and the fourth for other users not in the file’s group, with the same values.</p>
+<p>That is, we previously assumed a permission string contained 3 octal digits, but really there are 4 octal digits. The missing octal digit is that for the set-bits. There are three possible set-bit settings and they are combined in the same way as other permissions:</p>
+<ul>
+<li><code>4</code> or <code>s+u</code> - set-user-id : sets the program’s effective user id to the owner of the program</li>
+<li><code>2</code> or <code>s+g</code>- set-group-id : sets the program’s effective group id to the group of the program</li>
+<li><code>1</code> or <code>t</code> - the sticky bit : used to denote the memory loading of a program or directory</li>
+</ul>
+<p>These bits are used in much the same way as the other permission modes. For example, we can change the permission of our get_uidgid program from before like so:</p>
+<pre><code>chmod 6751 get_uidgid</code></pre>
+<p>And we can interpet the octals like so:</p>
+<pre><code>set      group
+bits user |  other
+  |   |   |   |
+  V   V   V   V
+ 110 111 101 001
+  6   7   5   1</code></pre>
+<p>When we look at the ls -l output of the program, the permission string reflects these settings with an “s” in the execute part of the string for user and group.</p>
+<pre><code>aviv@saddleback: lec-23-demo $ ls -l get_uidgid
+-rwsr-s--x 1 aviv scs 8778 Mar 30 16:45 get_uidgid</code></pre>
+<h4 id="real-vs.-effective-capabilities"><span class="header-section-number">11.2.4.3</span> Real vs. Effective Capabilities</h4>
+<p>With the set-bits, when the program runs, the capabilities of the program are effectively that of the owner and group of the program. However, the real user id and real group id remain that of the user who ran the program. This brings up the concept of effective vs. real identifiers:</p>
+<ul>
+<li><em>real user id</em> (or <em>group id</em>) : the identifier of the actual user who executed a program</li>
+<li><em>effective user id</em> (or <em>group id</em>) : the idenifier for the capabilities or permissions settings of an executing program.</li>
+</ul>
+<p>The system calls getuid() and getgid() return the real user and group identifiers, but we can also retrieve the effective user and group identifiers:</p>
+<ul>
+<li><code>uid_t geteuid(void)</code> - return the effective user identifier for the calling process</li>
+<li><code>gid_t getegid(void)</code> - return the effective group identifer for the calling process</li>
+</ul>
+<p>We now have enough to test set-bit programs using a the following program that prints both the real and effective user/group identities.</p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb285-1" title="1"><span class="co">/*get_euidegid.c*/</span></a>
+<a class="sourceLine" id="cb285-2" title="2"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb285-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb285-4" title="4"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb285-5" title="5"></a>
+<a class="sourceLine" id="cb285-6" title="6"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb285-7" title="7">main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[]){</a>
+<a class="sourceLine" id="cb285-8" title="8"></a>
+<a class="sourceLine" id="cb285-9" title="9">  uid_t uid,euid;</a>
+<a class="sourceLine" id="cb285-10" title="10">  gid_t gid,egid;</a>
+<a class="sourceLine" id="cb285-11" title="11"></a>
+<a class="sourceLine" id="cb285-12" title="12">  uid = getuid();</a>
+<a class="sourceLine" id="cb285-13" title="13">  gid = getgid();</a>
+<a class="sourceLine" id="cb285-14" title="14">  printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb285-15" title="15"></a>
+<a class="sourceLine" id="cb285-16" title="16">  euid = geteuid();</a>
+<a class="sourceLine" id="cb285-17" title="17">  egid = getegid();</a>
+<a class="sourceLine" id="cb285-18" title="18">  printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb285-19" title="19">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code> uid=1000  gid=1000
+euid=1000 egid=1000</code></pre>
+<p>As the owner of the file, after compilation, the permissions can be set to add set-user-id:</p>
+<pre><code>aviv@saddleback: lec-23-demo $ make get_euidegid
+cc     get_euidegid.c   -o get_euidegid
+aviv@saddleback: lec-23-demo $ chmod u+s get_euidegid
+aviv@saddleback: lec-23-demo $ ls -l get_euidegid
+-rwsr-x--x 1 aviv scs 8730 Mar 31 08:31 get_euidegid</code></pre>
+<p>Now as the m179998 user, the program can be run, and we see that the effective user id of the program is aviv’s id:</p>
+<pre><code>m179998@saddleback: ~ $ ~aviv/lec-23-demo/get_euidegid
+ uid=179998  gid=15000
+euid=35001 egid=15000
+m179998@saddleback: ~ $ id
+uid=179998(m179998) gid=15000(mids) groups=15000(mids),15001(ic221)
+m179998@saddleback: ~ $ id aviv
+uid=35001(aviv) gid=10120(scs) groups=27(sudo),15000(mids),10120(scs),15001(ic221)</code></pre>
+<p>Continuing the example, we can see the other set-bit settings give different effective user/group settings:</p>
+<pre><code>aviv@saddleback: lec-23-demo $ chmod g+s get_euidegid
+aviv@saddleback: lec-23-demo $ ls -l get_euidegid
+-rwsr-s--x 1 aviv scs 8730 Mar 31 08:31 get_euidegid
+
+m179998@saddleback: ~ $ ~aviv/lec-23-demo/get_euidegid
+ uid=179998  gid=15000
+euid=35001 egid=10120
+
+aviv@saddleback: lec-23-demo $ ls -l get_euidegid
+-rwxr-s--x 1 aviv scs 8730 Mar 31 08:31 get_euidegid
+
+m179998@saddleback: ~ $ ~aviv/lec-23-demo/get_euidegid
+ uid=179998  gid=15000
+euid=179998 egid=10120</code></pre>
+<p>And just to show how the effective user ID plays a role, let’s consider what happens when we have set-group-id program that opens a file:</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb290-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb290-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb290-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb290-4" title="4"><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></a>
+<a class="sourceLine" id="cb290-5" title="5"></a>
+<a class="sourceLine" id="cb290-6" title="6"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb290-7" title="7">main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[]){</a>
+<a class="sourceLine" id="cb290-8" title="8"></a>
+<a class="sourceLine" id="cb290-9" title="9">  <span class="dt">int</span> i,fd;</a>
+<a class="sourceLine" id="cb290-10" title="10"></a>
+<a class="sourceLine" id="cb290-11" title="11">  <span class="cf">for</span>(i=<span class="dv">0</span>;i&lt;argc;i++){</a>
+<a class="sourceLine" id="cb290-12" title="12"></a>
+<a class="sourceLine" id="cb290-13" title="13">    <span class="co">//create an empty file</span></a>
+<a class="sourceLine" id="cb290-14" title="14">    <span class="cf">if</span>( (fd = open(argv[i],O_CREAT,<span class="bn">0666</span>) &gt; <span class="dv">0</span>) ){</a>
+<a class="sourceLine" id="cb290-15" title="15">      close(fd);</a>
+<a class="sourceLine" id="cb290-16" title="16">    }<span class="cf">else</span>{</a>
+<a class="sourceLine" id="cb290-17" title="17">      perror(<span class="st">&quot;open&quot;</span>);</a>
+<a class="sourceLine" id="cb290-18" title="18">    }</a>
+<a class="sourceLine" id="cb290-19" title="19">  }</a>
+<a class="sourceLine" id="cb290-20" title="20"></a>
+<a class="sourceLine" id="cb290-21" title="21">  <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb290-22" title="22">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code></code></pre>
+<p>When we compile we can set this program to set-group-id:</p>
+<pre><code>aviv@saddleback: lec-23-demo $ make create_file
+cc     create_file.c   -o create_file
+aviv@saddleback: lec-23-demo $ chmod g+s create_file
+aviv@saddleback: lec-23-demo $ ls -l create_file
+-rwxr-s--x 1 aviv scs 8620 Mar 31 08:41 create_file</code></pre>
+<p>Now, let’s create a file as the m179998 user:</p>
+<pre><code>m179998@saddleback: ~ $ ~aviv/lec-23-demo/create_file a b c
+m179998@saddleback: ~ $ ls -l a b c
+-rw-r----- 1 m179998 scs 0 Mar 31 08:42 a
+-rw-r----- 1 m179998 scs 0 Mar 31 08:42 b
+-rw-r----- 1 m179998 scs 0 Mar 31 08:42 c</code></pre>
+<p>Notice that the group of the file is scs not mids, which is the default group.</p>
+<p>However, see what happens if we make this program set-user-id instead:</p>
+<pre><code>aviv@saddleback: lec-23-demo $ chmod g-s create_file
+aviv@saddleback: lec-23-demo $ chmod u+s create_file
+aviv@saddleback: lec-23-demo $ ls -l create_file
+-rwsr-x--x 1 aviv scs 8620 Mar 31 08:41 create_file</code></pre>
+<pre><code>m179998@saddleback: ~ $ rm -f a b c
+m179998@saddleback: ~ $ ~aviv/lec-23-demo/create_file a b c
+open: Permission denied
+open: Permission denied
+open: Permission denied
+m179998@saddleback: ~ $ ls -l a b c
+ls: cannot access a: No such file or directory
+ls: cannot access b: No such file or directory
+ls: cannot access c: No such file or directory</code></pre>
+<p>The operation is not permitted, and this is because the user aviv does not have the permission to write to the directory. But, what if we wanted to create a file in the director that is owned by aviv in a directory that the real user has permission to write to? What we need is a way to programmatically change the capabilities.</p>
+<h4 id="programmatically-downgradingupgrading-capabilities"><span class="header-section-number">11.2.4.4</span> Programmatically Downgrading/Upgrading Capabilities</h4>
+<p>The set-bits automatically start a program with the effective user or group id set; however, there are times when we might want to downgrade priviledge or change permission dynamically. There are two system calls to change user/group settings of an executing process:</p>
+<ul>
+<li><code>setuid(uid_t uid)</code> - change the effective user id of a process to uid <code>setgid(gid_t gid)</code> - change the effective group id of a proces to gid</li>
+</ul>
+<p>The requirements of <code>setuid()</code> (for all users other than root) is that the effective user id can be changed to the real user id of the program or to an effective user id as described in the set-bits. The root user, however, can downgrade to any user id and upgrade back to the root user. For <code>setgid()</code> the user can chance the group id to any group the user belongs to or as allowed by the set-group-id bit.</p>
+<p>Now we can look at a program that downgrades and upgrades a program dynamically:</p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb296-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb296-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb296-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb296-4" title="4"></a>
+<a class="sourceLine" id="cb296-5" title="5"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb296-6" title="6">main()</a>
+<a class="sourceLine" id="cb296-7" title="7">{</a>
+<a class="sourceLine" id="cb296-8" title="8">  uid_t uid,euid;</a>
+<a class="sourceLine" id="cb296-9" title="9">  gid_t gid,egid;</a>
+<a class="sourceLine" id="cb296-10" title="10"></a>
+<a class="sourceLine" id="cb296-11" title="11">  uid_t saved_euid;</a>
+<a class="sourceLine" id="cb296-12" title="12"></a>
+<a class="sourceLine" id="cb296-13" title="13">  uid = getuid();</a>
+<a class="sourceLine" id="cb296-14" title="14">  gid = getgid();</a>
+<a class="sourceLine" id="cb296-15" title="15">  printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb296-16" title="16"></a>
+<a class="sourceLine" id="cb296-17" title="17">  euid = geteuid();</a>
+<a class="sourceLine" id="cb296-18" title="18">  egid = getegid();</a>
+<a class="sourceLine" id="cb296-19" title="19">  printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb296-20" title="20"></a>
+<a class="sourceLine" id="cb296-21" title="21"></a>
+<a class="sourceLine" id="cb296-22" title="22">  saved_euid=euid;</a>
+<a class="sourceLine" id="cb296-23" title="23">  setuid(uid);</a>
+<a class="sourceLine" id="cb296-24" title="24"></a>
+<a class="sourceLine" id="cb296-25" title="25">  printf(<span class="st">&quot;---- setuid(%d) ----</span><span class="sc">\n</span><span class="st">&quot;</span>,uid);</a>
+<a class="sourceLine" id="cb296-26" title="26"></a>
+<a class="sourceLine" id="cb296-27" title="27">  uid = getuid();</a>
+<a class="sourceLine" id="cb296-28" title="28">  gid = getgid();</a>
+<a class="sourceLine" id="cb296-29" title="29">  printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb296-30" title="30"></a>
+<a class="sourceLine" id="cb296-31" title="31">  euid = geteuid();</a>
+<a class="sourceLine" id="cb296-32" title="32">  egid = getegid();</a>
+<a class="sourceLine" id="cb296-33" title="33">  printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb296-34" title="34"></a>
+<a class="sourceLine" id="cb296-35" title="35"></a>
+<a class="sourceLine" id="cb296-36" title="36">  setuid(saved_euid);</a>
+<a class="sourceLine" id="cb296-37" title="37"></a>
+<a class="sourceLine" id="cb296-38" title="38">  printf(<span class="st">&quot;---- setuid(%d) ----</span><span class="sc">\n</span><span class="st">&quot;</span>,saved_euid);</a>
+<a class="sourceLine" id="cb296-39" title="39">  uid = getuid();</a>
+<a class="sourceLine" id="cb296-40" title="40">  gid = getgid();</a>
+<a class="sourceLine" id="cb296-41" title="41">  printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb296-42" title="42"></a>
+<a class="sourceLine" id="cb296-43" title="43">  euid = geteuid();</a>
+<a class="sourceLine" id="cb296-44" title="44">  egid = getegid();</a>
+<a class="sourceLine" id="cb296-45" title="45">  printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb296-46" title="46"></a>
+<a class="sourceLine" id="cb296-47" title="47">  <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb296-48" title="48">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code> uid=1000  gid=1000
+euid=1000 egid=1000
+---- setuid(1000) ----
+ uid=1000  gid=1000
+euid=1000 egid=1000
+---- setuid(1000) ----
+ uid=1000  gid=1000
+euid=1000 egid=1000</code></pre>
+<p>If we look at the output with the program set-user-id ran by m179998:</p>
+<pre><code>m179998@saddleback: ~ $ ~aviv/lec-23-demo/setuid
+ uid=179998  gid=15000
+euid=35001 egid=15000
+---- setuid(179998) ----
+ uid=179998  gid=15000
+euid=179998 egid=15000
+---- setuid(35001) ----
+ uid=179998  gid=15000
+euid=35001 egid=15000</code></pre>
+<h3 id="sudo-and-su"><span class="header-section-number">11.2.5</span> <code>sudo</code> and <code>su</code></h3>
+<p>With this understanding of how user and group id are assigned, we can turn our attention to two built in commands that perform these actions. In particular, sudo and su which will execute a command as a specified user or switch to a specified user. By default, these commands execute as the root user, and you need to know the root password or have sudo access to use them.</p>
+<p>We can see this as the case if I were to run the <code>get_euidegid</code> program using sudo. First notice that it is no longer set-group or set-user:</p>
+<pre><code>aviv@saddleback: lec-23-demo $ ls -l get_euidegid
+-rwxr-x--x 1 aviv scs 8730 Mar 31 08:31 get_euidegid
+aviv@saddleback: lec-23-demo $ sudo ./get_euidegid
+[sudo] password for aviv:
+ uid=0  gid=0
+euid=0 egid=0</code></pre>
+<p>After sudo authenticated me, the program’s effective and real user identification becomes 0 which is the uid/gid for the root user.</p>
+<h4 id="sudoers"><span class="header-section-number">11.2.5.1</span> sudoers</h4>
+<p>Who has permission to run sudo commands? This is important because on many modern unix systems, like ubuntu, there is no default root password. Instead certain users are deemed to be sudoers or privileged users. These are set in a special configuraiton file called the <code>/etc/sudoers</code>.</p>
+<pre><code>aviv@saddleback: lec-23-demo $ cat /etc/sudoers
+cat: /etc/sudoers: Permission denied
+aviv@saddleback: lec-23-demo $ sudo cat /etc/sudo
+sudoers    sudoers.d/
+aviv@saddleback: lec-23-demo $ sudo cat /etc/sudoers
+#
+# This file MUST be edited with the &#39;visudo&#39; command as root.
+#
+# Please consider adding local content in /etc/sudoers.d/ instead of
+# directly modifying this file.
+#
+# See the man page for details on how to write a sudoers file.
+#
+Defaults    env_reset
+Defaults    mail_badpass
+Defaults    secure_path=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+
+# User privilege specification
+root    ALL=(ALL:ALL) ALL
+
+# Members of the admin group may gain root privileges
+%admin ALL=(ALL) ALL
+
+# Allow members of group sudo to execute any command
+%sudo   ALL=(ALL:ALL) ALL
+
+# See sudoers(5) for more information on &quot;#include&quot; directives:
+
+#includedir /etc/sudoers.d</code></pre>
+<p>Notice that only root has access to read this file, and since I am a sudoer on saddleback I can get access to it. If you look carefully, you can perform a basic parse of the settings. The root user has full sudo permissions, and other sudoer’s are determine based on group membership. Users in the sudo or admin group may run commands as root, and I am a member of the sudo group:</p>
+<pre><code>aviv@saddleback: lec-23-demo $ id
+uid=35001(aviv) gid=10120(scs) groups=10120(scs),27(sudo),15000(mids),15001(ic221)</code></pre>
+<p>However, on a lab machine, I do not have such group settings:</p>
+<pre><code>aviv@mich302csd01u: ~ $ id
+uid=35001(aviv) gid=10120(scs) groups=10120(scs),15000(mids)</code></pre>
+<h1 id="security-attacks-on-system-programs"><span class="header-section-number">12</span> Security: Attacks on System Programs</h1>
+<blockquote>
+<p><strong>This material directly adapted from Prof. Aviv’s <a href="https://classes.adamaviv.com/ic221/s18/units/07/unit.html#org67f4730">material</a>.</strong></p>
+</blockquote>
+<p>It is an unfortunate truth of security that all programs have faults because humans have faults — human’s write programs. As such, we will take some time to understand the kinds of mistakes you, me, and all programmers may make that can lead to security violations.</p>
+<p>This is a broad topic area, and we only have a small amount of time to talk about it. We will focus on three classes of attack that are very common for the kinds of programs we’ve been writing in this course.</p>
+<ul>
+<li><em>Path Lookup Attacks</em>: Where the attacker leverages path lookup to compromise an executable or library</li>
+<li><em>Injection Attacks</em>: Where an attacker can inject code, usually in the form of bash, into a program that will get run.</li>
+<li><em>Overflow Attacks</em>: Where the attack overflows a buffer to alter program state.</li>
+</ul>
+<p>In isolation, each of these attacks can just make a program misbehave; however, things get interesting when you have privilege escalation, such as with the set-bits. A privilege program that can be exploited will be able to perform arbitrary tasks.</p>
+<p>Each of these topics have great nuance, and the hope is to give you a general overview so you can explore the topic more on your own.</p>
+<h2 id="path-attacks"><span class="header-section-number">12.1</span> Path Attacks</h2>
+<p>We’ve been using path lookup throughout the class. Perhaps the best example is when we are in the shell and type a command:</p>
+<pre><code>aviv@saddleback: demo $ cat helloworld.txt
+Hello World</code></pre>
+<p>The command cat is run, but the program that is actually cat’s the file exists in a different place in the file system. We can find that location using the which command:</p>
+<pre><code>aviv@saddleback: demo $ which cat
+/bin/cat</code></pre>
+<p>So when we type cat, we are really executing /bin/cat which is found by exploring the PATH enviroment variable:</p>
+<pre><code>aviv@saddleback: demo $ echo $PATH
+/home/scs/aviv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games</code></pre>
+<p>Each of the directories listed is searched, in order, until that command is found. Environment variables are global variables set across programs that provide information about the current environment.</p>
+<p>The <code>PATH</code> environment variable is a perfect example of this, and the customizability of the environment variables. If you look at the directories along my path, I have a bin directory Win my home directory so I can load custom binaries. The fact that I can customize the <code>PATH</code> in this way can lead to some interesting security situations.</p>
+<h3 id="system"><span class="header-section-number">12.1.1</span> <code>system()</code></h3>
+<p>To help this conversation, we need to introduce two library functions that work much like <code>execvp()</code> with a <code>fork()</code>, like we’ve done all along, but more compact. Here’s the description in the manual page:</p>
+<pre><code>NAME
+       system - execute a shell command
+
+SYNOPSIS
+       #include &lt;stdlib.h&gt;
+
+       int system(const char *command);
+
+DESCRIPTION
+
+       system() executes a command specified in command by calling
+       /bin/sh -c command, and returns after the command has been
+       completed.  During execution of the command, SIGCHLD will be
+       blocked, and SIGINT and SIGQUIT will be ignored.</code></pre>
+<p>That is, the <code>system()</code> function will run an arbitrary shell command. Let’s look at a very simple example, a “hello world” that uses two commands.</p>
+<pre><code>/*system_cat.c*/
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(){
+  system(&quot;cat&quot;);
+}</code></pre>
+<pre><code>aviv@saddleback: demo $ echo &quot;Hello World&quot; | ./system_cat
+Hello World</code></pre>
+<p>The <code>system_cat</code> program runs cat with <code>system()</code>, and so it will print whatever it reads from stdin to the screen. It turns out, that this program, despite its simplicity, actually has a relatively bad security flaw. Let’s quickly consider what might happen if we were to change the <code>PATH</code> value to include our local directory:</p>
+<pre><code>aviv@saddleback: demo $ export PATH=.:$PATH
+aviv@saddleback: demo $ echo $PATH
+.:/home/scs/aviv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games</code></pre>
+<p>So now the local directory is on the path, and if I were to create a program named cat, then that cat would run instead of the one you would expect. For example, here is such a program:</p>
+<pre><code>/*cat.c*/
+#include &lt;stdlib.h&gt;
+
+int main(){
+
+  system(&quot;echo &#39;Goodbye World&#39;&quot;);
+}</code></pre>
+<p>Now, when we run our program for system_cat, we don’t get the same result:</p>
+<pre><code>aviv@saddleback: demo $ echo &quot;Hello World&quot; | ./system_cat
+Hello World
+aviv@saddleback: demo $ make
+clang -g -Wall    cat.c   -o cat
+aviv@saddleback: demo $ echo &quot;Hello World&quot; | ./system_cat
+Goodbye World</code></pre>
+<p>This is not just a problem with the <code>system()</code> command, but also <code>execvp()</code>, which will also look up commands along the path.</p>
+<pre><code>#include &lt;unistd.h&gt;
+
+int
+main(void)
+{
+    char * args[] = {&quot;cat&quot;,NULL};
+
+    execvp(args[0],args);
+
+    return 0;
+}</code></pre>
+<pre><code>aviv@saddleback: demo $ echo &quot;Hello World&quot; | ./execvp_cat
+Hello World
+aviv@saddleback: demo $ make
+clang -g -Wall    cat.c   -o cat
+aviv@saddleback: demo $ echo &quot;Hello World&quot; | ./execvp_cat
+Goodbye World</code></pre>
+<p>How do we fix this? There are two solutions:</p>
+<ol type="1">
+<li>Always use full paths. Don’t specify a command to run by its name, instead describe exactly which program is to be executed.</li>
+<li>Fix the path before executing using setenv()</li>
+</ol>
+<p>You can actually control the current <code>PATH</code> setting during execution. To do this you can set the enviorment variables using <code>setenv()</code> and <code>getenv()</code></p>
+<pre><code>#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+int main(){
+
+  //ensure the enviorment only has the path we want
+  //and overwrite
+  setenv(&quot;PATH&quot;,&quot;/bin&quot;,1);
+
+  char * args[] = {&quot;cat&quot;,NULL};
+
+  execvp(args[0],args);
+
+}</code></pre>
+<pre><code>aviv@saddleback: demo $ echo &quot;Hello World&quot; | ./setenv_cat
+Hello World
+aviv@saddleback: demo $ make
+clang -g -Wall    cat.c   -o cat
+aviv@saddleback: demo $ echo &quot;Hello World&quot; | ./setenv_cat
+Hello World</code></pre>
+<h3 id="path-attacks-with-set-user-id-bits"><span class="header-section-number">12.1.2</span> Path attacks with set-user-id bits</h3>
+<p>Clearly, ensuring the PATH is correct is vitally important, but let’s see what happens when we introduce set-user-id to the mix. This time, I’ve set the program system_cat to be set-user-id in a place that others can run it:</p>
+<pre><code>aviv@saddleback: lec-24-demo $ chmod u+s system_cat
+aviv@saddleback: lec-24-demo $ ls -l
+total 12
+-rwsr-x--x 1 aviv scs 9742 Mar 31 16:09 system_cat</code></pre>
+<p>Now as user m179998, I’m going to run the program.</p>
+<pre><code>m179998@saddleback: ~ $ echo &quot;Hello World&quot; | ~aviv/lec-24-demo/system_cat
+Hello World</code></pre>
+<p>It works like <code>cat</code>, and so we are going to do a <code>PATH</code> attack again, by add the local directory to the path.</p>
+<pre><code>m179998@saddleback: ~ $ export PATH=.:$PATH
+m179998@saddleback: ~ $ echo $PATH
+.:/home/mids/m179998/bin:/usr/local/bin:/usr/bin:/usr/include:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games</code></pre>
+<p>This time, instead of doing something silly with our version of cat lets do something not so silly. Let’s have it run a shell and also set our real user id:</p>
+<pre><code>#include &lt;stdlib.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(){
+
+  char * args[]={&quot;/bin/sh&quot;,NULL};
+
+  //set our real uid to our effective uid
+  setreuid(geteuid(),geteuid());
+
+  execvp(args[0],args);
+
+}</code></pre>
+<p>This time when we run the system_cat program, it will run bash as the set-user-id user. Now we’ve just escalated privilege.</p>
+<pre><code>m179998@saddleback:~$ ~aviv/lec-24-demo/system_cat
+$ id
+uid=35001(aviv) gid=15000(mids) groups=10120(scs),15000(mids),15001(ic221)
+$ bash
+bash: /home/mids/m179998/.bashrc: Permission denied
+aviv@saddleback:~$</code></pre>
+<p>And now user <code>m179998</code> has become user <code>aviv</code>!</p>
+<h2 id="injection-attacks"><span class="header-section-number">12.2</span> Injection Attacks</h2>
+<p>Now, lets consider a situation where you use system() better. You call all programs with absolute path and everything, but even that is not enough. You must also consider injection attacks which is when the attacker can inject code that will run. In our case, the injected code will be bash.</p>
+<p>Consider this program which prompts the user for a file to cat out.</p>
+<pre><code>/* inject_system.c*/
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+
+int main(){
+
+  char cmd[1024] = &quot;/bin/cat ./&quot;; //will append to this string
+
+  char input[40];
+
+  printf(&quot;What input do you want to &#39;cat&#39; (choose from below)\n&quot;);
+  system(&quot;/bin/ls&quot;); //show available files
+
+  printf(&quot;input &gt; &quot;);
+  fflush(stdout); //force stdout to print
+
+  scanf(&quot;%s&quot;,input);//read input
+
+  strcat(cmd,input); //create the command
+
+  printf(&quot;Executing: %s\n&quot;, cmd);
+  fflush(stdout); //force stdout to print
+
+  system(cmd);
+
+
+}</code></pre>
+<p>If we were to run this program, it does mostly what you expect:</p>
+<pre><code>aviv@saddleback: demo $ ./inject_system
+What input do you want to &#39;cat&#39; (choose from below)
+cat.c       execvp_cat.c   inject_system.c   input.txt  mal-lib      overflow_system.c   run_foo    run_foo.o   setenv_cat.c   shared-lib  system_cat.c
+execvp_cat  inject_system  inject_system.c~  Makefile   overflow_system  overflow_system.c~  run_foo.c  setenv_cat  setenv_cat.c~  system_cat  #system-ex.c#
+input &gt; inject_system.c</code></pre>
+<pre><code>Executing: /bin/cat ./inject_system.c
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+
+int main(){
+
+  char cmd[1024] = &quot;/bin/cat ./&quot;; //will append to this string
+
+  char input[40];
+
+  printf(&quot;What input do you want to &#39;cat&#39; (choose from below)\n&quot;);
+  system(&quot;/bin/ls&quot;); //show available files
+
+  printf(&quot;input &gt; &quot;);
+  fflush(stdout); //force stdout to print
+
+  scanf(&quot;%s&quot;,input);//read input
+
+  strcat(cmd,input); //create the command
+
+  printf(&quot;Executing: %s\n&quot;, cmd);
+  fflush(stdout); //force stdout to print
+
+  system(cmd);
+
+}</code></pre>
+<p>Ok, now consider if we were to provide input that doesn’t fit this model. What if we were to provide shell commands as input.</p>
+<pre><code>aviv@saddleback: demo $ ./inject_system
+What input do you want to &#39;cat&#39; (choose from below)
+cat.c       execvp_cat.c   inject_system.c   input.txt  mal-lib      overflow_system.c   run_foo    run_foo.o   setenv_cat.c   shared-lib  system_cat.c
+execvp_cat  inject_system  inject_system.c~  Makefile   overflow_system  overflow_system.c~  run_foo.c  setenv_cat  setenv_cat.c~  system_cat  #system-ex.c#
+input &gt; ;echo
+Executing: /bin/cat ./;echo
+/bin/cat: ./: Is a directory
+
+aviv@saddleback: demo $</code></pre>
+<p>The input we provided was “;echo” the semi-colon closes off a bash command alowing a new one to start. Notice that there is an extra new line printed, that was the echo printing. Now, can we get this program to run something more interesting?</p>
+<p>We still have the cat program we wrote that prints “Goodbye World” and the PATH is set up to look in the local directory. Setting that up, we get the following result:</p>
+<pre><code>aviv@saddleback: demo $ ./inject_system
+What input do you want to &#39;cat&#39; (choose from below)
+cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
+cat.c  execvp_cat.c  inject_system.c  input.txt     mal-lib   overflow_system.c  run_foo         run_foo.o  setenv_cat.c  shared-lib     system_cat.c
+input &gt; ;cat
+Executing: /bin/cat ./;cat
+/bin/cat: ./: Is a directory
+Goodbye World</code></pre>
+<p>At this point, we own this program (pwn in the parlance). If the program were set-user-id, we could escalate our privilege.</p>
+<h2 id="overflow-attacks"><span class="header-section-number">12.3</span> Overflow Attacks</h2>
+<p>Two attacks down, moving onto the third. Let’s now assume that the programmer has wised up to the two previous attacks. Now we are using full paths to executables and we are scrubbing the input to remove any potential bash commands prior to execution. The result is the following program:</p>
+<div class="sourceCode" id="cb326"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb326-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb326-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb326-3" title="3"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb326-4" title="4"></a>
+<a class="sourceLine" id="cb326-5" title="5"></a>
+<a class="sourceLine" id="cb326-6" title="6"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb326-7" title="7">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb326-8" title="8">{</a>
+<a class="sourceLine" id="cb326-9" title="9">    <span class="dt">char</span> cmd[<span class="dv">1024</span>] = <span class="st">&quot;/bin/cat ./&quot;</span>; <span class="co">//will append to this string</span></a>
+<a class="sourceLine" id="cb326-10" title="10">    <span class="dt">char</span> input[<span class="dv">40</span>];</a>
+<a class="sourceLine" id="cb326-11" title="11"></a>
+<a class="sourceLine" id="cb326-12" title="12">    printf(<span class="st">&quot;What input do you want to &#39;cat&#39; (choose from below)</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb326-13" title="13">    system(<span class="st">&quot;/bin/ls&quot;</span>); <span class="co">//show available files</span></a>
+<a class="sourceLine" id="cb326-14" title="14"></a>
+<a class="sourceLine" id="cb326-15" title="15">    printf(<span class="st">&quot;input &gt; &quot;</span>);</a>
+<a class="sourceLine" id="cb326-16" title="16">    fflush(stdout); <span class="co">//force stdout to print</span></a>
+<a class="sourceLine" id="cb326-17" title="17"></a>
+<a class="sourceLine" id="cb326-18" title="18">    scanf(<span class="st">&quot;%s&quot;</span>,input);<span class="co">//read input</span></a>
+<a class="sourceLine" id="cb326-19" title="19"></a>
+<a class="sourceLine" id="cb326-20" title="20">  <span class="co">//clean input before passing to /bin/cat</span></a>
+<a class="sourceLine" id="cb326-21" title="21">    <span class="dt">int</span> i;</a>
+<a class="sourceLine" id="cb326-22" title="22">    <span class="cf">for</span> (i=<span class="dv">0</span>; i&lt;<span class="dv">40</span>; i++) {</a>
+<a class="sourceLine" id="cb326-23" title="23">        <span class="cf">if</span> (input[i] == <span class="ch">&#39;;&#39;</span> || input[i] == <span class="ch">&#39;|&#39;</span> || input[i] == <span class="ch">&#39;$&#39;</span> || input[i] == <span class="ch">&#39;&amp;&#39;</span>) {</a>
+<a class="sourceLine" id="cb326-24" title="24">            input[i] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>; <span class="co">//change all ;,|,$,&amp; to a NULL</span></a>
+<a class="sourceLine" id="cb326-25" title="25">        }</a>
+<a class="sourceLine" id="cb326-26" title="26">    }</a>
+<a class="sourceLine" id="cb326-27" title="27"></a>
+<a class="sourceLine" id="cb326-28" title="28">    <span class="co">//concatenate the two strings</span></a>
+<a class="sourceLine" id="cb326-29" title="29">    strcat(cmd,input);</a>
+<a class="sourceLine" id="cb326-30" title="30"></a>
+<a class="sourceLine" id="cb326-31" title="31">    printf(<span class="st">&quot;Executing: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, cmd);</a>
+<a class="sourceLine" id="cb326-32" title="32">    fflush(stdout);</a>
+<a class="sourceLine" id="cb326-33" title="33"></a>
+<a class="sourceLine" id="cb326-34" title="34">    system(cmd);</a>
+<a class="sourceLine" id="cb326-35" title="35"></a>
+<a class="sourceLine" id="cb326-36" title="36">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb326-37" title="37">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>01
+02
+03
+04
+05
+06
+07
+08
+09
+10
+11
+12
+99
+aggregate.md
+domain_socket
+figures
+inline_exec_tmp
+inline_exec_tmp.c
+lectures.html
+LICENSE
+Makefile
+output_tmp.dat
+README.md
+templates
+title.md
+tools
+What input do you want to &#39;cat&#39; (choose from below)
+input &gt; Executing: /bin/cat ./execvp_cat
+/bin/cat: ./execvp_cat: No such file or directory</code></pre>
+<pre><code>aviv@saddleback: demo $ make
+clang -g -Wall    cat.c   -o cat
+clang -g -Wall    overflow_system.c   -o overflow_system
+aviv@saddleback: demo $ ./overflow_system
+What input do you want to &#39;cat&#39; (choose from below)
+cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
+cat.c  execvp_cat.c  inject_system.c  input.txt     mal-lib   overflow_system.c  run_foo         run_foo.o  setenv_cat.c  shared-lib     system_cat.c
+input &gt; ;cat
+Executing: /bin/cat ./
+/bin/cat: ./: Is a directory
+#+END_SRC</code></pre>
+<p>This time, no dice, but the jig is not up yet. There is an overflow attack. Consider what happens when we increase the size of the input selection. To do this programatically, I’m going to use a small trick of the python programming language to print a bunch of ’A’s.</p>
+<pre><code>aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*10&quot;
+AAAAAAAAAA
+aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*20&quot;
+AAAAAAAAAAAAAAAAAAAA
+aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*30&quot;
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*40&quot;
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*50&quot;
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</code></pre>
+<p>I’m using this to produce strings of varying length, length 10, 20, 30, 40, and 50. Those strings can be sent to the target program using a pipe. And we can see the result:</p>
+<pre><code>aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*10&quot; | ./overflow_system
+What input do you want to &#39;cat&#39; (choose from below)
+cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
+cat.c  execvp_cat.c  inject_system.c  input.txt     mal-lib   overflow_system.c  run_foo         run_foo.o  setenv_cat.c  shared-lib     system_cat.c
+input &gt; Executing: /bin/cat ./AAAAAAAAAA
+/bin/cat: ./AAAAAAAAAA: No such file or directory
+aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*20&quot; | ./overflow_system
+What input do you want to &#39;cat&#39; (choose from below)
+cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
+cat.c  execvp_cat.c  inject_system.c  input.txt     mal-lib   overflow_system.c  run_foo         run_foo.o  setenv_cat.c  shared-lib     system_cat.c
+input &gt; Executing: /bin/cat ./AAAAAAAAAAAAAAAAAAAA
+/bin/cat: ./AAAAAAAAAAAAAAAAAAAA: No such file or directory
+aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*30&quot; | ./overflow_system
+What input do you want to &#39;cat&#39; (choose from below)
+cat mes not sufficient.
+In the end, it requires good programmers who understand security and can identify bad programming practices.
+This is just a small set of examples of bad programs.
+
+# Appendix: C Programming Conventions
+
+C gives you quite a bit of freedom in how you write your code.
+Conventions are *necessary* in C because they bring order to the unrestricted freedom that allows code that is too complicated to debug, too clever to understand, and completely unmaintainable.
+Conventions are a set of rules that we follow that inherently *limit* the way in which we write code.
+The intention is to put [guard rails](https://en.wikipedia.org/wiki/Guard_rail) onto our development process and to only deviate from the conventions in exceptional cases.
+An important aspect of this is that once you understand the conventions, it is *drastically easier to read the code* because you only have to consider how convention-based code is written.
+This means that there is a significant importance to uniformly applying conventions.
+Because of this, it is less important if one likes the conventions, than it is to adhere to them for uniformity.
+
+Put another way, it is easy for *any* programmer to code themself into a corner where the program is more complex than our brains can handle.
+Being an experienced programmer is *much less* about being able to handle more complexity, and much more about understanding that you need to spend significant development time *simplifying* your code.
+Conventions are a set of codified simplifications, in some sense.
+They provide your a set of rules (that you don&#39;t need to think about, you just do) to simplify the structure of your code.
+
+OK, onward to conventions!
+
+## Naming Conventions
+
+There are many potential naming conventions, for example, [camel case](https://en.wikipedia.org/wiki/Camel_case), [snake case](https://en.wikipedia.org/wiki/Snake_case), and [hungarian notiation](https://en.wikipedia.org/wiki/Hungarian_notation).
+Some are antiquated (hungarian), but most are a matter of taste and convention.
+
+&gt; **Convention.**
+&gt; Most C uses lower-case `snake_case` for variables, types, and functions, capital `SNAKE_CASE` for constants and macros.
+
+Stick to this convention.
+A new convention will likely not feel &quot;right&quot; because it is new and different.
+Remember that they are subjective, but the aim to apply them uniformly.
+
+For names that are visible across `.c` files (i.e. functions in a `.h` file), use names that are the shortest they can be to convey the functionality.
+Within functions, names can be short, and here there are a few conventions as well:
+
+- `ret` is a variable that stores a return value (i.e. a value that will later be used as in `return ret;`).
+- `i`, `j`, `k`, `l` are iterator variables.
+
+## Namespacing
+
+When you create a global variable, type, or function, you&#39;re creating a symbol that can be accessed for any `.c` file.
+This has a significant downside: if you choose a name that is already used in a library, or that is common, you might get a linker error along the lines of:
+</code></pre>
+<p>multiple definition of `foo’; /tmp/ccrvA8in.o:a.c:(.text+0x0): first defined here … collect2: error: ld returned 1 exit status ```</p>
 <p>This means that the naming choices each application and library makes can easily cause such a problem.</p>
 <blockquote>
 <p><strong>Convention.</strong> Thus, the convention is that you should “namespace” your functions and variables by pre-pending them with a functionality-specific prefix. For example, a key-value store might have all of its types, variables, and functions prefixed with <code>kv_</code>, for example, <code>kv_get</code>.</p>
 </blockquote>
-<h2 id="headers-and-visibility"><span class="header-section-number">10.3</span> Headers and Visibility</h2>
+<h2 id="headers-and-visibility"><span class="header-section-number">12.4</span> Headers and Visibility</h2>
 <p>C does not have classes and the rules therein to support per-class/object encapsulation. Instead, C views each <code>.c</code> file as a unit of visibility. Functions and global variables (known as “symbols”) can be hooked up with references to them in other objects by the linker. However, it is possible to write code in a <code>.c</code> file that is <em>not visible</em> outside of that file. In contrast to the linking error above emphasizing good naming, if a symbol is marked as <code>static</code>, no other <code>.c</code> file will be able to reference that symbol.</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb223-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
-<a class="sourceLine" id="cb223-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb331-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
+<a class="sourceLine" id="cb331-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
 <p>No other <code>.c</code> file can define code that will be able to access <code>global_var</code> nor call <code>foo</code>. You can see the list of all symbols within a <code>.c</code> file that are accessible outside of it by compiling into a <code>.o</code> file (using <code>gcc -c ...</code>), and <code>nm -g --defined-only x.o | awk '{print $3}'</code> (replace <code>x</code> with your object file name).</p>
 <blockquote>
 <p><strong>Convention.</strong> All functions and variables that are not part of the <em>public interface</em> with which to interact with the <code>.c</code> file should be <code>static</code> so that they cannot be used from other objects.</p>
@@ -5428,13 +6815,13 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>When we include a file, it just copies the file at the point of the <code>#include</code>. Thus, if the same header is included separately into two <code>.c</code> files, then it effectively replicates the header’s contents into the two <code>.o</code> files. This can cause problems if the two <code>.o</code> files are linked together. An example:</p>
 <p><code>a.c</code>:</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb224-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb332-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
 <p><code>b.c</code>:</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb225-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
-<a class="sourceLine" id="cb225-2" title="2"></a>
-<a class="sourceLine" id="cb225-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb333-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
+<a class="sourceLine" id="cb333-2" title="2"></a>
+<a class="sourceLine" id="cb333-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
 <p><code>c.h</code>:</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb226-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb334-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
 <p>After compiling these files, we get</p>
 <pre><code>$ gcc -c a.c -o a.o
 $ gcc -c b.c -o b.o
@@ -5446,45 +6833,45 @@ collect2: error: ld returned 1 exit status</code></pre>
 <blockquote>
 <p><strong>Convention.</strong> Never put global data in a <code>.h</code> file. Only put type information (e.g. function declarations) in <code>.h</code> files<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>.</p>
 </blockquote>
-<h2 id="what-to-include"><span class="header-section-number">10.4</span> What to Include?</h2>
+<h2 id="what-to-include"><span class="header-section-number">12.5</span> What to Include?</h2>
 <p>You <em>must</em> include the header files that provide the functionality that you rely on and use. This sounds obvious, but it is <em>very</em> easy to mess this up. A couple of examples:</p>
 <p><em>Example 1: Implementing a library.</em> You’re implementing a library, and you have a <code>.h</code> file for it that exposes the types of the library’s functions. You test your library, and it works wonderfully – victory! However, because it is a library, it might be used by other people’s code, and all they are going to do is <code>#include &lt;your_lib.h&gt;</code>, and expect everything to work.</p>
 <p>What if the following happened? Your <code>your_lib.h</code> file does this:</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb228-1" title="1"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb228-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb228-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb336-1" title="1"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb336-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb336-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
 <p>In your test file, you do this:</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb229-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
-<a class="sourceLine" id="cb229-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb229-3" title="3"></a>
-<a class="sourceLine" id="cb229-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb337-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
+<a class="sourceLine" id="cb337-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb337-3" title="3"></a>
+<a class="sourceLine" id="cb337-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>Your tests of your library work wonderfully! But if the user of your library simply does:</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb230-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb230-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb338-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb338-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
 <p>The user will get a compiler error that says it doesn’t understand what <code>size_t</code> is! The core problem is that your library’s header file didn’t include all of the headers it relies on! Instead, it should updated to look like so:</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb231-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
-<a class="sourceLine" id="cb231-2" title="2"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb231-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb231-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb339-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
+<a class="sourceLine" id="cb339-2" title="2"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb339-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb339-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>A good way to defensively code to try to minimize the chance that this error happens, you should include your header files <em>before</em> the rest of the header files. The only real solution is to be very careful, and always include what headers are necessary for the functionality you depend on.</p>
 <p><em>Example 2: implementing a program or test.</em> A <code>.c</code> file, lets say <code>my_prog.c</code>, includes some header file, <code>head.h</code>. It compiles just fine. But if <code>my_prog.c</code> relies on some header file – lets say <code>dep.h</code> – that is only included itself in the <code>head.h</code> file, then if <code>head.h</code> is updated and removes the include, it will break any program that depends on it! In this case, <code>my_prog.c</code> should explicitly include <code>dep.h</code>: include the headers that are required for your functionality!</p>
 <p><em>How do you know which headers to include?</em> If you’re using a system function, the <code>man</code> page for it is explicit about which headers provide the necessary functionality. If you’re implementing a library in the class, we are explicit about what headers are required.</p>
-<h2 id="depth-complexity"><span class="header-section-number">10.5</span> Depth = Complexity</h2>
+<h2 id="depth-complexity"><span class="header-section-number">12.6</span> Depth = Complexity</h2>
 <p>Syntactic nesting, or depth often significantly increase the cognitive complexity in C<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>. Two examples of this:</p>
 <p><strong>Depth through indentation nesting.</strong> Each additional nesting level (each nested set of <code>{}</code>) adds another condition that you must keep in your mind<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a> when understanding the code. This includes the conditions, or looping conditions associated with the nesting level. This is <em>a lot</em> to keep in your head, and makes developing and reading code quite a bit more difficult.</p>
 <p>What can you do to avoid this nesting? <em>First</em>, return early for errors. Instead of the following code…</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb232-1" title="1"><span class="cf">if</span> (a) {</a>
-<a class="sourceLine" id="cb232-2" title="2">    <span class="co">/* normal code */</span></a>
-<a class="sourceLine" id="cb232-3" title="3">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb232-4" title="4">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb232-5" title="5">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb232-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb340-1" title="1"><span class="cf">if</span> (a) {</a>
+<a class="sourceLine" id="cb340-2" title="2">    <span class="co">/* normal code */</span></a>
+<a class="sourceLine" id="cb340-3" title="3">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb340-4" title="4">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb340-5" title="5">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb340-6" title="6">}</a></code></pre></div>
 <p>…do the following…</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb233-1" title="1"><span class="cf">if</span> (!a) {</a>
-<a class="sourceLine" id="cb233-2" title="2">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb233-3" title="3">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb233-4" title="4">}</a>
-<a class="sourceLine" id="cb233-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb341-1" title="1"><span class="cf">if</span> (!a) {</a>
+<a class="sourceLine" id="cb341-2" title="2">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb341-3" title="3">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb341-4" title="4">}</a>
+<a class="sourceLine" id="cb341-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
 <p>Though seemingly trivial, it enables you to separate your understanding of error conditions from the complexity of the following code. Try to perform as much error checking as soon as it possibly can be done so that you can switch into “normal case” thinking.</p>
 <p><em>Second</em>, if you nest deeper than four levels of brackets, then pull code out into appropriately-named functions. Long functions aren’t necessarily bad, but <em>complex</em> functions are.</p>
 <blockquote>
@@ -5496,23 +6883,23 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>I use indentation levels in C of eight visual spaces to make it visually clear when I’m indenting too much.</p>
 <p><strong>Depth through field nesting.</strong> It can be quite difficult to follow code that nests access to fields. For example:</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb234-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb342-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
 <p>Of course, this is fake code, but even if it wasn’t, keeping track of the types of each of the levels of increasing depth of field reference is nearly impossible. This will make writing the code fickle and challenging, and reading the code, needlessly complex.</p>
 <p>The main means we have to remove this complexity is to</p>
 <ol type="1">
 <li><p>Create an set of typed variables</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb235-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
-<a class="sourceLine" id="cb235-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
-<a class="sourceLine" id="cb235-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
-<a class="sourceLine" id="cb235-4" title="4"></a>
-<a class="sourceLine" id="cb235-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb343-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
+<a class="sourceLine" id="cb343-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
+<a class="sourceLine" id="cb343-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
+<a class="sourceLine" id="cb343-4" title="4"></a>
+<a class="sourceLine" id="cb343-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
 It is up to you to decide where it is right to provide an “intermediate” type for a certain depth in the fields, and when to directly dive into a few fields.</li>
 <li><p>If any the structs (or sub-structs, or arrays) represents an API layer, then you can call a function that performs the necessary operation on that part of the data-structure. This both provide abstraction over the data access, and documents the types.</p></li>
 </ol>
 <blockquote>
 <p><strong>Convention.</strong> When faced with walking through nested composite data-structures, use intermediate variables to make types explicit, or functions to abstract operations.</p>
 </blockquote>
-<h2 id="object-orientation-initialization-destruction-and-methods"><span class="header-section-number">10.6</span> Object Orientation: Initialization, Destruction, and Methods</h2>
+<h2 id="object-orientation-initialization-destruction-and-methods"><span class="header-section-number">12.7</span> Object Orientation: Initialization, Destruction, and Methods</h2>
 <p>C is an imperative programming language as it came before Object Orientation (OO) took hold. That said, the OO concept of <a href="https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)">encapsulation</a> behind an <a href="https://en.wikipedia.org/wiki/Abstract_data_type">abstract data type</a> is a universal requirement of programming in complex environments. Though C doesn’t support this explicitly, conventions can provide much of the same benefit. Such an abstraction requires</p>
 <ol type="1">
 <li>a <em>datatype</em> that stores the information required for the abstraction (think: a list, a key-value store, etc…),</li>
