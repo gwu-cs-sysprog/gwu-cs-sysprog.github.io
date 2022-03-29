@@ -290,14 +290,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#file-ownership-and-groups"><span class="toc-section-number">11.1.1</span> File Ownership and Groups</a></li>
         <li><a href="#the-password-and-group-file"><span class="toc-section-number">11.1.2</span> The password and group file</a></li>
         <li><a href="#file-permissions"><span class="toc-section-number">11.1.3</span> File Permissions</a></li>
-        <li><a href="#changing-file-ownership-and-group"><span class="toc-section-number">11.1.4</span> Changing File Ownership and Group</a></li>
+        <li><a href="#numerical-representation-of-permissions"><span class="toc-section-number">11.1.4</span> Numerical Representation of Permissions</a></li>
+        <li><a href="#updating-filedirectory-permissions"><span class="toc-section-number">11.1.5</span> Updating File/Directory Permissions</a></li>
+        <li><a href="#changing-filedirectory-owner-and-group"><span class="toc-section-number">11.1.6</span> Changing File/Directory Owner and Group</a></li>
         </ul></li>
         <li><a href="#security-and-programming-with-users-and-groups"><span class="toc-section-number">11.2</span> Security and Programming with Users and Groups</a><ul>
-        <li><a href="#users-and-groups"><span class="toc-section-number">11.2.1</span> Users and Groups</a></li>
-        <li><a href="#permissions"><span class="toc-section-number">11.2.2</span> Permissions</a></li>
-        <li><a href="#terminal-login-and-password-checking"><span class="toc-section-number">11.2.3</span> Terminal Login and Password Checking</a></li>
-        <li><a href="#usersgroup-capabilities-of-programs"><span class="toc-section-number">11.2.4</span> Users/Group Capabilities of Programs</a></li>
-        <li><a href="#sudo-and-su"><span class="toc-section-number">11.2.5</span> <code>sudo</code> and <code>su</code></a></li>
+        <li><a href="#user-and-group-strings"><span class="toc-section-number">11.2.1</span> User and Group Strings</a></li>
+        </ul></li>
+        <li><a href="#application-specific-privileges-using-set-user-idset-group-id"><span class="toc-section-number">11.3</span> Application-Specific Privileges using set-user-id/set-group-id</a></li>
+        <li><a href="#applications-of-identify-and-permission-management"><span class="toc-section-number">11.4</span> Applications of Identify and Permission Management</a><ul>
+        <li><a href="#logging-events-selectively-increasing-access-rights"><span class="toc-section-number">11.4.1</span> Logging Events: Selectively Increasing Access Rights</a></li>
+        <li><a href="#logging-in-carefully-decreasing-access-rights"><span class="toc-section-number">11.4.2</span> Logging In: Carefully Decreasing Access Rights</a></li>
+        <li><a href="#sudo-and-su-increasing-access-rights"><span class="toc-section-number">11.4.3</span> <code>sudo</code> and <code>su</code>: Increasing Access Rights</a></li>
         </ul></li>
         </ul></li>
         <li><a href="#security-attacks-on-system-programs"><span class="toc-section-number">12</span> Security: Attacks on System Programs</a><ul>
@@ -307,10 +311,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </ul></li>
         <li><a href="#injection-attacks"><span class="toc-section-number">12.2</span> Injection Attacks</a></li>
         <li><a href="#overflow-attacks"><span class="toc-section-number">12.3</span> Overflow Attacks</a></li>
-        <li><a href="#headers-and-visibility"><span class="toc-section-number">12.4</span> Headers and Visibility</a></li>
-        <li><a href="#what-to-include"><span class="toc-section-number">12.5</span> What to Include?</a></li>
-        <li><a href="#depth-complexity"><span class="toc-section-number">12.6</span> Depth = Complexity</a></li>
-        <li><a href="#object-orientation-initialization-destruction-and-methods"><span class="toc-section-number">12.7</span> Object Orientation: Initialization, Destruction, and Methods</a></li>
+        </ul></li>
+        <li><a href="#appendix-c-programming-conventions"><span class="toc-section-number">13</span> Appendix: C Programming Conventions</a><ul>
+        <li><a href="#naming-conventions"><span class="toc-section-number">13.1</span> Naming Conventions</a></li>
+        <li><a href="#namespacing"><span class="toc-section-number">13.2</span> Namespacing</a></li>
+        <li><a href="#headers-and-visibility"><span class="toc-section-number">13.3</span> Headers and Visibility</a></li>
+        <li><a href="#what-to-include"><span class="toc-section-number">13.4</span> What to Include?</a></li>
+        <li><a href="#depth-complexity"><span class="toc-section-number">13.5</span> Depth = Complexity</a></li>
+        <li><a href="#object-orientation-initialization-destruction-and-methods"><span class="toc-section-number">13.6</span> Object Orientation: Initialization, Destruction, and Methods</a></li>
         </ul></li>
         </ul>
 
@@ -467,7 +475,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x557cd8968149
+Hex and pointers: 7fffffffffffffff, 0x559ea9a4c149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -587,8 +595,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffc06cc73d0 == 0x7ffc06cc73d0; 6 == 6
-nth index: 0x7ffc06cc73d4 == 0x7ffc06cc73d4; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffc8f07d960 == 0x7ffc8f07d960; 6 == 6
+nth index: 0x7ffc8f07d964 == 0x7ffc8f07d964; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -611,7 +619,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffec9f83514 == 0x7ffec9f83514; 7 == 7</code></pre>
+<pre><code>nth index: 0x7fff6b10fdf4 == 0x7fff6b10fdf4; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -635,10 +643,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffed4381ed0 &amp; 0x7ffed4381ee4
-idx 1 @ 0x7ffed4381ed4 &amp; 0x7ffed4381ee5
-idx 2 @ 0x7ffed4381ed8 &amp; 0x7ffed4381ee6
-idx 3 @ 0x7ffed4381edc &amp; 0x7ffed4381ee7</code></pre>
+<pre><code>idx 0 @ 0x7ffc9a3e2320 &amp; 0x7ffc9a3e2334
+idx 1 @ 0x7ffc9a3e2324 &amp; 0x7ffc9a3e2335
+idx 2 @ 0x7ffc9a3e2328 &amp; 0x7ffc9a3e2336
+idx 3 @ 0x7ffc9a3e232c &amp; 0x7ffc9a3e2337</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -875,10 +883,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x5557b757c010
-b   @ 0x5557b757c014
-c   @ 0x5557b757c020
-end @ 0x5557b757c039
+a   @ 0x5587a6707010
+b   @ 0x5587a6707014
+c   @ 0x5587a6707020
+end @ 0x5587a6707039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -886,7 +894,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x5557b757c014
+c.c_c = 0x5587a6707014
 
 Print out the variables as raw memory
 
@@ -981,8 +989,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x561b70fc404c
-1: 2 @ 0x561b70fc4044
+<pre><code>0: 4 @ 0x56214d62304c
+1: 2 @ 0x56214d623044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1311,16 +1319,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: 1828022279
-3: 32767
-4: 1828022278
-5: 32767
-6: 1512235581
-7: 22098
-8: 386642664
-9: 32579
-10: 1512235504
-11: 22098</code></pre>
+2: 483114375
+3: 32764
+4: 483114374
+5: 32764
+6: 1916256829
+7: 21955
+8: 308675304
+9: 32523
+10: 1916256752
+11: 21955</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1661,7 +1669,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x55b44027f004 == 0x55b44027f004 != 0x55b440281011</code></pre>
+0x55f9fca36004 == 0x55f9fca36004 != 0x55f9fca38011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2060,15 +2068,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 166455
+     parent pid 112174
 post-fork:
-    returned 166456,
-    current pid 166455
-    parent pid 166445
+    returned 112175,
+    current pid 112174
+    parent pid 112165
 post-fork:
     returned 0,
-    current pid 166456
-    parent pid 166455</code></pre>
+    current pid 112175
+    parent pid 112174</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2132,14 +2140,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 166475 exiting with 0
-Child 166477 exiting with -2
-Child 166478 exiting with -3
-Child 166476 exiting with -1
-Child 166475 exited with exit status 0
-Child 166477 exited with exit status -2
-Child 166478 exited with exit status -3
-Child 166476 exited with exit status -1</code></pre>
+<pre><code>Child 112194 exiting with 0
+Child 112195 exiting with -1
+Child 112196 exiting with -2
+Child 112197 exiting with -3
+Child 112194 exited with exit status 0
+Child 112195 exited with exit status -1
+Child 112196 exited with exit status -2
+Child 112197 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3263,9 +3271,9 @@ make[1]: *** [Makefile:28: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>166735: We&#39;ve been asked to terminate. Exit!
-166734: Parent asking child (166735) to terminate
-166734: Child process 166735 has exited.</code></pre>
+<pre><code>112455: We&#39;ve been asked to terminate. Exit!
+112454: Parent asking child (112455) to terminate
+112454: Child process 112455 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -4113,7 +4121,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - D 01
 - D 05
 - D 02
-- F aggregate.md (162963)
+- F aggregate.md (162961)
 - D 04
 - D .git
 - F inline_exec_tmp.c (1658)</code></pre>
@@ -4444,7 +4452,8 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>167086: 167086167085</code></pre>
+<pre><code>112805: 112805
+112806: 112806</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4597,15 +4606,15 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 167106 connected to server.
-2. Client 167106 request sent message to server.
-Server received message (sz 37): &quot;Citizen 167106: Penny for Pawsident!&quot;. Replying!
-1. Client 167107 connected to server.
-3. Client 167106 reply received from server: Citizen 167106: Penny for Pawsident!
+1. Client 112826 connected to server.
+1. Client 112827 connected to server.
+2. Client 112826 request sent message to server.
+2. Client 112827 request sent message to server.
+Server received message (sz 37): &quot;Citizen 112826: Penny for Pawsident!&quot;. Replying!
+3. Client 112826 reply received from server: Citizen 112826: Penny for Pawsident!
 Server: New client connected with new file descriptor 4.
-2. Client 167107 request sent message to server.
-Server received message (sz 37): &quot;Citizen 167107: Penny for Pawsident!&quot;. Replying!
-3. Client 167107 reply received from server: Citizen 167107: Penny for Pawsident!</code></pre>
+Server received message (sz 37): &quot;Citizen 112827: Penny for Pawsident!&quot;. Replying!
+3. Client 112827 reply received from server: Citizen 112827: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -5837,9 +5846,9 @@ exit_group(0)                           = ?
 <a class="sourceLine" id="cb249-38" title="38">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>
-malloc + free overhead (cycles): 455
+malloc + free overhead (cycles): 417
 
-mmap + munmap overhead (cycles): 10273</code></pre>
+mmap + munmap overhead (cycles): 9634</code></pre>
 <blockquote>
 <p>What is a “cycle”? When you read that you have a 3GHz, that essentially says that the internal “clock” that drives the logic in the processor cycles by at 3 billion cycles per second. That’s a <em>lot</em>. Each cycle is 1/3 a nanosecond. A cycle is the smallest unit of measurement on a processor, and the <code>cycles</code> function we implement here gives us how many cycles have elapsed since the system boots.</p>
 </blockquote>
@@ -5887,11 +5896,11 @@ mmap + munmap overhead (cycles): 10273</code></pre>
 <a class="sourceLine" id="cb251-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>                                                                                                                                                                                                                                                                
-write overhead (cycles): 4923
+write overhead (cycles): 4140
                                                                                                                                                                                                                                                                 
-fwrite (stream) overhead (cycles): 45
+fwrite (stream) overhead (cycles): 47
                                                                                                                                                                                                                                                                 
-fwrite + fflush overhead (cycles): 4975</code></pre>
+fwrite + fflush overhead (cycles): 4243</code></pre>
 <h2 id="library-vs.-kernel-trade-offs-in-memory-allocation"><span class="header-section-number">10.4</span> Library vs. Kernel Trade-offs in Memory Allocation</h2>
 <p>We’ve seen that</p>
 <ol type="1">
@@ -5951,53 +5960,57 @@ $ ./smalloc.bin</code></pre>
 <p>It currently implements this simple <code>malloc</code>! Read through the <code>smalloc</code> and <code>sfree</code> functions, and the <code>main</code>. Answer <code>QUESTION 1-3</code>. Then, move on to <code>QUESTION 4</code>. In <code>expand_heap</code>, we make the system call to allocate more memory from the system with <code>sbrk</code>. We need to set up that newly allocated heap memory to include memory chunks that we can allocate with <code>smalloc</code>. Answering how this is done is the core of <code>QUESTION 4</code>.</p>
 <h1 id="unix-security-users-groups-and-filesystem-permissions"><span class="header-section-number">11</span> UNIX Security: Users, Groups, and Filesystem Permissions</h1>
 <blockquote>
-<p><strong>This material directly adapted from Prof. Aviv’s <a href="https://classes.adamaviv.com/ic221/s18/units/01/unit.html#org26c0ea7">material</a>.</strong></p>
+<p><strong>This material adapted from Prof. Aviv’s <a href="https://classes.adamaviv.com/ic221/s18/units/01/unit.html#org26c0ea7">material</a>.</strong></p>
 </blockquote>
-<p>We’ve seen how the filesystem is used to store and name files and channels, and we’ve seen the APIs to access directories and files. If everyone had access to every else’s files, then there would be no way to secure your information. Thus, systems provide means to control different user’s <em>access</em> to different files and directories.</p>
+<p>We’ve seen how the filesystem is used to store and name files and channels, and we’ve seen the APIs to access directories and files. If everyone had access to every else’s files, then there would be no way to secure your information. Thus, the kernel provides means to control different user’s <em>access</em> to different files and directories. This means that I cannot access your files, and vice-versa!</p>
 <p>To understand the core concept of <em>access control</em> in UNIX, we have to understand</p>
 <ol type="1">
-<li>how UNIX thinks, implements, and organizes users,</li>
+<li>how UNIX thinks about, implements, and organizes users and groups of users,</li>
 <li>how files and directories provide various access permissions to different users and how to alter those permissions, and</li>
 <li>how services, even when executed by a user, can have heightened access to system resources.</li>
 </ol>
 <h2 id="file-and-directory-permissions"><span class="header-section-number">11.1</span> File and Directory Permissions</h2>
-<p>Lets first remind ourselves of the properties of a file that are returned by running <code>ls -l</code>:</p>
+<p>The filesystem stores files and directories are somehow associated with each of us, separately. Lets check out the properties of a file that are returned by running <code>ls -l</code>:</p>
 <pre><code>.- Directory?
 |    .-------Permissions                   .- Directory Name
 | ___|___     .----- Owner                 |
 v/       \    V     ,---- Group            V
-drwxr-x--x 4 aviv scs 4096 Dec 17 15:14 imma_directory
+drwxr-x--x 4 aviv scs 4096 Dec 17 15:14 im_a_directory
 -rw------- 1 aviv scs 400  Dec 19  2013 .ssh/id_rsa.pub
                        ^   \__________/    ^
 File Size -------------&#39;       |           &#39;- File Name
   in bytes                     |
                                |
    Last Modified --------------&#39;</code></pre>
-<p>An example from the class’ server, we create a file, a directory, and see the results:</p>
+<p>An example from the class’ server where we create a file, a directory, and see the results:</p>
 <pre><code>$ echo hi &gt; file.txt
 $ mkdir hello
 $ ls -l
 -rw-r--r-- 1 gparmer dialout    3 Mar 18 12:19 file.txt
 drwxr-xr-x 2 gparmer dialout 4096 Mar 18 12:20 hello</code></pre>
-<p>There are two important parts to this discussion: the owner/group and the permissions. The owner and the permissions are directly related to each other. Often permissions are assigned based on user status to the file, either being the owner or part of a group of users who have certain access to the file.</p>
+<p>We see that each file and directory has a owner and group associated with it.</p>
+<p><strong>Question:</strong></p>
+<ul>
+<li>What do you think this means? Why do files have owners and groups?</li>
+</ul>
 <h3 id="file-ownership-and-groups"><span class="header-section-number">11.1.1</span> File Ownership and Groups</h3>
-<p>The owner of a file is the user that is directly responsible for the file and has special status with respect to the file permission. Users can also be grouped together in group, a collection of users who posses the same permissions. A file also has a group designation to specify which permission should apply.</p>
-<p>You all are already aware of your username. You use it all the time, and it should be a part of your command prompt. To have UNIX tell you your username and connection information on this machine, use the command, who am i:</p>
-<pre><code>$ who
-gparmer  pts/1        2022-03-18 12:12 (128.164...)</code></pre>
-<p>You can use the whoami (no spaces) command to print only your username:</p>
+<p>The <em>owner</em> of a file is the <em>user</em> that is directly responsible for the file and has special status with respect to the file permissions. Users can also be collected together into a set called a <em>group</em>, a collection of users who posses the same permissions. A file is associated with a group. A file’s or directory’s owners and groups have different permissions to access the file. Before we dive into that, lets understand how to understand users and groups.</p>
+<p>You all are already aware of your username. You can get your username with the <code>whoami</code> command:</p>
 <pre><code>$ whoami
 gparmer</code></pre>
-<p>The first part of the output is the username, for me that is aviv, for you it will be your username. The rest of the information in the output refers to the terminal, the time the terminal was created, and from which host you are connected.</p>
+<p>To have UNIX tell you your username and connection information on this machine, use the command, <code>who</code>:</p>
+<pre><code>$ who
+gparmer  pts/1        2022-03-18 12:12 (128.164...)</code></pre>
+<p>The first part of the output is the username. The rest of the information in the output refers to the terminal you’re using (it is a “pseudo-terminal device”, something that pretends it is a typewriter from the 60s), the time the terminal was created, and from which host you are connected.</p>
 <p>You can determine which groups you are in using the groups command.</p>
 <pre><code>$ groups
 dialout CS_Admins</code></pre>
 <p>On the class’ server, I’m in the <code>dialout</code> and <code>CS_Admins</code> groups. On my work computer, I’m in a few more groups:</p>
 <pre><code>$ groups
 ycombinator adm cdrom sudo dip plugdev lpadmin sambashare</code></pre>
-<p>The good news is that I can use my <code>cdrom</code>. Fantastic. Cool.</p>
+<p>The good news is that I can use my <code>cdrom</code>. Fantastic. It will pair well with my pseudo-typewriter. Cool.</p>
 <h3 id="the-password-and-group-file"><span class="header-section-number">11.1.2</span> The password and group file</h3>
-<p>Groupings are defined in two places. The first is a file called /etc/passwd which manages all the users of the system. Here is the <code>/etc/passwd</code> entry on my local system (the server uses another means to store user info):</p>
+<p>Groupings are defined in two places. The first is a file called <code>/etc/passwd</code> which manages all the users of the system. Here is the <code>/etc/passwd</code> entry on my local system (the server uses another means to store user info):</p>
 <pre><code>$ cat /etc/passwd | grep gparmer
 gparmer:x:1000:1000:Gabe Parmer,,,:/home/ycombinator:/bin/bash
    |    |   |     |      |                 |             |
@@ -6011,13 +6024,15 @@ CS_Admins:x:1004:aaviv,timwood,gparmer,...</code></pre>
 <p>There you can see that the users <code>aaviv</code>, <code>timwood</code>, and <code>gparmer</code> are all in the group of administrators.</p>
 <p><strong>Question:</strong> Take a moment to explore these files and the commands. See what groups you are in.</p>
 <h3 id="file-permissions"><span class="header-section-number">11.1.3</span> File Permissions</h3>
-<p>We can now turn our attention to the permission string. A permission is simply a sequence of 9 bits broken into 3 octets of 3 bits each. An octet is a base 8 number that goes from 0 to 7, and 3 bits uniquely define an octet since all the numbers between 0 and 7 can be represented in 3 bits.</p>
-<p>Within an octet, there are three permission flags, read, write and execute. These are often referred to by their short hand, r, w, and x. The setting of a permission to on means that the bit is 1. Thus for a set of possible permission states, we can uniquely define it by an octal number:</p>
-<pre><code>rwx -&gt; 1 1 1 -&gt; 7
-r-x -&gt; 1 0 1 -&gt; 5
---x -&gt; 0 0 1 -&gt; 1
-rw- -&gt; 1 1 0 -&gt; 6</code></pre>
-<p>A full file permission consists of the octet set in order of user, group, and global permission.</p>
+<p>The <em>permissions</em> associated with each file/directory specify who should be able to have the following access:</p>
+<ul>
+<li><code>r</code> - the ability to <em>read</em> the file, or <em>read the contents</em> of a directory.</li>
+<li><code>w</code> - the ability to <em>write</em> to the file, or update the contents of a directory.</li>
+<li><code>x</code> - the ability to <em>execute</em> a file (i.e. a program), or <code>chdir</code> into a directory.</li>
+</ul>
+<p>We think about different users as having different sets of these permissions to access files and directories. When we see the permissions string for a file, we see three sets of these <code>rwx</code> permissions:</p>
+<pre><code>-rw-r--r-- 1 gparmer dialout    3 Mar 18 12:19 file.txt</code></pre>
+<p>Here we have three sets of permissions <code>rw-</code> (read and write), <code>r--</code> (read only), and <code>r--</code> (read only). These three sets of permissions each specify the access permissions for the <em>owner</em>, the <em>group</em>, and everyone else’s <em>global</em> permissions.</p>
 <pre><code> .-- Directory Bit
 |
 |       ,--- Global Permission (i.e. &quot;every else&quot;)
@@ -6027,77 +6042,126 @@ v      / \
   |  `--Group Permission
   |
    `-- Owner Permission</code></pre>
-<p>These define the permission for the user of the file, what users in the same group of the file, and what everyone else can do. For a full permission, we can now define it as 3 octal numbers:</p>
+<p>Given this, now we can understand the permissions for each file in:</p>
+<pre><code>ls -l 11/perm_example/
+total 0
+-rw-r--r-- 1 gparmer gparmer 0 Mar 25 18:43 bar
+-rw-rw-r-- 1 gparmer gparmer 0 Mar 25 18:43 baz
+-rwx------ 1 gparmer gparmer 0 Mar 25 18:42 foo</code></pre>
+<p><em>Question:</em></p>
+<ul>
+<li><em>Who</em> has <em>what access permissions</em> to which files?</li>
+</ul>
+<h3 id="numerical-representation-of-permissions"><span class="header-section-number">11.1.4</span> Numerical Representation of Permissions</h3>
+<p>Each permission has a <em>numerical representation</em>. We represent it in <em>octal</em>, which is a fancy way to say that we think of each digit of our numerical representation as being between <code>0-7</code> – it is “base 8” (in contrast to the normal digits numbers we use every day that are “base 10”). Thus, each of the three sets of permissions is <code>3</code> bits.</p>
+<p>Each of the three permissions, <code>r</code>, <code>w</code>, and <code>x</code> correspond to the most-significant to the least significant bits in each octal digit. For example:</p>
+<pre><code>rwx -&gt; 1 1 1 -&gt; 7
+r-x -&gt; 1 0 1 -&gt; 5
+--x -&gt; 0 0 1 -&gt; 1
+rw- -&gt; 1 1 0 -&gt; 6</code></pre>
+<p>On the left we see a permission, its bit representation, and the associated octal digit. The shorthand, you can think of this is this:</p>
+<ul>
+<li><code>r = 4</code> as it is represented with the most significant bit</li>
+<li><code>w = 2</code> as the second bit</li>
+<li><code>x = 1</code> as it is the least significant bit</li>
+</ul>
+<p>Thus the octal digit is simply the addition of each of these numeric values for each access right. We can combine these digits to encapsulate permissions for the owner, group, and everyone else:</p>
 <pre><code>-rwxrwxrwx -&gt; 111 111 111 -&gt; 7 7 7
 -rwxrw-rw- -&gt; 111 110 110 -&gt; 7 6 6
 -rwxr-xr-x -&gt; 111 101 101 -&gt; 7 5 5</code></pre>
-<p>To change a file permission, you use the chmod command and indicate the new permission through the octal. For example, in part5 directory, there is an executable file hello_world. Let’s try and execute it. To do so, we insert a <code>./</code> in the front to tell the shell to execute the local file.</p>
-<pre><code>$ gcc helloworld.c -o helloworld
-$ chmod 600 hello world
-$ ./helloworld
--bash: ./helloworld: Permission denied</code></pre>
-<p>The shell returns with a permission denied. That’s because the execute bit is not set.</p>
-<pre><code>$ ls -l helloworld
--rw------- 1 ycombinator ycombinator 16704 Mar 18 13:28 helloworld</code></pre>
-<p>Let’s start by making the file just executable by the user, the permission 700. And now we can execute the file:</p>
-<pre><code>$ chmod 700 helloworld
-$ ls -l helloworld
--rwx------ 1 ycombinator ycombinator 16704 Mar 18 13:28 helloworld
-$ ./helloworld
-Hello World!</code></pre>
-<p>This file can only be executed by the user, not by anyone else because the permissions for the group and the world are still <code>0</code>. To add group and world permission to execute, we use the permission setting <code>711</code>:</p>
-<pre><code>$ chmod 711 helloworld
-$ ls -l helloworld
--rwx--x--x 1 aviv scs 7856 Dec 23 13:51 helloworld</code></pre>
-<p>At times using octets can be cumbersome, for example, when you want to set all the execute or read bits but don’t want to calculate the octet. In those cases you can use shorthands.</p>
+<p>So now we know how to interpret, and understand these permission values, and how to represent them as digits.</p>
+<h3 id="updating-filedirectory-permissions"><span class="header-section-number">11.1.5</span> Updating File/Directory Permissions</h3>
+<p>To change a file permission, you use the <code>chmod</code> command, or the <code>chmod</code> system call. In each, we specify the file to update, and the new permissions in octal. Lets play around with permission and see their impact:</p>
+<pre><code>$ gcc helloworld.c -o helloworld.bin
+$ ls -l helloworld.bin
+-rwxrwxr-x 1 gparmer gparmer 41488 Mar 22 08:52 helloworld.bin
+$ ./helloworld.bin
+hello world!</code></pre>
+<p>I can execute the program, and I could read the program, for example using <code>nm</code>. I could even overwrite the file.</p>
+<blockquote>
+<p>Note: on the server, the default permissions are more restrictive – <code>-rwxr-xr-x 1 gparmer dialout 16464 Mar 25 19:16 helloworld.bin</code>. We don’t want anyone other than us writing to the file on a shared server!</p>
+</blockquote>
+<p>What if I removed all permissions for everyone but the owner, and even removed my own ability to execute?</p>
+<pre><code>$ chmod 600 helloworld.bin
+$ ls -l helloworld.bin
+-rw------- 1 gparmer gparmer 41488 Mar 22 08:52 helloworld.bin
+$ ./helloworld.bin
+-bash: ./helloworld.bin: Permission denied</code></pre>
+<p>We removed our own ability to execute the file, so we no longer can! Note that permission <code>6</code> is <code>4 + 2</code> which is <code>r</code> + <code>w</code>. If I wanted on the system to be able to execute the program:</p>
+<pre><code>$ chmod 711 helloworld.bin
+$ ls -l helloworld.bin
+-rwx--x--x 1 gparmer gparmer 41488 Mar 22 08:52 helloworld.bin
+$ ./helloworld.bin
+hello world!</code></pre>
+<p>Recall, <code>7 = 4 + 2 + 1</code> which is <code>r</code> + <code>w</code> + <code>x</code>. We can see that we’ve given everyone on the system execute permissions, so the file is again about to execute! Any other user on the system would also be able to execute the program.</p>
+<p><strong>Questions:</strong></p>
 <ul>
-<li><code>r</code>, <code>w</code>, <code>x</code> shorthands for permission bit read, write and execute</li>
-<li>The <code>+</code> indicates to add a permission, as in <code>+x</code> or <code>+w</code></li>
-<li>The <code>-</code> indicates to remove a permission, as in <code>-x</code> or <code>-w</code></li>
-<li><code>u</code>, <code>g</code>, <code>o</code> shorthands for permission bit user, group, and other</li>
-<li>a shorthand refers to all, applying the permission to user, group, and other</li>
+<li>How do you think permissions change access to directories? Try out setting the permissions of a directory (recall <code>mkdir</code>), and seeing what accesses cannot be made if permissions are removed.</li>
+<li>You and a classmate should sit down together, and use <code>chmod</code> to concretely understand when you can access each other’s files. Remember, you can find out where your files are with <code>pwd</code>, what groups you’re in with <code>groups</code>. Which files can another user can access at that path with sufficient permissions?</li>
 </ul>
-<p>Then we can change the permission</p>
-<pre><code>chmod +x file   &lt;-- set all the execute bits
-chmod a+r file  &lt;-- set the file world readable
-chmod -r  file  &lt;-- unset all the read bits
-chmod gu+w file &lt;-- set the group and user write bits to true</code></pre>
-<p>Depending on the situation, either the octets or the shorthands are preferred.</p>
-<h3 id="changing-file-ownership-and-group"><span class="header-section-number">11.1.4</span> Changing File Ownership and Group</h3>
-<p>The last piece of the puzzle is how do we change the ownership and group of a file. Two commands:</p>
+<h3 id="changing-filedirectory-owner-and-group"><span class="header-section-number">11.1.6</span> Changing File/Directory Owner and Group</h3>
+<p>We’ve seen that each file and directory is associated with a user, and with a group. Which means that, of course, we can change those settings! Two commands (and their corresponding system call: <code>chown</code>):</p>
 <ul>
 <li><code>chown &lt;user&gt; &lt;file/directory&gt;</code> - change owner of the file/directory to the user</li>
 <li><code>chgrp &lt;group&gt; &lt;file/directory&gt;</code> - change group of the file to the group</li>
 </ul>
-<p>Permission to change the owner of a file is reserved only for the super user for security reasons. However, changing the group of the file is reserved only for the owner.</p>
-<pre><code>$ ls -l
-total 16
--rwxr-x--- 1 aviv scs 9133 Dec 29 10:39 helloworld
--rw-r----- 1 aviv scs   99 Dec 29 10:39 helloworld.cpp
-$ chgrp mids helloworld
-$ ls -l
-total 16
--rwxr-x--- 1 aviv mids 9133 Dec 29 10:39 helloworld
--rw-r----- 1 aviv scs    99 Dec 29 10:39 helloworld.cpp</code></pre>
-<p>Note now the hello world program is in the mids group. I can still execute it because I am the owner:</p>
-<pre><code>$ ./helloworld
-Hello World</code></pre>
-<p>However if I were to change the owner, to say, <code>pepin</code>, we get the following error:</p>
-<pre><code>$ chown pepin helloworld
-chown: changing ownership of ‘helloworld’: Operation not permitted</code></pre>
-<p>Consider why this might be. If any user can change the ownership of a file, then they could potentially upgrade or downgrade the permissions of files inadvertently, violating a security requirement. As such, only the super user, or the administrator, can change ownership settings.</p>
+<p>UNIX limits who is able to execute these operations.</p>
+<ul>
+<li>Only a <em>superuser</em> called <code>root</code> is allowed to <code>chown</code> a file or directory. <code>root</code> is special in that they are able to change the permissions of any file/directory, and most of the most sensitive files on the system are owned by root. For example, the devices (think, hard-drives holding the filesystem, monitors, and network devices) are only accessible by <code>root</code> (check out <code>/dev/*</code>).</li>
+<li>Only the <em>owner</em> of a file (and <code>root</code>) is allowed to change the group of a file, and only to a group that user is in (recall <code>groups</code>).</li>
+</ul>
+<p>We can see this:</p>
+<pre><code>$ chown root helloworld.bin
+chown: changing ownership of &#39;helloworld.bin&#39;: Operation not permitted</code></pre>
+<p><strong>Question:</strong></p>
+<ul>
+<li>Why do you think we aren’t allowed to change the owner of a file, nor change the group to one in which we don’t belong?</li>
+</ul>
 <h2 id="security-and-programming-with-users-and-groups"><span class="header-section-number">11.2</span> Security and Programming with Users and Groups</h2>
-<p>Through this class we have seen a number of security settings provided by the operating system. Formost, we discussed users and groups, file permissions, the terminal login, and finally the concept of system calls generally and how that system is designed to protect the user from itself.</p>
-<p>Let’s take a moment to review some of these concepts and the O.S. security settings thereof.</p>
-<h3 id="users-and-groups"><span class="header-section-number">11.2.1</span> Users and Groups</h3>
-<p>All users are defined in the /etc/passwd file with lines like such:</p>
+<p>We’ve seen that a lot of UNIX security centers around users, groups, and the corresponding permissions associated with files and directories. When a process is <code>fork</code>ed, it <em>inherits</em> the user and group of the parent process. Thus, when you’re typing at a shell, the <em>shell process</em> is what really is executing as your user id, and when you create programs, they inherit your user id. These are the core of the security primitives, so lets dive into a little more detail.</p>
+<h4 id="apis-for-accessing-a-programs-privilege-settings"><span class="header-section-number">11.2.0.1</span> APIs for Accessing a Program’s Privilege Settings</h4>
+<p>If every process has a user and group, we must be able to access them, right? There are two basic system calls for retrieving user and group information within a program.</p>
+<ul>
+<li><code>uid_t getuid(void)</code> - Returns the real user id of the calling process.</li>
+<li><code>gid_t getgid(void)</code> - Returns the real group id of the calling process.</li>
+</ul>
+<p>Let’s look at an example program.</p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb271-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb271-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb271-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb271-4" title="4"></a>
+<a class="sourceLine" id="cb271-5" title="5"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb271-6" title="6">main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[])</a>
+<a class="sourceLine" id="cb271-7" title="7">{</a>
+<a class="sourceLine" id="cb271-8" title="8">    uid_t uid;</a>
+<a class="sourceLine" id="cb271-9" title="9">    gid_t gid;</a>
+<a class="sourceLine" id="cb271-10" title="10"></a>
+<a class="sourceLine" id="cb271-11" title="11">    uid = getuid();</a>
+<a class="sourceLine" id="cb271-12" title="12">    gid = getgid();</a>
+<a class="sourceLine" id="cb271-13" title="13"></a>
+<a class="sourceLine" id="cb271-14" title="14">    printf(<span class="st">&quot;uid=%d gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, uid, gid);</a>
+<a class="sourceLine" id="cb271-15" title="15"></a>
+<a class="sourceLine" id="cb271-16" title="16">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb271-17" title="17">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>uid=1000 gid=1000</code></pre>
+<p>Every user has different identifiers as does each group. If another user where to run the same program, they’d get a different value.</p>
+<p><strong>Question:</strong></p>
+<ul>
+<li>In groups, one of you compile this program, and the other run it! Use <code>chmod</code> to make sure that they can! What do you observe?</li>
+<li>If the kernel thinks of users as numeric identifiers, how does <code>whoami</code> print out a <em>human-readable string</em>? Use <code>strace whoami</code> to come up with a strong guess.</li>
+<li>How do we get human-readable groups with <code>groups</code> (investigate with <code>strace groups</code>)?</li>
+</ul>
+<p>Interestingly, whomever <em>executes</em> the program will have their uid/gid printed out; it won’t use the uid/gid of the owner of the program. Remember, that we inherit the uid/gid on fork, thus when the shell runs the program, it uses our shell’s (thus our) uid/gid.</p>
+<h3 id="user-and-group-strings"><span class="header-section-number">11.2.1</span> User and Group Strings</h3>
+<p>The user information beyond just their id is stored in the <code>/etc/passwd</code> file. All users are defined in <code>/etc/passwd</code> with lines like such:</p>
 <pre><code>.-- user name         .-- full name   .--- home directory
 |                     |               |
 v                     v               v
 aviv:x:35001:10120:Adam Aviv {}:/home/scs/aviv:/bin/bash
         ^     ^                                   ^
 uid ----&#39;     &#39;--- gid (Default)                  &#39;--- default shell</code></pre>
-<p>This is my passwd entry. It stores my user name, my user id, my default group id, my full name, my home directory, and my default shell. Every user has a unique username, user id, and default group; however, a user can be assigned to multiple groups. Group information is fined in the /etc/group directory, and here is entry for my default group:</p>
+<p>This is <code>aviv</code>’s entry in the <code>passwd</code> file. It stores their user name, user id, default group id, full name, home directory, and default shell. The latter two are useful when logging in: the login services will <code>chdir</code> to the home directory, and <code>exec</code> the shell. Every user has a unique username, user id, and default group; however, a user can be assigned to multiple groups. Thus, group information is in the <code>/etc/group</code> file, and here is entry for <code>aviv</code>’s default group:</p>
 <pre><code>.-- group name
 |
 v
@@ -6105,120 +6169,23 @@ scs:*:10120:webadmin,www-data,lucas,slack
        ^    \___________________________/
 gid ---&#39;                |
                         &#39;- Additional users in that group</code></pre>
-<p>From the command line, the tool id will print this information, as well as groups</p>
-<pre><code>aviv@saddleback: ~ $ id
-uid=35001(aviv) gid=10120(scs) groups=10120(scs),27(sudo),15000(mids)
-aviv@saddleback: ~ $ groups
-scs sudo mids</code></pre>
-<p>One thing you might notice is that I am in the sudo group … on this computer, at least. We’ll come back to this later.</p>
-<h3 id="permissions"><span class="header-section-number">11.2.2</span> Permissions</h3>
-<p>Access to files are permission-ed based on the user and group designation of the accessing agent. Typically, this is a user, but the same designations are assigned to running processes. The permissions of a file can be observed using ls -l or stat:</p>
-<pre><code>aviv@saddleback: demo $ ls -l
-total 4
--rwxr--r-- 1 aviv scs    0 Mar 27 09:41 a
--rw--wx--- 1 aviv scs    0 Mar 27 09:41 b
--------rwx 1 aviv scs    0 Mar 27 09:41 c
-drwxr-x--- 2 aviv scs 4096 Mar 27 09:41 d
-aviv@saddleback: demo $ stat b
-  File: ‘b’
-  Size: 0           Blocks: 0          IO Block: 524288 regular empty file
-Device: 1ch/28d Inode: 34996239    Links: 1
-Access: (0630/-rw--wx---)  Uid: (35001/    aviv)   Gid: (10120/     scs)
-Access: 2015-03-27 09:41:22.884094861 -0400
-Modify: 2015-03-27 09:41:22.884094861 -0400
-Change: 2015-03-27 09:41:41.292753637 -0400</code></pre>
-<p>And if we look at a particular mode portion, let’s recall how the permissions are identified:</p>
-<pre><code>user   other       .- group
-  |     |          |
- .-.   .-.         v
--rwxr--r-- 1 aviv scs    0 Mar 27 09:41 a
-^   &#39;-&#39;       ^
-|    |        &#39;-- user/owner
-|   group
-|
-&#39;- Directory Bit</code></pre>
-<p>When an operation is performed on the file, such as reading, writing, or executing, the user taking the action is compared to the permission. If the right permissions are set, and the user matches those permissions, the action can be taken. For example, a user that is not aviv may still read the file if they are in group scs. More, even a user who meets neither criteria, the owner or group of the file, can still read the file because the other read permission is set.</p>
-<p>Permissions of files can be changed using three commands:</p>
+<p>All of this information, including identifiers, and human-readable strings can be retrieved with <code>id</code>.</p>
+<pre><code>$ id
+uid=1000(gparmer) gid=1000(gparmer) groups=1000(gparmer),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),120(lpadmin),131(lxd),132(sambashare)</code></pre>
+<h2 id="application-specific-privileges-using-set-user-idset-group-id"><span class="header-section-number">11.3</span> Application-Specific Privileges using set-user-id/set-group-id</h2>
+<p>Systems that support multiple users are quite complex. They have services used by many users, but that must be protected from the potentially accidental or malicious actions of users. These programs require more privileges than a user to do their job. A few examples:</p>
 <ul>
-<li><code>chmod</code> : change the permissions string of the file which can only be done by the owner of the file (or super user).</li>
-<li><code>chgrp</code> : change the group of the file which can only be done by the owner of the file (or super user).</li>
-<li><code>chown</code> : change the owner of the file which can only be done by the super user.</li>
+<li><em>Logging</em> is a very important functionality in systems. It enables services to log actions that are taken, for example, users logging in to <code>ssh</code> and clients connecting to webservers. The logs are stored in files (often in <code>/var/log/</code>), and users must <em>not</em> be able to directly modify (and potentially corrupt) the logs. But they must be able to append to the logs. How can we support this contradiction when a logging process will run with our user id when we execute it!?</li>
+<li><em>Coordinating actions</em> such as running commands regularly, or at specific points in time. The programs <code>at</code> and <code>cron</code> enable exactly this! They require adding entries into system files (e.g. <code>crontab</code>) to record the actions, but one user must not corrupt the entires of another user. Again, we want to both be able to add entries to the files, but cannot modify the file!</li>
 </ul>
-<p>The super user for unix systems is referred as <code>root</code>. It has full privileges and can do whatever it wants. Creating multiple levels of permissions by dividing users from one privilege to another is a key security concept. A key question is how does this occur? To understand this process, we have to start with when the user logs in.</p>
-<h3 id="terminal-login-and-password-checking"><span class="header-section-number">11.2.3</span> Terminal Login and Password Checking</h3>
-<p>The log procedure is not a huge focus of this lesson; however, what happens after login is incredibly relevant. Recall from the lectures on the tty that when a user “calls” a tty the program getty will execute login. Following the diagram:</p>
-<pre><code> runs as root
-.......................................
-:  .-------.                          :
-:  | getty |                          :
-:  &#39;-------&#39;                          :
-:      |                              :
-:    exec() &lt;-------.                 :
-:      |            |                 :
-: (1)  v            | (failed)        :
-:  .--------.       |     ............:
-:  | login  | ------&#39;     :
-:  &#39;--------&#39;             :                    runs as the user
-:      | (success)        :   ..................................
-:      |      ............:   :                                :
-:      |      :   ............: .-------. (3)                  :
-:     fork() -:---:- exec() --&gt; | shell |                      :
-:.............: ^ :             &#39;-------&#39;                      :
- (2)            | :                  |                  .----. :
-  changes ______| :               fork() --- exec() --&gt; | ls | :
-    user          :                                     &#39;----&#39; :
-                  :............................................:</code></pre>
-<p>At (1), the log procedure is going to authentic a user by asking for a password. While it would seem logical for passwords to be stored in /etc/passwd, it isn’t. The reason /etc/passwd is named such is that it used to store password; however, that is no longer the case. Now passwords are stored are in the file /etc/shadow which is carefully protected, and passwords are not stored in plain text in /etc/shadow but rather stored using secure hashes.</p>
-<p>Of more interest to this lesson is what happens if the user successfully logs into the system. The log in procedure needs to run in a privileged state so that passwords can be checked from /etc/shadow. Only the root user has access to read/write the file, but we do not want it to be the case that when the user’s shell starts up he/she gets the same permissions as the root user. To prevent that, there is a deescalation of privilege level by setting the effective user of the shell program to the user the that just logged onto the system – occurring at step (2). By the time the shell executes commands, the user is running — occurring at step (3).</p>
-<h3 id="usersgroup-capabilities-of-programs"><span class="header-section-number">11.2.4</span> Users/Group Capabilities of Programs</h3>
-<p>Running programs inherit the permissions of the user who execute it, but we will see how that might change. To start, let us first look at the system programming constructs for observing and testing the users permission, and the errors associated with permission. Following, we can look at how to escalate or change the permission settings.</p>
-<h4 id="observing-the-privilege-settings-of-programs"><span class="header-section-number">11.2.4.1</span> Observing the privilege settings of programs</h4>
-<p>There are two basic system calls for retrieving useer and group information for an execution program.</p>
-<ul>
-<li><code>uid_t getuid(void)</code> - Returns the real user id of the calling process.</li>
-<li><code>gid_t getgid(void)</code> - Returns the real group id of the calling process.</li>
-</ul>
-<p>Let’s look at an example program.</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb279-1" title="1"><span class="co">/*get_uidgid.c*/</span></a>
-<a class="sourceLine" id="cb279-2" title="2"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb279-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb279-4" title="4"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb279-5" title="5"></a>
-<a class="sourceLine" id="cb279-6" title="6"><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[]){</a>
-<a class="sourceLine" id="cb279-7" title="7"></a>
-<a class="sourceLine" id="cb279-8" title="8">  uid_t uid;</a>
-<a class="sourceLine" id="cb279-9" title="9">  gid_t gid;</a>
-<a class="sourceLine" id="cb279-10" title="10"></a>
-<a class="sourceLine" id="cb279-11" title="11">  uid = getuid();</a>
-<a class="sourceLine" id="cb279-12" title="12"></a>
-<a class="sourceLine" id="cb279-13" title="13">  gid = getgid();</a>
-<a class="sourceLine" id="cb279-14" title="14"></a>
-<a class="sourceLine" id="cb279-15" title="15">  printf(<span class="st">&quot;uid=%d gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, uid, gid);</a>
-<a class="sourceLine" id="cb279-16" title="16"></a>
-<a class="sourceLine" id="cb279-17" title="17">}</a></code></pre></div>
-<p>Program output:</p>
-<pre><code>uid=1000 gid=1000</code></pre>
-<p>When executing, my user id and group id is printed to the terminal:</p>
-<pre><code>m179998@saddleback: git $ ~aviv/lec-23-demo/get_uidgid
-uid=179998 gid=15000</code></pre>
-<p>These values are mine. If you were to run the same program, you would get a different value. For example, I have a test student account m17998 and if I run this program as that user:</p>
-<pre><code>m159998@saddleback: git $ ~aviv/lec-23-demo/get_uidgid
-uid=35013 gid=15000
-m159998@saddleback: git $ ls -l ~aviv/lec-23-demo/get_uidgid
--rwxr-x--x 1 aviv scs 8622 Mar 30 10:40 /home/scs/aviv/lec-23-demo/get_uidgid</code></pre>
-<p>Even though the program is owned by the user aviv, the execution of the program as the process takes on the permissions of the user that runs the program, which is m179998 in this demo. However, this could be changed.</p>
-<h4 id="extra-permission-modes-for-set-user-idset-group-id"><span class="header-section-number">11.2.4.2</span> Extra permission modes for set-user-id/set-group-id</h4>
-<p>There is also an obvious need to be able to set the user/group privileges of a running program. For example, consider the submission system we have been using all semester. You all run a program in my home directory:</p>
-<pre><code>~aviv/bin/ic221-submit</code></pre>
-<p>This program, run by you, has your user and group permissions, but it is able to take your submission and copy/save those submissions to my home directory, with my permissions at a location where you do not have access to write. How is that possible?</p>
-<p>If you could somehow change the user/group setting of the running program to my user/group priviledge, then you could write to my home directory. This is essentially how the submission system works.</p>
-<p>To have a program run with a different user’s capabilities requires additional permissions on the program beyond just that the user can execute the program. These permissions are called the set-bit and if we look at the man page for chmod, the set-bit is composed of three permission bits we previously ignored:</p>
-<p>A numeric mode is from one to four octal digits (0-7), derived by adding up the bits with values 4, 2, and 1. Omitted digits are assumed to be leading zeros. <em>The first digit selects the set user ID (4) and set group ID (2) and restricted deletion or sticky (1) attributes.</em> The second digit selects permissions for the user who owns the file: read (4), write (2), and execute (1); the third selects permissions for other users in the file’s group, with the same values; and the fourth for other users not in the file’s group, with the same values.</p>
+<p>We already know one way to solve this problem. We can write a service, and have clients <em>request</em> (e.g. via IPC and domain sockets) it perform actions on our behalf. So long as a service runs as a different user, its files will be in accessible from clients.</p>
+<p>However, there is another way to solve the above contradictions. We really want a program to run with a <em>different</em> user’s permissions – those that go beyond our own. We want the <em>logger</em> to run with the permissions of the logging user, and we want <code>cron</code> to run with the permissions of the <code>cron</code> service. This is possible with the set-uid-bits (and set-gid-bits).</p>
+<p>The <code>set-*-bits</code> can be seen in the <code>man chmod</code> manual page. We’re used to permissions being three digits (for the owner, the group, and everyone else), but it can be specified as <em>four</em> digits. The most significant digit can be set on executable binaries, and will result in the binary executing with the owner’s uid/gid.</p>
 <p>That is, we previously assumed a permission string contained 3 octal digits, but really there are 4 octal digits. The missing octal digit is that for the set-bits. There are three possible set-bit settings and they are combined in the same way as other permissions:</p>
 <ul>
-<li><code>4</code> or <code>s+u</code> - set-user-id : sets the program’s effective user id to the owner of the program</li>
-<li><code>2</code> or <code>s+g</code>- set-group-id : sets the program’s effective group id to the group of the program</li>
-<li><code>1</code> or <code>t</code> - the sticky bit : used to denote the memory loading of a program or directory</li>
+<li><code>4</code> - <em>set-user-id</em>: sets the program’s effective user id to the owner of the program</li>
+<li><code>2</code> - <em>set-group-id</em>: sets the program’s effective group id to the group of the program</li>
+<li><code>1</code> - <em>the sticky bit</em>: which, when set on a directory, prevents others from deleting files from that directory. We won’t cover the stick bit.</li>
 </ul>
 <p>These bits are used in much the same way as the other permission modes. For example, we can change the permission of our get_uidgid program from before like so:</p>
 <pre><code>chmod 6751 get_uidgid</code></pre>
@@ -6229,180 +6196,123 @@ bits user |  other
   V   V   V   V
  110 111 101 001
   6   7   5   1</code></pre>
-<p>When we look at the ls -l output of the program, the permission string reflects these settings with an “s” in the execute part of the string for user and group.</p>
+<p>When we look at the <code>ls -l</code> output of the program, the permission string reflects these settings with an “s” in the execute part of the string for user and group.</p>
 <pre><code>aviv@saddleback: lec-23-demo $ ls -l get_uidgid
 -rwsr-s--x 1 aviv scs 8778 Mar 30 16:45 get_uidgid</code></pre>
-<h4 id="real-vs.-effective-capabilities"><span class="header-section-number">11.2.4.3</span> Real vs. Effective Capabilities</h4>
-<p>With the set-bits, when the program runs, the capabilities of the program are effectively that of the owner and group of the program. However, the real user id and real group id remain that of the user who ran the program. This brings up the concept of effective vs. real identifiers:</p>
+<h4 id="real-vs.-effective-capabilities"><span class="header-section-number">11.3.0.1</span> Real vs. Effective Capabilities</h4>
+<p>With the set-bits, when the program runs, the capabilities of the program are effectively that of the owner and group of the <em>program</em>. However, the real user id and real group id remain that of the user who ran the program. This brings up the concept of <em>effective</em> vs. <em>real</em> identifiers:</p>
 <ul>
-<li><em>real user id</em> (or <em>group id</em>) : the identifier of the actual user who executed a program</li>
-<li><em>effective user id</em> (or <em>group id</em>) : the idenifier for the capabilities or permissions settings of an executing program.</li>
+<li><em>real user id</em> (or <em>group id</em>): the identifier of the actual user who executed a program.</li>
+<li><em>effective user id</em> (or <em>group id</em>): the idenifier for the capabilities or permissions settings of an executing program.</li>
 </ul>
-<p>The system calls getuid() and getgid() return the real user and group identifiers, but we can also retrieve the effective user and group identifiers:</p>
+<p>The system calls <code>getuid</code> and <code>getgid</code> return the <em>real</em> user and group identifiers, but we can also retrieve the <em>effective</em> user and group identifiers with</p>
 <ul>
-<li><code>uid_t geteuid(void)</code> - return the effective user identifier for the calling process</li>
-<li><code>gid_t getegid(void)</code> - return the effective group identifer for the calling process</li>
+<li><code>uid_t geteuid(void)</code> - return the effective user identifier for the calling process.</li>
+<li><code>gid_t getegid(void)</code> - return the effective group identifer for the calling process.</li>
 </ul>
-<p>We now have enough to test set-bit programs using a the following program that prints both the real and effective user/group identities.</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb287-1" title="1"><span class="co">/*get_euidegid.c*/</span></a>
-<a class="sourceLine" id="cb287-2" title="2"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb287-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb287-4" title="4"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb287-5" title="5"></a>
-<a class="sourceLine" id="cb287-6" title="6"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb287-7" title="7">main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[]){</a>
-<a class="sourceLine" id="cb287-8" title="8"></a>
-<a class="sourceLine" id="cb287-9" title="9">  uid_t uid,euid;</a>
-<a class="sourceLine" id="cb287-10" title="10">  gid_t gid,egid;</a>
-<a class="sourceLine" id="cb287-11" title="11"></a>
-<a class="sourceLine" id="cb287-12" title="12">  uid = getuid();</a>
-<a class="sourceLine" id="cb287-13" title="13">  gid = getgid();</a>
-<a class="sourceLine" id="cb287-14" title="14">  printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
-<a class="sourceLine" id="cb287-15" title="15"></a>
-<a class="sourceLine" id="cb287-16" title="16">  euid = geteuid();</a>
-<a class="sourceLine" id="cb287-17" title="17">  egid = getegid();</a>
-<a class="sourceLine" id="cb287-18" title="18">  printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
-<a class="sourceLine" id="cb287-19" title="19">}</a></code></pre></div>
-<p>Program output:</p>
-<pre><code> uid=1000  gid=1000
-euid=1000 egid=1000</code></pre>
+<p>We now have enough to test <em>set-x-bit</em> programs using a the following program that prints both the real and effective user/group identities.</p>
+<div class="sourceCode" id="cb279"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb279-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb279-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb279-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb279-4" title="4"></a>
+<a class="sourceLine" id="cb279-5" title="5"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb279-6" title="6">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb279-7" title="7">{</a>
+<a class="sourceLine" id="cb279-8" title="8">    uid_t uid,euid;</a>
+<a class="sourceLine" id="cb279-9" title="9">    gid_t gid,egid;</a>
+<a class="sourceLine" id="cb279-10" title="10"></a>
+<a class="sourceLine" id="cb279-11" title="11">    uid = getuid();</a>
+<a class="sourceLine" id="cb279-12" title="12">    gid = getgid();</a>
+<a class="sourceLine" id="cb279-13" title="13">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb279-14" title="14"></a>
+<a class="sourceLine" id="cb279-15" title="15">    euid = geteuid();</a>
+<a class="sourceLine" id="cb279-16" title="16">    egid = getegid();</a>
+<a class="sourceLine" id="cb279-17" title="17">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb279-18" title="18"></a>
+<a class="sourceLine" id="cb279-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb279-20" title="20">}</a></code></pre></div>
 <p>As the owner of the file, after compilation, the permissions can be set to add set-user-id:</p>
-<pre><code>aviv@saddleback: lec-23-demo $ make get_euidegid
-cc     get_euidegid.c   -o get_euidegid
-aviv@saddleback: lec-23-demo $ chmod u+s get_euidegid
-aviv@saddleback: lec-23-demo $ ls -l get_euidegid
--rwsr-x--x 1 aviv scs 8730 Mar 31 08:31 get_euidegid</code></pre>
-<p>Now as the m179998 user, the program can be run, and we see that the effective user id of the program is aviv’s id:</p>
-<pre><code>m179998@saddleback: ~ $ ~aviv/lec-23-demo/get_euidegid
- uid=179998  gid=15000
-euid=35001 egid=15000
-m179998@saddleback: ~ $ id
-uid=179998(m179998) gid=15000(mids) groups=15000(mids),15001(ic221)
-m179998@saddleback: ~ $ id aviv
-uid=35001(aviv) gid=10120(scs) groups=27(sudo),15000(mids),10120(scs),15001(ic221)</code></pre>
-<p>Continuing the example, we can see the other set-bit settings give different effective user/group settings:</p>
-<pre><code>aviv@saddleback: lec-23-demo $ chmod g+s get_euidegid
-aviv@saddleback: lec-23-demo $ ls -l get_euidegid
--rwsr-s--x 1 aviv scs 8730 Mar 31 08:31 get_euidegid
-
-m179998@saddleback: ~ $ ~aviv/lec-23-demo/get_euidegid
- uid=179998  gid=15000
-euid=35001 egid=10120
-
-aviv@saddleback: lec-23-demo $ ls -l get_euidegid
--rwxr-s--x 1 aviv scs 8730 Mar 31 08:31 get_euidegid
-
-m179998@saddleback: ~ $ ~aviv/lec-23-demo/get_euidegid
- uid=179998  gid=15000
-euid=179998 egid=10120</code></pre>
-<p>And just to show how the effective user ID plays a role, let’s consider what happens when we have set-group-id program that opens a file:</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb292-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb292-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb292-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb292-4" title="4"><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></a>
-<a class="sourceLine" id="cb292-5" title="5"></a>
-<a class="sourceLine" id="cb292-6" title="6"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb292-7" title="7">main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[]){</a>
-<a class="sourceLine" id="cb292-8" title="8"></a>
-<a class="sourceLine" id="cb292-9" title="9">  <span class="dt">int</span> i,fd;</a>
-<a class="sourceLine" id="cb292-10" title="10"></a>
-<a class="sourceLine" id="cb292-11" title="11">  <span class="cf">for</span>(i=<span class="dv">0</span>;i&lt;argc;i++){</a>
-<a class="sourceLine" id="cb292-12" title="12"></a>
-<a class="sourceLine" id="cb292-13" title="13">    <span class="co">//create an empty file</span></a>
-<a class="sourceLine" id="cb292-14" title="14">    <span class="cf">if</span>( (fd = open(argv[i],O_CREAT,<span class="bn">0666</span>) &gt; <span class="dv">0</span>) ){</a>
-<a class="sourceLine" id="cb292-15" title="15">      close(fd);</a>
-<a class="sourceLine" id="cb292-16" title="16">    }<span class="cf">else</span>{</a>
-<a class="sourceLine" id="cb292-17" title="17">      perror(<span class="st">&quot;open&quot;</span>);</a>
-<a class="sourceLine" id="cb292-18" title="18">    }</a>
-<a class="sourceLine" id="cb292-19" title="19">  }</a>
-<a class="sourceLine" id="cb292-20" title="20"></a>
-<a class="sourceLine" id="cb292-21" title="21">  <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb292-22" title="22">}</a></code></pre></div>
-<p>Program output:</p>
-<pre><code></code></pre>
-<p>When we compile we can set this program to set-group-id:</p>
-<pre><code>aviv@saddleback: lec-23-demo $ make create_file
-cc     create_file.c   -o create_file
-aviv@saddleback: lec-23-demo $ chmod g+s create_file
-aviv@saddleback: lec-23-demo $ ls -l create_file
--rwxr-s--x 1 aviv scs 8620 Mar 31 08:41 create_file</code></pre>
-<p>Now, let’s create a file as the m179998 user:</p>
-<pre><code>m179998@saddleback: ~ $ ~aviv/lec-23-demo/create_file a b c
-m179998@saddleback: ~ $ ls -l a b c
--rw-r----- 1 m179998 scs 0 Mar 31 08:42 a
--rw-r----- 1 m179998 scs 0 Mar 31 08:42 b
--rw-r----- 1 m179998 scs 0 Mar 31 08:42 c</code></pre>
-<p>Notice that the group of the file is scs not mids, which is the default group.</p>
-<p>However, see what happens if we make this program set-user-id instead:</p>
-<pre><code>aviv@saddleback: lec-23-demo $ chmod g-s create_file
-aviv@saddleback: lec-23-demo $ chmod u+s create_file
-aviv@saddleback: lec-23-demo $ ls -l create_file
--rwsr-x--x 1 aviv scs 8620 Mar 31 08:41 create_file</code></pre>
-<pre><code>m179998@saddleback: ~ $ rm -f a b c
-m179998@saddleback: ~ $ ~aviv/lec-23-demo/create_file a b c
-open: Permission denied
-open: Permission denied
-open: Permission denied
-m179998@saddleback: ~ $ ls -l a b c
-ls: cannot access a: No such file or directory
-ls: cannot access b: No such file or directory
-ls: cannot access c: No such file or directory</code></pre>
-<p>The operation is not permitted, and this is because the user aviv does not have the permission to write to the directory. But, what if we wanted to create a file in the director that is owned by aviv in a directory that the real user has permission to write to? What we need is a way to programmatically change the capabilities.</p>
-<h4 id="programmatically-downgradingupgrading-capabilities"><span class="header-section-number">11.2.4.4</span> Programmatically Downgrading/Upgrading Capabilities</h4>
-<p>The set-bits automatically start a program with the effective user or group id set; however, there are times when we might want to downgrade priviledge or change permission dynamically. There are two system calls to change user/group settings of an executing process:</p>
+<pre><code>$ gcc 11/test_setid.c -o test_setid
+$ chmod 6755 test_setid
+$ ls -l test_setid
+-rwsr-sr-x   1 gparmer        gparmer     16880 2022-03-29 08:30 test_setid</code></pre>
+<p>Notice the <code>s</code> values to denote the <code>set-*-bits</code>.</p>
+<p><strong>Question:</strong></p>
+<ul>
+<li>Use the previous program as groups, one user compiling the file on the server, and the other running it. What do you observe? Recall that you can use <code>id</code> to print out both of your ids and groups. You might want to <code>cp test_setid ~</code> to make it more easily accessible from your home directory</li>
+<li><p>What happens if we enable the program to create files while using the <code>set-*-id</code> bits? Use the following program, set it as setuid, and have on of your peers create files, and <code>ls -l</code> to see who owns them.</p>
+<div class="sourceCode" id="cb281"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb281-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb281-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb281-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb281-4" title="4"><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></a>
+<a class="sourceLine" id="cb281-5" title="5"></a>
+<a class="sourceLine" id="cb281-6" title="6"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb281-7" title="7">main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[])</a>
+<a class="sourceLine" id="cb281-8" title="8">{</a>
+<a class="sourceLine" id="cb281-9" title="9">    <span class="dt">int</span> i, fd;</a>
+<a class="sourceLine" id="cb281-10" title="10"></a>
+<a class="sourceLine" id="cb281-11" title="11">    <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; argc; i++){</a>
+<a class="sourceLine" id="cb281-12" title="12">        <span class="co">/* create an empty file */</span></a>
+<a class="sourceLine" id="cb281-13" title="13">        <span class="cf">if</span>((fd = open(argv[i],O_CREAT,<span class="bn">0666</span>) &gt; <span class="dv">0</span>) &gt; <span class="dv">0</span>){</a>
+<a class="sourceLine" id="cb281-14" title="14">            close(fd);</a>
+<a class="sourceLine" id="cb281-15" title="15">        } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb281-16" title="16">            perror(<span class="st">&quot;open&quot;</span>);</a>
+<a class="sourceLine" id="cb281-17" title="17">        }</a>
+<a class="sourceLine" id="cb281-18" title="18">    }</a>
+<a class="sourceLine" id="cb281-19" title="19"></a>
+<a class="sourceLine" id="cb281-20" title="20">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb281-21" title="21">}</a></code></pre></div></li>
+</ul>
+<h4 id="programmatically-downgradingupgrading-capabilities"><span class="header-section-number">11.3.0.2</span> Programmatically Downgrading/Upgrading Capabilities</h4>
+<p>The set-bits automatically start a program with the effective user or group id set; however, there are times when we might want to <em>downgrade privilege</em> or change permission dynamically. There are two system calls to change user/group settings of an executing process:</p>
 <ul>
 <li><code>setuid(uid_t uid)</code> - change the effective user id of a process to uid <code>setgid(gid_t gid)</code> - change the effective group id of a proces to gid</li>
 </ul>
 <p>The requirements of <code>setuid()</code> (for all users other than root) is that the effective user id can be changed to the real user id of the program or to an effective user id as described in the set-bits. The root user, however, can downgrade to any user id and upgrade back to the root user. For <code>setgid()</code> the user can chance the group id to any group the user belongs to or as allowed by the set-group-id bit.</p>
 <p>Now we can look at a program that downgrades and upgrades a program dynamically:</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb298-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb298-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb298-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb298-4" title="4"></a>
-<a class="sourceLine" id="cb298-5" title="5"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb298-6" title="6">main()</a>
-<a class="sourceLine" id="cb298-7" title="7">{</a>
-<a class="sourceLine" id="cb298-8" title="8">  uid_t uid,euid;</a>
-<a class="sourceLine" id="cb298-9" title="9">  gid_t gid,egid;</a>
-<a class="sourceLine" id="cb298-10" title="10"></a>
-<a class="sourceLine" id="cb298-11" title="11">  uid_t saved_euid;</a>
-<a class="sourceLine" id="cb298-12" title="12"></a>
-<a class="sourceLine" id="cb298-13" title="13">  uid = getuid();</a>
-<a class="sourceLine" id="cb298-14" title="14">  gid = getgid();</a>
-<a class="sourceLine" id="cb298-15" title="15">  printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
-<a class="sourceLine" id="cb298-16" title="16"></a>
-<a class="sourceLine" id="cb298-17" title="17">  euid = geteuid();</a>
-<a class="sourceLine" id="cb298-18" title="18">  egid = getegid();</a>
-<a class="sourceLine" id="cb298-19" title="19">  printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
-<a class="sourceLine" id="cb298-20" title="20"></a>
-<a class="sourceLine" id="cb298-21" title="21"></a>
-<a class="sourceLine" id="cb298-22" title="22">  saved_euid=euid;</a>
-<a class="sourceLine" id="cb298-23" title="23">  setuid(uid);</a>
-<a class="sourceLine" id="cb298-24" title="24"></a>
-<a class="sourceLine" id="cb298-25" title="25">  printf(<span class="st">&quot;---- setuid(%d) ----</span><span class="sc">\n</span><span class="st">&quot;</span>,uid);</a>
-<a class="sourceLine" id="cb298-26" title="26"></a>
-<a class="sourceLine" id="cb298-27" title="27">  uid = getuid();</a>
-<a class="sourceLine" id="cb298-28" title="28">  gid = getgid();</a>
-<a class="sourceLine" id="cb298-29" title="29">  printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
-<a class="sourceLine" id="cb298-30" title="30"></a>
-<a class="sourceLine" id="cb298-31" title="31">  euid = geteuid();</a>
-<a class="sourceLine" id="cb298-32" title="32">  egid = getegid();</a>
-<a class="sourceLine" id="cb298-33" title="33">  printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
-<a class="sourceLine" id="cb298-34" title="34"></a>
-<a class="sourceLine" id="cb298-35" title="35"></a>
-<a class="sourceLine" id="cb298-36" title="36">  setuid(saved_euid);</a>
-<a class="sourceLine" id="cb298-37" title="37"></a>
-<a class="sourceLine" id="cb298-38" title="38">  printf(<span class="st">&quot;---- setuid(%d) ----</span><span class="sc">\n</span><span class="st">&quot;</span>,saved_euid);</a>
-<a class="sourceLine" id="cb298-39" title="39">  uid = getuid();</a>
-<a class="sourceLine" id="cb298-40" title="40">  gid = getgid();</a>
-<a class="sourceLine" id="cb298-41" title="41">  printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
-<a class="sourceLine" id="cb298-42" title="42"></a>
-<a class="sourceLine" id="cb298-43" title="43">  euid = geteuid();</a>
-<a class="sourceLine" id="cb298-44" title="44">  egid = getegid();</a>
-<a class="sourceLine" id="cb298-45" title="45">  printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
-<a class="sourceLine" id="cb298-46" title="46"></a>
-<a class="sourceLine" id="cb298-47" title="47">  <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb298-48" title="48">}</a></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb282-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb282-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb282-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb282-4" title="4"></a>
+<a class="sourceLine" id="cb282-5" title="5"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb282-6" title="6">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb282-7" title="7">{</a>
+<a class="sourceLine" id="cb282-8" title="8">    uid_t uid,euid;</a>
+<a class="sourceLine" id="cb282-9" title="9">    gid_t gid,egid;</a>
+<a class="sourceLine" id="cb282-10" title="10">    uid_t saved_euid;</a>
+<a class="sourceLine" id="cb282-11" title="11"></a>
+<a class="sourceLine" id="cb282-12" title="12">    uid = getuid();</a>
+<a class="sourceLine" id="cb282-13" title="13">    gid = getgid();</a>
+<a class="sourceLine" id="cb282-14" title="14">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb282-15" title="15"></a>
+<a class="sourceLine" id="cb282-16" title="16">    euid = geteuid();</a>
+<a class="sourceLine" id="cb282-17" title="17">    egid = getegid();</a>
+<a class="sourceLine" id="cb282-18" title="18">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb282-19" title="19"></a>
+<a class="sourceLine" id="cb282-20" title="20">    saved_euid=euid;</a>
+<a class="sourceLine" id="cb282-21" title="21">    setuid(uid);</a>
+<a class="sourceLine" id="cb282-22" title="22">    printf(<span class="st">&quot;---- setuid(%d) ----</span><span class="sc">\n</span><span class="st">&quot;</span>,uid);</a>
+<a class="sourceLine" id="cb282-23" title="23"></a>
+<a class="sourceLine" id="cb282-24" title="24">    uid = getuid();</a>
+<a class="sourceLine" id="cb282-25" title="25">    gid = getgid();</a>
+<a class="sourceLine" id="cb282-26" title="26">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb282-27" title="27"></a>
+<a class="sourceLine" id="cb282-28" title="28">    euid = geteuid();</a>
+<a class="sourceLine" id="cb282-29" title="29">    egid = getegid();</a>
+<a class="sourceLine" id="cb282-30" title="30">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb282-31" title="31"></a>
+<a class="sourceLine" id="cb282-32" title="32">    setuid(saved_euid);</a>
+<a class="sourceLine" id="cb282-33" title="33">    printf(<span class="st">&quot;---- setuid(%d) ----</span><span class="sc">\n</span><span class="st">&quot;</span>,saved_euid);</a>
+<a class="sourceLine" id="cb282-34" title="34">    uid = getuid();</a>
+<a class="sourceLine" id="cb282-35" title="35">    gid = getgid();</a>
+<a class="sourceLine" id="cb282-36" title="36">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb282-37" title="37"></a>
+<a class="sourceLine" id="cb282-38" title="38">    euid = geteuid();</a>
+<a class="sourceLine" id="cb282-39" title="39">    egid = getegid();</a>
+<a class="sourceLine" id="cb282-40" title="40">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb282-41" title="41"></a>
+<a class="sourceLine" id="cb282-42" title="42">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb282-43" title="43">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code> uid=1000  gid=1000
 euid=1000 egid=1000
@@ -6412,19 +6322,29 @@ euid=1000 egid=1000
 ---- setuid(1000) ----
  uid=1000  gid=1000
 euid=1000 egid=1000</code></pre>
-<p>If we look at the output with the program set-user-id ran by m179998:</p>
-<pre><code>m179998@saddleback: ~ $ ~aviv/lec-23-demo/setuid
- uid=179998  gid=15000
-euid=35001 egid=15000
----- setuid(179998) ----
- uid=179998  gid=15000
-euid=179998 egid=15000
----- setuid(35001) ----
- uid=179998  gid=15000
-euid=35001 egid=15000</code></pre>
-<h3 id="sudo-and-su"><span class="header-section-number">11.2.5</span> <code>sudo</code> and <code>su</code></h3>
-<p>With this understanding of how user and group id are assigned, we can turn our attention to two built in commands that perform these actions. In particular, sudo and su which will execute a command as a specified user or switch to a specified user. By default, these commands execute as the root user, and you need to know the root password or have sudo access to use them.</p>
-<p>We can see this as the case if I were to run the <code>get_euidegid</code> program using sudo. First notice that it is no longer set-group or set-user:</p>
+<p><strong>Question:</strong></p>
+<ul>
+<li>Run this program yourself. What do think will happen if you have a peer run it on the server after you set the <code>set-uid</code> bit? Run it and see!</li>
+</ul>
+<h2 id="applications-of-identify-and-permission-management"><span class="header-section-number">11.4</span> Applications of Identify and Permission Management</h2>
+<h3 id="logging-events-selectively-increasing-access-rights"><span class="header-section-number">11.4.1</span> Logging Events: Selectively Increasing Access Rights</h3>
+<p>We previously covered the general desire to have a log in the system of the events for different activities. For example, logging when each user logs in, when clients make web requests of an http server, etc…</p>
+<p>We might support two high-level operations:</p>
+<ol type="1">
+<li>adding a logging event, and</li>
+<li>reading the log.</li>
+</ol>
+<p>If we don’t care to censor the log, we can support the second very easily by, for example, making the log file’s group the <code>log</code> group, and giving read (<code>4</code>) permissions to the log for anyone in that group. Now any user in the <code>log</code>group can read the log.</p>
+<p>However, to support adding logging events to the log, we might use the set-uid-bit to ensure that a <code>log</code> program runs with the effictive user-id of the logger user. Thus, it will be able to append to the log in a straightforward manner.</p>
+<h3 id="logging-in-carefully-decreasing-access-rights"><span class="header-section-number">11.4.2</span> Logging In: Carefully Decreasing Access Rights</h3>
+<p>One example of how you might want to use the identity management APIs is when logging in. The process of logging in requires that the <code>login</code> program access sensitive files that include (encrypted) user passwords (<code>/etc/shadow</code>). Understandably, users don’t generally have access to these files. Thus, the act of logging in requires programs running as <code>root</code> to read in username and password. Only if they match the proper values for a user, will the login logic then change uid/gid to the corresponding user and group id, and execute a shell for the user (as the user). See the figure for more details.</p>
+<figure>
+<img src="figures/login.svg" alt="The login procedure on a system. On a system that uses a nameserver like systemd, it will ensure that terminals are available (either attached to the keyboard/monitor, or remote) by executing the getty (link), or “get tty” program (or ssh for remote, or gdm for graphical) which makes available a terminal for a user to interact with. getty executes the login (link) program that reads the username and password from the user. If it is unable to find a match, it exits, letting systemd start again. If the username and password match what is in the /etc/passwd and /etc/shadow (password) files, it will change the user and group ids to those for the user in the /etc/passwd file, change to the home directory specified in that same file, and exec the corresponding shell." /><figcaption>The login procedure on a system. On a system that uses a nameserver like <code>systemd</code>, it will ensure that terminals are available (either attached to the keyboard/monitor, or remote) by executing the <a href="https://github.com/mirror/busybox/blob/master/loginutils/getty.c"><code>getty</code> (link)</a>, or “get tty” program (or <code>ssh</code> for remote, or <code>gdm</code> for graphical) which makes available a terminal for a user to interact with. <code>getty</code> executes the <a href="https://github.com/mirror/busybox/blob/master/loginutils/login.c"><code>login</code> (link)</a> program that reads the username and password from the user. If it is unable to find a match, it exits, letting <code>systemd</code> start again. If the username and password match what is in the <code>/etc/passwd</code> and <code>/etc/shadow</code> (password) files, it will change the user and group ids to those for the user in the <code>/etc/passwd</code> file, change to the home directory specified in that same file, and <code>exec</code> the corresponding shell.</figcaption>
+</figure>
+<h3 id="sudo-and-su-increasing-access-rights"><span class="header-section-number">11.4.3</span> <code>sudo</code> and <code>su</code>: Increasing Access Rights</h3>
+<p>There are many times in systems that we want to <em>increase</em> the privileges of a human. For example, for security, it is often <em>not possible</em> to login as <em>root</em>. But it is certainly true that sometimes humans need to be able to run commands as root. For example, updating some software, installing new software, creating new users, and many other operations, all require <em>root</em>.</p>
+<p>To control who is able to execute commands as <em>root</em>, the <code>sudo</code> and <code>su</code> programs enable restricted access to root privileges. Specifically, <code>sudo</code> and <code>su</code> will execute a command as a <em>specified user</em> or <em>switch to a specified user</em>. By default, these commands execute as the root user, and you need to know the root password or have sudo access to use them.</p>
+<p>We can see this as the case if I were to run the <code>get_euidegid</code> program using <code>sudo</code>. First notice that it is no longer set-group or set-user:</p>
 <pre><code>aviv@saddleback: lec-23-demo $ ls -l get_euidegid
 -rwxr-x--x 1 aviv scs 8730 Mar 31 08:31 get_euidegid
 aviv@saddleback: lec-23-demo $ sudo ./get_euidegid
@@ -6432,7 +6352,7 @@ aviv@saddleback: lec-23-demo $ sudo ./get_euidegid
  uid=0  gid=0
 euid=0 egid=0</code></pre>
 <p>After sudo authenticated me, the program’s effective and real user identification becomes 0 which is the uid/gid for the root user.</p>
-<h4 id="sudoers"><span class="header-section-number">11.2.5.1</span> sudoers</h4>
+<h4 id="sudoers"><span class="header-section-number">11.4.3.1</span> sudoers</h4>
 <p>Who has permission to run sudo commands? This is important because on many modern unix systems, like ubuntu, there is no default root password. Instead certain users are deemed to be sudoers or privileged users. These are set in a special configuraiton file called the <code>/etc/sudoers</code>.</p>
 <pre><code>aviv@saddleback: lec-23-demo $ cat /etc/sudoers
 cat: /etc/sudoers: Permission denied
@@ -6475,6 +6395,10 @@ uid=35001(aviv) gid=10120(scs) groups=10120(scs),27(sudo),15000(mids),15001(ic22
 <p>However, on a lab machine, I do not have such group settings:</p>
 <pre><code>aviv@mich302csd01u: ~ $ id
 uid=35001(aviv) gid=10120(scs) groups=10120(scs),15000(mids)</code></pre>
+<h4 id="assignment-submission"><span class="header-section-number">11.4.3.2</span> Assignment Submission</h4>
+<p>What if we did assignment submission by simply executing a program that copied a directory into the instructor’s home directory? For example, if you wanted to submit the directory of code at <code>my_hw/</code> for homework <code>HW1</code>,</p>
+<pre><code>$ ./3410_submit HW1 my_hw</code></pre>
+<p>This program, run by you, has your user and group permissions, but it is able to take your submission and copy/save those submissions to my home directory, with my permissions at a location where you do not have access to write. How is that possible? Of course, using the <code>set-uid/gid</code> bits!</p>
 <h1 id="security-attacks-on-system-programs"><span class="header-section-number">12</span> Security: Attacks on System Programs</h1>
 <blockquote>
 <p><strong>This material directly adapted from Prof. Aviv’s <a href="https://classes.adamaviv.com/ic221/s18/units/07/unit.html#org67f4730">material</a>.</strong></p>
@@ -6713,43 +6637,43 @@ Goodbye World</code></pre>
 <p>At this point, we own this program (pwn in the parlance). If the program were set-user-id, we could escalate our privilege.</p>
 <h2 id="overflow-attacks"><span class="header-section-number">12.3</span> Overflow Attacks</h2>
 <p>Two attacks down, moving onto the third. Let’s now assume that the programmer has wised up to the two previous attacks. Now we are using full paths to executables and we are scrubbing the input to remove any potential bash commands prior to execution. The result is the following program:</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb328-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb328-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb328-3" title="3"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
-<a class="sourceLine" id="cb328-4" title="4"></a>
-<a class="sourceLine" id="cb328-5" title="5"></a>
-<a class="sourceLine" id="cb328-6" title="6"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb328-7" title="7">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb328-8" title="8">{</a>
-<a class="sourceLine" id="cb328-9" title="9">    <span class="dt">char</span> cmd[<span class="dv">1024</span>] = <span class="st">&quot;/bin/cat ./&quot;</span>; <span class="co">//will append to this string</span></a>
-<a class="sourceLine" id="cb328-10" title="10">    <span class="dt">char</span> input[<span class="dv">40</span>];</a>
-<a class="sourceLine" id="cb328-11" title="11"></a>
-<a class="sourceLine" id="cb328-12" title="12">    printf(<span class="st">&quot;What input do you want to &#39;cat&#39; (choose from below)</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb328-13" title="13">    system(<span class="st">&quot;/bin/ls&quot;</span>); <span class="co">//show available files</span></a>
-<a class="sourceLine" id="cb328-14" title="14"></a>
-<a class="sourceLine" id="cb328-15" title="15">    printf(<span class="st">&quot;input &gt; &quot;</span>);</a>
-<a class="sourceLine" id="cb328-16" title="16">    fflush(stdout); <span class="co">//force stdout to print</span></a>
-<a class="sourceLine" id="cb328-17" title="17"></a>
-<a class="sourceLine" id="cb328-18" title="18">    scanf(<span class="st">&quot;%s&quot;</span>,input);<span class="co">//read input</span></a>
-<a class="sourceLine" id="cb328-19" title="19"></a>
-<a class="sourceLine" id="cb328-20" title="20">  <span class="co">//clean input before passing to /bin/cat</span></a>
-<a class="sourceLine" id="cb328-21" title="21">    <span class="dt">int</span> i;</a>
-<a class="sourceLine" id="cb328-22" title="22">    <span class="cf">for</span> (i=<span class="dv">0</span>; i&lt;<span class="dv">40</span>; i++) {</a>
-<a class="sourceLine" id="cb328-23" title="23">        <span class="cf">if</span> (input[i] == <span class="ch">&#39;;&#39;</span> || input[i] == <span class="ch">&#39;|&#39;</span> || input[i] == <span class="ch">&#39;$&#39;</span> || input[i] == <span class="ch">&#39;&amp;&#39;</span>) {</a>
-<a class="sourceLine" id="cb328-24" title="24">            input[i] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>; <span class="co">//change all ;,|,$,&amp; to a NULL</span></a>
-<a class="sourceLine" id="cb328-25" title="25">        }</a>
-<a class="sourceLine" id="cb328-26" title="26">    }</a>
-<a class="sourceLine" id="cb328-27" title="27"></a>
-<a class="sourceLine" id="cb328-28" title="28">    <span class="co">//concatenate the two strings</span></a>
-<a class="sourceLine" id="cb328-29" title="29">    strcat(cmd,input);</a>
-<a class="sourceLine" id="cb328-30" title="30"></a>
-<a class="sourceLine" id="cb328-31" title="31">    printf(<span class="st">&quot;Executing: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, cmd);</a>
-<a class="sourceLine" id="cb328-32" title="32">    fflush(stdout);</a>
-<a class="sourceLine" id="cb328-33" title="33"></a>
-<a class="sourceLine" id="cb328-34" title="34">    system(cmd);</a>
-<a class="sourceLine" id="cb328-35" title="35"></a>
-<a class="sourceLine" id="cb328-36" title="36">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb328-37" title="37">}</a></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb312-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb312-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb312-3" title="3"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb312-4" title="4"></a>
+<a class="sourceLine" id="cb312-5" title="5"></a>
+<a class="sourceLine" id="cb312-6" title="6"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb312-7" title="7">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb312-8" title="8">{</a>
+<a class="sourceLine" id="cb312-9" title="9">    <span class="dt">char</span> cmd[<span class="dv">1024</span>] = <span class="st">&quot;/bin/cat ./&quot;</span>; <span class="co">//will append to this string</span></a>
+<a class="sourceLine" id="cb312-10" title="10">    <span class="dt">char</span> input[<span class="dv">40</span>];</a>
+<a class="sourceLine" id="cb312-11" title="11"></a>
+<a class="sourceLine" id="cb312-12" title="12">    printf(<span class="st">&quot;What input do you want to &#39;cat&#39; (choose from below)</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb312-13" title="13">    system(<span class="st">&quot;/bin/ls&quot;</span>); <span class="co">//show available files</span></a>
+<a class="sourceLine" id="cb312-14" title="14"></a>
+<a class="sourceLine" id="cb312-15" title="15">    printf(<span class="st">&quot;input &gt; &quot;</span>);</a>
+<a class="sourceLine" id="cb312-16" title="16">    fflush(stdout); <span class="co">//force stdout to print</span></a>
+<a class="sourceLine" id="cb312-17" title="17"></a>
+<a class="sourceLine" id="cb312-18" title="18">    scanf(<span class="st">&quot;%s&quot;</span>,input);<span class="co">//read input</span></a>
+<a class="sourceLine" id="cb312-19" title="19"></a>
+<a class="sourceLine" id="cb312-20" title="20">  <span class="co">//clean input before passing to /bin/cat</span></a>
+<a class="sourceLine" id="cb312-21" title="21">    <span class="dt">int</span> i;</a>
+<a class="sourceLine" id="cb312-22" title="22">    <span class="cf">for</span> (i=<span class="dv">0</span>; i&lt;<span class="dv">40</span>; i++) {</a>
+<a class="sourceLine" id="cb312-23" title="23">        <span class="cf">if</span> (input[i] == <span class="ch">&#39;;&#39;</span> || input[i] == <span class="ch">&#39;|&#39;</span> || input[i] == <span class="ch">&#39;$&#39;</span> || input[i] == <span class="ch">&#39;&amp;&#39;</span>) {</a>
+<a class="sourceLine" id="cb312-24" title="24">            input[i] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>; <span class="co">//change all ;,|,$,&amp; to a NULL</span></a>
+<a class="sourceLine" id="cb312-25" title="25">        }</a>
+<a class="sourceLine" id="cb312-26" title="26">    }</a>
+<a class="sourceLine" id="cb312-27" title="27"></a>
+<a class="sourceLine" id="cb312-28" title="28">    <span class="co">//concatenate the two strings</span></a>
+<a class="sourceLine" id="cb312-29" title="29">    strcat(cmd,input);</a>
+<a class="sourceLine" id="cb312-30" title="30"></a>
+<a class="sourceLine" id="cb312-31" title="31">    printf(<span class="st">&quot;Executing: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, cmd);</a>
+<a class="sourceLine" id="cb312-32" title="32">    fflush(stdout);</a>
+<a class="sourceLine" id="cb312-33" title="33"></a>
+<a class="sourceLine" id="cb312-34" title="34">    system(cmd);</a>
+<a class="sourceLine" id="cb312-35" title="35"></a>
+<a class="sourceLine" id="cb312-36" title="36">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb312-37" title="37">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>01
 02
@@ -6779,8 +6703,8 @@ templates
 title.md
 tools
 What input do you want to &#39;cat&#39; (choose from below)
-input &gt; Executing: /bin/cat ./.c
-/bin/cat: ./.c: No such file or directory</code></pre>
+input &gt; Executing: /bin/cat ./execvp_cat
+/bin/cat: ./execvp_cat: No such file or directory</code></pre>
 <pre><code>aviv@saddleback: demo $ make
 clang -g -Wall    cat.c   -o cat
 clang -g -Wall    overflow_system.c   -o overflow_system
@@ -6806,69 +6730,66 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</code></pre>
 <p>I’m using this to produce strings of varying length, length 10, 20, 30, 40, and 50. Those strings can be sent to the target program using a pipe. And we can see the result:</p>
 <pre><code>aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*10&quot; | ./overflow_system
 What input do you want to &#39;cat&#39; (choose from below)
-cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
-cat.c  execvp_cat.c  inject_system.c  input.txt     mal-lib   overflow_system.c  run_foo         run_foo.o  setenv_cat.c  shared-lib     system_cat.c
-input &gt; Executing: /bin/cat ./AAAAAAAAAA
-/bin/cat: ./AAAAAAAAAA: No such file or directory
-aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*20&quot; | ./overflow_system
+cat AA
+Goodbye World</code></pre>
+<p>Now when we execute the overflow, we get our desired “Goodbye World” result:</p>
+<pre><code>aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*50&quot; | ./overflow_system
 What input do you want to &#39;cat&#39; (choose from below)
-cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
-cat.c  execvp_cat.c  inject_system.c  input.txt     mal-lib   overflow_system.c  run_foo         run_foo.o  setenv_cat.c  shared-lib     system_cat.c
-input &gt; Executing: /bin/cat ./AAAAAAAAAAAAAAAAAAAA
-/bin/cat: ./AAAAAAAAAAAAAAAAAAAA: No such file or directory
-aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*30&quot; | ./overflow_system
-What input do you want to &#39;cat&#39; (choose from below)
-cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
-cat.c  execvp_cat.c  inject_system.c  input.txt     mal-lib   overflow_system.c  run_foo         run_foo.o  setenv_cat.c  shared-lib     system_cat.c
-input &gt; Executing: /bin/cat ./AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-/bin/cat: ./AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: No such file or directory
-aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*40&quot; | ./overflow_system
-What input do you want to &#39;cat&#39; (choose from below)
-cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
-cat.c  execvp_cat.c  inject_system.c  input.txt     mal-lib   overflow_system.c  run_foo         run_foo.o  setenv_cat.c  shared-lib     system_cat.c
-input &gt; Executing: /bin/cat ./AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-/bin/cat: ./AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: No such file or directory
-aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*50&quot; | ./overflow_system
-What input do you want to &#39;cat&#39; (choose from below)
-cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
-cat.c  execvp_cat.c  inject_system.c  input.txt     mal-lib   overflow_system.c  run_foo         run_foo.o  setenv_catneed to spend significant development time *simplifying* your code.
-Conventions are a set of codified simplifications, in some sense.
-They provide your a set of rules (that you don&#39;t need to think about, you just do) to simplify the structure of your code.
-
-OK, onward to conventions!
-
-## Naming Conventions
-
-There are many potential naming conventions, for example, [camel case](https://en.wikipedia.org/wiki/Camel_case), [snake case](https://en.wikipedia.org/wiki/Snake_case), and [hungarian notiation](https://en.wikipedia.org/wiki/Hungarian_notation).
-Some are antiquated (hungarian), but most are a matter of taste and convention.
-
-&gt; **Convention.**
-&gt; Most C uses lower-case `snake_case` for variables, types, and functions, capital `SNAKE_CASE` for constants and macros.
-
-Stick to this convention.
-A new convention will likely not feel &quot;right&quot; because it is new and different.
-Remember that they are subjective, but the aim to apply them uniformly.
-
-For names that are visible across `.c` files (i.e. functions in a `.h` file), use names that are the shortest they can be to convey the functionality.
-Within functions, names can be short, and here there are a few conventions as well:
-
-- `ret` is a variable that stores a return value (i.e. a value that will later be used as in `return ret;`).
-- `i`, `j`, `k`, `l` are iterator variables.
-
-## Namespacing
-
-When you create a global variable, type, or function, you&#39;re creating a symbol that can be accessed for any `.c` file.
-This has a significant downside: if you choose a name that is already used in a library, or that is common, you might get a linker error along the lines of:
-</code></pre>
-<p>multiple definition of `foo’; /tmp/ccrvA8in.o:a.c:(.text+0x0): first defined here … collect2: error: ld returned 1 exit status ```</p>
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+cat
+cat.c
+execvp_cat
+execvp_cat.c
+inject_system
+inject_system.c
+inject_system.c~
+input.txt
+Makefile
+mal-lib
+overflow_system
+overflow_system.c
+overflow_system.c~
+run_foo
+run_foo.c
+run_foo.o
+setenv_cat
+setenv_cat.c
+setenv_cat.c~
+shared-lib
+system_cat
+system_cat.c
+#system-ex.c#
+input &gt; Executing: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Goodbye World</code></pre>
+<p>How do we fix overflow bugs? The most direct way is to always bound checks on strings. For example, always use <code>strncp()</code> or <code>strncat()</code>, but that is even sometimes not sufficient. In the end, it requires good programmers who understand security and can identify bad programming practices. This is just a small set of examples of bad programs.</p>
+<h1 id="appendix-c-programming-conventions"><span class="header-section-number">13</span> Appendix: C Programming Conventions</h1>
+<p>C gives you quite a bit of freedom in how you write your code. Conventions are <em>necessary</em> in C because they bring order to the unrestricted freedom that allows code that is too complicated to debug, too clever to understand, and completely unmaintainable. Conventions are a set of rules that we follow that inherently <em>limit</em> the way in which we write code. The intention is to put <a href="https://en.wikipedia.org/wiki/Guard_rail">guard rails</a> onto our development process and to only deviate from the conventions in exceptional cases. An important aspect of this is that once you understand the conventions, it is <em>drastically easier to read the code</em> because you only have to consider how convention-based code is written. This means that there is a significant importance to uniformly applying conventions. Because of this, it is less important if one likes the conventions, than it is to adhere to them for uniformity.</p>
+<p>Put another way, it is easy for <em>any</em> programmer to code themself into a corner where the program is more complex than our brains can handle. Being an experienced programmer is <em>much less</em> about being able to handle more complexity, and much more about understanding that you need to spend significant development time <em>simplifying</em> your code. Conventions are a set of codified simplifications, in some sense. They provide your a set of rules (that you don’t need to think about, you just do) to simplify the structure of your code.</p>
+<p>OK, onward to conventions!</p>
+<h2 id="naming-conventions"><span class="header-section-number">13.1</span> Naming Conventions</h2>
+<p>There are many potential naming conventions, for example, <a href="https://en.wikipedia.org/wiki/Camel_case">camel case</a>, <a href="https://en.wikipedia.org/wiki/Snake_case">snake case</a>, and <a href="https://en.wikipedia.org/wiki/Hungarian_notation">hungarian notiation</a>. Some are antiquated (hungarian), but most are a matter of taste and convention.</p>
+<blockquote>
+<p><strong>Convention.</strong> Most C uses lower-case <code>snake_case</code> for variables, types, and functions, capital <code>SNAKE_CASE</code> for constants and macros.</p>
+</blockquote>
+<p>Stick to this convention. A new convention will likely not feel “right” because it is new and different. Remember that they are subjective, but the aim to apply them uniformly.</p>
+<p>For names that are visible across <code>.c</code> files (i.e. functions in a <code>.h</code> file), use names that are the shortest they can be to convey the functionality. Within functions, names can be short, and here there are a few conventions as well:</p>
+<ul>
+<li><code>ret</code> is a variable that stores a return value (i.e. a value that will later be used as in <code>return ret;</code>).</li>
+<li><code>i</code>, <code>j</code>, <code>k</code>, <code>l</code> are iterator variables.</li>
+</ul>
+<h2 id="namespacing"><span class="header-section-number">13.2</span> Namespacing</h2>
+<p>When you create a global variable, type, or function, you’re creating a symbol that can be accessed for any <code>.c</code> file. This has a significant downside: if you choose a name that is already used in a library, or that is common, you might get a linker error along the lines of:</p>
+<pre><code>multiple definition of `foo&#39;; /tmp/ccrvA8in.o:a.c:(.text+0x0): first defined here
+...
+collect2: error: ld returned 1 exit status</code></pre>
 <p>This means that the naming choices each application and library makes can easily cause such a problem.</p>
 <blockquote>
 <p><strong>Convention.</strong> Thus, the convention is that you should “namespace” your functions and variables by pre-pending them with a functionality-specific prefix. For example, a key-value store might have all of its types, variables, and functions prefixed with <code>kv_</code>, for example, <code>kv_get</code>.</p>
 </blockquote>
-<h2 id="headers-and-visibility"><span class="header-section-number">12.4</span> Headers and Visibility</h2>
+<h2 id="headers-and-visibility"><span class="header-section-number">13.3</span> Headers and Visibility</h2>
 <p>C does not have classes and the rules therein to support per-class/object encapsulation. Instead, C views each <code>.c</code> file as a unit of visibility. Functions and global variables (known as “symbols”) can be hooked up with references to them in other objects by the linker. However, it is possible to write code in a <code>.c</code> file that is <em>not visible</em> outside of that file. In contrast to the linking error above emphasizing good naming, if a symbol is marked as <code>static</code>, no other <code>.c</code> file will be able to reference that symbol.</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb333-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
-<a class="sourceLine" id="cb333-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb319-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
+<a class="sourceLine" id="cb319-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
 <p>No other <code>.c</code> file can define code that will be able to access <code>global_var</code> nor call <code>foo</code>. You can see the list of all symbols within a <code>.c</code> file that are accessible outside of it by compiling into a <code>.o</code> file (using <code>gcc -c ...</code>), and <code>nm -g --defined-only x.o | awk '{print $3}'</code> (replace <code>x</code> with your object file name).</p>
 <blockquote>
 <p><strong>Convention.</strong> All functions and variables that are not part of the <em>public interface</em> with which to interact with the <code>.c</code> file should be <code>static</code> so that they cannot be used from other objects.</p>
@@ -6879,13 +6800,13 @@ This has a significant downside: if you choose a name that is already used in a 
 </blockquote>
 <p>When we include a file, it just copies the file at the point of the <code>#include</code>. Thus, if the same header is included separately into two <code>.c</code> files, then it effectively replicates the header’s contents into the two <code>.o</code> files. This can cause problems if the two <code>.o</code> files are linked together. An example:</p>
 <p><code>a.c</code>:</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb334-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb320-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
 <p><code>b.c</code>:</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb335-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
-<a class="sourceLine" id="cb335-2" title="2"></a>
-<a class="sourceLine" id="cb335-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb321-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
+<a class="sourceLine" id="cb321-2" title="2"></a>
+<a class="sourceLine" id="cb321-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
 <p><code>c.h</code>:</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb336-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb322-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
 <p>After compiling these files, we get</p>
 <pre><code>$ gcc -c a.c -o a.o
 $ gcc -c b.c -o b.o
@@ -6897,45 +6818,45 @@ collect2: error: ld returned 1 exit status</code></pre>
 <blockquote>
 <p><strong>Convention.</strong> Never put global data in a <code>.h</code> file. Only put type information (e.g. function declarations) in <code>.h</code> files<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>.</p>
 </blockquote>
-<h2 id="what-to-include"><span class="header-section-number">12.5</span> What to Include?</h2>
+<h2 id="what-to-include"><span class="header-section-number">13.4</span> What to Include?</h2>
 <p>You <em>must</em> include the header files that provide the functionality that you rely on and use. This sounds obvious, but it is <em>very</em> easy to mess this up. A couple of examples:</p>
 <p><em>Example 1: Implementing a library.</em> You’re implementing a library, and you have a <code>.h</code> file for it that exposes the types of the library’s functions. You test your library, and it works wonderfully – victory! However, because it is a library, it might be used by other people’s code, and all they are going to do is <code>#include &lt;your_lib.h&gt;</code>, and expect everything to work.</p>
 <p>What if the following happened? Your <code>your_lib.h</code> file does this:</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb338-1" title="1"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb338-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb338-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb324-1" title="1"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb324-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb324-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
 <p>In your test file, you do this:</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb339-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
-<a class="sourceLine" id="cb339-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb339-3" title="3"></a>
-<a class="sourceLine" id="cb339-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb325-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
+<a class="sourceLine" id="cb325-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb325-3" title="3"></a>
+<a class="sourceLine" id="cb325-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>Your tests of your library work wonderfully! But if the user of your library simply does:</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb340-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb340-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb326-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb326-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
 <p>The user will get a compiler error that says it doesn’t understand what <code>size_t</code> is! The core problem is that your library’s header file didn’t include all of the headers it relies on! Instead, it should updated to look like so:</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb341-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
-<a class="sourceLine" id="cb341-2" title="2"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb341-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb341-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb327-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
+<a class="sourceLine" id="cb327-2" title="2"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb327-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb327-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>A good way to defensively code to try to minimize the chance that this error happens, you should include your header files <em>before</em> the rest of the header files. The only real solution is to be very careful, and always include what headers are necessary for the functionality you depend on.</p>
 <p><em>Example 2: implementing a program or test.</em> A <code>.c</code> file, lets say <code>my_prog.c</code>, includes some header file, <code>head.h</code>. It compiles just fine. But if <code>my_prog.c</code> relies on some header file – lets say <code>dep.h</code> – that is only included itself in the <code>head.h</code> file, then if <code>head.h</code> is updated and removes the include, it will break any program that depends on it! In this case, <code>my_prog.c</code> should explicitly include <code>dep.h</code>: include the headers that are required for your functionality!</p>
 <p><em>How do you know which headers to include?</em> If you’re using a system function, the <code>man</code> page for it is explicit about which headers provide the necessary functionality. If you’re implementing a library in the class, we are explicit about what headers are required.</p>
-<h2 id="depth-complexity"><span class="header-section-number">12.6</span> Depth = Complexity</h2>
+<h2 id="depth-complexity"><span class="header-section-number">13.5</span> Depth = Complexity</h2>
 <p>Syntactic nesting, or depth often significantly increase the cognitive complexity in C<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>. Two examples of this:</p>
 <p><strong>Depth through indentation nesting.</strong> Each additional nesting level (each nested set of <code>{}</code>) adds another condition that you must keep in your mind<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a> when understanding the code. This includes the conditions, or looping conditions associated with the nesting level. This is <em>a lot</em> to keep in your head, and makes developing and reading code quite a bit more difficult.</p>
 <p>What can you do to avoid this nesting? <em>First</em>, return early for errors. Instead of the following code…</p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb342-1" title="1"><span class="cf">if</span> (a) {</a>
-<a class="sourceLine" id="cb342-2" title="2">    <span class="co">/* normal code */</span></a>
-<a class="sourceLine" id="cb342-3" title="3">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb342-4" title="4">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb342-5" title="5">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb342-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb328-1" title="1"><span class="cf">if</span> (a) {</a>
+<a class="sourceLine" id="cb328-2" title="2">    <span class="co">/* normal code */</span></a>
+<a class="sourceLine" id="cb328-3" title="3">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb328-4" title="4">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb328-5" title="5">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb328-6" title="6">}</a></code></pre></div>
 <p>…do the following…</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb343-1" title="1"><span class="cf">if</span> (!a) {</a>
-<a class="sourceLine" id="cb343-2" title="2">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb343-3" title="3">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb343-4" title="4">}</a>
-<a class="sourceLine" id="cb343-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb329-1" title="1"><span class="cf">if</span> (!a) {</a>
+<a class="sourceLine" id="cb329-2" title="2">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb329-3" title="3">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb329-4" title="4">}</a>
+<a class="sourceLine" id="cb329-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
 <p>Though seemingly trivial, it enables you to separate your understanding of error conditions from the complexity of the following code. Try to perform as much error checking as soon as it possibly can be done so that you can switch into “normal case” thinking.</p>
 <p><em>Second</em>, if you nest deeper than four levels of brackets, then pull code out into appropriately-named functions. Long functions aren’t necessarily bad, but <em>complex</em> functions are.</p>
 <blockquote>
@@ -6947,23 +6868,23 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>I use indentation levels in C of eight visual spaces to make it visually clear when I’m indenting too much.</p>
 <p><strong>Depth through field nesting.</strong> It can be quite difficult to follow code that nests access to fields. For example:</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb344-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb330-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
 <p>Of course, this is fake code, but even if it wasn’t, keeping track of the types of each of the levels of increasing depth of field reference is nearly impossible. This will make writing the code fickle and challenging, and reading the code, needlessly complex.</p>
 <p>The main means we have to remove this complexity is to</p>
 <ol type="1">
 <li><p>Create an set of typed variables</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb345-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
-<a class="sourceLine" id="cb345-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
-<a class="sourceLine" id="cb345-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
-<a class="sourceLine" id="cb345-4" title="4"></a>
-<a class="sourceLine" id="cb345-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb331-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
+<a class="sourceLine" id="cb331-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
+<a class="sourceLine" id="cb331-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
+<a class="sourceLine" id="cb331-4" title="4"></a>
+<a class="sourceLine" id="cb331-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
 It is up to you to decide where it is right to provide an “intermediate” type for a certain depth in the fields, and when to directly dive into a few fields.</li>
 <li><p>If any the structs (or sub-structs, or arrays) represents an API layer, then you can call a function that performs the necessary operation on that part of the data-structure. This both provide abstraction over the data access, and documents the types.</p></li>
 </ol>
 <blockquote>
 <p><strong>Convention.</strong> When faced with walking through nested composite data-structures, use intermediate variables to make types explicit, or functions to abstract operations.</p>
 </blockquote>
-<h2 id="object-orientation-initialization-destruction-and-methods"><span class="header-section-number">12.7</span> Object Orientation: Initialization, Destruction, and Methods</h2>
+<h2 id="object-orientation-initialization-destruction-and-methods"><span class="header-section-number">13.6</span> Object Orientation: Initialization, Destruction, and Methods</h2>
 <p>C is an imperative programming language as it came before Object Orientation (OO) took hold. That said, the OO concept of <a href="https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)">encapsulation</a> behind an <a href="https://en.wikipedia.org/wiki/Abstract_data_type">abstract data type</a> is a universal requirement of programming in complex environments. Though C doesn’t support this explicitly, conventions can provide much of the same benefit. Such an abstraction requires</p>
 <ol type="1">
 <li>a <em>datatype</em> that stores the information required for the abstraction (think: a list, a key-value store, etc…),</li>
