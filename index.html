@@ -288,11 +288,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#unix-security-users-groups-and-filesystem-permissions"><span class="toc-section-number">11</span> UNIX Security: Users, Groups, and Filesystem Permissions</a><ul>
         <li><a href="#file-and-directory-permissions"><span class="toc-section-number">11.1</span> File and Directory Permissions</a><ul>
         <li><a href="#file-ownership-and-groups"><span class="toc-section-number">11.1.1</span> File Ownership and Groups</a></li>
-        <li><a href="#the-password-and-group-file"><span class="toc-section-number">11.1.2</span> The password and group file</a></li>
-        <li><a href="#file-permissions"><span class="toc-section-number">11.1.3</span> File Permissions</a></li>
-        <li><a href="#numerical-representation-of-permissions"><span class="toc-section-number">11.1.4</span> Numerical Representation of Permissions</a></li>
-        <li><a href="#updating-filedirectory-permissions"><span class="toc-section-number">11.1.5</span> Updating File/Directory Permissions</a></li>
-        <li><a href="#changing-filedirectory-owner-and-group"><span class="toc-section-number">11.1.6</span> Changing File/Directory Owner and Group</a></li>
+        <li><a href="#file-permissions"><span class="toc-section-number">11.1.2</span> File Permissions</a></li>
+        <li><a href="#numerical-representation-of-permissions"><span class="toc-section-number">11.1.3</span> Numerical Representation of Permissions</a></li>
+        <li><a href="#updating-filedirectory-permissions"><span class="toc-section-number">11.1.4</span> Updating File/Directory Permissions</a></li>
+        <li><a href="#changing-filedirectory-owner-and-group"><span class="toc-section-number">11.1.5</span> Changing File/Directory Owner and Group</a></li>
         </ul></li>
         <li><a href="#security-and-programming-with-users-and-groups"><span class="toc-section-number">11.2</span> Security and Programming with Users and Groups</a><ul>
         <li><a href="#user-and-group-strings"><span class="toc-section-number">11.2.1</span> User and Group Strings</a></li>
@@ -475,7 +474,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x559ea9a4c149
+Hex and pointers: 7fffffffffffffff, 0x555ef51f7149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -595,8 +594,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffc8f07d960 == 0x7ffc8f07d960; 6 == 6
-nth index: 0x7ffc8f07d964 == 0x7ffc8f07d964; 7 == 7</code></pre>
+<pre><code>0th index: 0x7fffda41e430 == 0x7fffda41e430; 6 == 6
+nth index: 0x7fffda41e434 == 0x7fffda41e434; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -619,7 +618,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7fff6b10fdf4 == 0x7fff6b10fdf4; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffce6393424 == 0x7ffce6393424; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -643,10 +642,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffc9a3e2320 &amp; 0x7ffc9a3e2334
-idx 1 @ 0x7ffc9a3e2324 &amp; 0x7ffc9a3e2335
-idx 2 @ 0x7ffc9a3e2328 &amp; 0x7ffc9a3e2336
-idx 3 @ 0x7ffc9a3e232c &amp; 0x7ffc9a3e2337</code></pre>
+<pre><code>idx 0 @ 0x7ffe5bc9c2c0 &amp; 0x7ffe5bc9c2d4
+idx 1 @ 0x7ffe5bc9c2c4 &amp; 0x7ffe5bc9c2d5
+idx 2 @ 0x7ffe5bc9c2c8 &amp; 0x7ffe5bc9c2d6
+idx 3 @ 0x7ffe5bc9c2cc &amp; 0x7ffe5bc9c2d7</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -883,10 +882,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x5587a6707010
-b   @ 0x5587a6707014
-c   @ 0x5587a6707020
-end @ 0x5587a6707039
+a   @ 0x55584519c010
+b   @ 0x55584519c014
+c   @ 0x55584519c020
+end @ 0x55584519c039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -894,7 +893,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x5587a6707014
+c.c_c = 0x55584519c014
 
 Print out the variables as raw memory
 
@@ -989,8 +988,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x56214d62304c
-1: 2 @ 0x56214d623044
+<pre><code>0: 4 @ 0x556eced2804c
+1: 2 @ 0x556eced28044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1319,16 +1318,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: 483114375
+2: 402239895
 3: 32764
-4: 483114374
+4: 402239894
 5: 32764
-6: 1916256829
-7: 21955
-8: 308675304
-9: 32523
-10: 1916256752
-11: 21955</code></pre>
+6: 418931261
+7: 21969
+8: 439730920
+9: 32754
+10: 418931184
+11: 21969</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1669,7 +1668,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x55f9fca36004 == 0x55f9fca36004 != 0x55f9fca38011</code></pre>
+0x55a4b056d004 == 0x55a4b056d004 != 0x55a4b056f011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2068,15 +2067,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 112174
+     parent pid 173351
 post-fork:
-    returned 112175,
-    current pid 112174
-    parent pid 112165
+    returned 173352,
+    current pid 173351
+    parent pid 173342
 post-fork:
     returned 0,
-    current pid 112175
-    parent pid 112174</code></pre>
+    current pid 173352
+    parent pid 173351</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2140,14 +2139,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 112194 exiting with 0
-Child 112195 exiting with -1
-Child 112196 exiting with -2
-Child 112197 exiting with -3
-Child 112194 exited with exit status 0
-Child 112195 exited with exit status -1
-Child 112196 exited with exit status -2
-Child 112197 exited with exit status -3</code></pre>
+<pre><code>Child 173371 exiting with 0
+Child 173372 exiting with -1
+Child 173373 exiting with -2
+Child 173374 exiting with -3
+Child 173371 exited with exit status 0
+Child 173372 exited with exit status -1
+Child 173373 exited with exit status -2
+Child 173374 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -3271,9 +3270,9 @@ make[1]: *** [Makefile:28: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>112455: We&#39;ve been asked to terminate. Exit!
-112454: Parent asking child (112455) to terminate
-112454: Child process 112455 has exited.</code></pre>
+<pre><code>173633: We&#39;ve been asked to terminate. Exit!
+173632: Parent asking child (173633) to terminate
+173632: Child process 173633 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -4117,11 +4116,11 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - F a.out (17136)
 - F LICENSE (1522)
 - D 09
-- F lectures.html (717727)
+- F lectures.html (719971)
 - D 01
 - D 05
 - D 02
-- F aggregate.md (162961)
+- F aggregate.md (162959)
 - D 04
 - D .git
 - F inline_exec_tmp.c (1658)</code></pre>
@@ -4452,8 +4451,7 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>112805: 112805
-112806: 112806</code></pre>
+<pre><code>173984: 173983173984</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4606,15 +4604,15 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 112826 connected to server.
-1. Client 112827 connected to server.
-2. Client 112826 request sent message to server.
-2. Client 112827 request sent message to server.
-Server received message (sz 37): &quot;Citizen 112826: Penny for Pawsident!&quot;. Replying!
-3. Client 112826 reply received from server: Citizen 112826: Penny for Pawsident!
+1. Client 174007 connected to server.
+2. Client 174007 request sent message to server.
+Server received message (sz 37): &quot;Citizen 174007: Penny for Pawsident!&quot;. Replying!
+1. Client 174008 connected to server.
 Server: New client connected with new file descriptor 4.
-Server received message (sz 37): &quot;Citizen 112827: Penny for Pawsident!&quot;. Replying!
-3. Client 112827 reply received from server: Citizen 112827: Penny for Pawsident!</code></pre>
+2. Client 174008 request sent message to server.
+Server received message (sz 37): &quot;Citizen 174008: Penny for Pawsident!&quot;. Replying!
+3. Client 174007 reply received from server: Citizen 174007: Penny for Pawsident!
+3. Client 174008 reply received from server: Citizen 174008: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -5846,9 +5844,9 @@ exit_group(0)                           = ?
 <a class="sourceLine" id="cb249-38" title="38">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>
-malloc + free overhead (cycles): 417
+malloc + free overhead (cycles): 447
 
-mmap + munmap overhead (cycles): 9634</code></pre>
+mmap + munmap overhead (cycles): 9956</code></pre>
 <blockquote>
 <p>What is a “cycle”? When you read that you have a 3GHz, that essentially says that the internal “clock” that drives the logic in the processor cycles by at 3 billion cycles per second. That’s a <em>lot</em>. Each cycle is 1/3 a nanosecond. A cycle is the smallest unit of measurement on a processor, and the <code>cycles</code> function we implement here gives us how many cycles have elapsed since the system boots.</p>
 </blockquote>
@@ -5896,11 +5894,11 @@ mmap + munmap overhead (cycles): 9634</code></pre>
 <a class="sourceLine" id="cb251-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>                                                                                                                                                                                                                                                                
-write overhead (cycles): 4140
+write overhead (cycles): 3952
                                                                                                                                                                                                                                                                 
-fwrite (stream) overhead (cycles): 47
+fwrite (stream) overhead (cycles): 41
                                                                                                                                                                                                                                                                 
-fwrite + fflush overhead (cycles): 4243</code></pre>
+fwrite + fflush overhead (cycles): 3906</code></pre>
 <h2 id="library-vs.-kernel-trade-offs-in-memory-allocation"><span class="header-section-number">10.4</span> Library vs. Kernel Trade-offs in Memory Allocation</h2>
 <p>We’ve seen that</p>
 <ol type="1">
@@ -6009,21 +6007,7 @@ dialout CS_Admins</code></pre>
 <pre><code>$ groups
 ycombinator adm cdrom sudo dip plugdev lpadmin sambashare</code></pre>
 <p>The good news is that I can use my <code>cdrom</code>. Fantastic. It will pair well with my pseudo-typewriter. Cool.</p>
-<h3 id="the-password-and-group-file"><span class="header-section-number">11.1.2</span> The password and group file</h3>
-<p>Groupings are defined in two places. The first is a file called <code>/etc/passwd</code> which manages all the users of the system. Here is the <code>/etc/passwd</code> entry on my local system (the server uses another means to store user info):</p>
-<pre><code>$ cat /etc/passwd | grep gparmer
-gparmer:x:1000:1000:Gabe Parmer,,,:/home/ycombinator:/bin/bash
-   |    |   |     |      |                 |             |
-   V    |   V     |      V                 V             V
- user   | user id |  human-readable id  home directory  shell to use upon login
-        V         V
-    password    group id</code></pre>
-<p>We can lookup our username and associate it with a numerical user id, and a group id for that user. These numbers are what the system uses to track users, but UNIX nicely converts these numbers into names for our convenience. The file additionally holds the path to the user’s home directory, and their shell. These are used upon the user logging in: the login logic will switch to the user’s home directory, and execute their shell. The <code>password</code> entry is deprecated. The translation between userid and username is in the password file. The translation between groupid and group name is in the group file, <code>/etc/group</code>. Here is the entry for the administrators on the class’ server:</p>
-<pre><code>$ grep CS_Admins /etc/group
-CS_Admins:x:1004:aaviv,timwood,gparmer,...</code></pre>
-<p>There you can see that the users <code>aaviv</code>, <code>timwood</code>, and <code>gparmer</code> are all in the group of administrators.</p>
-<p><strong>Question:</strong> Take a moment to explore these files and the commands. See what groups you are in.</p>
-<h3 id="file-permissions"><span class="header-section-number">11.1.3</span> File Permissions</h3>
+<h3 id="file-permissions"><span class="header-section-number">11.1.2</span> File Permissions</h3>
 <p>The <em>permissions</em> associated with each file/directory specify who should be able to have the following access:</p>
 <ul>
 <li><code>r</code> - the ability to <em>read</em> the file, or <em>read the contents</em> of a directory.</li>
@@ -6052,7 +6036,7 @@ total 0
 <ul>
 <li><em>Who</em> has <em>what access permissions</em> to which files?</li>
 </ul>
-<h3 id="numerical-representation-of-permissions"><span class="header-section-number">11.1.4</span> Numerical Representation of Permissions</h3>
+<h3 id="numerical-representation-of-permissions"><span class="header-section-number">11.1.3</span> Numerical Representation of Permissions</h3>
 <p>Each permission has a <em>numerical representation</em>. We represent it in <em>octal</em>, which is a fancy way to say that we think of each digit of our numerical representation as being between <code>0-7</code> – it is “base 8” (in contrast to the normal digits numbers we use every day that are “base 10”). Thus, each of the three sets of permissions is <code>3</code> bits.</p>
 <p>Each of the three permissions, <code>r</code>, <code>w</code>, and <code>x</code> correspond to the most-significant to the least significant bits in each octal digit. For example:</p>
 <pre><code>rwx -&gt; 1 1 1 -&gt; 7
@@ -6070,7 +6054,7 @@ rw- -&gt; 1 1 0 -&gt; 6</code></pre>
 -rwxrw-rw- -&gt; 111 110 110 -&gt; 7 6 6
 -rwxr-xr-x -&gt; 111 101 101 -&gt; 7 5 5</code></pre>
 <p>So now we know how to interpret, and understand these permission values, and how to represent them as digits.</p>
-<h3 id="updating-filedirectory-permissions"><span class="header-section-number">11.1.5</span> Updating File/Directory Permissions</h3>
+<h3 id="updating-filedirectory-permissions"><span class="header-section-number">11.1.4</span> Updating File/Directory Permissions</h3>
 <p>To change a file permission, you use the <code>chmod</code> command, or the <code>chmod</code> system call. In each, we specify the file to update, and the new permissions in octal. Lets play around with permission and see their impact:</p>
 <pre><code>$ gcc helloworld.c -o helloworld.bin
 $ ls -l helloworld.bin
@@ -6097,9 +6081,9 @@ hello world!</code></pre>
 <p><strong>Questions:</strong></p>
 <ul>
 <li>How do you think permissions change access to directories? Try out setting the permissions of a directory (recall <code>mkdir</code>), and seeing what accesses cannot be made if permissions are removed.</li>
-<li>You and a classmate should sit down together, and use <code>chmod</code> to concretely understand when you can access each other’s files. Remember, you can find out where your files are with <code>pwd</code>, what groups you’re in with <code>groups</code>. Which files can another user can access at that path with sufficient permissions?</li>
+<li>You and a classmate should sit down together, and use <code>chmod</code> to concretely understand when you can access each other’s files. Remember, you can find out where your files are with <code>pwd</code>, what groups you’re in with <code>groups</code>. Which files can another user can access at that path with sufficient permissions? You can use the <code>/tmp/</code> directory to store files that you can both mutually access, permissions allowing.</li>
 </ul>
-<h3 id="changing-filedirectory-owner-and-group"><span class="header-section-number">11.1.6</span> Changing File/Directory Owner and Group</h3>
+<h3 id="changing-filedirectory-owner-and-group"><span class="header-section-number">11.1.5</span> Changing File/Directory Owner and Group</h3>
 <p>We’ve seen that each file and directory is associated with a user, and with a group. Which means that, of course, we can change those settings! Two commands (and their corresponding system call: <code>chown</code>):</p>
 <ul>
 <li><code>chown &lt;user&gt; &lt;file/directory&gt;</code> - change owner of the file/directory to the user</li>
@@ -6126,23 +6110,23 @@ chown: changing ownership of &#39;helloworld.bin&#39;: Operation not permitted</
 <li><code>gid_t getgid(void)</code> - Returns the real group id of the calling process.</li>
 </ul>
 <p>Let’s look at an example program.</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb271-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb271-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb271-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb271-4" title="4"></a>
-<a class="sourceLine" id="cb271-5" title="5"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb271-6" title="6">main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[])</a>
-<a class="sourceLine" id="cb271-7" title="7">{</a>
-<a class="sourceLine" id="cb271-8" title="8">    uid_t uid;</a>
-<a class="sourceLine" id="cb271-9" title="9">    gid_t gid;</a>
-<a class="sourceLine" id="cb271-10" title="10"></a>
-<a class="sourceLine" id="cb271-11" title="11">    uid = getuid();</a>
-<a class="sourceLine" id="cb271-12" title="12">    gid = getgid();</a>
-<a class="sourceLine" id="cb271-13" title="13"></a>
-<a class="sourceLine" id="cb271-14" title="14">    printf(<span class="st">&quot;uid=%d gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, uid, gid);</a>
-<a class="sourceLine" id="cb271-15" title="15"></a>
-<a class="sourceLine" id="cb271-16" title="16">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb271-17" title="17">}</a></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb269-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb269-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb269-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb269-4" title="4"></a>
+<a class="sourceLine" id="cb269-5" title="5"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb269-6" title="6">main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[])</a>
+<a class="sourceLine" id="cb269-7" title="7">{</a>
+<a class="sourceLine" id="cb269-8" title="8">    uid_t uid;</a>
+<a class="sourceLine" id="cb269-9" title="9">    gid_t gid;</a>
+<a class="sourceLine" id="cb269-10" title="10"></a>
+<a class="sourceLine" id="cb269-11" title="11">    uid = getuid();</a>
+<a class="sourceLine" id="cb269-12" title="12">    gid = getgid();</a>
+<a class="sourceLine" id="cb269-13" title="13"></a>
+<a class="sourceLine" id="cb269-14" title="14">    printf(<span class="st">&quot;uid=%d gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, uid, gid);</a>
+<a class="sourceLine" id="cb269-15" title="15"></a>
+<a class="sourceLine" id="cb269-16" title="16">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb269-17" title="17">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>uid=1000 gid=1000</code></pre>
 <p>Every user has different identifiers as does each group. If another user where to run the same program, they’d get a different value.</p>
@@ -6154,24 +6138,22 @@ chown: changing ownership of &#39;helloworld.bin&#39;: Operation not permitted</
 </ul>
 <p>Interestingly, whomever <em>executes</em> the program will have their uid/gid printed out; it won’t use the uid/gid of the owner of the program. Remember, that we inherit the uid/gid on fork, thus when the shell runs the program, it uses our shell’s (thus our) uid/gid.</p>
 <h3 id="user-and-group-strings"><span class="header-section-number">11.2.1</span> User and Group Strings</h3>
-<p>The user information beyond just their id is stored in the <code>/etc/passwd</code> file. All users are defined in <code>/etc/passwd</code> with lines like such:</p>
-<pre><code>.-- user name         .-- full name   .--- home directory
-|                     |               |
-v                     v               v
-aviv:x:35001:10120:Adam Aviv {}:/home/scs/aviv:/bin/bash
-        ^     ^                                   ^
-uid ----&#39;     &#39;--- gid (Default)                  &#39;--- default shell</code></pre>
-<p>This is <code>aviv</code>’s entry in the <code>passwd</code> file. It stores their user name, user id, default group id, full name, home directory, and default shell. The latter two are useful when logging in: the login services will <code>chdir</code> to the home directory, and <code>exec</code> the shell. Every user has a unique username, user id, and default group; however, a user can be assigned to multiple groups. Thus, group information is in the <code>/etc/group</code> file, and here is entry for <code>aviv</code>’s default group:</p>
-<pre><code>.-- group name
-|
-v
-scs:*:10120:webadmin,www-data,lucas,slack
-       ^    \___________________________/
-gid ---&#39;                |
-                        &#39;- Additional users in that group</code></pre>
+<p>If the UNIX programmatic APIs provide access to user and group <em>identifiers</em> (i.e. integers), how is it that we can see strings corresponding to these numeric values? The mapping of the identifiers to strings are defined in two places. The first is a file called <code>/etc/passwd</code> which manages all the users of the system. Here is the <code>/etc/passwd</code> entry on my local system (the server uses another means to store user info):</p>
+<pre><code>$ cat /etc/passwd | grep gparmer
+gparmer:x:1000:1000:Gabe Parmer,,,:/home/ycombinator:/bin/bash
+   |    |   |     |      |                 |             |
+   V    |   V     |      V                 V             V
+ user   | user id |  human-readable id  home directory  shell to use upon login
+        V         V
+    password    group id</code></pre>
+<p>We can lookup our username and associate it with a numerical user id, and a group id for that user. These numbers are what the system uses to track users, but UNIX nicely converts these numbers into names for our convenience. The file additionally holds the path to the user’s home directory, and their shell. These are used upon the user logging in: the login logic will switch to the user’s home directory, and execute their shell. The <code>password</code> entry is deprecated. The translation between userid and username is in the password file. The translation between groupid and group name is in the group file, <code>/etc/group</code>. Here is the entry for the administrators on the class’ server:</p>
+<pre><code>$ grep CS_Admins /etc/group
+CS_Admins:x:1004:aaviv,timwood,gparmer,...</code></pre>
+<p>There you can see that the users <code>aaviv</code>, <code>timwood</code>, and <code>gparmer</code> are all in the group of administrators.</p>
 <p>All of this information, including identifiers, and human-readable strings can be retrieved with <code>id</code>.</p>
 <pre><code>$ id
 uid=1000(gparmer) gid=1000(gparmer) groups=1000(gparmer),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),120(lpadmin),131(lxd),132(sambashare)</code></pre>
+<p><strong>Question:</strong> Take a moment to explore these files and the commands. See what groups you are in.</p>
 <h2 id="application-specific-privileges-using-set-user-idset-group-id"><span class="header-section-number">11.3</span> Application-Specific Privileges using set-user-id/set-group-id</h2>
 <p>Systems that support multiple users are quite complex. They have services used by many users, but that must be protected from the potentially accidental or malicious actions of users. These programs require more privileges than a user to do their job. A few examples:</p>
 <ul>
@@ -6197,7 +6179,7 @@ bits user |  other
  110 111 101 001
   6   7   5   1</code></pre>
 <p>When we look at the <code>ls -l</code> output of the program, the permission string reflects these settings with an “s” in the execute part of the string for user and group.</p>
-<pre><code>aviv@saddleback: lec-23-demo $ ls -l get_uidgid
+<pre><code>$ ls -l get_uidgid
 -rwsr-s--x 1 aviv scs 8778 Mar 30 16:45 get_uidgid</code></pre>
 <h4 id="real-vs.-effective-capabilities"><span class="header-section-number">11.3.0.1</span> Real vs. Effective Capabilities</h4>
 <p>With the set-bits, when the program runs, the capabilities of the program are effectively that of the owner and group of the <em>program</em>. However, the real user id and real group id remain that of the user who ran the program. This brings up the concept of <em>effective</em> vs. <em>real</em> identifiers:</p>
@@ -6211,57 +6193,62 @@ bits user |  other
 <li><code>gid_t getegid(void)</code> - return the effective group identifer for the calling process.</li>
 </ul>
 <p>We now have enough to test <em>set-x-bit</em> programs using a the following program that prints both the real and effective user/group identities.</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb279-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb279-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb279-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb279-4" title="4"></a>
-<a class="sourceLine" id="cb279-5" title="5"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb279-6" title="6">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb279-7" title="7">{</a>
-<a class="sourceLine" id="cb279-8" title="8">    uid_t uid,euid;</a>
-<a class="sourceLine" id="cb279-9" title="9">    gid_t gid,egid;</a>
-<a class="sourceLine" id="cb279-10" title="10"></a>
-<a class="sourceLine" id="cb279-11" title="11">    uid = getuid();</a>
-<a class="sourceLine" id="cb279-12" title="12">    gid = getgid();</a>
-<a class="sourceLine" id="cb279-13" title="13">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
-<a class="sourceLine" id="cb279-14" title="14"></a>
-<a class="sourceLine" id="cb279-15" title="15">    euid = geteuid();</a>
-<a class="sourceLine" id="cb279-16" title="16">    egid = getegid();</a>
-<a class="sourceLine" id="cb279-17" title="17">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
-<a class="sourceLine" id="cb279-18" title="18"></a>
-<a class="sourceLine" id="cb279-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb279-20" title="20">}</a></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb277-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb277-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb277-3" title="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb277-4" title="4"></a>
+<a class="sourceLine" id="cb277-5" title="5"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb277-6" title="6">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb277-7" title="7">{</a>
+<a class="sourceLine" id="cb277-8" title="8">    uid_t uid,euid;</a>
+<a class="sourceLine" id="cb277-9" title="9">    gid_t gid,egid;</a>
+<a class="sourceLine" id="cb277-10" title="10"></a>
+<a class="sourceLine" id="cb277-11" title="11">    uid = getuid();</a>
+<a class="sourceLine" id="cb277-12" title="12">    gid = getgid();</a>
+<a class="sourceLine" id="cb277-13" title="13">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb277-14" title="14"></a>
+<a class="sourceLine" id="cb277-15" title="15">    euid = geteuid();</a>
+<a class="sourceLine" id="cb277-16" title="16">    egid = getegid();</a>
+<a class="sourceLine" id="cb277-17" title="17">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb277-18" title="18"></a>
+<a class="sourceLine" id="cb277-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb277-20" title="20">}</a></code></pre></div>
 <p>As the owner of the file, after compilation, the permissions can be set to add set-user-id:</p>
-<pre><code>$ gcc 11/test_setid.c -o test_setid
-$ chmod 6755 test_setid
-$ ls -l test_setid
--rwsr-sr-x   1 gparmer        gparmer     16880 2022-03-29 08:30 test_setid</code></pre>
+<pre><code>$ gcc 11/get_uidgid.c -o get_uidgid
+$ chmod 6755 get_uidgid
+$ ls -l get_uidgid
+-rwsr-sr-x   1 gparmer        gparmer     16880 2022-03-29 08:30 get_uidgid</code></pre>
 <p>Notice the <code>s</code> values to denote the <code>set-*-bits</code>.</p>
+<p>Lets test this set uid stuff!</p>
+<pre><code>$ cp get_uidgid /tmp/
+$ chmod 4755 /tmp/get_uidgid</code></pre>
+<p>Now you should all have access to the file, with it being set as set-uid.</p>
 <p><strong>Question:</strong></p>
 <ul>
-<li>Use the previous program as groups, one user compiling the file on the server, and the other running it. What do you observe? Recall that you can use <code>id</code> to print out both of your ids and groups. You might want to <code>cp test_setid ~</code> to make it more easily accessible from your home directory</li>
-<li><p>What happens if we enable the program to create files while using the <code>set-*-id</code> bits? Use the following program, set it as setuid, and have on of your peers create files, and <code>ls -l</code> to see who owns them.</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb281-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb281-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb281-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb281-4" title="4"><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></a>
-<a class="sourceLine" id="cb281-5" title="5"></a>
-<a class="sourceLine" id="cb281-6" title="6"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb281-7" title="7">main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[])</a>
-<a class="sourceLine" id="cb281-8" title="8">{</a>
-<a class="sourceLine" id="cb281-9" title="9">    <span class="dt">int</span> i, fd;</a>
-<a class="sourceLine" id="cb281-10" title="10"></a>
-<a class="sourceLine" id="cb281-11" title="11">    <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; argc; i++){</a>
-<a class="sourceLine" id="cb281-12" title="12">        <span class="co">/* create an empty file */</span></a>
-<a class="sourceLine" id="cb281-13" title="13">        <span class="cf">if</span>((fd = open(argv[i],O_CREAT,<span class="bn">0666</span>) &gt; <span class="dv">0</span>) &gt; <span class="dv">0</span>){</a>
-<a class="sourceLine" id="cb281-14" title="14">            close(fd);</a>
-<a class="sourceLine" id="cb281-15" title="15">        } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb281-16" title="16">            perror(<span class="st">&quot;open&quot;</span>);</a>
-<a class="sourceLine" id="cb281-17" title="17">        }</a>
-<a class="sourceLine" id="cb281-18" title="18">    }</a>
-<a class="sourceLine" id="cb281-19" title="19"></a>
-<a class="sourceLine" id="cb281-20" title="20">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb281-21" title="21">}</a></code></pre></div></li>
+<li>Compile and run the <code>get_uidgid</code> program. What would you expect to happen? What do you observe? Recall that you can use <code>id</code> to print out both of your ids and groups.</li>
+<li>Run the <code>get_uidgid</code> program I placed in <code>/tmp/</code>. What is the expected output? What do you observe?</li>
+<li><p>What happens if we enable the program to create files while using the <code>set-*-id</code> bits? Run the following program in your home directory, passing as arguments the names of files you want to create. Check out the owner of the files. The following program, that is setuid in <code>/tmp/</code>, and have on of your peers create files, and <code>ls -l</code> to see who owns them.</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb280-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb280-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb280-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb280-4" title="4"><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></a>
+<a class="sourceLine" id="cb280-5" title="5"></a>
+<a class="sourceLine" id="cb280-6" title="6"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb280-7" title="7">main(<span class="dt">int</span> argc, <span class="dt">char</span> * argv[])</a>
+<a class="sourceLine" id="cb280-8" title="8">{</a>
+<a class="sourceLine" id="cb280-9" title="9">    <span class="dt">int</span> i, fd;</a>
+<a class="sourceLine" id="cb280-10" title="10"></a>
+<a class="sourceLine" id="cb280-11" title="11">    <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; argc; i++){</a>
+<a class="sourceLine" id="cb280-12" title="12">        <span class="co">/* create an empty file */</span></a>
+<a class="sourceLine" id="cb280-13" title="13">        <span class="cf">if</span>((fd = open(argv[i],O_CREAT,<span class="bn">0666</span>) &gt; <span class="dv">0</span>) &gt; <span class="dv">0</span>){</a>
+<a class="sourceLine" id="cb280-14" title="14">            close(fd);</a>
+<a class="sourceLine" id="cb280-15" title="15">        } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb280-16" title="16">            perror(<span class="st">&quot;open&quot;</span>);</a>
+<a class="sourceLine" id="cb280-17" title="17">        }</a>
+<a class="sourceLine" id="cb280-18" title="18">    }</a>
+<a class="sourceLine" id="cb280-19" title="19"></a>
+<a class="sourceLine" id="cb280-20" title="20">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb280-21" title="21">}</a></code></pre></div></li>
 </ul>
 <h4 id="programmatically-downgradingupgrading-capabilities"><span class="header-section-number">11.3.0.2</span> Programmatically Downgrading/Upgrading Capabilities</h4>
 <p>The set-bits automatically start a program with the effective user or group id set; however, there are times when we might want to <em>downgrade privilege</em> or change permission dynamically. There are two system calls to change user/group settings of an executing process:</p>
@@ -6270,49 +6257,49 @@ $ ls -l test_setid
 </ul>
 <p>The requirements of <code>setuid()</code> (for all users other than root) is that the effective user id can be changed to the real user id of the program or to an effective user id as described in the set-bits. The root user, however, can downgrade to any user id and upgrade back to the root user. For <code>setgid()</code> the user can chance the group id to any group the user belongs to or as allowed by the set-group-id bit.</p>
 <p>Now we can look at a program that downgrades and upgrades a program dynamically:</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb282-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb282-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb282-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb282-4" title="4"></a>
-<a class="sourceLine" id="cb282-5" title="5"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb282-6" title="6">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb282-7" title="7">{</a>
-<a class="sourceLine" id="cb282-8" title="8">    uid_t uid,euid;</a>
-<a class="sourceLine" id="cb282-9" title="9">    gid_t gid,egid;</a>
-<a class="sourceLine" id="cb282-10" title="10">    uid_t saved_euid;</a>
-<a class="sourceLine" id="cb282-11" title="11"></a>
-<a class="sourceLine" id="cb282-12" title="12">    uid = getuid();</a>
-<a class="sourceLine" id="cb282-13" title="13">    gid = getgid();</a>
-<a class="sourceLine" id="cb282-14" title="14">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
-<a class="sourceLine" id="cb282-15" title="15"></a>
-<a class="sourceLine" id="cb282-16" title="16">    euid = geteuid();</a>
-<a class="sourceLine" id="cb282-17" title="17">    egid = getegid();</a>
-<a class="sourceLine" id="cb282-18" title="18">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
-<a class="sourceLine" id="cb282-19" title="19"></a>
-<a class="sourceLine" id="cb282-20" title="20">    saved_euid=euid;</a>
-<a class="sourceLine" id="cb282-21" title="21">    setuid(uid);</a>
-<a class="sourceLine" id="cb282-22" title="22">    printf(<span class="st">&quot;---- setuid(%d) ----</span><span class="sc">\n</span><span class="st">&quot;</span>,uid);</a>
-<a class="sourceLine" id="cb282-23" title="23"></a>
-<a class="sourceLine" id="cb282-24" title="24">    uid = getuid();</a>
-<a class="sourceLine" id="cb282-25" title="25">    gid = getgid();</a>
-<a class="sourceLine" id="cb282-26" title="26">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
-<a class="sourceLine" id="cb282-27" title="27"></a>
-<a class="sourceLine" id="cb282-28" title="28">    euid = geteuid();</a>
-<a class="sourceLine" id="cb282-29" title="29">    egid = getegid();</a>
-<a class="sourceLine" id="cb282-30" title="30">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
-<a class="sourceLine" id="cb282-31" title="31"></a>
-<a class="sourceLine" id="cb282-32" title="32">    setuid(saved_euid);</a>
-<a class="sourceLine" id="cb282-33" title="33">    printf(<span class="st">&quot;---- setuid(%d) ----</span><span class="sc">\n</span><span class="st">&quot;</span>,saved_euid);</a>
-<a class="sourceLine" id="cb282-34" title="34">    uid = getuid();</a>
-<a class="sourceLine" id="cb282-35" title="35">    gid = getgid();</a>
-<a class="sourceLine" id="cb282-36" title="36">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
-<a class="sourceLine" id="cb282-37" title="37"></a>
-<a class="sourceLine" id="cb282-38" title="38">    euid = geteuid();</a>
-<a class="sourceLine" id="cb282-39" title="39">    egid = getegid();</a>
-<a class="sourceLine" id="cb282-40" title="40">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
-<a class="sourceLine" id="cb282-41" title="41"></a>
-<a class="sourceLine" id="cb282-42" title="42">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb282-43" title="43">}</a></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb281-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb281-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb281-3" title="3"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb281-4" title="4"></a>
+<a class="sourceLine" id="cb281-5" title="5"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb281-6" title="6">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb281-7" title="7">{</a>
+<a class="sourceLine" id="cb281-8" title="8">    uid_t uid,euid;</a>
+<a class="sourceLine" id="cb281-9" title="9">    gid_t gid,egid;</a>
+<a class="sourceLine" id="cb281-10" title="10">    uid_t saved_euid;</a>
+<a class="sourceLine" id="cb281-11" title="11"></a>
+<a class="sourceLine" id="cb281-12" title="12">    uid = getuid();</a>
+<a class="sourceLine" id="cb281-13" title="13">    gid = getgid();</a>
+<a class="sourceLine" id="cb281-14" title="14">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb281-15" title="15"></a>
+<a class="sourceLine" id="cb281-16" title="16">    euid = geteuid();</a>
+<a class="sourceLine" id="cb281-17" title="17">    egid = getegid();</a>
+<a class="sourceLine" id="cb281-18" title="18">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb281-19" title="19"></a>
+<a class="sourceLine" id="cb281-20" title="20">    saved_euid=euid;</a>
+<a class="sourceLine" id="cb281-21" title="21">    setuid(uid);</a>
+<a class="sourceLine" id="cb281-22" title="22">    printf(<span class="st">&quot;---- setuid(%d) ----</span><span class="sc">\n</span><span class="st">&quot;</span>,uid);</a>
+<a class="sourceLine" id="cb281-23" title="23"></a>
+<a class="sourceLine" id="cb281-24" title="24">    uid = getuid();</a>
+<a class="sourceLine" id="cb281-25" title="25">    gid = getgid();</a>
+<a class="sourceLine" id="cb281-26" title="26">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb281-27" title="27"></a>
+<a class="sourceLine" id="cb281-28" title="28">    euid = geteuid();</a>
+<a class="sourceLine" id="cb281-29" title="29">    egid = getegid();</a>
+<a class="sourceLine" id="cb281-30" title="30">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb281-31" title="31"></a>
+<a class="sourceLine" id="cb281-32" title="32">    setuid(saved_euid);</a>
+<a class="sourceLine" id="cb281-33" title="33">    printf(<span class="st">&quot;---- setuid(%d) ----</span><span class="sc">\n</span><span class="st">&quot;</span>,saved_euid);</a>
+<a class="sourceLine" id="cb281-34" title="34">    uid = getuid();</a>
+<a class="sourceLine" id="cb281-35" title="35">    gid = getgid();</a>
+<a class="sourceLine" id="cb281-36" title="36">    printf(<span class="st">&quot; uid=%d  gid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>,  uid,  gid);</a>
+<a class="sourceLine" id="cb281-37" title="37"></a>
+<a class="sourceLine" id="cb281-38" title="38">    euid = geteuid();</a>
+<a class="sourceLine" id="cb281-39" title="39">    egid = getegid();</a>
+<a class="sourceLine" id="cb281-40" title="40">    printf(<span class="st">&quot;euid=%d egid=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, euid, egid);</a>
+<a class="sourceLine" id="cb281-41" title="41"></a>
+<a class="sourceLine" id="cb281-42" title="42">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb281-43" title="43">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code> uid=1000  gid=1000
 euid=1000 egid=1000
@@ -6324,7 +6311,7 @@ euid=1000 egid=1000
 euid=1000 egid=1000</code></pre>
 <p><strong>Question:</strong></p>
 <ul>
-<li>Run this program yourself. What do think will happen if you have a peer run it on the server after you set the <code>set-uid</code> bit? Run it and see!</li>
+<li>Run this program yourself. What do think will happen if you have a peer run it on the server after you set the <code>set-uid</code> bit?</li>
 </ul>
 <h2 id="applications-of-identify-and-permission-management"><span class="header-section-number">11.4</span> Applications of Identify and Permission Management</h2>
 <h3 id="logging-events-selectively-increasing-access-rights"><span class="header-section-number">11.4.1</span> Logging Events: Selectively Increasing Access Rights</h3>
@@ -6345,19 +6332,20 @@ euid=1000 egid=1000</code></pre>
 <p>There are many times in systems that we want to <em>increase</em> the privileges of a human. For example, for security, it is often <em>not possible</em> to login as <em>root</em>. But it is certainly true that sometimes humans need to be able to run commands as root. For example, updating some software, installing new software, creating new users, and many other operations, all require <em>root</em>.</p>
 <p>To control who is able to execute commands as <em>root</em>, the <code>sudo</code> and <code>su</code> programs enable restricted access to root privileges. Specifically, <code>sudo</code> and <code>su</code> will execute a command as a <em>specified user</em> or <em>switch to a specified user</em>. By default, these commands execute as the root user, and you need to know the root password or have sudo access to use them.</p>
 <p>We can see this as the case if I were to run the <code>get_euidegid</code> program using <code>sudo</code>. First notice that it is no longer set-group or set-user:</p>
-<pre><code>aviv@saddleback: lec-23-demo $ ls -l get_euidegid
--rwxr-x--x 1 aviv scs 8730 Mar 31 08:31 get_euidegid
-aviv@saddleback: lec-23-demo $ sudo ./get_euidegid
-[sudo] password for aviv:
+<pre><code>$ sudo ./get_euidegid
+[sudo] password for gparmer:
  uid=0  gid=0
 euid=0 egid=0</code></pre>
 <p>After sudo authenticated me, the program’s effective and real user identification becomes 0 which is the uid/gid for the root user.</p>
 <h4 id="sudoers"><span class="header-section-number">11.4.3.1</span> sudoers</h4>
-<p>Who has permission to run sudo commands? This is important because on many modern unix systems, like ubuntu, there is no default root password. Instead certain users are deemed to be sudoers or privileged users. These are set in a special configuraiton file called the <code>/etc/sudoers</code>.</p>
+<p>Who has permission to run <code>sudo</code> commands? This is important because on many modern unix systems, like ubuntu, there is no default root password.</p>
+<p><strong>Question:</strong></p>
+<ul>
+<li>Why don’t we just have a <code>root</code> account with a password instead of having <code>sudo</code> and <code>su</code>?</li>
+</ul>
+<p>Instead certain users are deemed to be sudoers or privileged users. These are set in a special configuraiton file called the <code>/etc/sudoers</code>.</p>
 <pre><code>aviv@saddleback: lec-23-demo $ cat /etc/sudoers
 cat: /etc/sudoers: Permission denied
-aviv@saddleback: lec-23-demo $ sudo cat /etc/sudo
-sudoers    sudoers.d/
 aviv@saddleback: lec-23-demo $ sudo cat /etc/sudoers
 #
 # This file MUST be edited with the &#39;visudo&#39; command as root.
@@ -6389,16 +6377,29 @@ root    ALL=(ALL:ALL) ALL
 # See sudoers(5) for more information on &quot;#include&quot; directives:
 
 #includedir /etc/sudoers.d</code></pre>
-<p>Notice that only root has access to read this file, and since I am a sudoer on saddleback I can get access to it. If you look carefully, you can perform a basic parse of the settings. The root user has full sudo permissions, and other sudoer’s are determine based on group membership. Users in the sudo or admin group may run commands as root, and I am a member of the sudo group:</p>
-<pre><code>aviv@saddleback: lec-23-demo $ id
-uid=35001(aviv) gid=10120(scs) groups=10120(scs),27(sudo),15000(mids),15001(ic221)</code></pre>
-<p>However, on a lab machine, I do not have such group settings:</p>
-<pre><code>aviv@mich302csd01u: ~ $ id
-uid=35001(aviv) gid=10120(scs) groups=10120(scs),15000(mids)</code></pre>
+<p>Notice that only root has access to read this file, and since I am a <code>sudoer</code> on the system I can get access to it. If you look carefully, you can perform a basic parse of the settings. The root user has full <code>sudo</code> permissions, and other sudoer’s are determine based on group membership. Users in the <code>sudo</code> or <code>admin</code> group may run commands as <code>root</code>, and I am a member of the <code>sudo</code> group:</p>
+<pre><code>$ id
+uid=1000(gparmer) gid=1000(gparmer) groups=1000(gparmer),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),120(lpadmin),131(lxd),132(sambashare)</code></pre>
+<p><strong>Question:</strong></p>
+<ul>
+<li>How do you think that <code>sudo</code> is implemented? What mechanisms from this week’s lecture is it using to provide the requested functionality?</li>
+</ul>
 <h4 id="assignment-submission"><span class="header-section-number">11.4.3.2</span> Assignment Submission</h4>
-<p>What if we did assignment submission by simply executing a program that copied a directory into the instructor’s home directory? For example, if you wanted to submit the directory of code at <code>my_hw/</code> for homework <code>HW1</code>,</p>
+<p>What if we implemented an assignment submission program that copied a student’s directory into the instructor’s home directory? For example, if you wanted to submit the directory of code at <code>my_hw/</code> for homework <code>HW1</code>,</p>
 <pre><code>$ ./3410_submit HW1 my_hw</code></pre>
-<p>This program, run by you, has your user and group permissions, but it is able to take your submission and copy/save those submissions to my home directory, with my permissions at a location where you do not have access to write. How is that possible? Of course, using the <code>set-uid/gid</code> bits!</p>
+<p>This program, run by you, has your user and group permissions, but it is able to take your submission and copy/save those submissions to my home directory, with my permissions at a location where you do not have access to write. How is that possible?</p>
+<p>Naively, we’d have a problem:</p>
+<ul>
+<li>The submission program is written and provided by the instructor.</li>
+<li>The students would be executing the program, thus it would execute with their identity.</li>
+<li>We don’t want the submitted data to be visible to <em>any</em> students.</li>
+<li><em>However</em>, if the students run the submission program, it will run as their uid/gid, and 1. it won’t have access to the instructor’s home directory, and 2. any files it creates (during the copy) will belong to the user.</li>
+</ul>
+<p>Yikes.</p>
+<p><strong>Question:</strong></p>
+<ul>
+<li>How could we go about implementing a homework submission program?</li>
+</ul>
 <h1 id="security-attacks-on-system-programs"><span class="header-section-number">12</span> Security: Attacks on System Programs</h1>
 <blockquote>
 <p><strong>This material directly adapted from Prof. Aviv’s <a href="https://classes.adamaviv.com/ic221/s18/units/07/unit.html#org67f4730">material</a>.</strong></p>
@@ -6637,43 +6638,43 @@ Goodbye World</code></pre>
 <p>At this point, we own this program (pwn in the parlance). If the program were set-user-id, we could escalate our privilege.</p>
 <h2 id="overflow-attacks"><span class="header-section-number">12.3</span> Overflow Attacks</h2>
 <p>Two attacks down, moving onto the third. Let’s now assume that the programmer has wised up to the two previous attacks. Now we are using full paths to executables and we are scrubbing the input to remove any potential bash commands prior to execution. The result is the following program:</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb312-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb312-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb312-3" title="3"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
-<a class="sourceLine" id="cb312-4" title="4"></a>
-<a class="sourceLine" id="cb312-5" title="5"></a>
-<a class="sourceLine" id="cb312-6" title="6"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb312-7" title="7">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb312-8" title="8">{</a>
-<a class="sourceLine" id="cb312-9" title="9">    <span class="dt">char</span> cmd[<span class="dv">1024</span>] = <span class="st">&quot;/bin/cat ./&quot;</span>; <span class="co">//will append to this string</span></a>
-<a class="sourceLine" id="cb312-10" title="10">    <span class="dt">char</span> input[<span class="dv">40</span>];</a>
-<a class="sourceLine" id="cb312-11" title="11"></a>
-<a class="sourceLine" id="cb312-12" title="12">    printf(<span class="st">&quot;What input do you want to &#39;cat&#39; (choose from below)</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb312-13" title="13">    system(<span class="st">&quot;/bin/ls&quot;</span>); <span class="co">//show available files</span></a>
-<a class="sourceLine" id="cb312-14" title="14"></a>
-<a class="sourceLine" id="cb312-15" title="15">    printf(<span class="st">&quot;input &gt; &quot;</span>);</a>
-<a class="sourceLine" id="cb312-16" title="16">    fflush(stdout); <span class="co">//force stdout to print</span></a>
-<a class="sourceLine" id="cb312-17" title="17"></a>
-<a class="sourceLine" id="cb312-18" title="18">    scanf(<span class="st">&quot;%s&quot;</span>,input);<span class="co">//read input</span></a>
-<a class="sourceLine" id="cb312-19" title="19"></a>
-<a class="sourceLine" id="cb312-20" title="20">  <span class="co">//clean input before passing to /bin/cat</span></a>
-<a class="sourceLine" id="cb312-21" title="21">    <span class="dt">int</span> i;</a>
-<a class="sourceLine" id="cb312-22" title="22">    <span class="cf">for</span> (i=<span class="dv">0</span>; i&lt;<span class="dv">40</span>; i++) {</a>
-<a class="sourceLine" id="cb312-23" title="23">        <span class="cf">if</span> (input[i] == <span class="ch">&#39;;&#39;</span> || input[i] == <span class="ch">&#39;|&#39;</span> || input[i] == <span class="ch">&#39;$&#39;</span> || input[i] == <span class="ch">&#39;&amp;&#39;</span>) {</a>
-<a class="sourceLine" id="cb312-24" title="24">            input[i] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>; <span class="co">//change all ;,|,$,&amp; to a NULL</span></a>
-<a class="sourceLine" id="cb312-25" title="25">        }</a>
-<a class="sourceLine" id="cb312-26" title="26">    }</a>
-<a class="sourceLine" id="cb312-27" title="27"></a>
-<a class="sourceLine" id="cb312-28" title="28">    <span class="co">//concatenate the two strings</span></a>
-<a class="sourceLine" id="cb312-29" title="29">    strcat(cmd,input);</a>
-<a class="sourceLine" id="cb312-30" title="30"></a>
-<a class="sourceLine" id="cb312-31" title="31">    printf(<span class="st">&quot;Executing: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, cmd);</a>
-<a class="sourceLine" id="cb312-32" title="32">    fflush(stdout);</a>
-<a class="sourceLine" id="cb312-33" title="33"></a>
-<a class="sourceLine" id="cb312-34" title="34">    system(cmd);</a>
-<a class="sourceLine" id="cb312-35" title="35"></a>
-<a class="sourceLine" id="cb312-36" title="36">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb312-37" title="37">}</a></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb310-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb310-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb310-3" title="3"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb310-4" title="4"></a>
+<a class="sourceLine" id="cb310-5" title="5"></a>
+<a class="sourceLine" id="cb310-6" title="6"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb310-7" title="7">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb310-8" title="8">{</a>
+<a class="sourceLine" id="cb310-9" title="9">    <span class="dt">char</span> cmd[<span class="dv">1024</span>] = <span class="st">&quot;/bin/cat ./&quot;</span>; <span class="co">//will append to this string</span></a>
+<a class="sourceLine" id="cb310-10" title="10">    <span class="dt">char</span> input[<span class="dv">40</span>];</a>
+<a class="sourceLine" id="cb310-11" title="11"></a>
+<a class="sourceLine" id="cb310-12" title="12">    printf(<span class="st">&quot;What input do you want to &#39;cat&#39; (choose from below)</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb310-13" title="13">    system(<span class="st">&quot;/bin/ls&quot;</span>); <span class="co">//show available files</span></a>
+<a class="sourceLine" id="cb310-14" title="14"></a>
+<a class="sourceLine" id="cb310-15" title="15">    printf(<span class="st">&quot;input &gt; &quot;</span>);</a>
+<a class="sourceLine" id="cb310-16" title="16">    fflush(stdout); <span class="co">//force stdout to print</span></a>
+<a class="sourceLine" id="cb310-17" title="17"></a>
+<a class="sourceLine" id="cb310-18" title="18">    scanf(<span class="st">&quot;%s&quot;</span>,input);<span class="co">//read input</span></a>
+<a class="sourceLine" id="cb310-19" title="19"></a>
+<a class="sourceLine" id="cb310-20" title="20">  <span class="co">//clean input before passing to /bin/cat</span></a>
+<a class="sourceLine" id="cb310-21" title="21">    <span class="dt">int</span> i;</a>
+<a class="sourceLine" id="cb310-22" title="22">    <span class="cf">for</span> (i=<span class="dv">0</span>; i&lt;<span class="dv">40</span>; i++) {</a>
+<a class="sourceLine" id="cb310-23" title="23">        <span class="cf">if</span> (input[i] == <span class="ch">&#39;;&#39;</span> || input[i] == <span class="ch">&#39;|&#39;</span> || input[i] == <span class="ch">&#39;$&#39;</span> || input[i] == <span class="ch">&#39;&amp;&#39;</span>) {</a>
+<a class="sourceLine" id="cb310-24" title="24">            input[i] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>; <span class="co">//change all ;,|,$,&amp; to a NULL</span></a>
+<a class="sourceLine" id="cb310-25" title="25">        }</a>
+<a class="sourceLine" id="cb310-26" title="26">    }</a>
+<a class="sourceLine" id="cb310-27" title="27"></a>
+<a class="sourceLine" id="cb310-28" title="28">    <span class="co">//concatenate the two strings</span></a>
+<a class="sourceLine" id="cb310-29" title="29">    strcat(cmd,input);</a>
+<a class="sourceLine" id="cb310-30" title="30"></a>
+<a class="sourceLine" id="cb310-31" title="31">    printf(<span class="st">&quot;Executing: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, cmd);</a>
+<a class="sourceLine" id="cb310-32" title="32">    fflush(stdout);</a>
+<a class="sourceLine" id="cb310-33" title="33"></a>
+<a class="sourceLine" id="cb310-34" title="34">    system(cmd);</a>
+<a class="sourceLine" id="cb310-35" title="35"></a>
+<a class="sourceLine" id="cb310-36" title="36">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb310-37" title="37">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>01
 02
@@ -6703,8 +6704,8 @@ templates
 title.md
 tools
 What input do you want to &#39;cat&#39; (choose from below)
-input &gt; Executing: /bin/cat ./execvp_cat
-/bin/cat: ./execvp_cat: No such file or directory</code></pre>
+input &gt; Executing: /bin/cat ./flow_system
+/bin/cat: ./flow_system: No such file or directory</code></pre>
 <pre><code>aviv@saddleback: demo $ make
 clang -g -Wall    cat.c   -o cat
 clang -g -Wall    overflow_system.c   -o overflow_system
@@ -6730,17 +6731,11 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</code></pre>
 <p>I’m using this to produce strings of varying length, length 10, 20, 30, 40, and 50. Those strings can be sent to the target program using a pipe. And we can see the result:</p>
 <pre><code>aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*10&quot; | ./overflow_system
 What input do you want to &#39;cat&#39; (choose from below)
-cat AA
-Goodbye World</code></pre>
-<p>Now when we execute the overflow, we get our desired “Goodbye World” result:</p>
-<pre><code>aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*50&quot; | ./overflow_system
-What input do you want to &#39;cat&#39; (choose from below)
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-cat
-cat.c
-execvp_cat
-execvp_cat.c
-inject_system
+cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
+cat.c  execvp_cat.c  inject_system.c  input.txt     mal-lib   overflow_system.c  run_foo         run_foo.o  setenv_cat.c  shared-lib     system_cat.c
+input &gt; Executing: /bin/cat ./AAAAAAAAAA
+/bin/cat: ./AAAAAAAAAA: No such file or directory
+aviv@saddleback: demo $ python -c &quot;print &#39;A&#39;*20&quot; | ./over
 inject_system.c
 inject_system.c~
 input.txt
@@ -6788,8 +6783,8 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <h2 id="headers-and-visibility"><span class="header-section-number">13.3</span> Headers and Visibility</h2>
 <p>C does not have classes and the rules therein to support per-class/object encapsulation. Instead, C views each <code>.c</code> file as a unit of visibility. Functions and global variables (known as “symbols”) can be hooked up with references to them in other objects by the linker. However, it is possible to write code in a <code>.c</code> file that is <em>not visible</em> outside of that file. In contrast to the linking error above emphasizing good naming, if a symbol is marked as <code>static</code>, no other <code>.c</code> file will be able to reference that symbol.</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb319-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
-<a class="sourceLine" id="cb319-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb316-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
+<a class="sourceLine" id="cb316-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
 <p>No other <code>.c</code> file can define code that will be able to access <code>global_var</code> nor call <code>foo</code>. You can see the list of all symbols within a <code>.c</code> file that are accessible outside of it by compiling into a <code>.o</code> file (using <code>gcc -c ...</code>), and <code>nm -g --defined-only x.o | awk '{print $3}'</code> (replace <code>x</code> with your object file name).</p>
 <blockquote>
 <p><strong>Convention.</strong> All functions and variables that are not part of the <em>public interface</em> with which to interact with the <code>.c</code> file should be <code>static</code> so that they cannot be used from other objects.</p>
@@ -6800,13 +6795,13 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>When we include a file, it just copies the file at the point of the <code>#include</code>. Thus, if the same header is included separately into two <code>.c</code> files, then it effectively replicates the header’s contents into the two <code>.o</code> files. This can cause problems if the two <code>.o</code> files are linked together. An example:</p>
 <p><code>a.c</code>:</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb320-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb317-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
 <p><code>b.c</code>:</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb321-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
-<a class="sourceLine" id="cb321-2" title="2"></a>
-<a class="sourceLine" id="cb321-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb318-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
+<a class="sourceLine" id="cb318-2" title="2"></a>
+<a class="sourceLine" id="cb318-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
 <p><code>c.h</code>:</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb322-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb319-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
 <p>After compiling these files, we get</p>
 <pre><code>$ gcc -c a.c -o a.o
 $ gcc -c b.c -o b.o
@@ -6822,22 +6817,22 @@ collect2: error: ld returned 1 exit status</code></pre>
 <p>You <em>must</em> include the header files that provide the functionality that you rely on and use. This sounds obvious, but it is <em>very</em> easy to mess this up. A couple of examples:</p>
 <p><em>Example 1: Implementing a library.</em> You’re implementing a library, and you have a <code>.h</code> file for it that exposes the types of the library’s functions. You test your library, and it works wonderfully – victory! However, because it is a library, it might be used by other people’s code, and all they are going to do is <code>#include &lt;your_lib.h&gt;</code>, and expect everything to work.</p>
 <p>What if the following happened? Your <code>your_lib.h</code> file does this:</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb324-1" title="1"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb324-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb324-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb321-1" title="1"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb321-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb321-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
 <p>In your test file, you do this:</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb325-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
-<a class="sourceLine" id="cb325-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb325-3" title="3"></a>
-<a class="sourceLine" id="cb325-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb322-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
+<a class="sourceLine" id="cb322-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb322-3" title="3"></a>
+<a class="sourceLine" id="cb322-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>Your tests of your library work wonderfully! But if the user of your library simply does:</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb326-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb326-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb323-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb323-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
 <p>The user will get a compiler error that says it doesn’t understand what <code>size_t</code> is! The core problem is that your library’s header file didn’t include all of the headers it relies on! Instead, it should updated to look like so:</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb327-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
-<a class="sourceLine" id="cb327-2" title="2"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb327-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb327-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb324-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
+<a class="sourceLine" id="cb324-2" title="2"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb324-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb324-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>A good way to defensively code to try to minimize the chance that this error happens, you should include your header files <em>before</em> the rest of the header files. The only real solution is to be very careful, and always include what headers are necessary for the functionality you depend on.</p>
 <p><em>Example 2: implementing a program or test.</em> A <code>.c</code> file, lets say <code>my_prog.c</code>, includes some header file, <code>head.h</code>. It compiles just fine. But if <code>my_prog.c</code> relies on some header file – lets say <code>dep.h</code> – that is only included itself in the <code>head.h</code> file, then if <code>head.h</code> is updated and removes the include, it will break any program that depends on it! In this case, <code>my_prog.c</code> should explicitly include <code>dep.h</code>: include the headers that are required for your functionality!</p>
 <p><em>How do you know which headers to include?</em> If you’re using a system function, the <code>man</code> page for it is explicit about which headers provide the necessary functionality. If you’re implementing a library in the class, we are explicit about what headers are required.</p>
@@ -6845,18 +6840,18 @@ collect2: error: ld returned 1 exit status</code></pre>
 <p>Syntactic nesting, or depth often significantly increase the cognitive complexity in C<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>. Two examples of this:</p>
 <p><strong>Depth through indentation nesting.</strong> Each additional nesting level (each nested set of <code>{}</code>) adds another condition that you must keep in your mind<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a> when understanding the code. This includes the conditions, or looping conditions associated with the nesting level. This is <em>a lot</em> to keep in your head, and makes developing and reading code quite a bit more difficult.</p>
 <p>What can you do to avoid this nesting? <em>First</em>, return early for errors. Instead of the following code…</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb328-1" title="1"><span class="cf">if</span> (a) {</a>
-<a class="sourceLine" id="cb328-2" title="2">    <span class="co">/* normal code */</span></a>
-<a class="sourceLine" id="cb328-3" title="3">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb328-4" title="4">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb328-5" title="5">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb328-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb325-1" title="1"><span class="cf">if</span> (a) {</a>
+<a class="sourceLine" id="cb325-2" title="2">    <span class="co">/* normal code */</span></a>
+<a class="sourceLine" id="cb325-3" title="3">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb325-4" title="4">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb325-5" title="5">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb325-6" title="6">}</a></code></pre></div>
 <p>…do the following…</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb329-1" title="1"><span class="cf">if</span> (!a) {</a>
-<a class="sourceLine" id="cb329-2" title="2">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb329-3" title="3">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb329-4" title="4">}</a>
-<a class="sourceLine" id="cb329-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb326-1" title="1"><span class="cf">if</span> (!a) {</a>
+<a class="sourceLine" id="cb326-2" title="2">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb326-3" title="3">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb326-4" title="4">}</a>
+<a class="sourceLine" id="cb326-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
 <p>Though seemingly trivial, it enables you to separate your understanding of error conditions from the complexity of the following code. Try to perform as much error checking as soon as it possibly can be done so that you can switch into “normal case” thinking.</p>
 <p><em>Second</em>, if you nest deeper than four levels of brackets, then pull code out into appropriately-named functions. Long functions aren’t necessarily bad, but <em>complex</em> functions are.</p>
 <blockquote>
@@ -6868,16 +6863,16 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>I use indentation levels in C of eight visual spaces to make it visually clear when I’m indenting too much.</p>
 <p><strong>Depth through field nesting.</strong> It can be quite difficult to follow code that nests access to fields. For example:</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb330-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb327-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
 <p>Of course, this is fake code, but even if it wasn’t, keeping track of the types of each of the levels of increasing depth of field reference is nearly impossible. This will make writing the code fickle and challenging, and reading the code, needlessly complex.</p>
 <p>The main means we have to remove this complexity is to</p>
 <ol type="1">
 <li><p>Create an set of typed variables</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb331-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
-<a class="sourceLine" id="cb331-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
-<a class="sourceLine" id="cb331-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
-<a class="sourceLine" id="cb331-4" title="4"></a>
-<a class="sourceLine" id="cb331-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb328-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
+<a class="sourceLine" id="cb328-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
+<a class="sourceLine" id="cb328-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
+<a class="sourceLine" id="cb328-4" title="4"></a>
+<a class="sourceLine" id="cb328-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
 It is up to you to decide where it is right to provide an “intermediate” type for a certain depth in the fields, and when to directly dive into a few fields.</li>
 <li><p>If any the structs (or sub-structs, or arrays) represents an API layer, then you can call a function that performs the necessary operation on that part of the data-structure. This both provide abstraction over the data access, and documents the types.</p></li>
 </ol>
