@@ -6,8 +6,8 @@
 
 		<title>UNIX Personalities: Android</title>
 
-		<meta name="description" content="A presentation by Gabe Parmer 👋, research by <a href="https://github.com/bushidocodes">Sean McBride</a>">
-		<meta name="author" content="Gabe Parmer 👋, research by <a href="https://github.com/bushidocodes">Sean McBride</a>">
+		<meta name="description" content="A presentation by Gabe Parmer 👋, research by Sean McBride">
+		<meta name="author" content="Gabe Parmer 👋, research by Sean McBride">
 
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -55,7 +55,7 @@
 
 <section>
 <h1>UNIX Personalities: Android</h1>
-<h3>Gabe Parmer 👋, research by <a href="https://github.com/bushidocodes">Sean McBride</a></h3>
+<h3>Gabe Parmer 👋, research by Sean McBride</h3>
 <p>
 <h4></h4>
 </p>
@@ -271,7 +271,9 @@
 <ul>
 <li>Loads all java packages into the zygote</li>
 <li>Listens for App/Service-creation requests</li>
-<li><code>fork</code>s the new App/Service, executes its java code</li>
+<li><code>fork</code>s the new App/Service</li>
+<li><code>setuid</code> to the App’s <code>uid</code> (zygote is <code>root</code>)</li>
+<li>Executes App/Service’s java code</li>
 </ul>
 </section><section id="zygote-memory-savings" class="slide level2">
 <h2>Zygote Memory Savings</h2>
@@ -531,7 +533,10 @@ public void composeEmail(String[] addresses, String subject, Uri attachment) {
 <h2>ActivityManager Examples</h2>
 <ul>
 <li><a href="https://developer.android.com/reference/android/view/inputmethod/InputMethodManager.html">the <code>InputManager</code> multiplexes</a> user input between</li>
-<li><a href="https://developer.android.com/reference/android/inputmethodservice/InputMethodService"><code>InputMethod</code>s (link)</a> are things like on-screen keyboards that are Services activated by intents from the <code>InputManager</code></li>
+<li><p><a href="https://developer.android.com/reference/android/inputmethodservice/InputMethodService"><code>InputMethod</code>s (link)</a> are things like on-screen keyboards that are Services activated by intents from the <code>InputManager</code></p>
+<ul>
+<li>Provide the <code>INPUT_METHOD_SERVICE</code> intent</li>
+</ul></li>
 </ul>
 </section><section id="intentactivity-permissions" class="slide level2">
 <h2>Intent/Activity Permissions</h2>
@@ -572,8 +577,8 @@ public class ActivityManager {
     }
 }</code></pre>
 </section></section>
-<section><section id="posix-vs.-android" class="title-slide slide level1"><h1>POSIX vs. Android</h1></section><section id="posix-vs.-android-1" class="slide level2">
-<h2>POSIX vs. Android</h2>
+<section><section id="posix-vs.-android" class="title-slide slide level1"><h1>POSIX vs. Android</h1></section><section id="posix-vs.-android-summary" class="slide level2">
+<h2>POSIX vs. Android Summary</h2>
 <table>
 <thead>
 <tr class="header">
@@ -584,26 +589,82 @@ public class ActivityManager {
 <tbody>
 <tr class="odd">
 <td>User-centric</td>
-<td>App-centric</td>
+<td>App-centric, per-App permissions</td>
+</tr>
+<tr class="even">
+<td>Security through FS</td>
+<td>Security through permission manifests</td>
+</tr>
+<tr class="odd">
+<td>Shared resources on FS</td>
+<td>Shared resources via Services</td>
 </tr>
 <tr class="even">
 <td>Everything’s a file</td>
 <td>Everything’s App (JVM) execution</td>
 </tr>
 <tr class="odd">
-<td>Security through FS</td>
-<td>Security through permission manifests</td>
-</tr>
-<tr class="even">
 <td>Shell + <code>pipe</code> composition</td>
 <td>Composition via App IPC through <code>Intent</code>s</td>
 </tr>
-<tr class="odd">
-<td></td>
-<td>Binder-based IPC w/ passed <code>uid</code>/<code>pid</code></td>
-</tr>
 </tbody>
 </table>
+</section><section id="app-centric" class="slide level2">
+<h2>App-Centric</h2>
+<ul>
+<li>A user (<code>uid</code>) for each App/Service</li>
+<li>File system directory per App</li>
+<li>Binder IPC gives us <code>uid</code>/<code>pid</code> of calling App</li>
+<li>Each App has a permission manifest</li>
+<li><code>PermissionManager</code> lets us query App permissions</li>
+</ul>
+<p><span class="math inline">→</span> foundation for per-App access control/privileges</p>
+</section><section id="shared-resources-through-services" class="slide level2">
+<h2>Shared Resources Through Services</h2>
+<ul>
+<li><code>SystemManager</code> nameserver maps unique <code>name</code> to a Service</li>
+<li><p>Apps use IPC to request resources from Services</p>
+<ul>
+<li>Contacts</li>
+<li>Shared documents</li>
+<li>Hardware (location, screen, networking, etc…)</li>
+</ul></li>
+</ul>
+</section><section id="everything-is-appservice-execution" class="slide level2">
+<h2>Everything is App/Service Execution</h2>
+<p>Zygote as the parent of each App</p>
+<ul>
+<li>pre-loads all class libraries</li>
+<li>a service awaiting App creation requests on a domain socket</li>
+<li>App creation = <code>fork</code></li>
+<li>uses <code>setuid</code> to restrict App’s privileges</li>
+</ul>
+</section><section id="composition-via-intents" class="slide level2">
+<h2>Composition via <code>Intent</code>s</h2>
+<p>Apps and Services are activated by <em>intents</em>.</p>
+<ul>
+<li><p>Polymorphic</p>
+<ul>
+<li>Code for homescreen? Provide <code>PRE_BOOT_COMPLETED</code> intent.</li>
+<li>On-screen keyboard? Provide <code>INPUT_METHOD_SERVICE</code> intent.</li>
+</ul></li>
+<li><p>Drives App/Service activation</p>
+<ul>
+<li>If the intent provide isn’t running, start it!</li>
+</ul></li>
+<li><p>Communication driven by the <code>IntentManager</code></p>
+<ul>
+<li>nameserver for intents</li>
+<li>in some sense, provides similar purpose to the shell</li>
+</ul></li>
+</ul>
+</section><section id="androids-unix" class="slide level2">
+<h2>Android’s UNIX</h2>
+<p>Similar set of system calls to normal UNIX system…</p>
+<p>…augmented with pervasive use of IPC…</p>
+<p>…to coordinate between Apps and Services…</p>
+<p>…while checking per-App permissions…</p>
+<p>…all driven by the special trust relationship of untrusted Apps.</p>
 </section></section>
 
 <!-- https://gist.github.com/aaronwolen/5017084 -->
