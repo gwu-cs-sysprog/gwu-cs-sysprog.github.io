@@ -577,39 +577,7 @@ public class ActivityManager {
     }
 }</code></pre>
 </section></section>
-<section><section id="posix-vs.-android" class="title-slide slide level1"><h1>POSIX vs. Android</h1></section><section id="posix-vs.-android-summary" class="slide level2">
-<h2>POSIX vs. Android Summary</h2>
-<table>
-<thead>
-<tr class="header">
-<th>POSIX</th>
-<th>Android</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>User-centric</td>
-<td>App-centric, per-App permissions</td>
-</tr>
-<tr class="even">
-<td>Security through FS</td>
-<td>Security through permission manifests</td>
-</tr>
-<tr class="odd">
-<td>Shared resources on FS</td>
-<td>Shared resources via Services</td>
-</tr>
-<tr class="even">
-<td>Everything’s a file</td>
-<td>Everything’s App (JVM) execution</td>
-</tr>
-<tr class="odd">
-<td>Shell + <code>pipe</code> composition</td>
-<td>Composition via App IPC through <code>Intent</code>s</td>
-</tr>
-</tbody>
-</table>
-</section><section id="app-centric" class="slide level2">
+<section><section id="summary-posix-vs.-android" class="title-slide slide level1"><h1>Summary: POSIX vs. Android</h1></section><section id="app-centric" class="slide level2">
 <h2>App-Centric</h2>
 <ul>
 <li>A user (<code>uid</code>) for each App/Service</li>
@@ -658,6 +626,38 @@ public class ActivityManager {
 <li>in some sense, provides similar purpose to the shell</li>
 </ul></li>
 </ul>
+</section><section id="posix-vs.-android-summary" class="slide level2">
+<h2>POSIX vs. Android Summary</h2>
+<table>
+<thead>
+<tr class="header">
+<th>POSIX</th>
+<th>Android</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>User-centric</td>
+<td>App-centric, per-App permissions</td>
+</tr>
+<tr class="even">
+<td>Security through FS</td>
+<td>Security through permission manifests</td>
+</tr>
+<tr class="odd">
+<td>Shared resources on FS</td>
+<td>Shared resources via Services</td>
+</tr>
+<tr class="even">
+<td>Everything’s a file</td>
+<td>Everything’s App (JVM) execution</td>
+</tr>
+<tr class="odd">
+<td>Shell + <code>pipe</code> composition</td>
+<td>Composition via App IPC through <code>Intent</code>s</td>
+</tr>
+</tbody>
+</table>
 </section><section id="androids-unix" class="slide level2">
 <h2>Android’s UNIX</h2>
 <p>Similar set of system calls to normal UNIX system…</p>
