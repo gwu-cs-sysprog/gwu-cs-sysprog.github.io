@@ -61,8 +61,8 @@
 </p>
 </section>
 
-<section><section id="unixs-world-view" class="title-slide slide level1"><h1>UNIX’s World View</h1></section><section id="unixs-user-centricity" class="slide level2">
-<h2>UNIX’s User-Centricity</h2>
+<section><section id="unixs-world-view" class="title-slide slide level1"><h1>UNIX’s World View</h1></section><section id="unixs-user-centrality" class="slide level2">
+<h2>UNIX’s User-Centrality</h2>
 <ul>
 <li>Users that belong to groups,</li>
 <li>own and access files,</li>
@@ -292,8 +292,8 @@
 <img data-src="figures/android/zygote_flowchart.png" alt="A great video discussing bootup. Source: zybuluo.com" /><figcaption>A <a href="https://www.youtube.com/watch?v=5SQP0qfUDjI&amp;list=TLPQMDkwNDIwMjLUVCspTvNY9A">great video</a> discussing bootup. Source: zybuluo.com</figcaption>
 </figure>
 </section></section>
-<section><section id="application-centricity" class="title-slide slide level1"><h1>Application Centricity</h1></section><section id="app-centricity-application-sandbox" class="slide level2">
-<h2>App-Centricity: Application Sandbox</h2>
+<section><section id="application-centrality" class="title-slide slide level1"><h1>Application Centrality</h1></section><section id="app-centrality-application-sandbox" class="slide level2">
+<h2>App-Centrality: Application Sandbox</h2>
 <ol type="1">
 <li>Apps have <code>uid</code>/<code>gid</code>s, not users</li>
 <li>Apps have “home directories” for private storage</li>
@@ -329,8 +329,10 @@
 <h2>Tracking of Permissions</h2>
 <p>App and Service permissions are tracked and queried:</p>
 <ul>
-<li><code>PermissionManager</code></li>
+<li><code>PermissionManager</code> + <code>PackageManager</code></li>
 </ul>
+<pre><code>return AppGlobals.getPackageManager()
+    .checkUidPermission(permission, uid);</code></pre>
 </section><section id="app-filesystem-access" class="slide level2">
 <h2>App Filesystem Access</h2>
 <p>Applications have access only to a small part of the filesystem</p>
@@ -410,7 +412,7 @@
 <li><p><code>uid/gid</code> of Apps using connection can be queried</p>
 <ul>
 <li>Example: does the App have group <code>AID_INPUT</code> to be able to input?</li>
-<li>Example: pass uid to <code>PermissionManager</code>: “<em>are they allowed?</em>”</li>
+<li>Example: pass uid to <code>Package/PermissionManager</code>: “<em>are they allowed?</em>”</li>
 </ul></li>
 </ul>
 </section><section id="binder-communication-authentication" class="slide level2">
@@ -529,14 +531,19 @@ public void composeEmail(String[] addresses, String subject, Uri attachment) {
 <figure>
 <img data-src="figures/android/app_launch.png" alt="CurrentApp launches NextApp through an intent provided by NextApp. Credit: video" /><figcaption><code>CurrentApp</code> launches <code>NextApp</code> through an intent provided by <code>NextApp</code>. Credit: <a href="https://www.youtube.com/watch?v=5SQP0qfUDjI&amp;list=TLPQMDkwNDIwMjLUVCspTvNY9A">video</a></figcaption>
 </figure>
-</section><section id="activitymanager-examples" class="slide level2">
-<h2>ActivityManager Examples</h2>
+</section><section id="activitymanager-example" class="slide level2">
+<h2>ActivityManager Example</h2>
 <ul>
-<li><a href="https://developer.android.com/reference/android/view/inputmethod/InputMethodManager.html">the <code>InputManager</code> multiplexes</a> user input between</li>
-<li><p><a href="https://developer.android.com/reference/android/inputmethodservice/InputMethodService"><code>InputMethod</code>s (link)</a> are things like on-screen keyboards that are Services activated by intents from the <code>InputManager</code></p>
+<li><p><a href="https://developer.android.com/reference/android/view/inputmethod/InputMethodManager.html">the <code>InputManager</code> multiplexes</a> user input between <code>InputMethod</code>s.</p>
 <ul>
-<li>Provide the <code>INPUT_METHOD_SERVICE</code> intent</li>
+<li>Think: where are we getting our <code>stdin</code>? Up to the system to decide if <code>stdin</code> is a pipe, or a terminal. Polymorphic!</li>
 </ul></li>
+<li><p><a href="https://developer.android.com/reference/android/inputmethodservice/InputMethodService"><code>InputMethod</code>s (link)</a> are things like on-screen keyboards that are Services activated by intents from the <code>InputManager</code>.</p>
+<ul>
+<li>Provides the <code>INPUT_METHOD_SERVICE</code> intent</li>
+<li>This class is much like “file descriptor <code>0</code>”; we know it will give us input.</li>
+</ul></li>
+<li><p>App <span class="math inline">→</span> <code>ActivityManager</code>(<code>INPUT_METHOD_SERVICE</code>) <span class="math inline">→</span> <code>InputMethod</code></p></li>
 </ul>
 </section><section id="intentactivity-permissions" class="slide level2">
 <h2>Intent/Activity Permissions</h2>
@@ -584,7 +591,7 @@ public class ActivityManager {
 <li>File system directory per App</li>
 <li>Binder IPC gives us <code>uid</code>/<code>pid</code> of calling App</li>
 <li>Each App has a permission manifest</li>
-<li><code>PermissionManager</code> lets us query App permissions</li>
+<li><code>Package/PermissionManager</code> lets us query App permissions</li>
 </ul>
 <p><span class="math inline">→</span> foundation for per-App access control/privileges</p>
 </section><section id="shared-resources-through-services" class="slide level2">
