@@ -627,11 +627,39 @@ public class ActivityManager {
 <ul>
 <li>If the intent provide isn’t running, start it!</li>
 </ul></li>
-<li><p>Communication driven by the <code>IntentManager</code></p>
+<li><p>Communication driven by the <code>ActivityManager</code></p>
 <ul>
 <li>nameserver for intents</li>
 <li>in some sense, provides similar purpose to the shell</li>
 </ul></li>
+</ul>
+</section><section id="unix-vs.-android-access-to-resources" class="slide level2">
+<h2>UNIX vs. Android: Access to Resources</h2>
+<p>UNIX:</p>
+<ul>
+<li><p><span class="math inline"><em>o</em><em>p</em><em>e</em><em>n</em>(<em>S</em><em>t</em><em>r</em><em>i</em><em>n</em><em>g</em><em>p</em><em>a</em><em>t</em><em>h</em>) → <em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em></span></p>
+<ul>
+<li>Access check based on <code>uid</code>/<code>gid</code></li>
+</ul></li>
+<li><p><span class="math inline"><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em><sub><em>t</em></sub><em>a</em><em>b</em><em>l</em><em>e</em>(<em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em>) → <em>c</em><em>h</em><em>a</em><em>r</em>[]<em>f</em><em>i</em><em>l</em><em>e</em></span></p></li>
+</ul>
+</section><section id="unix-vs.-android-access-to-resources-1" class="slide level2">
+<h2>UNIX vs. Android: Access to Resources</h2>
+<p>Android:</p>
+<ul>
+<li><p><span class="math inline"><em>o</em><em>p</em><em>e</em><em>n</em>(<em>S</em><em>t</em><em>r</em><em>i</em><em>n</em><em>g</em><em>p</em><em>a</em><em>t</em><em>h</em>) → <em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em></span></p>
+<ul>
+<li>Access check based on <code>uid</code>/<code>gid</code></li>
+</ul></li>
+<li><p><span class="math inline"><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em><sub><em>t</em></sub><em>a</em><em>b</em><em>l</em><em>e</em>(<em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em>) → <em>c</em><em>h</em><em>a</em><em>r</em>[]<em>f</em><em>i</em><em>l</em><em>e</em></span></p></li>
+</ul>
+<p><em>and</em></p>
+<ul>
+<li><p><span class="math inline"><em>A</em><em>c</em><em>t</em><em>i</em><em>v</em><em>i</em><em>t</em><em>y</em><em>M</em><em>a</em><em>n</em><em>a</em><em>g</em><em>e</em><em>r</em>(<em>S</em><em>t</em><em>r</em><em>i</em><em>n</em><em>g</em><em>I</em><em>n</em><em>t</em><em>e</em><em>n</em><em>t</em>) → <em>B</em><em>i</em><em>n</em><em>d</em><em>e</em><em>r</em><em>C</em><em>h</em><em>a</em><em>n</em><em>n</em><em>e</em><em>l</em></span></p>
+<ul>
+<li>Permission checking with <code>PackageManager</code></li>
+</ul></li>
+<li><p>BinderChannel(fn, args…) Service</p></li>
 </ul>
 </section><section id="posix-vs.-android-summary" class="slide level2">
 <h2>POSIX vs. Android Summary</h2>
