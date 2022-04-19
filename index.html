@@ -477,7 +477,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb9-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x56120d393149
+Hex and pointers: 7fffffffffffffff, 0x561630eec149
 Strings: hello world</code></pre>
 <h3 id="compound-types"><span class="header-section-number">1.2.4</span> Compound types</h3>
 <ul>
@@ -597,8 +597,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb20-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffd8dd1eaa0 == 0x7ffd8dd1eaa0; 6 == 6
-nth index: 0x7ffd8dd1eaa4 == 0x7ffd8dd1eaa4; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffde6818d10 == 0x7ffde6818d10; 6 == 6
+nth index: 0x7ffde6818d14 == 0x7ffde6818d14; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -621,7 +621,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb23-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb23-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffc2b0a1b44 == 0x7ffc2b0a1b44; 7 == 7</code></pre>
+<pre><code>nth index: 0x7fffc37a0bd4 == 0x7fffc37a0bd4; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -645,10 +645,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb25-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb25-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffd6fcf0070 &amp; 0x7ffd6fcf0084
-idx 1 @ 0x7ffd6fcf0074 &amp; 0x7ffd6fcf0085
-idx 2 @ 0x7ffd6fcf0078 &amp; 0x7ffd6fcf0086
-idx 3 @ 0x7ffd6fcf007c &amp; 0x7ffd6fcf0087</code></pre>
+<pre><code>idx 0 @ 0x7ffd8d194ec0 &amp; 0x7ffd8d194ed4
+idx 1 @ 0x7ffd8d194ec4 &amp; 0x7ffd8d194ed5
+idx 2 @ 0x7ffd8d194ec8 &amp; 0x7ffd8d194ed6
+idx 3 @ 0x7ffd8d194ecc &amp; 0x7ffd8d194ed7</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -885,10 +885,10 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <a class="sourceLine" id="cb42-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x555b62edd010
-b   @ 0x555b62edd014
-c   @ 0x555b62edd020
-end @ 0x555b62edd039
+a   @ 0x563690b89010
+b   @ 0x563690b89014
+c   @ 0x563690b89020
+end @ 0x563690b89039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -896,7 +896,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x555b62edd014
+c.c_c = 0x563690b89014
 
 Print out the variables as raw memory
 
@@ -991,8 +991,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb44-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x5617d417204c
-1: 2 @ 0x5617d4172044
+<pre><code>0: 4 @ 0x5620dc5c304c
+1: 2 @ 0x5620dc5c3044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -1321,16 +1321,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: 183406039
-3: 32764
-4: 183406038
-5: 32764
-6: -1222503875
-7: 22016
-8: 944243432
-9: 32548
-10: -1222503952
-11: 22016</code></pre>
+2: 672536615
+3: 32766
+4: 672536614
+5: 32766
+6: -1041644995
+7: 21946
+8: 2138456808
+9: 32645
+10: -1041645072
+11: 21946</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb62-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1671,7 +1671,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb75-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x56470ef63004 == 0x56470ef63004 != 0x56470ef65011</code></pre>
+0x56097bfb9004 == 0x56097bfb9004 != 0x56097bfbb011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">2.3</span> API Design and Concerns</h2>
 <p>When programming in C, you’ll see quite a few APIs. Throughout the class, we’ll see quite a few APIs, most documented in <code>man</code> pages. It takes some practice in reading <code>man</code> pages to get what you need from them. One of the things that helps the most is to understand a few common <em>patterns</em> and <em>requirements</em> that you find these APIs, and in C programming in general.</p>
@@ -2070,15 +2070,15 @@ ERRORS
 <a class="sourceLine" id="cb88-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>pre-fork:
-     parent pid 402006
+     parent pid 308364
 post-fork:
-    returned 402007,
-    current pid 402006
-    parent pid 401997
+    returned 308365,
+    current pid 308364
+    parent pid 308355
 post-fork:
     returned 0,
-    current pid 402007
-    parent pid 402006</code></pre>
+    current pid 308365
+    parent pid 308364</code></pre>
 <p>We can see the <code>fork</code> creates a new process that continues running the same code, but has a separate set of memory. A few observations:</p>
 <ol type="1">
 <li>In this case, you can see that the <code>pid</code> variable is different for the two processes. In fact, after the <code>fork</code> call, <em>all of memory is copied</em> into the new process and is disjoint from that of the parent.</li>
@@ -2142,14 +2142,14 @@ post-fork:
 <a class="sourceLine" id="cb90-35" title="35">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb90-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Child 402026 exiting with 0
-Child 402027 exiting with -1
-Child 402029 exiting with -3
-Child 402028 exiting with -2
-Child 402026 exited with exit status 0
-Child 402027 exited with exit status -1
-Child 402029 exited with exit status -3
-Child 402028 exited with exit status -2</code></pre>
+<pre><code>Child 308385 exiting with -1
+Child 308384 exiting with 0
+Child 308386 exiting with -2
+Child 308387 exiting with -3
+Child 308384 exited with exit status 0
+Child 308385 exited with exit status -1
+Child 308386 exited with exit status -2
+Child 308387 exited with exit status -3</code></pre>
 <h3 id="non-determinism-everywhere-concurrency"><span class="header-section-number">3.2.2</span> Non-determinism Everywhere: Concurrency</h3>
 <p>The output of this program can actually vary, somewhat arbitrarily, in the following way: any of the output lines can be reordered with respect to any other, <em>except</em> that the parent’s print out for a specific child must come after it.</p>
 <p>For example, all of the following are possible:</p>
@@ -2477,7 +2477,7 @@ penny</code></pre>
 <a class="sourceLine" id="cb109-15" title="15">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb109-16" title="16">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>I am gparmer, and I live in /home/gparmer</code></pre>
+<pre><code>I am ycombinator, and I live in /home/ycombinator</code></pre>
 <p>You can see all of the environmental variables available by default with:</p>
 <pre><code>$ env
 SHELL=/bin/bash
@@ -2527,7 +2527,7 @@ DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 <a class="sourceLine" id="cb112-34" title="34">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb112-35" title="35">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>user: gparmer
+<pre><code>user: ycombinator
 user (forked child): penny
 Environment variable USER -&gt; penny</code></pre>
 <p><code>03/envtest.c</code> is</p>
@@ -2704,8 +2704,8 @@ Environment variable BESTPUP -&gt; penny</code></pre>
 <a class="sourceLine" id="cb122-23" title="23">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb122-24" title="24">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Current directory: /home/gparmer/repos/sp/lectures
-New current dir: /home/gparmer/repos/sp</code></pre>
+<pre><code>Current directory: /home/ycombinator/repos/sp/lectures
+New current dir: /home/ycombinator/repos/sp</code></pre>
 <p>The <code>cd</code> command in shells is actually <em>not a program</em>, and is instead a shell-internal function. You can confirm this using the <code>which</code> program, which tells you the location of a program:</p>
 <pre><code>$ which ls
 /bin/ls
@@ -3273,9 +3273,9 @@ make[1]: *** [Makefile:30: inline_exec] Error 1</code></pre>
 <a class="sourceLine" id="cb140-86" title="86">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb140-87" title="87">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>402286: We&#39;ve been asked to terminate. Exit!
-402285: Parent asking child (402286) to terminate
-402285: Child process 402286 has exited.</code></pre>
+<pre><code>308644: We&#39;ve been asked to terminate. Exit!
+308643: Parent asking child (308644) to terminate
+308643: Child process 308644 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -3937,12 +3937,12 @@ The two main ones we care about are directories and files. Subsequent calls to <
 <a class="sourceLine" id="cb171-56" title="56">    <span class="cf">return</span> finfo.st_size;</a>
 <a class="sourceLine" id="cb171-57" title="57">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>      File: 02_exercises.md (size: 2978)
- Directory: ..
-      File: prufrock.txt (size: 6044)
+<pre><code> Directory: .
  Directory: test_directory
- Directory: .
-      File: 01_lecture.md (size: 21580)</code></pre>
+      File: 02_exercises.md (size: 2978)
+      File: prufrock.txt (size: 6044)
+      File: 01_lecture.md (size: 21580)
+ Directory: ..</code></pre>
 <p>To make <em>changes</em> in the first system hierarchy, we need an additional set of functions.</p>
 <ul>
 <li><code>mkdir(path, mode)</code> - This function is used in, for example, the <code>mkdir</code> program. Don’t confuse the program you use in the shell, with the function you can call from C.</li>
@@ -4099,36 +4099,36 @@ The two main ones we care about are directories and files. Subsequent calls to <
 <a class="sourceLine" id="cb177-87" title="87">    <span class="cf">return</span> finfo.st_size;</a>
 <a class="sourceLine" id="cb177-88" title="88">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>- F README.md (35)
-- D tools
-- D 03
-- D 06
-- F Makefile (1892)
-- D figures
-- D 11
-- D templates
-- F inline_exec_tmp (60152)
-- F title.md (320)
-- F .gitignore (520)
-- D 07
-- D 14
-- D 12
-- D 99
-- F output_tmp.dat (0)
-- D 08
-- D slides
-- D 10
-- F a.out (17136)
-- F LICENSE (1522)
-- D 09
-- D 01
-- D 13
-- D 05
+<pre><code>- D 14
 - D 02
-- F aggregate.md (162963)
+- D 03
+- D tools
+- D 05
+- D 01
+- D 09
+- D figures
+- D 10
+- F inline_exec_tmp (60152)
+- D 13
+- D 11
+- D 08
+- D 07
+- D templates
+- F lectures.html (732776)
+- F README.md (35)
+- F title.md (320)
+- F output_tmp.dat (0)
+- F LICENSE (1522)
+- D slides
+- F Makefile (1908)
+- D 99
+- D 12
 - D 04
-- D .git
-- F inline_exec_tmp.c (1658)</code></pre>
+- D 06
+- F inline_exec_tmp.c (1658)
+- F aggregate.md (162984)
+- F .gitignore (520)
+- D .git</code></pre>
 <h3 id="task-2-file-and-directory-sizes"><span class="header-section-number">5.5.2</span> Task 2: File and Directory Sizes</h3>
 <p><strong>Task: Add output for the size of files, and the size of each directory – the sum of the size of all contained directories and files.</strong></p>
 <p>Again, if we run the program in the <code>05</code> directory:</p>
@@ -4267,7 +4267,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 <a class="sourceLine" id="cb183-54" title="54">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>msg1: 
-msg2: america for good doggies</code></pre>
+msg2: </code></pre>
 <p>You can see that there are some problems here. If we run it many times, we can see that sometimes we don’t see any messages, sometimes we only see the first, sometimes we only see the second, and other times combinations of all three options. Thus, they are not useful for channel-based communication between multiple processes.</p>
 <p>On the other side, files have a very <em>useful</em> properti that we’d like to use in a good solution to IPC: they <em>have a location in the FS</em> that the communicating processes can both use to find the file, thus avoiding the need for a shared parent.</p>
 <ul>
@@ -4456,7 +4456,8 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb187-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb187-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>402638: 402638402637</code></pre>
+<pre><code>308994: 308994
+308995: 308995</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -4609,15 +4610,15 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb191-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 402659 connected to server.
-2. Client 402659 request sent message to server.
-Server received message (sz 37): &quot;Citizen 402659: Penny for Pawsident!&quot;. Replying!
+1. Client 309015 connected to server.
+2. Client 309015 request sent message to server.
+1. Client 309016 connected to server.
+2. Client 309016 request sent message to server.
+Server received message (sz 37): &quot;Citizen 309015: Penny for Pawsident!&quot;. Replying!
 Server: New client connected with new file descriptor 4.
-3. Client 402659 reply received from server: Citizen 402659: Penny for Pawsident!
-1. Client 402660 connected to server.
-2. Client 402660 request sent message to server.
-Server received message (sz 37): &quot;Citizen 402660: Penny for Pawsident!&quot;. Replying!
-3. Client 402660 reply received from server: Citizen 402660: Penny for Pawsident!</code></pre>
+3. Client 309015 reply received from server: Citizen 309015: Penny for Pawsident!
+Server received message (sz 37): &quot;Citizen 309016: Penny for Pawsident!&quot;. Replying!
+3. Client 309016 reply received from server: Citizen 309016: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -5849,9 +5850,9 @@ exit_group(0)                           = ?
 <a class="sourceLine" id="cb249-38" title="38">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>
-malloc + free overhead (cycles): 718
+malloc + free overhead (cycles): 422
 
-mmap + munmap overhead (cycles): 10741</code></pre>
+mmap + munmap overhead (cycles): 9037</code></pre>
 <blockquote>
 <p>What is a “cycle”? When you read that you have a 3GHz, that essentially says that the internal “clock” that drives the logic in the processor cycles by at 3 billion cycles per second. That’s a <em>lot</em>. Each cycle is 1/3 a nanosecond. A cycle is the smallest unit of measurement on a processor, and the <code>cycles</code> function we implement here gives us how many cycles have elapsed since the system boots.</p>
 </blockquote>
@@ -5899,11 +5900,11 @@ mmap + munmap overhead (cycles): 10741</code></pre>
 <a class="sourceLine" id="cb251-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>                                                                                                                                                                                                                                                                
-write overhead (cycles): 3947
+write overhead (cycles): 3758
                                                                                                                                                                                                                                                                 
-fwrite (stream) overhead (cycles): 45
+fwrite (stream) overhead (cycles): 40
                                                                                                                                                                                                                                                                 
-fwrite + fflush overhead (cycles): 4175</code></pre>
+fwrite + fflush overhead (cycles): 3756</code></pre>
 <h2 id="library-vs.-kernel-trade-offs-in-memory-allocation"><span class="header-section-number">10.4</span> Library vs. Kernel Trade-offs in Memory Allocation</h2>
 <p>We’ve seen that</p>
 <ol type="1">
@@ -6268,7 +6269,7 @@ $ /tmp/create_files ~/blah
 <li><code>setuid(uid_t uid)</code> - change the effective user id of a process to uid</li>
 <li><code>setgid(gid_t gid)</code> - change the effective group id of a proces to gid</li>
 </ul>
-<p>The requirements of <code>setuid()</code> (for all users other than root) is that the effective user id can be changed to the real user id of the program or to an effective user id as described in the set-bits. The root user, however, can downgrade to any user id and upgrade back to the root user. For <code>setgid()</code> the user can chance the group id to any group the user belongs to or as allowed by the set-group-id bit.</p>
+<p>The requirements of <code>setuid()</code> (for all users other than root) is that the effective user id can be changed to the <em>real user id of the program</em> or to an <em>effective user id as described in the set-bits</em>. The root user, however, can <em>downgrade to any user id</em> and upgrade back to the root user. For <code>setgid()</code> the user can chance the group id to any group the user belongs to or as allowed by the set-group-id bit.</p>
 <p>Now we can look at a program that downgrades and upgrades a program dynamically:</p>
 <div class="sourceCode" id="cb282"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb282-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
 <a class="sourceLine" id="cb282-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
@@ -6313,15 +6314,6 @@ $ /tmp/create_files ~/blah
 <a class="sourceLine" id="cb282-41" title="41"></a>
 <a class="sourceLine" id="cb282-42" title="42">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb282-43" title="43">}</a></code></pre></div>
-<p>Program output:</p>
-<pre><code> uid=1000  gid=1000
-euid=1000 egid=1000
----- setuid(1000) ----
- uid=1000  gid=1000
-euid=1000 egid=1000
----- setuid(1000) ----
- uid=1000  gid=1000
-euid=1000 egid=1000</code></pre>
 <p><strong>Question:</strong></p>
 <ul>
 <li>What do think will happen if you have a peer run it on the server after you set the <code>set-uid</code> bit?</li>
@@ -6485,20 +6477,20 @@ DESCRIPTION
        completed.  During execution of the command, SIGCHLD will be
        blocked, and SIGINT and SIGQUIT will be ignored.</code></pre>
 <p>That is, the <code>system()</code> function will run an arbitrary shell command, inheriting all of the file descriptors of the caller of <code>system</code>. Let’s look at a very simple example, a “hello world” that uses two commands.</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb293-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb293-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb293-3" title="3"></a>
-<a class="sourceLine" id="cb293-4" title="4"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb293-5" title="5">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb293-6" title="6">{</a>
-<a class="sourceLine" id="cb293-7" title="7">    <span class="co">/*</span></a>
-<a class="sourceLine" id="cb293-8" title="8"><span class="co">     * Execute `cat`. It inherits the stdin/stdout/stderr</span></a>
-<a class="sourceLine" id="cb293-9" title="9"><span class="co">     * of the current process.</span></a>
-<a class="sourceLine" id="cb293-10" title="10"><span class="co">     */</span></a>
-<a class="sourceLine" id="cb293-11" title="11">    system(<span class="st">&quot;cat&quot;</span>);</a>
-<a class="sourceLine" id="cb293-12" title="12"></a>
-<a class="sourceLine" id="cb293-13" title="13">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb293-14" title="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb292-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb292-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb292-3" title="3"></a>
+<a class="sourceLine" id="cb292-4" title="4"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb292-5" title="5">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb292-6" title="6">{</a>
+<a class="sourceLine" id="cb292-7" title="7">    <span class="co">/*</span></a>
+<a class="sourceLine" id="cb292-8" title="8"><span class="co">     * Execute `cat`. It inherits the stdin/stdout/stderr</span></a>
+<a class="sourceLine" id="cb292-9" title="9"><span class="co">     * of the current process.</span></a>
+<a class="sourceLine" id="cb292-10" title="10"><span class="co">     */</span></a>
+<a class="sourceLine" id="cb292-11" title="11">    system(<span class="st">&quot;cat&quot;</span>);</a>
+<a class="sourceLine" id="cb292-12" title="12"></a>
+<a class="sourceLine" id="cb292-13" title="13">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb292-14" title="14">}</a></code></pre></div>
 <pre><code>$ echo &quot;Hello World&quot; | ./system_cat
 Hello World</code></pre>
 <p>The <code>system_cat</code> program runs cat with <code>system()</code>, thus it will print whatever it reads from stdin to the screen (recall: <code>cat</code> essentially echos stdin to stdout). It turns out, that this program, despite its simplicity, actually has a relatively bad security flaw. Let’s quickly consider what might happen if we were to <em>change the <code>PATH</code> value</em> to include our local directory:</p>
@@ -6509,32 +6501,32 @@ $ echo $PATH | tr : &quot;\n&quot; | head -n 2
 ./
 /home/gparmer/.local/bin</code></pre>
 <p>The <code>export</code> builtin command in our shell updates an environment variable. We see that at the start of the <code>PATH</code> variable is now the current directory! <code>system</code> (and <code>execvp</code>) will look for the program in the <em>current directory</em> before the others. So now the local directory is on the path, thus if I were to create a program named cat, then that cat would run instead of the one you would expect. For example, here is such a program (in <code>fake_cat.c</code>):</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb296-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb296-2" title="2"></a>
-<a class="sourceLine" id="cb296-3" title="3"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb296-4" title="4">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb296-5" title="5">{</a>
-<a class="sourceLine" id="cb296-6" title="6">    system(<span class="st">&quot;echo &#39;Goodbye World&#39;&quot;</span>);</a>
-<a class="sourceLine" id="cb296-7" title="7"></a>
-<a class="sourceLine" id="cb296-8" title="8">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb296-9" title="9">}</a></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb295-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb295-2" title="2"></a>
+<a class="sourceLine" id="cb295-3" title="3"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb295-4" title="4">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb295-5" title="5">{</a>
+<a class="sourceLine" id="cb295-6" title="6">    system(<span class="st">&quot;echo &#39;Goodbye World&#39;&quot;</span>);</a>
+<a class="sourceLine" id="cb295-7" title="7"></a>
+<a class="sourceLine" id="cb295-8" title="8">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb295-9" title="9">}</a></code></pre></div>
 <p>This is our <em>imposter</em> program! In this case it is innocuous, but you can imagine it being more nefarious. To do this, we’ll make a <em>new</em> <code>cat</code> command in the current directory.</p>
 <pre><code>$ echo &quot;Hello World&quot; | ./system_cat
 $ cp fake_cat cat
 $ echo &quot;Hello World&quot; | ./system_cat
 Goodbye World</code></pre>
 <p>This is not just a problem with the <code>system()</code> command, but also <code>execvp()</code>, which will also look up commands along the path.</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb298-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb298-2" title="2"></a>
-<a class="sourceLine" id="cb298-3" title="3"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb298-4" title="4">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb298-5" title="5">{</a>
-<a class="sourceLine" id="cb298-6" title="6">    <span class="dt">char</span> * args[] = { <span class="st">&quot;cat&quot;</span>, NULL };</a>
-<a class="sourceLine" id="cb298-7" title="7"></a>
-<a class="sourceLine" id="cb298-8" title="8">    execvp(args[<span class="dv">0</span>], args);</a>
-<a class="sourceLine" id="cb298-9" title="9"></a>
-<a class="sourceLine" id="cb298-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb298-11" title="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb297-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb297-2" title="2"></a>
+<a class="sourceLine" id="cb297-3" title="3"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb297-4" title="4">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb297-5" title="5">{</a>
+<a class="sourceLine" id="cb297-6" title="6">    <span class="dt">char</span> * args[] = { <span class="st">&quot;cat&quot;</span>, NULL };</a>
+<a class="sourceLine" id="cb297-7" title="7"></a>
+<a class="sourceLine" id="cb297-8" title="8">    execvp(args[<span class="dv">0</span>], args);</a>
+<a class="sourceLine" id="cb297-9" title="9"></a>
+<a class="sourceLine" id="cb297-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb297-11" title="11">}</a></code></pre></div>
 <pre><code>$ rm ./cat
 $ echo &quot;Hello World&quot; | ./execvp_cat
 Hello World
@@ -6553,20 +6545,20 @@ Goodbye World</code></pre>
 <li>Fix the path before executing using <code>setenv()</code></li>
 </ol>
 <p>You can actually control the current <code>PATH</code> setting during execution. To do this you can set the enviorment variables using <code>setenv()</code> and <code>getenv()</code></p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb300-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb300-2" title="2"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
-<a class="sourceLine" id="cb300-3" title="3"></a>
-<a class="sourceLine" id="cb300-4" title="4"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb300-5" title="5">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb300-6" title="6">{</a>
-<a class="sourceLine" id="cb300-7" title="7">    <span class="co">/* ensure the enviorment only has the path we want and overwrite */</span></a>
-<a class="sourceLine" id="cb300-8" title="8">    setenv(<span class="st">&quot;PATH&quot;</span>,<span class="st">&quot;/bin&quot;</span>,<span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb300-9" title="9"></a>
-<a class="sourceLine" id="cb300-10" title="10">    <span class="dt">char</span> * args[] = { <span class="st">&quot;cat&quot;</span>, NULL };</a>
-<a class="sourceLine" id="cb300-11" title="11">    execvp(args[<span class="dv">0</span>], args);</a>
-<a class="sourceLine" id="cb300-12" title="12"></a>
-<a class="sourceLine" id="cb300-13" title="13">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb300-14" title="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb299-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb299-2" title="2"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb299-3" title="3"></a>
+<a class="sourceLine" id="cb299-4" title="4"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb299-5" title="5">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb299-6" title="6">{</a>
+<a class="sourceLine" id="cb299-7" title="7">    <span class="co">/* ensure the enviorment only has the path we want and overwrite */</span></a>
+<a class="sourceLine" id="cb299-8" title="8">    setenv(<span class="st">&quot;PATH&quot;</span>,<span class="st">&quot;/bin&quot;</span>,<span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb299-9" title="9"></a>
+<a class="sourceLine" id="cb299-10" title="10">    <span class="dt">char</span> * args[] = { <span class="st">&quot;cat&quot;</span>, NULL };</a>
+<a class="sourceLine" id="cb299-11" title="11">    execvp(args[<span class="dv">0</span>], args);</a>
+<a class="sourceLine" id="cb299-12" title="12"></a>
+<a class="sourceLine" id="cb299-13" title="13">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb299-14" title="14">}</a></code></pre></div>
 <pre><code>$ rm ./cat
 $ echo &quot;Hello World&quot; | ./setenv_cat
 Hello World
@@ -6583,24 +6575,24 @@ $ ls -l system_cat
 <pre><code>$ export PATH=.:$PATH
 </code></pre>
 <p>…and do something this time that is not so innocuous. Lets run a shell after <em>changing our real user id to that of <code>gparmer</code></em>. Yikes.</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb304-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb304-2" title="2"></a>
-<a class="sourceLine" id="cb304-3" title="3"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb304-4" title="4">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb304-5" title="5">{</a>
-<a class="sourceLine" id="cb304-6" title="6">    <span class="dt">char</span> * args[]={<span class="st">&quot;/bin/sh&quot;</span>,NULL};</a>
-<a class="sourceLine" id="cb304-7" title="7"></a>
-<a class="sourceLine" id="cb304-8" title="8">    <span class="co">/* set our real uid to our effective uid */</span></a>
-<a class="sourceLine" id="cb304-9" title="9">    setreuid(geteuid(),geteuid());</a>
-<a class="sourceLine" id="cb304-10" title="10">    execvp(args[<span class="dv">0</span>],args);</a>
-<a class="sourceLine" id="cb304-11" title="11"></a>
-<a class="sourceLine" id="cb304-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb304-13" title="13">}</a></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb303-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb303-2" title="2"></a>
+<a class="sourceLine" id="cb303-3" title="3"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb303-4" title="4">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb303-5" title="5">{</a>
+<a class="sourceLine" id="cb303-6" title="6">    <span class="dt">char</span> * args[]={<span class="st">&quot;/bin/sh&quot;</span>,NULL};</a>
+<a class="sourceLine" id="cb303-7" title="7"></a>
+<a class="sourceLine" id="cb303-8" title="8">    <span class="co">/* set our real uid to our effective uid */</span></a>
+<a class="sourceLine" id="cb303-9" title="9">    setreuid(geteuid(),geteuid());</a>
+<a class="sourceLine" id="cb303-10" title="10">    execvp(args[<span class="dv">0</span>],args);</a>
+<a class="sourceLine" id="cb303-11" title="11"></a>
+<a class="sourceLine" id="cb303-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb303-13" title="13">}</a></code></pre></div>
 <p>This time when we run the system_cat program, it will run bash as the set-user-id user. Now we’ve just escalated privilege.</p>
 <pre><code>$ whoami
 hacker-mchackyface
 $ ./system_cat
-$ whoami
+$ whoami  &lt;---- new shell!
 gparmer
 $</code></pre>
 <p>Uh oh. Now user <code>hacker-mchackyface</code> has escalated their privilege to that of user <code>gparmer</code>!</p>
@@ -6610,34 +6602,34 @@ $</code></pre>
 <h2 id="injection-attacks"><span class="header-section-number">12.2</span> Injection Attacks</h2>
 <p>Now, lets consider a situation where you use <code>system()</code> in a safer way. You call all programs with absolute path, or update and control <code>PATH</code> before using it. Unfortunately, <em>even that is not enough</em>. You must also consider <em>injection attacks</em> which is when the attacker can inject code that will run. In our case, the injected code will be bash.</p>
 <p>Consider this program which prompts the user for a file to cat out.</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb306-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb306-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb306-3" title="3"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
-<a class="sourceLine" id="cb306-4" title="4"></a>
-<a class="sourceLine" id="cb306-5" title="5"></a>
-<a class="sourceLine" id="cb306-6" title="6"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb306-7" title="7">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb306-8" title="8">{</a>
-<a class="sourceLine" id="cb306-9" title="9">    <span class="dt">char</span> cmd[<span class="dv">1024</span>] = <span class="st">&quot;/bin/cat ./&quot;</span>; <span class="co">/* will append to this string */</span></a>
-<a class="sourceLine" id="cb306-10" title="10">    <span class="dt">char</span> input[<span class="dv">40</span>];</a>
-<a class="sourceLine" id="cb306-11" title="11"></a>
-<a class="sourceLine" id="cb306-12" title="12">    printf(<span class="st">&quot;What input do you want to &#39;cat&#39; (choose from below)</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb306-13" title="13">    system(<span class="st">&quot;/bin/ls&quot;</span>); <span class="co">/* show available files */</span></a>
-<a class="sourceLine" id="cb306-14" title="14"></a>
-<a class="sourceLine" id="cb306-15" title="15">    printf(<span class="st">&quot;input &gt; &quot;</span>);</a>
-<a class="sourceLine" id="cb306-16" title="16">    fflush(stdout); <span class="co">/* force stdout to print */</span></a>
-<a class="sourceLine" id="cb306-17" title="17"></a>
-<a class="sourceLine" id="cb306-18" title="18">    scanf(<span class="st">&quot;%s&quot;</span>,input);<span class="co">/* read input */</span></a>
-<a class="sourceLine" id="cb306-19" title="19"></a>
-<a class="sourceLine" id="cb306-20" title="20">    strcat(cmd,input); <span class="co">/* create the command */</span></a>
-<a class="sourceLine" id="cb306-21" title="21"></a>
-<a class="sourceLine" id="cb306-22" title="22">    printf(<span class="st">&quot;Executing: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, cmd);</a>
-<a class="sourceLine" id="cb306-23" title="23">    fflush(stdout); <span class="co">/* force stdout to print */</span></a>
-<a class="sourceLine" id="cb306-24" title="24"></a>
-<a class="sourceLine" id="cb306-25" title="25">    system(cmd);</a>
-<a class="sourceLine" id="cb306-26" title="26"></a>
-<a class="sourceLine" id="cb306-27" title="27">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb306-28" title="28">}</a></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb305-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb305-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb305-3" title="3"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb305-4" title="4"></a>
+<a class="sourceLine" id="cb305-5" title="5"></a>
+<a class="sourceLine" id="cb305-6" title="6"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb305-7" title="7">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb305-8" title="8">{</a>
+<a class="sourceLine" id="cb305-9" title="9">    <span class="dt">char</span> cmd[<span class="dv">1024</span>] = <span class="st">&quot;/bin/cat ./&quot;</span>; <span class="co">/* will append to this string */</span></a>
+<a class="sourceLine" id="cb305-10" title="10">    <span class="dt">char</span> input[<span class="dv">40</span>];</a>
+<a class="sourceLine" id="cb305-11" title="11"></a>
+<a class="sourceLine" id="cb305-12" title="12">    printf(<span class="st">&quot;What input do you want to &#39;cat&#39; (choose from below)</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb305-13" title="13">    system(<span class="st">&quot;/bin/ls&quot;</span>); <span class="co">/* show available files */</span></a>
+<a class="sourceLine" id="cb305-14" title="14"></a>
+<a class="sourceLine" id="cb305-15" title="15">    printf(<span class="st">&quot;input &gt; &quot;</span>);</a>
+<a class="sourceLine" id="cb305-16" title="16">    fflush(stdout); <span class="co">/* force stdout to print */</span></a>
+<a class="sourceLine" id="cb305-17" title="17"></a>
+<a class="sourceLine" id="cb305-18" title="18">    scanf(<span class="st">&quot;%s&quot;</span>,input);<span class="co">/* read input */</span></a>
+<a class="sourceLine" id="cb305-19" title="19"></a>
+<a class="sourceLine" id="cb305-20" title="20">    strcat(cmd,input); <span class="co">/* create the command */</span></a>
+<a class="sourceLine" id="cb305-21" title="21"></a>
+<a class="sourceLine" id="cb305-22" title="22">    printf(<span class="st">&quot;Executing: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, cmd);</a>
+<a class="sourceLine" id="cb305-23" title="23">    fflush(stdout); <span class="co">/* force stdout to print */</span></a>
+<a class="sourceLine" id="cb305-24" title="24"></a>
+<a class="sourceLine" id="cb305-25" title="25">    system(cmd);</a>
+<a class="sourceLine" id="cb305-26" title="26"></a>
+<a class="sourceLine" id="cb305-27" title="27">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb305-28" title="28">}</a></code></pre></div>
 <p>If we were to run this program, it hopefully does what you’d expect:</p>
 <pre><code>$ ./inject_system
 What input do you want to &#39;cat&#39; (choose from below)
@@ -6678,41 +6670,41 @@ Goodbye World</code></pre>
 </figure>
 <h2 id="overflow-attacks"><span class="header-section-number">12.3</span> Overflow Attacks</h2>
 <p>Two attacks down, moving onto the third. Let’s now assume that the programmer has wised up to the two previous attacks. Now we are using full paths to executables and we are scrubbing the input to remove any potential bash commands prior to execution. The result is the following program:</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb310-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb310-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb310-3" title="3"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
-<a class="sourceLine" id="cb310-4" title="4"></a>
-<a class="sourceLine" id="cb310-5" title="5"><span class="dt">int</span></a>
-<a class="sourceLine" id="cb310-6" title="6">main(<span class="dt">void</span>)</a>
-<a class="sourceLine" id="cb310-7" title="7">{</a>
-<a class="sourceLine" id="cb310-8" title="8">    <span class="dt">char</span> cmd[<span class="dv">1024</span>] = <span class="st">&quot;/bin/cat ./&quot;</span>; <span class="co">/* will append to this string */</span></a>
-<a class="sourceLine" id="cb310-9" title="9">    <span class="dt">char</span> input[<span class="dv">40</span>];</a>
-<a class="sourceLine" id="cb310-10" title="10">    <span class="dt">int</span> i;</a>
-<a class="sourceLine" id="cb310-11" title="11"></a>
-<a class="sourceLine" id="cb310-12" title="12">    printf(<span class="st">&quot;What input do you want to &#39;cat&#39; (choose from below)</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb310-13" title="13">    system(<span class="st">&quot;/bin/ls&quot;</span>); <span class="co">/* show available files */</span></a>
-<a class="sourceLine" id="cb310-14" title="14"></a>
-<a class="sourceLine" id="cb310-15" title="15">    printf(<span class="st">&quot;input &gt; &quot;</span>);</a>
-<a class="sourceLine" id="cb310-16" title="16">    fflush(stdout); <span class="co">/* force stdout to print */</span></a>
-<a class="sourceLine" id="cb310-17" title="17"></a>
-<a class="sourceLine" id="cb310-18" title="18">    scanf(<span class="st">&quot;%s&quot;</span>,input);<span class="co">/* read input */</span></a>
-<a class="sourceLine" id="cb310-19" title="19"></a>
-<a class="sourceLine" id="cb310-20" title="20">    <span class="co">/* clean input before passing to /bin/cat */</span></a>
-<a class="sourceLine" id="cb310-21" title="21">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dv">40</span>; i++) {</a>
-<a class="sourceLine" id="cb310-22" title="22">        <span class="cf">if</span> (input[i] == <span class="ch">&#39;;&#39;</span> || input[i] == <span class="ch">&#39;|&#39;</span> || input[i] == <span class="ch">&#39;$&#39;</span> || input[i] == <span class="ch">&#39;&amp;&#39;</span>) {</a>
-<a class="sourceLine" id="cb310-23" title="23">            input[i] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>; <span class="co">/* change all ;,|,$,&amp; to a NULL */</span></a>
-<a class="sourceLine" id="cb310-24" title="24">        }</a>
-<a class="sourceLine" id="cb310-25" title="25">    }</a>
-<a class="sourceLine" id="cb310-26" title="26"></a>
-<a class="sourceLine" id="cb310-27" title="27">    <span class="co">/* concatenate the two strings */</span></a>
-<a class="sourceLine" id="cb310-28" title="28">    strcat(cmd,input);</a>
-<a class="sourceLine" id="cb310-29" title="29">    printf(<span class="st">&quot;Executing: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, cmd);</a>
-<a class="sourceLine" id="cb310-30" title="30">    fflush(stdout);</a>
-<a class="sourceLine" id="cb310-31" title="31"></a>
-<a class="sourceLine" id="cb310-32" title="32">    system(cmd);</a>
-<a class="sourceLine" id="cb310-33" title="33"></a>
-<a class="sourceLine" id="cb310-34" title="34">    <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb310-35" title="35">}</a></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb309-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb309-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb309-3" title="3"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb309-4" title="4"></a>
+<a class="sourceLine" id="cb309-5" title="5"><span class="dt">int</span></a>
+<a class="sourceLine" id="cb309-6" title="6">main(<span class="dt">void</span>)</a>
+<a class="sourceLine" id="cb309-7" title="7">{</a>
+<a class="sourceLine" id="cb309-8" title="8">    <span class="dt">char</span> cmd[<span class="dv">1024</span>] = <span class="st">&quot;/bin/cat ./&quot;</span>; <span class="co">/* will append to this string */</span></a>
+<a class="sourceLine" id="cb309-9" title="9">    <span class="dt">char</span> input[<span class="dv">40</span>];</a>
+<a class="sourceLine" id="cb309-10" title="10">    <span class="dt">int</span> i;</a>
+<a class="sourceLine" id="cb309-11" title="11"></a>
+<a class="sourceLine" id="cb309-12" title="12">    printf(<span class="st">&quot;What input do you want to &#39;cat&#39; (choose from below)</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb309-13" title="13">    system(<span class="st">&quot;/bin/ls&quot;</span>); <span class="co">/* show available files */</span></a>
+<a class="sourceLine" id="cb309-14" title="14"></a>
+<a class="sourceLine" id="cb309-15" title="15">    printf(<span class="st">&quot;input &gt; &quot;</span>);</a>
+<a class="sourceLine" id="cb309-16" title="16">    fflush(stdout); <span class="co">/* force stdout to print */</span></a>
+<a class="sourceLine" id="cb309-17" title="17"></a>
+<a class="sourceLine" id="cb309-18" title="18">    scanf(<span class="st">&quot;%s&quot;</span>,input);<span class="co">/* read input */</span></a>
+<a class="sourceLine" id="cb309-19" title="19"></a>
+<a class="sourceLine" id="cb309-20" title="20">    <span class="co">/* clean input before passing to /bin/cat */</span></a>
+<a class="sourceLine" id="cb309-21" title="21">    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dv">40</span>; i++) {</a>
+<a class="sourceLine" id="cb309-22" title="22">        <span class="cf">if</span> (input[i] == <span class="ch">&#39;;&#39;</span> || input[i] == <span class="ch">&#39;|&#39;</span> || input[i] == <span class="ch">&#39;$&#39;</span> || input[i] == <span class="ch">&#39;&amp;&#39;</span>) {</a>
+<a class="sourceLine" id="cb309-23" title="23">            input[i] = &#39;\<span class="dv">0</span><span class="er">&#39;</span>; <span class="co">/* change all ;,|,$,&amp; to a NULL */</span></a>
+<a class="sourceLine" id="cb309-24" title="24">        }</a>
+<a class="sourceLine" id="cb309-25" title="25">    }</a>
+<a class="sourceLine" id="cb309-26" title="26"></a>
+<a class="sourceLine" id="cb309-27" title="27">    <span class="co">/* concatenate the two strings */</span></a>
+<a class="sourceLine" id="cb309-28" title="28">    strcat(cmd,input);</a>
+<a class="sourceLine" id="cb309-29" title="29">    printf(<span class="st">&quot;Executing: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, cmd);</a>
+<a class="sourceLine" id="cb309-30" title="30">    fflush(stdout);</a>
+<a class="sourceLine" id="cb309-31" title="31"></a>
+<a class="sourceLine" id="cb309-32" title="32">    system(cmd);</a>
+<a class="sourceLine" id="cb309-33" title="33"></a>
+<a class="sourceLine" id="cb309-34" title="34">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb309-35" title="35">}</a></code></pre></div>
 <pre><code>$ ./overflow_system
 What input do you want to &#39;cat&#39; (choose from below)
 cat    execvp_cat    inject_system    inject_system.c~  Makefile  overflow_system    overflow_system.c~  run_foo.c  setenv_cat    setenv_cat.c~  system_cat    #system-ex.c#
@@ -6807,8 +6799,8 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <h2 id="headers-and-visibility"><span class="header-section-number">15.3</span> Headers and Visibility</h2>
 <p>C does not have classes and the rules therein to support per-class/object encapsulation. Instead, C views each <code>.c</code> file as a unit of visibility. Functions and global variables (known as “symbols”) can be hooked up with references to them in other objects by the linker. However, it is possible to write code in a <code>.c</code> file that is <em>not visible</em> outside of that file. In contrast to the linking error above emphasizing good naming, if a symbol is marked as <code>static</code>, no other <code>.c</code> file will be able to reference that symbol.</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb318-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
-<a class="sourceLine" id="cb318-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb317-1" title="1"><span class="dt">static</span> <span class="dt">int</span> global_var;</a>
+<a class="sourceLine" id="cb317-2" title="2"><span class="dt">static</span> <span class="dt">void</span> foo(<span class="dt">void</span>) { }</a></code></pre></div>
 <p>No other <code>.c</code> file can define code that will be able to access <code>global_var</code> nor call <code>foo</code>. You can see the list of all symbols within a <code>.c</code> file that are accessible outside of it by compiling into a <code>.o</code> file (using <code>gcc -c ...</code>), and <code>nm -g --defined-only x.o | awk '{print $3}'</code> (replace <code>x</code> with your object file name).</p>
 <blockquote>
 <p><strong>Convention.</strong> All functions and variables that are not part of the <em>public interface</em> with which to interact with the <code>.c</code> file should be <code>static</code> so that they cannot be used from other objects.</p>
@@ -6819,13 +6811,13 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>When we include a file, it just copies the file at the point of the <code>#include</code>. Thus, if the same header is included separately into two <code>.c</code> files, then it effectively replicates the header’s contents into the two <code>.o</code> files. This can cause problems if the two <code>.o</code> files are linked together. An example:</p>
 <p><code>a.c</code>:</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb319-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb318-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a></code></pre></div>
 <p><code>b.c</code>:</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb320-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
-<a class="sourceLine" id="cb320-2" title="2"></a>
-<a class="sourceLine" id="cb320-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb319-1" title="1"><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span></a>
+<a class="sourceLine" id="cb319-2" title="2"></a>
+<a class="sourceLine" id="cb319-3" title="3"><span class="dt">int</span> main(<span class="dt">void</span>) { <span class="cf">return</span> <span class="dv">0</span>; }</a></code></pre></div>
 <p><code>c.h</code>:</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb321-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb320-1" title="1"><span class="dt">int</span> foo(<span class="dt">void</span>) { <span class="cf">return</span> -<span class="dv">1</span>; }</a></code></pre></div>
 <p>After compiling these files, we get</p>
 <pre><code>$ gcc -c a.c -o a.o
 $ gcc -c b.c -o b.o
@@ -6841,22 +6833,22 @@ collect2: error: ld returned 1 exit status</code></pre>
 <p>You <em>must</em> include the header files that provide the functionality that you rely on and use. This sounds obvious, but it is <em>very</em> easy to mess this up. A couple of examples:</p>
 <p><em>Example 1: Implementing a library.</em> You’re implementing a library, and you have a <code>.h</code> file for it that exposes the types of the library’s functions. You test your library, and it works wonderfully – victory! However, because it is a library, it might be used by other people’s code, and all they are going to do is <code>#include &lt;your_lib.h&gt;</code>, and expect everything to work.</p>
 <p>What if the following happened? Your <code>your_lib.h</code> file does this:</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb323-1" title="1"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb323-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb323-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb322-1" title="1"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb322-2" title="2"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb322-3" title="3"><span class="co">/* ... */</span></a></code></pre></div>
 <p>In your test file, you do this:</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb324-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
-<a class="sourceLine" id="cb324-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb324-3" title="3"></a>
-<a class="sourceLine" id="cb324-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb323-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></a>
+<a class="sourceLine" id="cb323-2" title="2"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb323-3" title="3"></a>
+<a class="sourceLine" id="cb323-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>Your tests of your library work wonderfully! But if the user of your library simply does:</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb325-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
-<a class="sourceLine" id="cb325-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb324-1" title="1"><span class="pp">#include </span><span class="im">&lt;your_lib.h&gt;</span></a>
+<a class="sourceLine" id="cb324-2" title="2"><span class="co">/* ... */</span></a></code></pre></div>
 <p>The user will get a compiler error that says it doesn’t understand what <code>size_t</code> is! The core problem is that your library’s header file didn’t include all of the headers it relies on! Instead, it should updated to look like so:</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb326-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
-<a class="sourceLine" id="cb326-2" title="2"><span class="co">/* ... */</span></a>
-<a class="sourceLine" id="cb326-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
-<a class="sourceLine" id="cb326-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb325-1" title="1"><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span><span class="pp"> </span><span class="co">/* we require `size_t` */</span></a>
+<a class="sourceLine" id="cb325-2" title="2"><span class="co">/* ... */</span></a>
+<a class="sourceLine" id="cb325-3" title="3"><span class="dt">size_t</span> my_function(<span class="kw">struct</span> my_type *t);</a>
+<a class="sourceLine" id="cb325-4" title="4"><span class="co">/* ... */</span></a></code></pre></div>
 <p>A good way to defensively code to try to minimize the chance that this error happens, you should include your header files <em>before</em> the rest of the header files. The only real solution is to be very careful, and always include what headers are necessary for the functionality you depend on.</p>
 <p><em>Example 2: implementing a program or test.</em> A <code>.c</code> file, lets say <code>my_prog.c</code>, includes some header file, <code>head.h</code>. It compiles just fine. But if <code>my_prog.c</code> relies on some header file – lets say <code>dep.h</code> – that is only included itself in the <code>head.h</code> file, then if <code>head.h</code> is updated and removes the include, it will break any program that depends on it! In this case, <code>my_prog.c</code> should explicitly include <code>dep.h</code>: include the headers that are required for your functionality!</p>
 <p><em>How do you know which headers to include?</em> If you’re using a system function, the <code>man</code> page for it is explicit about which headers provide the necessary functionality. If you’re implementing a library in the class, we are explicit about what headers are required.</p>
@@ -6864,18 +6856,18 @@ collect2: error: ld returned 1 exit status</code></pre>
 <p>Syntactic nesting, or depth often significantly increase the cognitive complexity in C<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>. Two examples of this:</p>
 <p><strong>Depth through indentation nesting.</strong> Each additional nesting level (each nested set of <code>{}</code>) adds another condition that you must keep in your mind<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a> when understanding the code. This includes the conditions, or looping conditions associated with the nesting level. This is <em>a lot</em> to keep in your head, and makes developing and reading code quite a bit more difficult.</p>
 <p>What can you do to avoid this nesting? <em>First</em>, return early for errors. Instead of the following code…</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb327-1" title="1"><span class="cf">if</span> (a) {</a>
-<a class="sourceLine" id="cb327-2" title="2">    <span class="co">/* normal code */</span></a>
-<a class="sourceLine" id="cb327-3" title="3">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb327-4" title="4">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb327-5" title="5">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb327-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb326-1" title="1"><span class="cf">if</span> (a) {</a>
+<a class="sourceLine" id="cb326-2" title="2">    <span class="co">/* normal code */</span></a>
+<a class="sourceLine" id="cb326-3" title="3">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb326-4" title="4">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb326-5" title="5">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb326-6" title="6">}</a></code></pre></div>
 <p>…do the following…</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb328-1" title="1"><span class="cf">if</span> (!a) {</a>
-<a class="sourceLine" id="cb328-2" title="2">    <span class="co">/* error code */</span></a>
-<a class="sourceLine" id="cb328-3" title="3">    <span class="cf">return</span>;</a>
-<a class="sourceLine" id="cb328-4" title="4">}</a>
-<a class="sourceLine" id="cb328-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb327-1" title="1"><span class="cf">if</span> (!a) {</a>
+<a class="sourceLine" id="cb327-2" title="2">    <span class="co">/* error code */</span></a>
+<a class="sourceLine" id="cb327-3" title="3">    <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb327-4" title="4">}</a>
+<a class="sourceLine" id="cb327-5" title="5"><span class="co">/* normal code */</span></a></code></pre></div>
 <p>Though seemingly trivial, it enables you to separate your understanding of error conditions from the complexity of the following code. Try to perform as much error checking as soon as it possibly can be done so that you can switch into “normal case” thinking.</p>
 <p><em>Second</em>, if you nest deeper than four levels of brackets, then pull code out into appropriately-named functions. Long functions aren’t necessarily bad, but <em>complex</em> functions are.</p>
 <blockquote>
@@ -6887,16 +6879,16 @@ collect2: error: ld returned 1 exit status</code></pre>
 </blockquote>
 <p>I use indentation levels in C of eight visual spaces to make it visually clear when I’m indenting too much.</p>
 <p><strong>Depth through field nesting.</strong> It can be quite difficult to follow code that nests access to fields. For example:</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb329-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb328-1" title="1">a.b-&gt;c[d].e = f.g-&gt;h;</a></code></pre></div>
 <p>Of course, this is fake code, but even if it wasn’t, keeping track of the types of each of the levels of increasing depth of field reference is nearly impossible. This will make writing the code fickle and challenging, and reading the code, needlessly complex.</p>
 <p>The main means we have to remove this complexity is to</p>
 <ol type="1">
 <li><p>Create an set of typed variables</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb330-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
-<a class="sourceLine" id="cb330-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
-<a class="sourceLine" id="cb330-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
-<a class="sourceLine" id="cb330-4" title="4"></a>
-<a class="sourceLine" id="cb330-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb329-1" title="1"><span class="kw">struct</span> *b   = &amp;a.b;</a>
+<a class="sourceLine" id="cb329-2" title="2"><span class="kw">struct</span> *c[] = b-&gt;c;</a>
+<a class="sourceLine" id="cb329-3" title="3"><span class="kw">struct</span> *g   = &amp;f.g;</a>
+<a class="sourceLine" id="cb329-4" title="4"></a>
+<a class="sourceLine" id="cb329-5" title="5">c[d].e = g-&gt;h;</a></code></pre></div>
 It is up to you to decide where it is right to provide an “intermediate” type for a certain depth in the fields, and when to directly dive into a few fields.</li>
 <li><p>If any the structs (or sub-structs, or arrays) represents an API layer, then you can call a function that performs the necessary operation on that part of the data-structure. This both provide abstraction over the data access, and documents the types.</p></li>
 </ol>

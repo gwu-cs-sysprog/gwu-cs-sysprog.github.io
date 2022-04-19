@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>UNIX Personalities: Containers</title>
+
+		<meta name="description" content="A presentation by Gabe Parmer 👋, research by Sean McBride">
+		<meta name="author" content="Gabe Parmer 👋, research by Sean McBride">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="reveal/dist/reset.css">
+		<link rel="stylesheet" href="reveal/dist/reveal.css">
+		<link rel="stylesheet" href="reveal/dist/theme/moon.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="reveal/plugin/highlight/monokai.css">
+
+		<style type="text/css">
+		  .reveal p {
+		      text-align: left;
+		  }
+		  .reveal blockquote p {
+		      text-align: center;
+		  }
+		  .reveal ul {
+		      display: block;
+		  }
+		  .reveal ol {
+		      display: block;
+		  }
+
+		  .reveal img {
+		      background: white
+		  }
+
+		  .reveal figcaption {
+		      font-size:1vw
+		  }
+		</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+<section>
+<h1>UNIX Personalities: Containers</h1>
+<h3>Gabe Parmer 👋, research by Sean McBride</h3>
+<p>
+<h4></h4>
+</p>
+</section>
+
+<section><section id="unixs-world-view" class="title-slide slide level1"><h1>UNIX’s World View</h1></section><section id="users" class="slide level2">
+<h2>Users</h2>
+<ul>
+<li>System includes all users</li>
+<li>All users can see each other (<code>who</code>)</li>
+<li>All processes are visible (<code>ps aux</code>)</li>
+</ul>
+</section><section id="filesystem-access-control" class="slide level2">
+<h2>Filesystem &amp; Access Control</h2>
+<ul>
+<li>All users share the same filesystem</li>
+<li>Permissions/ownership control which files are accessible to which users</li>
+<li><code>path</code> <span class="math inline">→</span> file/directory</li>
+</ul>
+</section><section id="dependency-management" class="slide level2">
+<h2>Dependency Management</h2>
+<p>Dependencies</p>
+<ul>
+<li>Dynamic libraries (which version?, is it installed?)</li>
+<li>Services (databases, webservers, GUI frameworks)</li>
+</ul>
+<p>Challenges</p>
+<ul>
+<li>installation</li>
+<li><p>versions (for dependencies, deps of deps, etc…)</p>
+<ul>
+<li>Our research project typically breaks when updating <code>gcc</code></li>
+</ul></li>
+</ul>
+</section><section id="root" class="slide level2">
+<h2><code>root</code></h2>
+<ul>
+<li><p>Universal access</p>
+<ul>
+<li>same old story</li>
+</ul></li>
+<li><p>Package installation</p>
+<ul>
+<li>So to solve the dependency problem, need root?</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="containers-world-view" class="title-slide slide level1"><h1>Containers World View</h1></section><section id="application-development-history" class="slide level2">
+<h2>Application Development History<span class="math inline"><em></em><sup>*</sup></span></h2>
+<p>90s - bespoke, targeted development</p>
+<ul>
+<li>Compile everything together</li>
+<li>Static libraries, or dynamic libraries for an OS version</li>
+</ul>
+<p>00s - frameworks, and increased application complexity</p>
+<ul>
+<li>Webserver/DB/Business logic</li>
+<li><em>Frameworks</em> w/ library/language dependencies</li>
+<li>“dependency hell”</li>
+<li>Growth of <em>VMs as unit of “application”</em></li>
+</ul>
+</section><section id="application-development-history-ii" class="slide level2">
+<h2>Application Development History II</h2>
+<p>10s - Applications via composition</p>
+<ul>
+<li>Coordination between components</li>
+<li>App development via library/service composition</li>
+<li>Languages with package management (but C dependencies)</li>
+<li>Growth of <em>Containers as unit of “application”</em></li>
+<li>DevOps curate dev vs. production</li>
+</ul>
+<p>Now - Assumed containers for distribution</p>
+<ul>
+<li>Containers + Kubernetes</li>
+<li>DevOps job of developers</li>
+<li>NP-complete dependency resolution in languages</li>
+</ul>
+</section><section id="app-program-dependencies" class="slide level2">
+<h2>App = Program + Dependencies</h2>
+<p>Applications aren’t just a <em>program</em>. Many millions of LoC, spread across:</p>
+<table>
+<colgroup>
+<col style="width: 69%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>software</th>
+<th>resolution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>static libraries</td>
+<td>compile-time</td>
+</tr>
+<tr class="even">
+<td>dynamic libraries</td>
+<td>runtime</td>
+</tr>
+<tr class="odd">
+<td>services</td>
+<td>runtime</td>
+</tr>
+<tr class="even">
+<td>kernel</td>
+<td>runtime</td>
+</tr>
+<tr class="odd">
+<td>distributed resources (REST endpoints/network services)</td>
+<td>runtime, across systems</td>
+</tr>
+</tbody>
+</table>
+</section><section id="app-program-dependencies-1" class="slide level2">
+<h2>App = Program + Dependencies</h2>
+<p>Applications aren’t just a <em>program</em>.</p>
+<p>Problems:</p>
+<ul>
+<li>you get your application working; <em>how does your co-worker?</em></li>
+<li>you test your program in <em>dev</em>; <em>how do you know it works in production?</em></li>
+<li>you provide an open source application; <em>how do you know others can use it?</em></li>
+</ul>
+</section><section id="separate-system-namespaces" class="slide level2">
+<h2>Separate System Namespaces</h2>
+<p>Namespaces define how we refer to</p>
+<ul>
+<li>libraries (in <code>LD_PATH</code>, and compiler’s <code>-I</code> &amp; <code>-L</code> flags)</li>
+<li>programs (in <code>PATH</code>)</li>
+</ul>
+<blockquote>
+<p>What if we had a completely different filesystem (namespace) for each application!?</p>
+</blockquote>
+<ul>
+<li>include exactly the dependencies required <em>only for this specific application</em>.</li>
+</ul>
+</section></section>
+<section><section id="unix-namespaces" class="title-slide slide level1"><h1>UNIX Namespaces</h1></section><section id="namespace-definition" class="slide level2">
+<h2>Namespace Definition</h2>
+<blockquote>
+<p>A <strong>Name</strong> is often a string or integer used to uniquely <em>identify or address</em> a resource.</p>
+<p>A <strong>Namespace</strong> is the set of these <strong>Names</strong>.</p>
+</blockquote>
+<p>Name Examples:</p>
+<ul>
+<li>filesystem <em>path</em>s</li>
+<li>process <em>pid</em>s</li>
+<li>internet URLs</li>
+</ul>
+</section><section id="unix-namespaces-1" class="slide level2">
+<h2>UNIX <a href="https://en.wikipedia.org/wiki/Linux_namespaces">Namespaces</a></h2>
+<p>What are UNIX <em>namespaces</em>? In Linux: read more in <code>man namespaces</code>.</p>
+<ul>
+<li><strong>Process IDs</strong> - <code>pid_namespaces(7)</code></li>
+<li><strong>User IDs/Group IDs</strong> - <code>user_namespaces(7)</code></li>
+<li><strong>Filesystem namespaces</strong> - <code>mount_namespaces(7)</code></li>
+<li>System V IPC/POSIX message queue IDs - <code>ipc_namespaces(7)</code></li>
+<li>Networking identity and addresses - <code>network_namespaces(7)</code></li>
+<li>System identity (<code>hostname</code>) - <code>uts_namespaces(7)</code></li>
+</ul>
+<p>The <a href="https://www.kernel.org/doc/html/latest/userspace-api/unshare.html"><code>unshare</code> system call</a> unshares namespaces in the next forked child.</p>
+</section><section id="pid-example" class="slide level2">
+<h2><code>pid</code> Example</h2>
+<p>Containers can have overlapping <code>pid</code>s, and cannot address other container’s <code>pid</code>s!</p>
+<pre><code>$ whoami
+root
+$ kill -9 1234</code></pre>
+<p>…cannot kill <code>1234</code> if it is in another container!</p>
+</section><section id="pid-example-ii" class="slide level2">
+<h2><code>pid</code> Example II</h2>
+<p><code>unshare</code> to create a new PID namespace for children:</p>
+<pre><code>unshare(CLONE_NEWPID);
+if (fork() == 0) {
+    assert(getpid() == 1);
+    execv(&quot;/bin/init&quot;);
+}</code></pre>
+</section><section id="user-example" class="slide level2">
+<h2>User Example</h2>
+<ul>
+<li>Each container can have a root!</li>
+<li>User <code>1234</code> in one container is not the same user in another!</li>
+</ul>
+<p><code>unshare</code> to create a new user id namespace for children:</p>
+<pre><code>unshare(CLONE_NEWUSER);
+if (fork() == 0) {
+    setuid(0); /* I&#39;m root now!...in my own little domain */
+    assert(getuid() == 0);
+    execv(&quot;/bin/init&quot;);
+}</code></pre>
+</section><section id="filesystem-example" class="slide level2">
+<h2>Filesystem Example</h2>
+<blockquote>
+<p><code>chroot(path)</code> - Set the <code>/</code> of the FS <em>for this process</em> to be <code>path</code>.</p>
+</blockquote>
+<p>Now all files I can access are in the <em>subdirectory</em> <code>path</code>.</p>
+<pre><code>chroot(&quot;/home/gparmer/myroot/&quot;);
+chdir(&quot;/&quot;);
+unshare(CLONE_NEWPID | CLONE_NEWUSER);
+if (fork() == 0) {
+    /* assuming `init` was originally in /home/gparmer/myroot/bin/init */
+    execv(&quot;/bin/init&quot;);
+}</code></pre>
+<p>Linux uses <a href="https://man7.org/linux/man-pages/man2/pivot_root.2.html"><code>pivot_root(new_root, old_path)</code> (link)</a> instead of <code>chroot</code> <a href="https://lists.linuxcontainers.org/pipermail/lxc-devel/2011-September/002065.html">(why)</a>. See the <a href="https://github.com/opencontainers/runc/blob/main/libcontainer/rootfs_linux.go#L840-L842">code</a> in Docker.</p>
+</section></section>
+<section><section id="docker-service" class="title-slide slide level1"><h1>Docker Service</h1></section><section id="docker-is-a-service" class="slide level2">
+<h2>Docker is a service</h2>
+<figure>
+<img data-src="figures/containers/docker_architecture.svg" alt="Docker service receives requests to manipulate containers. Credit: https://docs.docker.com" /><figcaption>Docker service receives requests to manipulate containers. Credit: https://docs.docker.com</figcaption>
+</figure>
+</section><section id="docker-orchestration" class="slide level2">
+<h2>Docker Orchestration</h2>
+<p>Service (<code>daemon</code>) created by <code>systemd</code></p>
+<ul>
+<li><code>dockerd</code></li>
+<li><p>awaits commands on a domain socket @ <code>/var/run/docker.sock</code></p>
+<ul>
+<li>start new containers with a specification</li>
+<li>terminate containers</li>
+<li>check in on a container</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="containers-summary" class="title-slide slide level1"><h1>Containers Summary</h1></section><section id="containers-core-idea" class="slide level2">
+<h2>Containers: Core Idea</h2>
+<blockquote>
+<p>APIs to explicitly manage namespaces enable Applications to be packaged along with all dependencies.</p>
+</blockquote>
+<p>Applications/users with <em>disjoint</em> namespaces are isolated</p>
+<ul>
+<li>(ignoring privilege escalation through a kernel compromise 🤦).</li>
+</ul>
+<p>Origins of containers are closer to Plan 9 and Solaris Zones, but Docker popularized them!</p>
+</section><section id="containers-and-android" class="slide level2">
+<h2>Containers and Android</h2>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 43%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Goal</th>
+<th>Containers</th>
+<th>Android</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Namespace Mgmt.</td>
+<td>Separate <em>all</em> namespaces</td>
+<td>Intents for shared services</td>
+</tr>
+<tr class="even">
+<td>App Isolation</td>
+<td>Namespace separation = isolation</td>
+<td><code>uid</code> separation</td>
+</tr>
+<tr class="odd">
+<td>Dependency Mgmt.</td>
+<td>Container includes set of dependencies</td>
+<td>App compiled for Android version</td>
+</tr>
+</tbody>
+</table>
+</section></section>
+
+<!-- https://gist.github.com/aaronwolen/5017084 -->
+
+			</div>
+
+		</div>
+
+		<script src="reveal/dist/reveal.js"></script>
+		<script src="reveal/plugin/zoom/zoom.js"></script>
+		<script src="reveal/plugin/notes/notes.js"></script>
+		<script src="reveal/plugin/search/search.js"></script>
+		<script src="reveal/plugin/markdown/markdown.js"></script>
+		<script src="reveal/plugin/highlight/highlight.js"></script>
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+			    controls: true,
+			    progress: true,
+			    center: false,
+			    hash: true,
+
+			    width: 1920*(2/3),
+			    height: 1080*(2/3),
+
+
+			    // Learn about plugins: https://revealjs.com/plugins/
+			    plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
+		</script>
+
+	</body>
+</html>
