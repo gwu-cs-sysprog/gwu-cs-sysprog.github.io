@@ -149,19 +149,21 @@ Programming</span>
         id="toc-memory-hierarchies"><span
         class="toc-section-number">1.2</span> Memory Hierarchies</a>
         <ul>
-        <li><a href="#c-constructs-familiar-w.r.t.-java"
-        id="toc-c-constructs-familiar-w.r.t.-java"><span
-        class="toc-section-number">1.2.1</span> C constructs [familiar
-        (w.r.t. Java)]</a></li>
+        <li><a href="#you-already-know-c"
+        id="toc-you-already-know-c">You already know
+        <strong>C</strong></a></li>
+        <li><a
+        href="#c-constructs-if-youre-familiar-with-java-python-etc."
+        id="toc-c-constructs-if-youre-familiar-with-java-python-etc."><span
+        class="toc-section-number">1.2.1</span> C constructs [if you’re
+        familiar with Java, Python, etc.]</a></li>
         <li><a href="#whats-different-from-java"
-        id="toc-whats-different-from-java"><span
-        class="toc-section-number">1.2.2</span> what’s different [from
+        id="toc-whats-different-from-java">What’s different [from
         java]</a></li>
         <li><a href="#compound-types" id="toc-compound-types"><span
-        class="toc-section-number">1.2.3</span> compound types</a></li>
+        class="toc-section-number">1.2.2</span> Compound types</a></li>
         <li><a href="#no-built-in-boolean"
-        id="toc-no-built-in-boolean"><span
-        class="toc-section-number">1.2.4</span> <strong>no (built-in)
+        id="toc-no-built-in-boolean"><strong>no (built-in)
         boolean!</strong></a></li>
         </ul></li>
         </ul></li>
@@ -787,13 +789,15 @@ Programming</span>
             class="header-section-number">1.2</span> Memory
             Hierarchies</h2>
             <p>Find the <a
-            href="https://sibin.github.io/teaching/csci2410-gwu-systems_programming/fall_2023/slides/reveal_slides/memory.html#/10">slides</a>.###
-            You already know <strong>C</strong></p>
+            href="https://sibin.github.io/teaching/csci2410-gwu-systems_programming/fall_2023/slides/reveal_slides/memory.html#/10">slides</a>.
+            ## Intro to C</p>
+            <h3 class="unnumbered" id="you-already-know-c">You already
+            know <strong>C</strong></h3>
             <p>well, some of it anyways…</p>
             <h3 data-number="1.2.1"
-            id="c-constructs-familiar-w.r.t.-java"><span
-            class="header-section-number">1.2.1</span> C constructs
-            [familiar (w.r.t. Java)]</h3>
+            id="c-constructs-if-youre-familiar-with-java-python-etc."><span
+            class="header-section-number">1.2.1</span> C constructs [if
+            you’re familiar with Java, Python, etc.]</h3>
             <table>
             <thead>
             <tr class="header">
@@ -832,10 +836,15 @@ Programming</span>
             </tr>
             </tbody>
             </table>
-            <p>* <strong>no range checks!!</strong></p>
-            <h3 data-number="1.2.2" id="whats-different-from-java"><span
-            class="header-section-number">1.2.2</span> what’s different
-            [from java]</h3>
+            <p>* <strong>no range checks!!</strong>: C will let you
+            access an array beyond the maximum size that you have
+            specified while creating it. The effects of such access are
+            <strong>implementation specific</strong> – each
+            platform/operating system will handle it differently. Note
+            that on platforms that don’t have memory protection, this
+            can cause some serious problems!</p>
+            <h3 class="unnumbered" id="whats-different-from-java">What’s
+            different [from java]</h3>
             <ul>
             <li>no object-oriented programming</li>
             <li>no function overloading</li>
@@ -847,10 +856,13 @@ Programming</span>
             <li><strong>compiled</strong> not interpreted</li>
             <li><strong>pointers!!!</strong></li>
             </ul>
-            <h3 data-number="1.2.3" id="compound-types"><span
-            class="header-section-number">1.2.3</span> compound
+            <h3 data-number="1.2.2" id="compound-types"><span
+            class="header-section-number">1.2.2</span> Compound
             types</h3>
-            <p><strong>contiguous memory</strong> layouts</p>
+            <p><strong>contiguous memory</strong> layouts: objects
+            within these data types are laid out in memory, next to each
+            other. This becomes important when you’re trying to use
+            pointers to access various elements.</p>
             <table>
             <thead>
             <tr class="header">
@@ -881,9 +893,12 @@ Programming</span>
             </tr>
             </tbody>
             </table>
-            <h3 data-number="1.2.4" id="no-built-in-boolean"><span
-            class="header-section-number">1.2.4</span> <strong>no
+            <h3 class="unnumbered" id="no-built-in-boolean"><strong>no
             (built-in) boolean!</strong></h3>
+            <p>C does not have a built in boolean data type. We can
+            mimic it by using integer values (<scb>0</scb> is
+            <code>false</code> while any other non-zero values is
+            <code>true</code>).</p>
             <h1 data-number="2" id="intermediate-c"><span
             class="header-section-number">2</span> Intermediate C</h1>
             <h2 data-number="2.1" id="objectives"><span
@@ -1132,9 +1147,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x104842f00
-Strings: hello world</code></pre>
+MON = 0, TUES = 1, ..., FRI = 4</code></pre>
             <h3 data-number="2.2.4" id="compound-types-1"><span
             class="header-section-number">2.2.4</span> Compound
             types</h3>
@@ -1198,9 +1211,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x1001ebf00
-Strings: hello world</code></pre>
+MON = 0, TUES = 1, ..., FRI = 4</code></pre>
             <p>We can see the effect of the <code>union</code>: The size
             is <code>max(fields)</code> rather than
             <code>sum(fields)</code>. What other examples can you think
@@ -1280,9 +1291,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x100789f00
-Strings: hello world</code></pre>
+value is initialized to 0
+value updated to 1</code></pre>
             <p>Pointers are <em>necessary</em> as they enable us to
             build <em>linked</em> data-structures (linked-lists, binary
             trees, etc…). Languages such as Java assume that <em>every
@@ -1318,9 +1328,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x102469f00
-Strings: hello world</code></pre>
+value is initialized to 0
+value updated to 1</code></pre>
             <p>Making this a little more clear, lets understand how C
             accesses the <code>n</code>th item. Lets make a pointer
             <code>int *p = a + 1</code> (we’ll just simply and assume
@@ -1355,7 +1364,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-nth index: 0x30d1d4024 == 0x30d1d4024; 7 == 7</code></pre>
+value is initialized to 0
+value updated to 1</code></pre>
             <p>We can see that <em>pointer arithmetic</em> (i.e. doing
             addition/subtraction on pointers) does the same thing as
             array indexing plus a dereference. That is,
@@ -1395,7 +1405,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-nth index: 0x309a32024 == 0x309a32024; 7 == 7</code></pre>
+value is initialized to 0
+value updated to 1</code></pre>
             <p>Note that the pointer for the integer array
             (<code>a</code>) is being incremented by 4, while the
             character array (<code>b</code>) by 1. Focusing on the key
@@ -1461,7 +1472,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-nth index: 0x30d386024 == 0x30d386024; 7 == 7</code></pre>
+value is initialized to 0
+value updated to 1</code></pre>
             <h4 data-number="2.2.5.2" id="generic-pointer-types"><span
             class="header-section-number">2.2.5.2</span> Generic Pointer
             Types</h4>
@@ -1509,13 +1521,11 @@ nth index: 0x30d386024 == 0x30d386024; 7 == 7</code></pre>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>intptr<span class="op">;</span></span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
+            <pre><code>inline_exec_tmp.c:1:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
-make[2]: *** [example.o] Error 1
-nth index: 0x3053fe024 == 0x3053fe024; 7 == 7</code></pre>
+make[1]: *** [inline_exec_tmp] Error 1</code></pre>
             <p>Data-structures often aim to store data of any type
             (think: a linked list of anything). Thus, in C, you often
             see <code>void *</code>s to reference the data they
@@ -1600,13 +1610,11 @@ nth index: 0x3053fe024 == 0x3053fe024; 7 == 7</code></pre>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
+            <pre><code>inline_exec_tmp.c:1:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
-make[2]: *** [example.o] Error 1
-nth index: 0x30a2de024 == 0x30a2de024; 7 == 7</code></pre>
+make[1]: *** [inline_exec_tmp] Error 1</code></pre>
             <ul>
             <li><em>Dangling pointer.</em> If you maintain a pointer to
             a chunk of memory that you <code>free</code>, and then
@@ -1797,10 +1805,10 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
 1 error generated.
 make[2]: *** [example.o] Error 1
 Addresses:
-a   @ 0x104126000
-b   @ 0x104126004
-c   @ 0x104126008
-end @ 0x104126020
+a   @ 0x102231000
+b   @ 0x102231004
+c   @ 0x102231008
+end @ 0x102231020
 &amp;end - &amp;a = 32
 
 Initial values:
@@ -1808,7 +1816,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x104126004
+c.c_c = 0x102231004
 
 Print out the variables as raw memory
 
@@ -1941,24 +1949,9 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Addresses:
-a   @ 0x100ff4000
-b   @ 0x100ff4004
-c   @ 0x100ff4008
-end @ 0x100ff4020
-&amp;end - &amp;a = 32
-
-Initial values:
-a     = 1
-b     = 2
-c.c_a = 3
-c.c_b = 0
-c.c_c = 0x100ff4004
-
-Print out the variables as raw memory
-
-
-Post-`memset` values:</code></pre>
+0: 4 @ 0x100f7a01c
+1: 2 @ 0x100f7a014
+2: 0 @ 0x0</code></pre>
             <p>You want to implement a simple “key-value” store that is
             very similar in API to a hash-table (many key-value stores
             are implemented using hash-tables!).</p>
@@ -2054,7 +2047,10 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
-make[2]: *** [example.o] Error 1</code></pre>
+make[2]: *** [example.o] Error 1
+0: 4 @ 0x1020be01c
+1: 2 @ 0x1020be014
+2: 0 @ 0x0</code></pre>
             <p>One of the more interesting uses of internal allocation
             is in linked data-structures (e.g. like linked lists). It is
             common in languages like java to implement linked
@@ -2150,7 +2146,10 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
-make[2]: *** [example.o] Error 1</code></pre>
+make[2]: *** [example.o] Error 1
+0: 4 @ 0x1005eb01c
+1: 2 @ 0x1005eb014
+2: 0 @ 0x0</code></pre>
             <p>A few interesting things happened here:</p>
             <ol type="1">
             <li>We’re using <code>void *</code> pointers within the
@@ -2216,7 +2215,10 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
-make[2]: *** [example.o] Error 1</code></pre>
+make[2]: *** [example.o] Error 1
+0: 4 @ 0x1044f101c
+1: 2 @ 0x1044f1014
+2: 0 @ 0x0</code></pre>
             <p>Global variables are either initialized where they are
             defined, or are initialized to <code>0</code>. Note that
             they are intialized to all <code>0</code>s regardless their
@@ -2291,7 +2293,9 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
-make[2]: *** [example.o] Error 1</code></pre>
+make[2]: *** [example.o] Error 1
+Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>Key points to realize:</p>
             <ul>
             <li><code>fibs</code> in <code>fib</code> is allocated
@@ -2429,7 +2433,9 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
-make[2]: *** [example.o] Error 1</code></pre>
+make[2]: *** [example.o] Error 1
+Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>Yikes. We’re getting random values in the array! Where do
             you think these values came from?</p>
             <p><strong>References to stack variables after function
@@ -2471,18 +2477,14 @@ make[2]: *** [example.o] Error 1</code></pre>
 <span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:10:10: warning: address of stack memory associated with local variable &#39;a&#39; returned [-Wreturn-stack-address]
-        return &amp;a;            /* Return the address of a local variable. */
-                ^
-1 warning generated.
-gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
+            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
 example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Save address of local variable, and dereference it: 42
-Return address of local variable, and dereference it: 42</code></pre>
+Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>You can see a few interesting facts from the output.</p>
             <ol type="1">
             <li>The value referenced by <code>*ptr</code> after
@@ -2586,8 +2588,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Save address of local variable, and dereference it: 42
-Return address of local variable, and dereference it: 42</code></pre>
+Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>In this program you might notice that we’ve used <em>no
             dynamic memory allocation at all</em>! The cost of this is
             that we had to create a key-value store of only a fixed size
@@ -2681,8 +2683,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Save address of local variable, and dereference it: 42
-Return address of local variable, and dereference it: 42</code></pre>
+Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>So strings aren’t really all that special in C. They’re
             just arrays with a special terminating character, and a
             little bit of syntax support to construct them
@@ -2762,8 +2764,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Save address of local variable, and dereference it: 42
-Return address of local variable, and dereference it: 42</code></pre>
+&quot;hello world and also 42&quot; has length 23</code></pre>
             <p>Many of these functions raise an important question: What
             happens if one of the strings is not large enough to hold
             the data being put into it? If you want to
@@ -2821,8 +2822,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Save address of local variable, and dereference it: 42
-Return address of local variable, and dereference it: 42</code></pre>
+&quot;hello world and also 42&quot; has length 23</code></pre>
             <h4 data-number="3.2.1.2" id="parsing-strings"><span
             class="header-section-number">3.2.1.2</span> Parsing
             Strings</h4>
@@ -2920,15 +2920,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-extracted 1, remaining string: &quot; 42 the secret to everything&quot;
-extracted 42, remaining string: &quot; the secret to everything&quot;
-42 and &quot;secret&quot;
-Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
-[1 42 ]
-[e secre]
-[ ]
-[o every]
-[ing]</code></pre>
+&quot;hello world and also 42&quot; has length 23</code></pre>
             <h3 data-number="3.2.2" id="bonus-explicit-strings"><span
             class="header-section-number">3.2.2</span> Bonus: Explicit
             Strings</h3>
@@ -2963,15 +2955,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-extracted 1, remaining string: &quot; 42 the secret to everything&quot;
-extracted 42, remaining string: &quot; the secret to everything&quot;
-42 and &quot;secret&quot;
-Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
-[1 42 ]
-[e secre]
-[ ]
-[o every]
-[ing]</code></pre>
+&quot;hello world and also 42&quot; has length 23</code></pre>
             <p>The C compiler and linker are smart enough to see that if
             you have already used a string with a specific value (in
             this case <code>"clone"</code>), it will avoid allocating a
@@ -3128,15 +3112,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-extracted 1, remaining string: &quot; 42 the secret to everything&quot;
-extracted 42, remaining string: &quot; the secret to everything&quot;
-42 and &quot;secret&quot;
-Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
-[1 42 ]
-[e secre]
-[ ]
-[o every]
-[ing]</code></pre>
+&quot;hello world and also 42&quot; has length 23</code></pre>
             <h3 data-number="3.3.2" id="errors"><span
             class="header-section-number">3.3.2</span> Errors</h3>
             <p>The first question is how we can detect that some error
@@ -3224,15 +3200,10 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-extracted 1, remaining string: &quot; 42 the secret to everything&quot;
-extracted 42, remaining string: &quot; the secret to everything&quot;
-42 and &quot;secret&quot;
-Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
-[1 42 ]
-[e secre]
-[ ]
-[o every]
-[ing]</code></pre>
+Lets get greedy: allocate 9223372036854775807 bytes!
+Error: errno value 12 and description: Cannot allocate memory
+Error allocating memory: Cannot allocate memory
+make[1]: *** [inline_exec] Error 255</code></pre>
             <p>(Note: when you return from a program with a non-zero
             value, it designates that your <em>program</em> had an
             error. This is why we see the <code>make</code> error when
@@ -3459,11 +3430,16 @@ ERRORS
 <span id="cb85-102"><a href="#cb85-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb85-103"><a href="#cb85-103" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:2:10: fatal error: &#39;malloc.h&#39; file not found
+            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
+example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+make[2]: *** [example.o] Error 1
+Lets get greedy: allocate 9223372036854775807 bytes!
+Error: errno value 12 and description: Cannot allocate memory
+Error allocating memory: Cannot allocate memory
+make[1]: *** [inline_exec] Error 255</code></pre>
             <p>The above code is hopelessly broken. Run it in valgrind
             to see.</p>
             <p><strong>Tasks:</strong></p>
@@ -3667,16 +3643,10 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-pre-fork:
-     parent pid 39902
-post-fork:
-    returned 39904,
-    current pid 39902
-    parent pid 39886
-post-fork:
-    returned 0,
-    current pid 39904
-    parent pid 39902</code></pre>
+Lets get greedy: allocate 9223372036854775807 bytes!
+Error: errno value 12 and description: Cannot allocate memory
+Error allocating memory: Cannot allocate memory
+make[1]: *** [inline_exec] Error 255</code></pre>
             <p>We can see the <code>fork</code> creates a new process
             that continues running the same code, but has a separate set
             of memory. A few observations:</p>
@@ -3811,16 +3781,10 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-pre-fork:
-     parent pid 39919
-post-fork:
-    returned 39920,
-    current pid 39919
-    parent pid 39910
-post-fork:
-    returned 0,
-    current pid 39920
-    parent pid 39919</code></pre>
+Lets get greedy: allocate 9223372036854775807 bytes!
+Error: errno value 12 and description: Cannot allocate memory
+Error allocating memory: Cannot allocate memory
+make[1]: *** [inline_exec] Error 255</code></pre>
             <h3 data-number="4.2.2"
             id="non-determinism-everywhere-concurrency"><span
             class="header-section-number">4.2.2</span> Non-determinism
@@ -3946,22 +3910,11 @@ Child 4579 exited with exit status 0</code></pre>
 <span id="cb97-22"><a href="#cb97-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb97-23"><a href="#cb97-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
+            <pre><code>inline_exec_tmp.c:16:2: error: call to undeclared function &#39;on_exit&#39;; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+        on_exit(destructor, &amp;value); /* `value` will get passed to the function */
+        ^
 1 error generated.
-make[2]: *** [example.o] Error 1
-pre-fork:
-     parent pid 39936
-post-fork:
-    returned 39937,
-    current pid 39936
-    parent pid 39926
-post-fork:
-    returned 0,
-    current pid 39937
-    parent pid 39936</code></pre>
+make[1]: *** [inline_exec_tmp] Error 1</code></pre>
             <h3 data-number="4.2.4" id="fork-questions"><span
             class="header-section-number">4.2.4</span> <code>fork</code>
             Questions</h3>
@@ -4117,16 +4070,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-pre-fork:
-     parent pid 39953
-post-fork:
-    returned 39954,
-    current pid 39953
-    parent pid 39943
-post-fork:
-    returned 0,
-    current pid 39954
-    parent pid 39953</code></pre>
+hello world!
+Parent: status 42</code></pre>
             <h2 data-number="4.4" id="command-line-arguments"><span
             class="header-section-number">4.4</span> Command Line
             Arguments</h2>
@@ -4181,11 +4126,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-First program, arg 1: ./inline_exec_tmp
-Inside ./03/args2.bin
-arg 0: ./03/args2.bin
-arg 1: hello
-arg 2: world</code></pre>
+hello world!
+Parent: status 42</code></pre>
             <p><code>args1.c</code> is</p>
             <div class="sourceCode" id="cb106"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
@@ -4347,11 +4289,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-First program, arg 1: ./inline_exec_tmp
-Inside ./03/args2.bin
-arg 0: ./03/args2.bin
-arg 1: hello
-arg 2: world</code></pre>
+hello world!
+Parent: status 42</code></pre>
             <p>You can see all of the environmental variables available
             by default with:</p>
             <pre><code>$ env
@@ -4409,11 +4348,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-First program, arg 1: ./inline_exec_tmp
-Inside ./03/args2.bin
-arg 0: ./03/args2.bin
-arg 1: hello
-arg 2: world</code></pre>
+hello world!
+Parent: status 42</code></pre>
             <p><code>03/envtest.c</code> is</p>
             <div class="sourceCode" id="cb114"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
@@ -5100,8 +5036,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-Current directory: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023/online_git_text
-New current dir: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023</code></pre>
+Child sent whole message!
+Parent got the message!</code></pre>
             <p>The <em>concurrency</em> of the system enables separate
             processes to be active at the same time, thus for the
             <code>write</code> and <code>read</code> to be transferring
@@ -5222,7 +5158,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-42 + 2a</code></pre>
+Child sent whole message!
+Parent got the message!</code></pre>
             <p><strong>Closing pipes.</strong> <code>read</code>ing from
             a pipe will return that there is no more data on the pipe
             (i.e. return <code>0</code>) <em>only if all
@@ -5336,7 +5273,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-42 + 2a</code></pre>
+Child sent whole message!
+Parent got the message!</code></pre>
             <p>This is kind-of crazy. We can actually execute in the
             signal handler when we access invalid memory! We can write
             code to execute in response to a segmentation fault. This is
@@ -5467,7 +5405,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-42 + 2a</code></pre>
+Child sent whole message!
+Parent got the message!</code></pre>
             <p><strong>Question</strong>: Track and explain the control
             flow through this program.</p>
             <p><code>SIGKILL</code> and <code>SIGSTOP</code> are unique
@@ -5579,7 +5518,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-42 + 2a</code></pre>
+Child sent whole message!
+Parent got the message!</code></pre>
             <p><em>Note:</em> You want to run this a few times on your
             system to see the output. The auto-execution scripts of the
             lectures might cause wonky effects here due to
@@ -5977,13 +5917,29 @@ errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined e
 <span id="cb146-36"><a href="#cb146-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb146-37"><a href="#cb146-37" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
+            <pre><code>inline_exec_tmp.c:23:80: warning: format specifies type &#39;long&#39; but the argument has type &#39;off_t&#39; (aka &#39;long long&#39;) [-Wformat]
+        printf(&quot;We want to say %ld things...but the world doesn&#39;t value artistry.\n&quot;, finfo.st_size);
+                               ~~~                                                    ^~~~~~~~~~~~~
+                               %lld
+1 warning generated.
+gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
 example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+We want to say 6044 things...but the world doesn&#39;t value artistry.
+Lets cut down to 280 characters and tweet like it is 1915...
+
+ The Love Song of J. Alfred Prufrock
+ T.S. Elliot
+
+S’io credesse che mia risposta fosse
+A persona che mai tornasse al mondo,
+Questa fiamma staria senza piu scosse.
+Ma percioche giammai di questo fondo
+Non torno vivo alcun, s’i’odo il vero,
+Senza tema d’infamia ti rispondo</code></pre>
             <blockquote>
             <p>It is <em>really</em> important that quite a few
             interesting functions operate on <em>descriptors</em>, which
@@ -6097,18 +6053,18 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-What lies beyond the tweet? Tweet 2/N:
+We want to say 6044 things...but the world doesn&#39;t value artistry.
+Lets cut down to 280 characters and tweet like it is 1915...
 
-.
+ The Love Song of J. Alfred Prufrock
+ T.S. Elliot
 
-Let us go then, you and I,
-When the evening is spread out against the sky
-Like a patient etherized upon a table;
-Let us go, through certain half-deserted streets,
-The muttering retreats
-Of restless nights in one-night cheap hotels
-And sawdust restaurants with oyster-shells:
-St</code></pre>
+S’io credesse che mia risposta fosse
+A persona che mai tornasse al mondo,
+Questa fiamma staria senza piu scosse.
+Ma percioche giammai di questo fondo
+Non torno vivo alcun, s’i’odo il vero,
+Senza tema d’infamia ti rispondo</code></pre>
             <h2 data-number="6.2" id="mapping-files"><span
             class="header-section-number">6.2</span> Mapping Files</h2>
             <p>It is very common to access files with <code>read</code>
@@ -6200,18 +6156,18 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-What lies beyond the tweet? Tweet 2/N:
+We want to say 6044 things...but the world doesn&#39;t value artistry.
+Lets cut down to 280 characters and tweet like it is 1915...
 
-.
+ The Love Song of J. Alfred Prufrock
+ T.S. Elliot
 
-Let us go then, you and I,
-When the evening is spread out against the sky
-Like a patient etherized upon a table;
-Let us go, through certain half-deserted streets,
-The muttering retreats
-Of restless nights in one-night cheap hotels
-And sawdust restaurants with oyster-shells:
-St</code></pre>
+S’io credesse che mia risposta fosse
+A persona che mai tornasse al mondo,
+Questa fiamma staria senza piu scosse.
+Ma percioche giammai di questo fondo
+Non torno vivo alcun, s’i’odo il vero,
+Senza tema d’infamia ti rispondo</code></pre>
             <p>Note that you cannot <code>mmap</code> a
             <code>pipe</code> or terminal, only files. This kinda makes
             sense: since a pipe holds <em>transient</em> data that is
@@ -6308,18 +6264,18 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-What lies beyond the tweet? Tweet 2/N:
+We want to say 6044 things...but the world doesn&#39;t value artistry.
+Lets cut down to 280 characters and tweet like it is 1915...
 
-.
+ The Love Song of J. Alfred Prufrock
+ T.S. Elliot
 
-Let us go then, you and I,
-When the evening is spread out against the sky
-Like a patient etherized upon a table;
-Let us go, through certain half-deserted streets,
-The muttering retreats
-Of restless nights in one-night cheap hotels
-And sawdust restaurants with oyster-shells:
-St</code></pre>
+S’io credesse che mia risposta fosse
+A persona che mai tornasse al mondo,
+Questa fiamma staria senza piu scosse.
+Ma percioche giammai di questo fondo
+Non torno vivo alcun, s’i’odo il vero,
+Senza tema d’infamia ti rispondo</code></pre>
             <p><strong>Streams as buffered I/O.</strong> So it doesn’t
             seem like we’re getting much of use out of these streams
             compared to raw descriptors. Streams are an optimization
@@ -6356,18 +6312,18 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-What lies beyond the tweet? Tweet 2/N:
+We want to say 6044 things...but the world doesn&#39;t value artistry.
+Lets cut down to 280 characters and tweet like it is 1915...
 
-.
+ The Love Song of J. Alfred Prufrock
+ T.S. Elliot
 
-Let us go then, you and I,
-When the evening is spread out against the sky
-Like a patient etherized upon a table;
-Let us go, through certain half-deserted streets,
-The muttering retreats
-Of restless nights in one-night cheap hotels
-And sawdust restaurants with oyster-shells:
-St</code></pre>
+S’io credesse che mia risposta fosse
+A persona che mai tornasse al mondo,
+Questa fiamma staria senza piu scosse.
+Ma percioche giammai di questo fondo
+Non torno vivo alcun, s’i’odo il vero,
+Senza tema d’infamia ti rispondo</code></pre>
             <p><code>_exit</code> exits from the process
             <em>immediately</em>, and without invoking any
             <code>atexit</code> functions. Flushing the
@@ -6393,18 +6349,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-What lies beyond the tweet? Tweet 2/N:
-
-.
-
-Let us go then, you and I,
-When the evening is spread out against the sky
-Like a patient etherized upon a table;
-Let us go, through certain half-deserted streets,
-The muttering retreats
-Of restless nights in one-night cheap hotels
-And sawdust restaurants with oyster-shells:
-St</code></pre>
+hello world
+hello world</code></pre>
             <p>Well that’s not good. The <em>buffered data</em> is
             copied into each process, then it is output when a
             <code>\n</code> is encountered.</p>
@@ -6429,7 +6375,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-world hello </code></pre>
+hello world
+hello world</code></pre>
             <p>Both <code>printf</code> and the <code>write</code> are
             to standard output, but <code>printf</code> is to a stream.
             The <em>buffered</em> <code>printf</code> output is not
@@ -6459,7 +6406,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-world hello </code></pre>
+hello world
+hello world</code></pre>
             <p>Even though we fault <em>after</em> the
             <code>printf</code>, we don’t see the <code>printf</code>’s
             output! We now know why: the <code>printf</code> wrote into
@@ -6502,7 +6450,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-world hello </code></pre>
+hello world
+hello world</code></pre>
             <div class="sourceCode" id="cb167"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
 <span id="cb167-2"><a href="#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
@@ -6524,7 +6473,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-world hello </code></pre>
+hello world
+hello world</code></pre>
             <p>A few other functions for streams that can be useful:</p>
             <ul>
             <li><code>fileno</code> - Get the file descriptor number
@@ -7202,19 +7152,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-The new genre: abridged, tweet-worthy poetry...
-
- The Love Song of J. Alfred Prufrock
-Of restless nights in one-night cheap hotels
-Let fall upon its back the soot that falls from chimneys,
-And for a hundred visions and revisions,
-Disturb the universe?
-Then how should I begin
-Of lonely men in shirt-sleeves, leaning out of windows? ...
-And I have seen the eternal Footman hold my coat, and snicker,
-
-Am an attendant lord, one that will do
-</code></pre>
+msg1: 
+msg2: </code></pre>
             <p>You can see that there are some problems here. If we run
             it many times, we can see that sometimes we don’t see any
             messages, sometimes we only see the first, sometimes we only
@@ -7343,7 +7282,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-What I hear at office hours is &quot;halp!&quot;.</code></pre>
+msg1: 
+msg2: </code></pre>
             <p>There is one very awkward named pipe behavior. Processes
             attempting to <code>open</code> a named pipe will block (the
             <code>open</code> will not return) until processes have
@@ -7480,7 +7420,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-What I hear at office hours is &quot;halp!&quot;.</code></pre>
+msg1: 
+msg2: </code></pre>
             <p>If executed many times, you see the expected result:</p>
             <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -7729,7 +7670,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-What I hear at office hours is &quot;halp!&quot;.</code></pre>
+msg1: 
+msg2: </code></pre>
             <p>The server’s call to <code>accept</code> is the key
             difference of domain sockets from named pipes. It enables us
             to have per-client descriptors we can use to separately
@@ -9472,7 +9414,8 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-What I hear at office hours is &quot;halp!&quot;.</code></pre>
+msg1: 
+msg2: </code></pre>
             <p>As <code>dlsym</code> returns a pointer to the symbol
             passed in (as a string), it means that you end up seeing a
             <em>lot</em> of function pointers when you’re using plugin
@@ -9510,7 +9453,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-What I hear at office hours is &quot;halp!&quot;.</code></pre>
+Look at me! Diving into your dynamic libraries...pulling out the symbols</code></pre>
             <p>Though this example doesn’t have much of a point, as we
             can directly call <code>write</code>, thus have to go
             through the symbol we retrieved from <code>dlsym</code>, See
@@ -9760,7 +9703,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-hello world</code></pre>
+Look at me! Diving into your dynamic libraries...pulling out the symbols</code></pre>
             <p>The C standard library even provides you a “generic” way
             to invoke <em>any</em> system call. The <code>syscall</code>
             function lets you make an integer-identified system call.
@@ -9784,7 +9727,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-hello world</code></pre>
+Look at me! Diving into your dynamic libraries...pulling out the symbols</code></pre>
             <p>Lets look at a few of these integer values to see what’s
             happening here:</p>
             <div class="sourceCode" id="cb242"><pre
@@ -9806,7 +9749,7 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-hello world</code></pre>
+Look at me! Diving into your dynamic libraries...pulling out the symbols</code></pre>
             <p>Note, these integer values are <em>not</em> related to
             descriptors (e.g. <code>STDIN_FILENO == 0</code>). The
             system calls in Linux (and in all operating systems!) are
@@ -10025,7 +9968,10 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-hello world</code></pre>
+
+malloc + free overhead (cycles): 153
+
+mmap + munmap overhead (cycles): 2791</code></pre>
             <blockquote>
             <p>What is a “cycle”? When you read that you have a 3GHz,
             that essentially says that the internal “clock” that drives
@@ -10091,12 +10037,10 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-                                                                                                                                                                                                                                                                
-write overhead (cycles): 2580
-                                                                                                                                                                                                                                                                
-fwrite (stream) overhead (cycles): 69
-                                                                                                                                                                                                                                                                
-fwrite + fflush overhead (cycles): 2681</code></pre>
+
+malloc + free overhead (cycles): 125
+
+mmap + munmap overhead (cycles): 2436</code></pre>
             <h2 data-number="11.4"
             id="library-vs.-kernel-trade-offs-in-memory-allocation"><span
             class="header-section-number">11.4</span> Library vs. Kernel
@@ -10617,12 +10561,10 @@ example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
          ^~~~~~~~~~
 1 error generated.
 make[2]: *** [example.o] Error 1
-                                                                                                                                                                                                                                                                
-write overhead (cycles): 2382
-                                                                                                                                                                                                                                                                
-fwrite (stream) overhead (cycles): 62
-                                                                                                                                                                                                                                                                
-fwrite + fflush overhead (cycles): 2428</code></pre>
+
+malloc + free overhead (cycles): 124
+
+mmap + munmap overhead (cycles): 2518</code></pre>
             <p>Every user has different identifiers as does each group.
             If another user where to run the same program, they’d get a
             different value.</p>
