@@ -6,7 +6,8 @@
 
 		<title>UNIX Personalities: Android</title>
 
-		<meta name="description" content="A presentation by Gabe Parmer 👋, research by Sean McBride">
+		<meta name="description" content="A presentation by Gabe Parmer 👋,
+research by Sean McBride">
 		<meta name="author" content="Gabe Parmer 👋, research by Sean McBride">
 
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -61,7 +62,12 @@
 </p>
 </section>
 
-<section><section id="unixs-world-view" class="title-slide slide level1"><h1>UNIX’s World View</h1></section><section id="unixs-user-centrality" class="slide level2">
+<section>
+<section id="unixs-world-view" class="title-slide slide level1">
+<h1>UNIX’s World View</h1>
+
+</section>
+<section id="unixs-user-centrality" class="slide level2">
 <h2>UNIX’s User-Centrality</h2>
 <ul>
 <li>Users that belong to groups,</li>
@@ -70,14 +76,17 @@
 <li>control the access rights to those files.</li>
 </ul>
 <blockquote>
-<p>User-centric - programs run on behalf of users, thus can access any of the user’s files!</p>
+<p>User-centric - programs run on behalf of users, thus can access any
+of the user’s files!</p>
 </blockquote>
-</section><section id="unix-process-composition-model" class="slide level2">
+</section>
+<section id="unix-process-composition-model" class="slide level2">
 <h2>UNIX Process &amp; Composition Model</h2>
 <p>Running a UNIX program:</p>
 <ul>
 <li><code>fork</code> + <code>exec</code></li>
-<li><code>ld.so</code> dynamic library loading + sharing <span class="math inline">→</span> memory saving</li>
+<li><code>ld.so</code> dynamic library loading + sharing <span
+class="math inline">→</span> memory saving</li>
 </ul>
 <p>Composition on shell:</p>
 <ul>
@@ -86,7 +95,8 @@
 <blockquote>
 <p><code>$ echo $PATH | tr : "\n" | wc -l</code></p>
 </blockquote>
-</section><section id="everythings-a-file" class="slide level2">
+</section>
+<section id="everythings-a-file" class="slide level2">
 <h2>Everything’s a File</h2>
 <ul>
 <li><code>files</code></li>
@@ -95,58 +105,88 @@
 <li><code>/dev/*</code></li>
 <li>IPC channels (named pipes + domain sockets)</li>
 </ul>
-<p><span class="math inline">→</span> Shell composition of programs can process on all system resources!</p>
-<p><span class="math inline">→</span> UNIX APIs for file manipulation manipulate all resources (polymorphism)!</p>
-</section><section id="shared-services-w-setuid-bits" class="slide level2">
+<p><span class="math inline">→</span> Shell composition of programs can
+process on all system resources!</p>
+<p><span class="math inline">→</span> UNIX APIs for file manipulation
+manipulate all resources (polymorphism)!</p>
+</section>
+<section id="shared-services-w-setuid-bits" class="slide level2">
 <h2>Shared Services w/ <code>setuid</code> Bits</h2>
-<p>We can use <code>setuid</code> bits to coordinate services that serve multiple users.</p>
+<p>We can use <code>setuid</code> bits to coordinate services that serve
+multiple users.</p>
 <ul>
 <li>users <em>read</em> files (e.g. <code>/etc/passwd</code>)</li>
 <li><code>setuid</code> bit programs <em>update</em> files</li>
 <li>services (<code>daemons</code>) consume and act on files</li>
 </ul>
 </section></section>
-<section><section id="unix-challenges" class="title-slide slide level1"><h1>UNIX Challenges</h1></section><section id="unix-security-challenge-root" class="slide level2">
+<section>
+<section id="unix-challenges" class="title-slide slide level1">
+<h1>UNIX Challenges</h1>
+
+</section>
+<section id="unix-security-challenge-root" class="slide level2">
 <h2>UNIX Security Challenge: <code>root</code></h2>
 <ul>
 <li><code>root</code> permission is <em>all or nothing</em></li>
 <li>Particularly susceptible to privilege escalation</li>
-<li><code>root</code> <em>required</em> for many roles (e.g. <code>chown</code>)</li>
+<li><code>root</code> <em>required</em> for many roles
+(e.g. <code>chown</code>)</li>
 </ul>
 <p>Examples:</p>
 <ul>
-<li>Why is <code>root</code> required for <code>login</code>? Only require 1. access to password file, and 2. ability to <code>setuid</code> to user.</li>
-<li>Why are many of the files in <code>/etc/</code> owned by <code>root</code>; why are the files in <code>/dev/</code> all owned by <code>root</code> (e.g. <code>/dev/mem</code>)</li>
+<li>Why is <code>root</code> required for <code>login</code>? Only
+require 1. access to password file, and 2. ability to
+<code>setuid</code> to user.</li>
+<li>Why are many of the files in <code>/etc/</code> owned by
+<code>root</code>; why are the files in <code>/dev/</code> all owned by
+<code>root</code> (e.g. <code>/dev/mem</code>)</li>
 </ul>
-</section><section id="unix-security-challenge-unrestricted-ipc" class="slide level2">
+</section>
+<section id="unix-security-challenge-unrestricted-ipc"
+class="slide level2">
 <h2>UNIX Security Challenge: Unrestricted IPC</h2>
 <p>Traditional services:</p>
 <ul>
-<li>Daemon that executes periodically, reads configuration/data files</li>
-<li>(setuid) Commands that users run to update configuration/data files</li>
+<li>Daemon that executes periodically, reads configuration/data
+files</li>
+<li>(setuid) Commands that users run to update configuration/data
+files</li>
 </ul>
-<p><span class="math inline">→</span> Each <em>user</em> (and all of their programs) can interact with the service</p>
+<p><span class="math inline">→</span> Each <em>user</em> (and all of
+their programs) can interact with the service</p>
 <blockquote>
-<p>Should everyone’s programs be able to interact with core services?</p>
+<p>Should everyone’s programs be able to interact with core
+services?</p>
 </blockquote>
-</section><section id="unix-security-challenges-dac" class="slide level2">
+</section>
+<section id="unix-security-challenges-dac" class="slide level2">
 <h2>UNIX Security Challenges: DAC</h2>
 <blockquote>
-<p><strong>Discretionary Access Control (DAC)</strong>: Users restrict access to their own files/data, and can indiscriminately pass that privilege.</p>
+<p><strong>Discretionary Access Control (DAC)</strong>: Users restrict
+access to their own files/data, and can indiscriminately pass that
+privilege.</p>
 </blockquote>
 <ul>
 <li>Example: students can each decide to share homeworks.</li>
 </ul>
 <blockquote>
-<p><strong>Mandatory Access Control (MAC)</strong>: Users restricted in sharing files/data by system-wide policies that restrict sharing relationships.</p>
+<p><strong>Mandatory Access Control (MAC)</strong>: Users restricted in
+sharing files/data by system-wide policies that restrict sharing
+relationships.</p>
 </blockquote>
 <ul>
 <li>Example: Policy disallowing students to share homeworks.</li>
 </ul>
-</section><section id="unix-security-challenge-user-centric-access" class="slide level2">
+</section>
+<section id="unix-security-challenge-user-centric-access"
+class="slide level2">
 <h2>UNIX Security Challenge: User-Centric Access</h2>
-<p>All of a user’s data is accessible to <em>every program they execute</em>. Assume a program <em>will</em> be attacked and compromised. How can we minimize its negative effects?</p>
-<p><em>Principle of least privilege</em>: Only give the access required to accomplish a program’s goals.</p>
+<p>All of a user’s data is accessible to <em>every program they
+execute</em>. Assume a program <em>will</em> be attacked and
+compromised. How can we minimize its negative effects?</p>
+<p><em>Principle of least privilege</em>: Only give the access required
+to accomplish a program’s goals.</p>
 <p>Examples:</p>
 <ul>
 <li>Pdf viewer accesses network?</li>
@@ -154,7 +194,12 @@
 <li>Compiler accesses anything other than code files?</li>
 </ul>
 </section></section>
-<section><section id="androids-world-view" class="title-slide slide level1"><h1>Android’s World View</h1></section><section id="androids-world-view-1" class="slide level2">
+<section>
+<section id="androids-world-view" class="title-slide slide level1">
+<h1>Android’s World View</h1>
+
+</section>
+<section id="androids-world-view-1" class="slide level2">
 <h2>Android’s World View</h2>
 <p>App-store model is central</p>
 <ul>
@@ -165,16 +210,19 @@
 <p>Apps cannot access each other’s resources!</p>
 <p>Default: share nothing.</p>
 </blockquote>
-</section><section id="androids-world-view-files" class="slide level2">
+</section>
+<section id="androids-world-view-files" class="slide level2">
 <h2>Android’s World View: Files</h2>
 <ul>
 <li>Apps cannot have access to each other’s files!</li>
 <li>Apps have their own directories, and no access to other Apps!</li>
 </ul>
 <blockquote>
-<p>App-centric - programs have <em>separate, limited access to files</em></p>
+<p>App-centric - programs have <em>separate, limited access to
+files</em></p>
 </blockquote>
-</section><section id="androids-world-view-ipc" class="slide level2">
+</section>
+<section id="androids-world-view-ipc" class="slide level2">
 <h2>Android’s World View: IPC</h2>
 <p>Sensitive resources are not just files</p>
 <ul>
@@ -182,14 +230,19 @@
 <li>GPS/IMU</li>
 <li>Contacts</li>
 </ul>
-<p>Must limit App access to each of these, based on App’s goals/requirements.</p>
+<p>Must limit App access to each of these, based on App’s
+goals/requirements.</p>
 <blockquote>
-<p>By-default <strong>deny</strong> App access to resources, <em>mediated</em> IPC</p>
+<p>By-default <strong>deny</strong> App access to resources,
+<em>mediated</em> IPC</p>
 </blockquote>
-</section><section id="androids-world-view-application-centric-access" class="slide level2">
+</section>
+<section id="androids-world-view-application-centric-access"
+class="slide level2">
 <h2>Android’s World View: Application-Centric Access</h2>
 <blockquote>
-<p>Idea: Apps are <em>not</em> trusted. Isolate them from each other!</p>
+<p>Idea: Apps are <em>not</em> trusted. Isolate them from each
+other!</p>
 </blockquote>
 <p>They are run by the user, but</p>
 <ul>
@@ -202,7 +255,8 @@
 <li>Why can applications not access each other’s files?</li>
 <li>Can any application access any phone resource (e.g. contacts)?</li>
 </ul>
-</section><section id="android-restrict-ipc-by-default" class="slide level2">
+</section>
+<section id="android-restrict-ipc-by-default" class="slide level2">
 <h2>Android: Restrict IPC by Default</h2>
 <p>Services oversee key abstraction/resources</p>
 <ul>
@@ -216,8 +270,10 @@
 <li>Camera</li>
 <li>Contacts</li>
 </ul>
-<p>Only Apps with permissions given by the user should be able to communicate with these services.</p>
-</section><section id="unix-process-model-vs.-jvm" class="slide level2">
+<p>Only Apps with permissions given by the user should be able to
+communicate with these services.</p>
+</section>
+<section id="unix-process-model-vs.-jvm" class="slide level2">
 <h2>UNIX Process Model vs. JVM</h2>
 <p>UNIX programs:</p>
 <ul>
@@ -232,32 +288,50 @@
 <li>Load libraries for java program (<code>imports</code>)</li>
 <li>Execute java program (JIT, GC)</li>
 </ul>
-</section><section id="android-everything-is-jvm-execution" class="slide level2">
+</section>
+<section id="android-everything-is-jvm-execution" class="slide level2">
 <h2>Android: Everything is JVM Execution</h2>
 <p>An application’s computation is always within a JVM. This means:</p>
 <ul>
 <li>We should optimize for starting an app in a JVM</li>
-<li>JVM is memory-hungry <span class="math inline">→</span> share as much memory between VMs as possible</li>
+<li>JVM is memory-hungry <span class="math inline">→</span> share as
+much memory between VMs as possible</li>
 </ul>
 <blockquote>
 <p>JVM-first execution abstractions</p>
 </blockquote>
 </section></section>
-<section><section id="android-architecture" class="title-slide slide level1"><h1>Android Architecture</h1></section><section id="android-architecture-1" class="slide level2">
+<section>
+<section id="android-architecture" class="title-slide slide level1">
+<h1>Android Architecture</h1>
+
+</section>
+<section id="android-architecture-1" class="slide level2">
 <h2>Android Architecture</h2>
 <figure>
-<img data-src="figures/android/android_system_architecture.jpg" alt="Source: developer.android.com" /><figcaption>Source: developer.android.com</figcaption>
+<img data-src="figures/android/android_system_architecture.jpg"
+alt="Source: developer.android.com" />
+<figcaption aria-hidden="true">Source:
+developer.android.com</figcaption>
 </figure>
-</section><section id="android-architecture-ii" class="slide level2">
+</section>
+<section id="android-architecture-ii" class="slide level2">
 <h2>Android Architecture II</h2>
 <center>
 <img src="figures/android/android_framework_stack.png" height="600px">
 </center>
 <figure>
-<img data-src="figures/android/android_framework_stack.png" alt="Source: www.makelinux.net" /><figcaption>Source: www.makelinux.net</figcaption>
+<img data-src="figures/android/android_framework_stack.png"
+alt="Source: www.makelinux.net" />
+<figcaption aria-hidden="true">Source: www.makelinux.net</figcaption>
 </figure>
 </section></section>
-<section><section id="zygote-process" class="title-slide slide level1"><h1>Zygote Process</h1></section><section id="zygote-process-creation-i" class="slide level2">
+<section>
+<section id="zygote-process" class="title-slide slide level1">
+<h1>Zygote Process</h1>
+
+</section>
+<section id="zygote-process-creation-i" class="slide level2">
 <h2>Zygote Process Creation I</h2>
 <p>The Java VM has a huge number of large packages</p>
 <ul>
@@ -265,39 +339,56 @@
 <li><em>expensive</em>: loading them all at App-start time</li>
 <li><em>expensive</em>: memory replication across Apps/Services</li>
 </ul>
-</section><section id="zygote-process-creation-ii" class="slide level2">
+</section>
+<section id="zygote-process-creation-ii" class="slide level2">
 <h2>Zygote Process Creation II</h2>
-<p>Zygote: single process that is the <em>parent</em> of <em>all</em> Apps and Services.</p>
+<p>Zygote: single process that is the <em>parent</em> of <em>all</em>
+Apps and Services.</p>
 <ul>
 <li>Loads all java packages into the zygote</li>
 <li>Listens for App/Service-creation requests</li>
 <li><code>fork</code>s the new App/Service</li>
-<li><code>setuid</code> to the App’s <code>uid</code> (zygote is <code>root</code>)</li>
+<li><code>setuid</code> to the App’s <code>uid</code> (zygote is
+<code>root</code>)</li>
 <li>Executes App/Service’s java code</li>
 </ul>
-</section><section id="zygote-memory-savings" class="slide level2">
+</section>
+<section id="zygote-memory-savings" class="slide level2">
 <h2>Zygote Memory Savings</h2>
 <center>
 <img src="figures/android/android_packages2.png" height="550px">
 </center>
 <figure>
-<img data-src="figures/android/android_packages.png" alt="Source: www.makelinux.net" /><figcaption>Source: www.makelinux.net</figcaption>
+<img data-src="figures/android/android_packages.png"
+alt="Source: www.makelinux.net" />
+<figcaption aria-hidden="true">Source: www.makelinux.net</figcaption>
 </figure>
-</section><section id="system-zygote-bootup" class="slide level2">
+</section>
+<section id="system-zygote-bootup" class="slide level2">
 <h2>System &amp; Zygote Bootup</h2>
 <center>
 <img src="figures/android/zygote_flowchart.png" height="550px">
 </center>
 <figure>
-<img data-src="figures/android/zygote_flowchart.png" alt="A great video discussing bootup. Source: zybuluo.com" /><figcaption>A <a href="https://www.youtube.com/watch?v=5SQP0qfUDjI&amp;list=TLPQMDkwNDIwMjLUVCspTvNY9A">great video</a> discussing bootup. Source: zybuluo.com</figcaption>
+<img data-src="figures/android/zygote_flowchart.png"
+alt="A great video discussing bootup. Source: zybuluo.com" />
+<figcaption aria-hidden="true">A <a
+href="https://www.youtube.com/watch?v=5SQP0qfUDjI&amp;list=TLPQMDkwNDIwMjLUVCspTvNY9A">great
+video</a> discussing bootup. Source: zybuluo.com</figcaption>
 </figure>
 </section></section>
-<section><section id="application-centrality" class="title-slide slide level1"><h1>Application Centrality</h1></section><section id="app-centrality-application-sandbox" class="slide level2">
+<section>
+<section id="application-centrality" class="title-slide slide level1">
+<h1>Application Centrality</h1>
+
+</section>
+<section id="app-centrality-application-sandbox" class="slide level2">
 <h2>App-Centrality: Application Sandbox</h2>
 <ol type="1">
-<li>Apps have <code>uid</code>/<code>gid</code>s, not users</li>
-<li>Apps have “home directories” for private storage</li>
-<li>No facilities for filesystem sharing between applications</li>
+<li><p>Apps have <code>uid</code>/<code>gid</code>s, not users</p></li>
+<li><p>Apps have “home directories” for private storage</p></li>
+<li><p>No facilities for filesystem sharing between
+applications</p></li>
 <li><p>Apps explicitly specify their resource requirements</p>
 <ul>
 <li>Contacts,</li>
@@ -305,9 +396,11 @@
 <li>Camera, …</li>
 </ul></li>
 </ol>
-</section><section id="allowing-apps-to-access-devices" class="slide level2">
+</section>
+<section id="allowing-apps-to-access-devices" class="slide level2">
 <h2>Allowing Apps to Access Devices</h2>
-<p>Apps have a <em>permission manifest</em>: what resources they can access.</p>
+<p>Apps have a <em>permission manifest</em>: what resources they can
+access.</p>
 <ul>
 <li>“This app wants access to your Contacts, do you consent?”</li>
 </ul>
@@ -321,11 +414,15 @@
 &lt;permission name=&quot;android.permission.INTERNET&quot; &gt;
     &lt;group gid=&quot;inet&quot; /&gt;
 &lt;/permission&gt;</code></pre>
-<p>All of the system’s potential <a href="https://developer.android.com/reference/android/Manifest.permission">permissions</a>.</p>
+<p>All of the system’s potential <a
+href="https://developer.android.com/reference/android/Manifest.permission">permissions</a>.</p>
 <ul>
-<li>For example, <a href="https://developer.android.com/reference/android/Manifest.permission#READ_CONTACTS">the <code>READ_CONTACTS</code> permission</a></li>
+<li>For example, <a
+href="https://developer.android.com/reference/android/Manifest.permission#READ_CONTACTS">the
+<code>READ_CONTACTS</code> permission</a></li>
 </ul>
-</section><section id="tracking-of-permissions" class="slide level2">
+</section>
+<section id="tracking-of-permissions" class="slide level2">
 <h2>Tracking of Permissions</h2>
 <p>App and Service permissions are tracked and queried:</p>
 <ul>
@@ -333,23 +430,36 @@
 </ul>
 <pre><code>return AppGlobals.getPackageManager()
     .checkUidPermission(permission, uid);</code></pre>
-</section><section id="app-filesystem-access" class="slide level2">
+</section>
+<section id="app-filesystem-access" class="slide level2">
 <h2>App Filesystem Access</h2>
 <p>Applications have access only to a small part of the filesystem</p>
 <ul>
-<li>The <code>uid</code> and <code>gid</code> are a unique, per-app values <code>app_N</code>. I.e. <code>app_6</code></li>
-<li><code>/data/app/&lt;app_name&gt;/</code> binary and “ELF-like” data</li>
+<li>The <code>uid</code> and <code>gid</code> are a unique, per-app
+values <code>app_N</code>. I.e. <code>app_6</code></li>
+<li><code>/data/app/&lt;app_name&gt;/</code> binary and “ELF-like”
+data</li>
 <li><code>/data/data/&lt;app_name&gt;/</code> storage</li>
 </ul>
 </section></section>
-<section><section id="resource-access-through-ipc-and-services" class="title-slide slide level1"><h1>Resource Access through IPC and Services</h1></section><section id="service-based-coordination" class="slide level2">
+<section>
+<section id="resource-access-through-ipc-and-services"
+class="title-slide slide level1">
+<h1>Resource Access through IPC and Services</h1>
+
+</section>
+<section id="service-based-coordination" class="slide level2">
 <h2><em>Service-based Coordination</em></h2>
 <blockquote>
-<p>If Apps cannot access each other’s data, how do we have a cohesive, single experience as user?</p>
+<p>If Apps cannot access each other’s data, how do we have a cohesive,
+single experience as user?</p>
 </blockquote>
-<p><strong>Our</strong> human experience is clicking buttons, and seeing actions. The system need only provide the <em>illusion</em> of a single, shared device.</p>
+<p><strong>Our</strong> human experience is clicking buttons, and seeing
+actions. The system need only provide the <em>illusion</em> of a single,
+shared device.</p>
 <p><strong>How?</strong></p>
-</section><section id="service-based-coordination-ii" class="slide level2">
+</section>
+<section id="service-based-coordination-ii" class="slide level2">
 <h2><em>Service-based Coordination</em> II</h2>
 <p>Illusion of a single, shared device:</p>
 <ol type="1">
@@ -367,7 +477,8 @@
 <li>Talk about this later</li>
 </ul></li>
 </ol>
-</section><section id="usergroup-ids" class="slide level2">
+</section>
+<section id="usergroup-ids" class="slide level2">
 <h2>User/Group IDs</h2>
 <pre><code>/* This is the master Users and Groups config for the platform.*/
 #define AID_ROOT             0  /* traditional unix root user */
@@ -390,68 +501,95 @@
 #define AID_APP          10000  /* first app user */
 #define AID_USER        100000  /* offset for uid ranges for each user */</code></pre>
 <ul>
-<li><code>0</code>/<code>1000</code> - <code>root</code> + System, <code>1001...1052</code> - Devices</li>
+<li><code>0</code>/<code>1000</code> - <code>root</code> + System,
+<code>1001...1052</code> - Devices</li>
 <li><code>1053</code> - Zygote, <code>10000+</code> - Apps</li>
 </ul>
-</section><section id="binder-inter-process-communication" class="slide level2">
+</section>
+<section id="binder-inter-process-communication" class="slide level2">
 <h2>Binder: Inter-Process Communication</h2>
 <p><em>Binder</em>: domain-socket analog for IPC</p>
 <ul>
 <li>Nameserver associates Apps/Services with <code>names</code></li>
 <li>IPC to those <code>names</code> can mimic function calls</li>
 </ul>
-<p><span class="math inline">→</span> cross App/Service “function invocations”</p>
-</section><section id="binder-based-ipc" class="slide level2">
+<p><span class="math inline">→</span> cross App/Service “function
+invocations”</p>
+</section>
+<section id="binder-based-ipc" class="slide level2">
 <h2>Binder-based IPC</h2>
 <ul>
 <li><p>IPC Connections can be passed to Apps</p>
 <ul>
 <li>“<em>I want to talk to the location service!</em>”</li>
-<li><code>ServiceManager</code> nameserver: “<em>here you go, have this connection</em>”</li>
+<li><code>ServiceManager</code> nameserver: “<em>here you go, have this
+connection</em>”</li>
 </ul></li>
 <li><p><code>uid/gid</code> of Apps using connection can be queried</p>
 <ul>
-<li>Example: does the App have group <code>AID_INPUT</code> to be able to input?</li>
-<li>Example: pass uid to <code>Package/PermissionManager</code>: “<em>are they allowed?</em>”</li>
+<li>Example: does the App have group <code>AID_INPUT</code> to be able
+to input?</li>
+<li>Example: pass uid to <code>Package/PermissionManager</code>:
+“<em>are they allowed?</em>”</li>
 </ul></li>
 </ul>
-</section><section id="binder-communication-authentication" class="slide level2">
+</section>
+<section id="binder-communication-authentication" class="slide level2">
 <h2>Binder Communication Authentication</h2>
 <blockquote>
 <p>Who is making a request to a service? Do they have permissions?</p>
 </blockquote>
 <ul>
 <li>Connections include <code>pid</code> and <code>euid</code></li>
-<li><code>Binder.getCallingPid()</code> &amp; <code>Binder.getCallingUid()</code></li>
+<li><code>Binder.getCallingPid()</code> &amp;
+<code>Binder.getCallingUid()</code></li>
 <li>Trusted <em>authentication</em> of App making request</li>
 </ul>
 <pre><code>ActivityManager.checkComponentPermission(permission, uid, owningUid, exported)</code></pre>
-</section><section id="servicemanager-android-nameserver" class="slide level2">
+</section>
+<section id="servicemanager-android-nameserver" class="slide level2">
 <h2>ServiceManager: Android Nameserver</h2>
 <p><code>android.os.ServiceManager</code> includes:</p>
 <pre><code>public static void addService(String name, IBinder service) { /* ... */ }
 public static IBinder getService(String name) { /* ... */ }</code></pre>
-<p>We can see that at its core, Android has a nameserver to map names to IPC channels.</p>
+<p>We can see that at its core, Android has a nameserver to map names to
+IPC channels.</p>
 <ul>
-<li>Similar to our nameserver creating a domain socket for each server</li>
-<li>Interacts with kernel to enable namespace-driven discovery for Binder</li>
+<li>Similar to our nameserver creating a domain socket for each
+server</li>
+<li>Interacts with kernel to enable namespace-driven discovery for
+Binder</li>
 </ul>
-</section><section id="services-link" class="slide level2">
-<h2><a href="https://www.youtube.com/watch?v=M6extgmQQNw&amp;list=TLPQMDkwNDIwMjLUVCspTvNY9A">Services (link)</a></h2>
+</section>
+<section id="services-link" class="slide level2">
+<h2><a
+href="https://www.youtube.com/watch?v=M6extgmQQNw&amp;list=TLPQMDkwNDIwMjLUVCspTvNY9A">Services
+(link)</a></h2>
 <ul>
 <li><em>Location Manager</em> - GPS + IMU</li>
 <li><em>Package Manager</em> - track code and permissions for Apps</li>
 <li><em>Account Manager</em> - track user permissions and data</li>
 <li><em>Power Manager</em> - track/manage power</li>
 <li><em>Wallpaper Service</em></li>
-<li>Input/output via <em>Input Manager</em> (manage connection from app to keyboard) and <a href="https://source.android.com/devices/graphics/surfaceflinger-windowmanager"><em>Window Manager</em></a> (interacts with <code>surfaceflinger</code> to display contents)</li>
+<li>Input/output via <em>Input Manager</em> (manage connection from app
+to keyboard) and <a
+href="https://source.android.com/devices/graphics/surfaceflinger-windowmanager"><em>Window
+Manager</em></a> (interacts with <code>surfaceflinger</code> to display
+contents)</li>
 </ul>
 <p>Coordination:</p>
 <ul>
-<li><em>Activity Manager</em> - nameserver to coordinate between Apps/Services</li>
+<li><em>Activity Manager</em> - nameserver to coordinate between
+Apps/Services</li>
 </ul>
 </section></section>
-<section><section id="composing-system-from-apps" class="title-slide slide level1"><h1>Composing System from Apps</h1></section><section id="general-communication-between-apps" class="slide level2">
+<section>
+<section id="composing-system-from-apps"
+class="title-slide slide level1">
+<h1>Composing System from Apps</h1>
+
+</section>
+<section id="general-communication-between-apps" class="slide level2">
 <h2>General Communication between Apps</h2>
 <p>UNIX focuses on pipelines for composition</p>
 <ul>
@@ -461,19 +599,41 @@ public static IBinder getService(String name) { /* ... */ }</code></pre>
 <li>using polymorphic <code>read</code>/<code>write</code> calls</li>
 </ul>
 <p>Android:</p>
-<p><a href="https://developer.android.com/guide/components/intents-filters"><em>Intents</em></a>: simple action you’d like to perform, identified by a name</p>
+<p><a
+href="https://developer.android.com/guide/components/intents-filters"><em>Intents</em></a>:
+simple action you’d like to perform, identified by a name</p>
 <ul>
-<li><a href="https://developer.android.com/guide/components/activities/intro-activities"><em>Activities</em> (link)</a> provide App-based intent implementations</li>
-<li><a href="https://developer.android.com/reference/android/app/Service"><em>Services</em> (link)</a> provide “background” intent implementations</li>
+<li><a
+href="https://developer.android.com/guide/components/activities/intro-activities"><em>Activities</em>
+(link)</a> provide App-based intent implementations</li>
+<li><a
+href="https://developer.android.com/reference/android/app/Service"><em>Services</em>
+(link)</a> provide “background” intent implementations</li>
 </ul>
-</section><section id="intent-based-ipc" class="slide level2">
+</section>
+<section id="intent-based-ipc" class="slide level2">
 <h2>Intent-based IPC</h2>
 <figure>
-<img data-src="figures/android/intent_ipc.png" alt="How an implicit intent is delivered through the system to start another activity: [1] Activity A creates an Intent with an action description and passes it to startActivity(). [2] The “Android System” searches all apps for an intent filter that matches the intent. When a match is found, [3] the system starts the matching activity (Activity B) by invoking its onCreate() method and passing it the Intent. Credit: Picture &amp; text from https://developer.android.com ." /><figcaption>How an implicit intent is delivered through the system to start another activity: [1] <code>Activity</code> <span class="math inline"><em>A</em></span> creates an <code>Intent</code> with an action description and passes it to <code>startActivity()</code>. [2] The “Android System” searches all apps for an intent filter that matches the intent. When a match is found, [3] the system starts the matching activity (<code>Activity</code> <span class="math inline"><em>B</em></span>) by invoking its <code>onCreate()</code> method and passing it the <code>Intent</code>. Credit: Picture &amp; text from https://developer.android.com .</figcaption>
+<img data-src="figures/android/intent_ipc.png"
+alt="How an implicit intent is delivered through the system to start another activity: [1] Activity A creates an Intent with an action description and passes it to startActivity(). [2] The “Android System” searches all apps for an intent filter that matches the intent. When a match is found, [3] the system starts the matching activity (Activity B) by invoking its onCreate() method and passing it the Intent. Credit: Picture &amp; text from https://developer.android.com ." />
+<figcaption aria-hidden="true">How an implicit intent is delivered
+through the system to start another activity: [1] <code>Activity</code>
+<span class="math inline"><em>A</em></span> creates an
+<code>Intent</code> with an action description and passes it to
+<code>startActivity()</code>. [2] The “Android System” searches all apps
+for an intent filter that matches the intent. When a match is found, [3]
+the system starts the matching activity (<code>Activity</code> <span
+class="math inline"><em>B</em></span>) by invoking its
+<code>onCreate()</code> method and passing it the <code>Intent</code>.
+Credit: Picture &amp; text from https://developer.android.com
+.</figcaption>
 </figure>
-</section><section id="intents" class="slide level2">
+</section>
+<section id="intents" class="slide level2">
 <h2>Intents</h2>
-<p><a href="https://developer.android.com/guide/components/intents-common">List of default <em>intents</em></a>. These include:</p>
+<p><a
+href="https://developer.android.com/guide/components/intents-common">List
+of default <em>intents</em></a>. These include:</p>
 <ul>
 <li>Alarm clock operations (setting alarm)</li>
 <li>Calendar (setting/retrieving events)</li>
@@ -485,7 +645,8 @@ public static IBinder getService(String name) { /* ... */ }</code></pre>
 <li>Web browser (loading URL)</li>
 </ul>
 <p><code>ActivityManager</code> is nameserver for intents</p>
-</section><section id="intent-example-sent-email" class="slide level2">
+</section>
+<section id="intent-example-sent-email" class="slide level2">
 <h2>Intent Example: Sent email</h2>
 <pre><code>// java code to send an email!
 public void composeEmail(String[] addresses, String subject, Uri attachment) {
@@ -498,61 +659,93 @@ public void composeEmail(String[] addresses, String subject, Uri attachment) {
         startActivity(intent);
     }
 }</code></pre>
-</section><section id="intents---mechanism-for-launching-apps" class="slide level2">
+</section>
+<section id="intents---mechanism-for-launching-apps"
+class="slide level2">
 <h2>Intents - Mechanism for Launching Apps</h2>
 <ol type="1">
-<li>System starts out by triggering the <code>PRE_BOOT_COMPLETED</code> intent</li>
-<li>Homescreen App displays homescreen (or “update” might run)</li>
-<li>Homescreen triggers <code>BOOT_COMPLETED</code> intent</li>
-<li>Homescreen App detects click <span class="math inline">→</span> triggers App intent</li>
-<li>If App is running, pass it the message, otherwise <em>start it</em>!</li>
+<li><p>System starts out by triggering the
+<code>PRE_BOOT_COMPLETED</code> intent</p></li>
+<li><p>Homescreen App displays homescreen (or “update” might
+run)</p></li>
+<li><p>Homescreen triggers <code>BOOT_COMPLETED</code> intent</p></li>
+<li><p>Homescreen App detects click <span class="math inline">→</span>
+triggers App intent</p></li>
+<li><p>If App is running, pass it the message, otherwise <em>start
+it</em>!</p></li>
 <li><p>App might trigger many intents</p>
 <ul>
-<li><code>INPUT_METHOD_SERVICE</code> to read from onscreen keyboard</li>
+<li><code>INPUT_METHOD_SERVICE</code> to read from onscreen
+keyboard</li>
 <li><code>ACTION_SEND</code> to send email</li>
 <li>open URL, view pdf, download file, etc…</li>
 </ul></li>
 </ol>
-</section><section id="activitymanager-i" class="slide level2">
+</section>
+<section id="activitymanager-i" class="slide level2">
 <h2>ActivityManager I</h2>
-<p><code>ActivityManager</code> implements this <em>intent</em> system</p>
+<p><code>ActivityManager</code> implements this <em>intent</em>
+system</p>
 <ul>
 <li>a service running inside the <code>SystemServer</code> process</li>
 <li>manages the runtime activities of applications in the system</li>
 </ul>
-<p>For functionality: <code>void startActivity (Intent intent)</code></p>
+<p>For functionality:
+<code>void startActivity (Intent intent)</code></p>
 <ul>
 <li>find activity/service to handle <code>intent</code></li>
 <li>check permissions</li>
 <li>ask zygote to start <em>or</em> activate activity/service</li>
 </ul>
-</section><section id="intents---mechanism-for-launching-apps-ii" class="slide level2">
+</section>
+<section id="intents---mechanism-for-launching-apps-ii"
+class="slide level2">
 <h2>Intents - Mechanism for Launching Apps II</h2>
 <figure>
-<img data-src="figures/android/app_launch.png" alt="CurrentApp launches NextApp through an intent provided by NextApp. Credit: video" /><figcaption><code>CurrentApp</code> launches <code>NextApp</code> through an intent provided by <code>NextApp</code>. Credit: <a href="https://www.youtube.com/watch?v=5SQP0qfUDjI&amp;list=TLPQMDkwNDIwMjLUVCspTvNY9A">video</a></figcaption>
+<img data-src="figures/android/app_launch.png"
+alt="CurrentApp launches NextApp through an intent provided by NextApp. Credit: video" />
+<figcaption aria-hidden="true"><code>CurrentApp</code> launches
+<code>NextApp</code> through an intent provided by <code>NextApp</code>.
+Credit: <a
+href="https://www.youtube.com/watch?v=5SQP0qfUDjI&amp;list=TLPQMDkwNDIwMjLUVCspTvNY9A">video</a></figcaption>
 </figure>
-</section><section id="activitymanager-example" class="slide level2">
+</section>
+<section id="activitymanager-example" class="slide level2">
 <h2>ActivityManager Example</h2>
 <ul>
-<li><p><a href="https://developer.android.com/reference/android/view/inputmethod/InputMethodManager.html">the <code>InputManager</code> multiplexes</a> user input between <code>InputMethod</code>s.</p>
+<li><p><a
+href="https://developer.android.com/reference/android/view/inputmethod/InputMethodManager.html">the
+<code>InputManager</code> multiplexes</a> user input between
+<code>InputMethod</code>s.</p>
 <ul>
-<li>Think: where are we getting our <code>stdin</code>? Up to the system to decide if <code>stdin</code> is a pipe, or a terminal. Polymorphic!</li>
+<li>Think: where are we getting our <code>stdin</code>? Up to the system
+to decide if <code>stdin</code> is a pipe, or a terminal.
+Polymorphic!</li>
 </ul></li>
-<li><p><a href="https://developer.android.com/reference/android/inputmethodservice/InputMethodService"><code>InputMethod</code>s (link)</a> are things like on-screen keyboards that are Services activated by intents from the <code>InputManager</code>.</p>
+<li><p><a
+href="https://developer.android.com/reference/android/inputmethodservice/InputMethodService"><code>InputMethod</code>s
+(link)</a> are things like on-screen keyboards that are Services
+activated by intents from the <code>InputManager</code>.</p>
 <ul>
 <li>Provides the <code>INPUT_METHOD_SERVICE</code> intent</li>
-<li>This class is much like “file descriptor <code>0</code>”; we know it will give us input.</li>
+<li>This class is much like “file descriptor <code>0</code>”; we know it
+will give us input.</li>
 </ul></li>
-<li><p>App <span class="math inline">→</span> <code>ActivityManager</code>(<code>INPUT_METHOD_SERVICE</code>) <span class="math inline">→</span> <code>InputMethod</code></p></li>
+<li><p>App <span class="math inline">→</span>
+<code>ActivityManager</code>(<code>INPUT_METHOD_SERVICE</code>) <span
+class="math inline">→</span> <code>InputMethod</code></p></li>
 </ul>
-</section><section id="intentactivity-permissions" class="slide level2">
+</section>
+<section id="intentactivity-permissions" class="slide level2">
 <h2>Intent/Activity Permissions</h2>
 <ul>
 <li>Binder provides <code>uid</code>/<code>pid</code> of client</li>
-<li><code>ActivityManager</code> checks if the client has permissions to access resource/trigger intent</li>
+<li><code>ActivityManager</code> checks if the client has permissions to
+access resource/trigger intent</li>
 <li>Will privilege system services and <code>root</code></li>
 </ul>
-</section><section id="activitymanager-ii" class="slide level2">
+</section>
+<section id="activitymanager-ii" class="slide level2">
 <h2>ActivityManager II</h2>
 <pre><code>// frameworks/base/core/java/android/app/ActivityManager.java
 
@@ -584,20 +777,31 @@ public class ActivityManager {
     }
 }</code></pre>
 </section></section>
-<section><section id="summary-posix-vs.-android" class="title-slide slide level1"><h1>Summary: POSIX vs. Android</h1></section><section id="app-centric" class="slide level2">
+<section>
+<section id="summary-posix-vs.-android"
+class="title-slide slide level1">
+<h1>Summary: POSIX vs. Android</h1>
+
+</section>
+<section id="app-centric" class="slide level2">
 <h2>App-Centric</h2>
 <ul>
 <li>A user (<code>uid</code>) for each App/Service</li>
 <li>File system directory per App</li>
-<li>Binder IPC gives us <code>uid</code>/<code>pid</code> of calling App</li>
+<li>Binder IPC gives us <code>uid</code>/<code>pid</code> of calling
+App</li>
 <li>Each App has a permission manifest</li>
-<li><code>Package/PermissionManager</code> lets us query App permissions</li>
+<li><code>Package/PermissionManager</code> lets us query App
+permissions</li>
 </ul>
-<p><span class="math inline">→</span> foundation for per-App access control/privileges</p>
-</section><section id="shared-resources-through-services" class="slide level2">
+<p><span class="math inline">→</span> foundation for per-App access
+control/privileges</p>
+</section>
+<section id="shared-resources-through-services" class="slide level2">
 <h2>Shared Resources Through Services</h2>
 <ul>
-<li><code>SystemManager</code> nameserver maps unique <code>name</code> to a Service</li>
+<li><p><code>SystemManager</code> nameserver maps unique
+<code>name</code> to a Service</p></li>
 <li><p>Apps use IPC to request resources from Services</p>
 <ul>
 <li>Contacts</li>
@@ -605,7 +809,8 @@ public class ActivityManager {
 <li>Hardware (location, screen, networking, etc…)</li>
 </ul></li>
 </ul>
-</section><section id="everything-is-appservice-execution" class="slide level2">
+</section>
+<section id="everything-is-appservice-execution" class="slide level2">
 <h2>Everything is App/Service Execution</h2>
 <p>Zygote as the parent of each App</p>
 <ul>
@@ -614,14 +819,17 @@ public class ActivityManager {
 <li>App creation = <code>fork</code></li>
 <li>uses <code>setuid</code> to restrict App’s privileges</li>
 </ul>
-</section><section id="composition-via-intents" class="slide level2">
+</section>
+<section id="composition-via-intents" class="slide level2">
 <h2>Composition via <code>Intent</code>s</h2>
 <p>Apps and Services are activated by <em>intents</em>.</p>
 <ul>
 <li><p>Polymorphic</p>
 <ul>
-<li>Code for homescreen? Provide <code>PRE_BOOT_COMPLETED</code> intent.</li>
-<li>On-screen keyboard? Provide <code>INPUT_METHOD_SERVICE</code> intent.</li>
+<li>Code for homescreen? Provide <code>PRE_BOOT_COMPLETED</code>
+intent.</li>
+<li>On-screen keyboard? Provide <code>INPUT_METHOD_SERVICE</code>
+intent.</li>
 </ul></li>
 <li><p>Drives App/Service activation</p>
 <ul>
@@ -633,37 +841,50 @@ public class ActivityManager {
 <li>in some sense, provides similar purpose to the shell</li>
 </ul></li>
 </ul>
-</section><section id="unix-vs.-android-access-to-resources" class="slide level2">
+</section>
+<section id="unix-vs.-android-access-to-resources" class="slide level2">
 <h2>UNIX vs. Android: Access to Resources</h2>
 <p>UNIX:</p>
 <ul>
-<li><p><span class="math inline"><em>o</em><em>p</em><em>e</em><em>n</em>(<em>S</em><em>t</em><em>r</em><em>i</em><em>n</em><em>g</em><em>p</em><em>a</em><em>t</em><em>h</em>) → <em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em></span></p>
+<li><p><span
+class="math inline"><em>o</em><em>p</em><em>e</em><em>n</em>(<em>S</em><em>t</em><em>r</em><em>i</em><em>n</em><em>g</em><em>p</em><em>a</em><em>t</em><em>h</em>) → <em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em></span></p>
 <ul>
 <li>Access check based on <code>uid</code>/<code>gid</code></li>
 </ul></li>
-<li><p><span class="math inline"><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em><sub><em>t</em></sub><em>a</em><em>b</em><em>l</em><em>e</em>(<em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em>) → <em>c</em><em>h</em><em>a</em><em>r</em>[]<em>f</em><em>i</em><em>l</em><em>e</em></span></p></li>
+<li><p><span
+class="math inline"><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em><sub><em>t</em></sub><em>a</em><em>b</em><em>l</em><em>e</em>(<em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em>) → <em>c</em><em>h</em><em>a</em><em>r</em>[]<em>f</em><em>i</em><em>l</em><em>e</em></span></p></li>
 </ul>
-</section><section id="unix-vs.-android-access-to-resources-1" class="slide level2">
+</section>
+<section id="unix-vs.-android-access-to-resources-1"
+class="slide level2">
 <h2>UNIX vs. Android: Access to Resources</h2>
 <p>Android:</p>
 <ul>
-<li><p><span class="math inline"><em>o</em><em>p</em><em>e</em><em>n</em>(<em>S</em><em>t</em><em>r</em><em>i</em><em>n</em><em>g</em><em>p</em><em>a</em><em>t</em><em>h</em>) → <em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em></span></p>
+<li><p><span
+class="math inline"><em>o</em><em>p</em><em>e</em><em>n</em>(<em>S</em><em>t</em><em>r</em><em>i</em><em>n</em><em>g</em><em>p</em><em>a</em><em>t</em><em>h</em>) → <em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em></span></p>
 <ul>
 <li>Access check based on <code>uid</code>/<code>gid</code></li>
 </ul></li>
-<li><p><span class="math inline"><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em><sub><em>t</em></sub><em>a</em><em>b</em><em>l</em><em>e</em>(<em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em>) → <em>c</em><em>h</em><em>a</em><em>r</em>[]<em>f</em><em>i</em><em>l</em><em>e</em></span></p></li>
+<li><p><span
+class="math inline"><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em><sub><em>t</em></sub><em>a</em><em>b</em><em>l</em><em>e</em>(<em>i</em><em>n</em><em>t</em><em>d</em><em>e</em><em>s</em><em>c</em><em>r</em><em>i</em><em>p</em><em>t</em><em>o</em><em>r</em>) → <em>c</em><em>h</em><em>a</em><em>r</em>[]<em>f</em><em>i</em><em>l</em><em>e</em></span></p></li>
 </ul>
 <p><em>and</em></p>
 <ul>
-<li><p><span class="math inline"><em>A</em><em>c</em><em>t</em><em>i</em><em>v</em><em>i</em><em>t</em><em>y</em><em>M</em><em>a</em><em>n</em><em>a</em><em>g</em><em>e</em><em>r</em>(<em>S</em><em>t</em><em>r</em><em>i</em><em>n</em><em>g</em><em>I</em><em>n</em><em>t</em><em>e</em><em>n</em><em>t</em>) → <em>B</em><em>i</em><em>n</em><em>d</em><em>e</em><em>r</em><em>C</em><em>h</em><em>a</em><em>n</em><em>n</em><em>e</em><em>l</em></span></p>
+<li><p><span
+class="math inline"><em>A</em><em>c</em><em>t</em><em>i</em><em>v</em><em>i</em><em>t</em><em>y</em><em>M</em><em>a</em><em>n</em><em>a</em><em>g</em><em>e</em><em>r</em>(<em>S</em><em>t</em><em>r</em><em>i</em><em>n</em><em>g</em><em>I</em><em>n</em><em>t</em><em>e</em><em>n</em><em>t</em>) → <em>B</em><em>i</em><em>n</em><em>d</em><em>e</em><em>r</em><em>C</em><em>h</em><em>a</em><em>n</em><em>n</em><em>e</em><em>l</em></span></p>
 <ul>
 <li>Permission checking with <code>PackageManager</code></li>
 </ul></li>
 <li><p>BinderChannel(fn, args…) Service</p></li>
 </ul>
-</section><section id="posix-vs.-android-summary" class="slide level2">
+</section>
+<section id="posix-vs.-android-summary" class="slide level2">
 <h2>POSIX vs. Android Summary</h2>
 <table>
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 60%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>POSIX</th>
@@ -693,7 +914,8 @@ public class ActivityManager {
 </tr>
 </tbody>
 </table>
-</section><section id="androids-unix" class="slide level2">
+</section>
+<section id="androids-unix" class="slide level2">
 <h2>Android’s UNIX</h2>
 <p>Similar set of system calls to normal UNIX system…</p>
 <p>…augmented with pervasive use of IPC…</p>
