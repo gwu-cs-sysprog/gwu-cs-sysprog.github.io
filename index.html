@@ -147,7 +147,10 @@ Programming</span>
         Organization</a></li>
         <li><a href="#memory-hierarchies"
         id="toc-memory-hierarchies"><span
-        class="toc-section-number">1.2</span> Memory Hierarchies</a>
+        class="toc-section-number">1.2</span> Memory
+        Hierarchies</a></li>
+        <li><a href="#intro-to-c" id="toc-intro-to-c"><span
+        class="toc-section-number">1.3</span> Intro to C</a>
         <ul>
         <li><a href="#you-already-know-c"
         id="toc-you-already-know-c">You already know
@@ -155,16 +158,13 @@ Programming</span>
         <li><a
         href="#c-constructs-if-youre-familiar-with-java-python-etc."
         id="toc-c-constructs-if-youre-familiar-with-java-python-etc."><span
-        class="toc-section-number">1.2.1</span> C constructs [if you’re
+        class="toc-section-number">1.3.1</span> C constructs [if you’re
         familiar with Java, Python, etc.]</a></li>
         <li><a href="#whats-different-from-java"
         id="toc-whats-different-from-java">What’s different [from
         java]</a></li>
         <li><a href="#compound-types" id="toc-compound-types"><span
-        class="toc-section-number">1.2.2</span> Compound types</a></li>
-        <li><a href="#no-built-in-boolean"
-        id="toc-no-built-in-boolean"><strong>no (built-in)
-        boolean!</strong></a></li>
+        class="toc-section-number">1.3.2</span> Compound types</a></li>
         </ul></li>
         </ul></li>
         <li><a href="#intermediate-c" id="toc-intermediate-c"><span
@@ -789,14 +789,15 @@ Programming</span>
             class="header-section-number">1.2</span> Memory
             Hierarchies</h2>
             <p>Find the <a
-            href="https://sibin.github.io/teaching/csci2410-gwu-systems_programming/fall_2023/slides/reveal_slides/memory.html#/10">slides</a>.
-            ## Intro to C</p>
+            href="https://sibin.github.io/teaching/csci2410-gwu-systems_programming/fall_2023/slides/reveal_slides/memory.html#/10">slides</a>.</p>
+            <h2 data-number="1.3" id="intro-to-c"><span
+            class="header-section-number">1.3</span> Intro to C</h2>
             <h3 class="unnumbered" id="you-already-know-c">You already
             know <strong>C</strong></h3>
             <p>well, some of it anyways…</p>
-            <h3 data-number="1.2.1"
+            <h3 data-number="1.3.1"
             id="c-constructs-if-youre-familiar-with-java-python-etc."><span
-            class="header-section-number">1.2.1</span> C constructs [if
+            class="header-section-number">1.3.1</span> C constructs [if
             you’re familiar with Java, Python, etc.]</h3>
             <table>
             <thead>
@@ -856,8 +857,8 @@ Programming</span>
             <li><strong>compiled</strong> not interpreted</li>
             <li><strong>pointers!!!</strong></li>
             </ul>
-            <h3 data-number="1.2.2" id="compound-types"><span
-            class="header-section-number">1.2.2</span> Compound
+            <h3 data-number="1.3.2" id="compound-types"><span
+            class="header-section-number">1.3.2</span> Compound
             types</h3>
             <p><strong>contiguous memory</strong> layouts: objects
             within these data types are laid out in memory, next to each
@@ -893,8 +894,8 @@ Programming</span>
             </tr>
             </tbody>
             </table>
-            <h3 class="unnumbered" id="no-built-in-boolean"><strong>no
-            (built-in) boolean!</strong></h3>
+            <h4 class="unnumbered" id="no-built-in-boolean"><strong>no
+            (built-in) boolean!</strong></h4>
             <p>C does not have a built in boolean data type. We can
             mimic it by using integer values (<scb>0</scb> is
             <code>false</code> while any other non-zero values is
@@ -965,11 +966,19 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
             <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
+gcc -Wall -Wextra -fpic -I. -c -o example2.o example2.c
+gcc -Wall -Wextra -fpic -I. -c -o example2b.o example2b.c
+gcc -o prog_naive prog.o example.o example2.o example2b.o
+gcc -Wall -Wextra -I. -c -o prog2.o prog2.c
+gcc -o prog2_naive prog2.o example.o example2.o example2b.o
+ar -crs libexample.a example.o
+ar -crs libexample2.a example2.o example2b.o
+gcc -o prog_static prog.o -L. -lexample -lexample2
+gcc -o prog2_static prog2.o -L. -lexample -lexample2
+gcc -shared -o libexample.so example.o
+gcc -shared -o libexample2.so example2.o example2b.o
+gcc -o prog_dynamic prog.o -L. -lexample -lexample2
+gcc -o prog2_dynamic prog2.o -L. -lexample -lexample2
 MON = 0, TUES = 1, ..., FRI = 4</code></pre>
             <p>You can choose the values explicitly
             (e.g. <code>enum grades { MON = 1, TUES = 2, WED = 3, THURS = 4, FRI = 5};</code>).</p>
@@ -1017,13 +1026,7 @@ MON = 0, TUES = 1, ..., FRI = 4</code></pre>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code></code></pre>
             <p>You might see all of these, but the common primitives,
             and their sizes:</p>
             <div class="sourceCode" id="cb7"><pre
@@ -1048,13 +1051,10 @@ MON = 0, TUES = 1, ..., FRI = 4</code></pre>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>char:   1
+short:  2
+int:    4
+long:   8</code></pre>
             <h3 data-number="2.2.2"
             id="common-posix-types-and-values"><span
             class="header-section-number">2.2.2</span> Common POSIX
@@ -1141,13 +1141,10 @@ MON = 0, TUES = 1, ..., FRI = 4</code></pre>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>char:   1
+short:  2
+int:    4
+long:   8</code></pre>
             <h3 data-number="2.2.4" id="compound-types-1"><span
             class="header-section-number">2.2.4</span> Compound
             types</h3>
@@ -1205,13 +1202,10 @@ MON = 0, TUES = 1, ..., FRI = 4</code></pre>
 <span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>char:   1
+short:  2
+int:    4
+long:   8</code></pre>
             <p>We can see the effect of the <code>union</code>: The size
             is <code>max(fields)</code> rather than
             <code>sum(fields)</code>. What other examples can you think
@@ -1285,14 +1279,10 @@ MON = 0, TUES = 1, ..., FRI = 4</code></pre>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> value <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>char:   1
+short:  2
+int:    4
+long:   8</code></pre>
             <p>Pointers are <em>necessary</em> as they enable us to
             build <em>linked</em> data-structures (linked-lists, binary
             trees, etc…). Languages such as Java assume that <em>every
@@ -1322,14 +1312,10 @@ value updated to 1</code></pre>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>char:   1
+short:  2
+int:    4
+long:   8</code></pre>
             <p>Making this a little more clear, lets understand how C
             accesses the <code>n</code>th item. Lets make a pointer
             <code>int *p = a + 1</code> (we’ll just simply and assume
@@ -1358,14 +1344,10 @@ a ---&gt; +---+---+---+---+
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>char:   1
+short:  2
+int:    4
+long:   8</code></pre>
             <p>We can see that <em>pointer arithmetic</em> (i.e. doing
             addition/subtraction on pointers) does the same thing as
             array indexing plus a dereference. That is,
@@ -1399,14 +1381,10 @@ value updated to 1</code></pre>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>char:   1
+short:  2
+int:    4
+long:   8</code></pre>
             <p>Note that the pointer for the integer array
             (<code>a</code>) is being incremented by 4, while the
             character array (<code>b</code>) by 1. Focusing on the key
@@ -1466,14 +1444,10 @@ Adds 1 -----------+</code></pre>
 <span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>char:   1
+short:  2
+int:    4
+long:   8</code></pre>
             <h4 data-number="2.2.5.2" id="generic-pointer-types"><span
             class="header-section-number">2.2.5.2</span> Generic Pointer
             Types</h4>
@@ -1798,17 +1772,11 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <span id="cb42-50"><a href="#cb42-50" aria-hidden="true" tabindex="-1"></a>           a<span class="op">,</span> b<span class="op">,</span> c<span class="op">.</span>c_a<span class="op">,</span> c<span class="op">.</span>c_b<span class="op">,</span> c<span class="op">.</span>c_c<span class="op">);</span></span>
 <span id="cb42-51"><a href="#cb42-51" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Addresses:
-a   @ 0x102231000
-b   @ 0x102231004
-c   @ 0x102231008
-end @ 0x102231020
+            <pre><code>Addresses:
+a   @ 0x10266a000
+b   @ 0x10266a004
+c   @ 0x10266a008
+end @ 0x10266a020
 &amp;end - &amp;a = 32
 
 Initial values:
@@ -1816,7 +1784,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x102231004
+c.c_c = 0x10266a004
 
 Print out the variables as raw memory
 
@@ -1943,14 +1911,8 @@ Post-`memset` values:</code></pre>
 <span id="cb44-77"><a href="#cb44-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb44-78"><a href="#cb44-78" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-0: 4 @ 0x100f7a01c
-1: 2 @ 0x100f7a014
+            <pre><code>0: 4 @ 0x102f8301c
+1: 2 @ 0x102f83014
 2: 0 @ 0x0</code></pre>
             <p>You want to implement a simple “key-value” store that is
             very similar in API to a hash-table (many key-value stores
@@ -2042,14 +2004,8 @@ make[2]: *** [example.o] Error 1
 <span id="cb46-38"><a href="#cb46-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb46-39"><a href="#cb46-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-0: 4 @ 0x1020be01c
-1: 2 @ 0x1020be014
+            <pre><code>0: 4 @ 0x102a1201c
+1: 2 @ 0x102a12014
 2: 0 @ 0x0</code></pre>
             <p>One of the more interesting uses of internal allocation
             is in linked data-structures (e.g. like linked lists). It is
@@ -2141,14 +2097,8 @@ make[2]: *** [example.o] Error 1
 <span id="cb49-46"><a href="#cb49-46" aria-hidden="true" tabindex="-1"></a><span class="co"> *            +-------+         +-------+</span></span>
 <span id="cb49-47"><a href="#cb49-47" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-0: 4 @ 0x1005eb01c
-1: 2 @ 0x1005eb014
+            <pre><code>0: 4 @ 0x102bca01c
+1: 2 @ 0x102bca014
 2: 0 @ 0x0</code></pre>
             <p>A few interesting things happened here:</p>
             <ol type="1">
@@ -2210,14 +2160,8 @@ make[2]: *** [example.o] Error 1
 <span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-0: 4 @ 0x1044f101c
-1: 2 @ 0x1044f1014
+            <pre><code>0: 4 @ 0x104aad01c
+1: 2 @ 0x104aad014
 2: 0 @ 0x0</code></pre>
             <p>Global variables are either initialized where they are
             defined, or are initialized to <code>0</code>. Note that
@@ -2288,14 +2232,9 @@ make[2]: *** [example.o] Error 1
 <span id="cb53-47"><a href="#cb53-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb53-48"><a href="#cb53-48" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Should find 8 @ 6: 6
-Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
+            <pre><code>0: 4 @ 0x102bc401c
+1: 2 @ 0x102bc4014
+2: 0 @ 0x0</code></pre>
             <p>Key points to realize:</p>
             <ul>
             <li><code>fibs</code> in <code>fib</code> is allocated
@@ -2428,14 +2367,9 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Should find 8 @ 6: 6
-Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
+            <pre><code>0: 4 @ 0x104a6501c
+1: 2 @ 0x104a65014
+2: 0 @ 0x0</code></pre>
             <p>Yikes. We’re getting random values in the array! Where do
             you think these values came from?</p>
             <p><strong>References to stack variables after function
@@ -2477,14 +2411,9 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Should find 8 @ 6: 6
-Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
+            <pre><code>0: 4 @ 0x10274601c
+1: 2 @ 0x102746014
+2: 0 @ 0x0</code></pre>
             <p>You can see a few interesting facts from the output.</p>
             <ol type="1">
             <li>The value referenced by <code>*ptr</code> after
@@ -2582,14 +2511,7 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <span id="cb64-62"><a href="#cb64-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb64-63"><a href="#cb64-63" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Should find 8 @ 6: 6
-Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
+            <pre><code>42 is the secret to everything</code></pre>
             <p>In this program you might notice that we’ve used <em>no
             dynamic memory allocation at all</em>! The cost of this is
             that we had to create a key-value store of only a fixed size
@@ -2677,14 +2599,7 @@ str ---&gt; +---+---+---+---+
 <span id="cb67-16"><a href="#cb67-16" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
 <span id="cb67-17"><a href="#cb67-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Should find 8 @ 6: 6
-Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
+            <pre><code>42 is the secret to everything</code></pre>
             <p>So strings aren’t really all that special in C. They’re
             just arrays with a special terminating character, and a
             little bit of syntax support to construct them
@@ -2758,13 +2673,7 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <span id="cb69-29"><a href="#cb69-29" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\&quot;%s\&quot;</span><span class="st"> has length </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> result<span class="op">,</span> ret<span class="op">);</span></span>
 <span id="cb69-30"><a href="#cb69-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>42 is the secret to everything</code></pre>
             <p>Many of these functions raise an important question: What
             happens if one of the strings is not large enough to hold
             the data being put into it? If you want to
@@ -2816,13 +2725,7 @@ make[2]: *** [example.o] Error 1
 <span id="cb71-33"><a href="#cb71-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb71-34"><a href="#cb71-34" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>42 is the secret to everything</code></pre>
             <h4 data-number="3.2.1.2" id="parsing-strings"><span
             class="header-section-number">3.2.1.2</span> Parsing
             Strings</h4>
@@ -2914,13 +2817,7 @@ make[2]: *** [example.o] Error 1
 <span id="cb73-37"><a href="#cb73-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb73-38"><a href="#cb73-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>42 is the secret to everything</code></pre>
             <h3 data-number="3.2.2" id="bonus-explicit-strings"><span
             class="header-section-number">3.2.2</span> Bonus: Explicit
             Strings</h3>
@@ -2949,13 +2846,7 @@ make[2]: *** [example.o] Error 1
 <span id="cb75-18"><a href="#cb75-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb75-19"><a href="#cb75-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>42 is the secret to everything</code></pre>
             <p>The C compiler and linker are smart enough to see that if
             you have already used a string with a specific value (in
             this case <code>"clone"</code>), it will avoid allocating a
@@ -3106,13 +2997,7 @@ make[2]: *** [example.o] Error 1
 <span id="cb77-119"><a href="#cb77-119" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb77-120"><a href="#cb77-120" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>42 is the secret to everything</code></pre>
             <h3 data-number="3.3.2" id="errors"><span
             class="header-section-number">3.3.2</span> Errors</h3>
             <p>The first question is how we can detect that some error
@@ -3194,16 +3079,7 @@ ENOSPC 28 No space left on device</code></pre>
 <span id="cb81-22"><a href="#cb81-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb81-23"><a href="#cb81-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Lets get greedy: allocate 9223372036854775807 bytes!
-Error: errno value 12 and description: Cannot allocate memory
-Error allocating memory: Cannot allocate memory
-make[1]: *** [inline_exec] Error 255</code></pre>
+            <pre><code>42 is the secret to everything</code></pre>
             <p>(Note: when you return from a program with a non-zero
             value, it designates that your <em>program</em> had an
             error. This is why we see the <code>make</code> error when
@@ -3430,16 +3306,11 @@ ERRORS
 <span id="cb85-102"><a href="#cb85-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb85-103"><a href="#cb85-103" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
+            <pre><code>inline_exec_tmp.c:2:10: fatal error: &#39;malloc.h&#39; file not found
 #include &lt;malloc.h&gt;
          ^~~~~~~~~~
 1 error generated.
-make[2]: *** [example.o] Error 1
-Lets get greedy: allocate 9223372036854775807 bytes!
-Error: errno value 12 and description: Cannot allocate memory
-Error allocating memory: Cannot allocate memory
-make[1]: *** [inline_exec] Error 255</code></pre>
+make[1]: *** [inline_exec_tmp] Error 1</code></pre>
             <p>The above code is hopelessly broken. Run it in valgrind
             to see.</p>
             <p><strong>Tasks:</strong></p>
@@ -3637,16 +3508,16 @@ make[1]: *** [inline_exec] Error 255</code></pre>
 <span id="cb88-15"><a href="#cb88-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb88-16"><a href="#cb88-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Lets get greedy: allocate 9223372036854775807 bytes!
-Error: errno value 12 and description: Cannot allocate memory
-Error allocating memory: Cannot allocate memory
-make[1]: *** [inline_exec] Error 255</code></pre>
+            <pre><code>pre-fork:
+     parent pid 84867
+post-fork:
+    returned 84869,
+    current pid 84867
+    parent pid 84855
+post-fork:
+    returned 0,
+    current pid 84869
+    parent pid 84867</code></pre>
             <p>We can see the <code>fork</code> creates a new process
             that continues running the same code, but has a separate set
             of memory. A few observations:</p>
@@ -3775,16 +3646,16 @@ make[1]: *** [inline_exec] Error 255</code></pre>
 <span id="cb90-35"><a href="#cb90-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb90-36"><a href="#cb90-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Lets get greedy: allocate 9223372036854775807 bytes!
-Error: errno value 12 and description: Cannot allocate memory
-Error allocating memory: Cannot allocate memory
-make[1]: *** [inline_exec] Error 255</code></pre>
+            <pre><code>pre-fork:
+     parent pid 84879
+post-fork:
+    returned 84880,
+    current pid 84879
+    parent pid 84875
+post-fork:
+    returned 0,
+    current pid 84880
+    parent pid 84879</code></pre>
             <h3 data-number="4.2.2"
             id="non-determinism-everywhere-concurrency"><span
             class="header-section-number">4.2.2</span> Non-determinism
@@ -3910,11 +3781,16 @@ Child 4579 exited with exit status 0</code></pre>
 <span id="cb97-22"><a href="#cb97-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb97-23"><a href="#cb97-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:16:2: error: call to undeclared function &#39;on_exit&#39;; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-        on_exit(destructor, &amp;value); /* `value` will get passed to the function */
-        ^
-1 error generated.
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+            <pre><code>pre-fork:
+     parent pid 84890
+post-fork:
+    returned 84891,
+    current pid 84890
+    parent pid 84886
+post-fork:
+    returned 0,
+    current pid 84891
+    parent pid 84890</code></pre>
             <h3 data-number="4.2.4" id="fork-questions"><span
             class="header-section-number">4.2.4</span> <code>fork</code>
             Questions</h3>
@@ -4064,14 +3940,16 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb101-35"><a href="#cb101-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb101-36"><a href="#cb101-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-hello world!
-Parent: status 42</code></pre>
+            <pre><code>pre-fork:
+     parent pid 84901
+post-fork:
+    returned 84902,
+    current pid 84901
+    parent pid 84897
+post-fork:
+    returned 0,
+    current pid 84902
+    parent pid 84901</code></pre>
             <h2 data-number="4.4" id="command-line-arguments"><span
             class="header-section-number">4.4</span> Command Line
             Arguments</h2>
@@ -4120,14 +3998,16 @@ Parent: status 42</code></pre>
 <span id="cb104-23"><a href="#cb104-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb104-24"><a href="#cb104-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-hello world!
-Parent: status 42</code></pre>
+            <pre><code>pre-fork:
+     parent pid 84912
+post-fork:
+    returned 84913,
+    current pid 84912
+    parent pid 84908
+post-fork:
+    returned 0,
+    current pid 84913
+    parent pid 84912</code></pre>
             <p><code>args1.c</code> is</p>
             <div class="sourceCode" id="cb106"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
@@ -4283,14 +4163,16 @@ penny</code></pre>
 <span id="cb109-15"><a href="#cb109-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb109-16"><a href="#cb109-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-hello world!
-Parent: status 42</code></pre>
+            <pre><code>pre-fork:
+     parent pid 84923
+post-fork:
+    returned 84924,
+    current pid 84923
+    parent pid 84919
+post-fork:
+    returned 0,
+    current pid 84924
+    parent pid 84923</code></pre>
             <p>You can see all of the environmental variables available
             by default with:</p>
             <pre><code>$ env
@@ -4342,14 +4224,8 @@ DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 <span id="cb112-34"><a href="#cb112-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb112-35"><a href="#cb112-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-hello world!
-Parent: status 42</code></pre>
+            <pre><code>user: sibin
+user (forked child): penny</code></pre>
             <p><code>03/envtest.c</code> is</p>
             <div class="sourceCode" id="cb114"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
@@ -4644,14 +4520,9 @@ Environment variable BESTPUP -&gt; penny</code></pre>
 <span id="cb122-23"><a href="#cb122-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb122-24"><a href="#cb122-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Current directory: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023/online_git_text
-New current dir: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023</code></pre>
+            <pre><code>user: sibin
+user (forked child): penny
+Environment variable USER -&gt; penny</code></pre>
             <p>The <code>cd</code> command in shells is actually <em>not
             a program</em>, and is instead a shell-internal function.
             You can confirm this using the <code>which</code> program,
@@ -4782,14 +4653,9 @@ $</code></pre>
 <span id="cb125-46"><a href="#cb125-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb125-47"><a href="#cb125-47" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Current directory: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023/online_git_text
-New current dir: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023</code></pre>
+            <pre><code>user: sibin
+user (forked child): penny
+Environment variable USER -&gt; penny</code></pre>
             <p>You can run this, and redirect the standard error to a
             file to see that writing to standard error is a different
             operation than writing to standard output. For example:
@@ -4847,14 +4713,9 @@ New current dir: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS
 <span id="cb127-39"><a href="#cb127-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb127-40"><a href="#cb127-40" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Current directory: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023/online_git_text
-New current dir: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023</code></pre>
+            <pre><code>user: sibin
+user (forked child): penny
+Environment variable USER -&gt; penny</code></pre>
             <p>It is common to have a convention on how channel data is
             structured. UNIX pipeline encourage channels to be plain
             text, so that each program can read from their standard
@@ -4958,14 +4819,9 @@ New current dir: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS
 <span id="cb130-54"><a href="#cb130-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb130-55"><a href="#cb130-55" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Current directory: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023/online_git_text
-New current dir: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023</code></pre>
+            <pre><code>user: sibin
+user (forked child): penny
+Environment variable USER -&gt; penny</code></pre>
             <p>Pipes are really quite a bit more useful when they are
             used to coordinate between separate processes. Thus, lets
             combine them with <code>fork</code>:</p>
@@ -5030,13 +4886,7 @@ New current dir: /Users/sibin/Documents/Documents/Teaching/SystemsProgramming-CS
 <span id="cb132-58"><a href="#cb132-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb132-59"><a href="#cb132-59" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Child sent whole message!
+            <pre><code>Child sent whole message!
 Parent got the message!</code></pre>
             <p>The <em>concurrency</em> of the system enables separate
             processes to be active at the same time, thus for the
@@ -5152,13 +5002,7 @@ Parent got the message!</code></pre>
 <span id="cb134-58"><a href="#cb134-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb134-59"><a href="#cb134-59" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Child sent whole message!
+            <pre><code>Child sent whole message!
 Parent got the message!</code></pre>
             <p><strong>Closing pipes.</strong> <code>read</code>ing from
             a pipe will return that there is no more data on the pipe
@@ -5267,13 +5111,7 @@ Parent got the message!</code></pre>
 <span id="cb136-43"><a href="#cb136-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb136-44"><a href="#cb136-44" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Child sent whole message!
+            <pre><code>Child sent whole message!
 Parent got the message!</code></pre>
             <p>This is kind-of crazy. We can actually execute in the
             signal handler when we access invalid memory! We can write
@@ -5399,13 +5237,7 @@ Parent got the message!</code></pre>
 <span id="cb138-52"><a href="#cb138-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb138-53"><a href="#cb138-53" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Child sent whole message!
+            <pre><code>Child sent whole message!
 Parent got the message!</code></pre>
             <p><strong>Question</strong>: Track and explain the control
             flow through this program.</p>
@@ -5512,13 +5344,7 @@ Parent got the message!</code></pre>
 <span id="cb140-86"><a href="#cb140-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb140-87"><a href="#cb140-87" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Child sent whole message!
+            <pre><code>Child sent whole message!
 Parent got the message!</code></pre>
             <p><em>Note:</em> You want to run this a few times on your
             system to see the output. The auto-execution scripts of the
@@ -5666,13 +5492,7 @@ Parent got the message!</code></pre>
 <span id="cb142-71"><a href="#cb142-71" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb142-72"><a href="#cb142-72" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Alarm signal handler
+            <pre><code>Alarm signal handler
 Wait call interrupted by signal!
 Child has exited.</code></pre>
             <p><strong>Re-entrant computations.</strong> Signal handlers
@@ -5745,13 +5565,7 @@ Child has exited.</code></pre>
 <span id="cb144-51"><a href="#cb144-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb144-52"><a href="#cb144-52" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
             <p>The set of functions you <em>can</em> call in a signal
             handler (i.e. that are <em>re-entrant</em>) are listed in
             the manual page: <code>man 7 signal-safety</code>. Notably
@@ -5917,29 +5731,7 @@ errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined e
 <span id="cb146-36"><a href="#cb146-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb146-37"><a href="#cb146-37" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:23:80: warning: format specifies type &#39;long&#39; but the argument has type &#39;off_t&#39; (aka &#39;long long&#39;) [-Wformat]
-        printf(&quot;We want to say %ld things...but the world doesn&#39;t value artistry.\n&quot;, finfo.st_size);
-                               ~~~                                                    ^~~~~~~~~~~~~
-                               %lld
-1 warning generated.
-gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-We want to say 6044 things...but the world doesn&#39;t value artistry.
-Lets cut down to 280 characters and tweet like it is 1915...
-
- The Love Song of J. Alfred Prufrock
- T.S. Elliot
-
-S’io credesse che mia risposta fosse
-A persona che mai tornasse al mondo,
-Questa fiamma staria senza piu scosse.
-Ma percioche giammai di questo fondo
-Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo</code></pre>
+            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
             <blockquote>
             <p>It is <em>really</em> important that quite a few
             interesting functions operate on <em>descriptors</em>, which
@@ -6047,24 +5839,7 @@ Senza tema d’infamia ti rispondo</code></pre>
 <span id="cb151-34"><a href="#cb151-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb151-35"><a href="#cb151-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-We want to say 6044 things...but the world doesn&#39;t value artistry.
-Lets cut down to 280 characters and tweet like it is 1915...
-
- The Love Song of J. Alfred Prufrock
- T.S. Elliot
-
-S’io credesse che mia risposta fosse
-A persona che mai tornasse al mondo,
-Questa fiamma staria senza piu scosse.
-Ma percioche giammai di questo fondo
-Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo</code></pre>
+            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
             <h2 data-number="6.2" id="mapping-files"><span
             class="header-section-number">6.2</span> Mapping Files</h2>
             <p>It is very common to access files with <code>read</code>
@@ -6150,16 +5925,7 @@ Senza tema d’infamia ti rispondo</code></pre>
 <span id="cb153-34"><a href="#cb153-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb153-35"><a href="#cb153-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-We want to say 6044 things...but the world doesn&#39;t value artistry.
-Lets cut down to 280 characters and tweet like it is 1915...
-
- The Love Song of J. Alfred Prufrock
+            <pre><code> The Love Song of J. Alfred Prufrock
  T.S. Elliot
 
 S’io credesse che mia risposta fosse
@@ -6167,7 +5933,16 @@ A persona che mai tornasse al mondo,
 Questa fiamma staria senza piu scosse.
 Ma percioche giammai di questo fondo
 Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo</code></pre>
+Senza tema d’infamia ti rispondo.
+
+Let us go then, you and I,
+When the evening is spread out against the sky
+Like a patient etherized upon a table;
+Let us go, through certain half-deserted streets,
+The muttering retreats
+Of restless nights in one-night cheap hotels
+And sawdust restaurants with oyster-shells:
+St</code></pre>
             <p>Note that you cannot <code>mmap</code> a
             <code>pipe</code> or terminal, only files. This kinda makes
             sense: since a pipe holds <em>transient</em> data that is
@@ -6258,16 +6033,7 @@ Senza tema d’infamia ti rispondo</code></pre>
 <span id="cb155-24"><a href="#cb155-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb155-25"><a href="#cb155-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-We want to say 6044 things...but the world doesn&#39;t value artistry.
-Lets cut down to 280 characters and tweet like it is 1915...
-
- The Love Song of J. Alfred Prufrock
+            <pre><code> The Love Song of J. Alfred Prufrock
  T.S. Elliot
 
 S’io credesse che mia risposta fosse
@@ -6275,7 +6041,16 @@ A persona che mai tornasse al mondo,
 Questa fiamma staria senza piu scosse.
 Ma percioche giammai di questo fondo
 Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo</code></pre>
+Senza tema d’infamia ti rispondo.
+
+Let us go then, you and I,
+When the evening is spread out against the sky
+Like a patient etherized upon a table;
+Let us go, through certain half-deserted streets,
+The muttering retreats
+Of restless nights in one-night cheap hotels
+And sawdust restaurants with oyster-shells:
+St</code></pre>
             <p><strong>Streams as buffered I/O.</strong> So it doesn’t
             seem like we’re getting much of use out of these streams
             compared to raw descriptors. Streams are an optimization
@@ -6306,16 +6081,7 @@ Senza tema d’infamia ti rispondo</code></pre>
 <span id="cb157-11"><a href="#cb157-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb157-12"><a href="#cb157-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-We want to say 6044 things...but the world doesn&#39;t value artistry.
-Lets cut down to 280 characters and tweet like it is 1915...
-
- The Love Song of J. Alfred Prufrock
+            <pre><code> The Love Song of J. Alfred Prufrock
  T.S. Elliot
 
 S’io credesse che mia risposta fosse
@@ -6323,7 +6089,16 @@ A persona che mai tornasse al mondo,
 Questa fiamma staria senza piu scosse.
 Ma percioche giammai di questo fondo
 Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo</code></pre>
+Senza tema d’infamia ti rispondo.
+
+Let us go then, you and I,
+When the evening is spread out against the sky
+Like a patient etherized upon a table;
+Let us go, through certain half-deserted streets,
+The muttering retreats
+Of restless nights in one-night cheap hotels
+And sawdust restaurants with oyster-shells:
+St</code></pre>
             <p><code>_exit</code> exits from the process
             <em>immediately</em>, and without invoking any
             <code>atexit</code> functions. Flushing the
@@ -6343,14 +6118,24 @@ Senza tema d’infamia ti rispondo</code></pre>
 <span id="cb159-11"><a href="#cb159-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb159-12"><a href="#cb159-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-hello world
-hello world</code></pre>
+            <pre><code> The Love Song of J. Alfred Prufrock
+ T.S. Elliot
+
+S’io credesse che mia risposta fosse
+A persona che mai tornasse al mondo,
+Questa fiamma staria senza piu scosse.
+Ma percioche giammai di questo fondo
+Non torno vivo alcun, s’i’odo il vero,
+Senza tema d’infamia ti rispondo.
+
+Let us go then, you and I,
+When the evening is spread out against the sky
+Like a patient etherized upon a table;
+Let us go, through certain half-deserted streets,
+The muttering retreats
+Of restless nights in one-night cheap hotels
+And sawdust restaurants with oyster-shells:
+St</code></pre>
             <p>Well that’s not good. The <em>buffered data</em> is
             copied into each process, then it is output when a
             <code>\n</code> is encountered.</p>
@@ -6369,14 +6154,24 @@ hello world</code></pre>
 <span id="cb161-12"><a href="#cb161-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb161-13"><a href="#cb161-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-hello world
-hello world</code></pre>
+            <pre><code> The Love Song of J. Alfred Prufrock
+ T.S. Elliot
+
+S’io credesse che mia risposta fosse
+A persona che mai tornasse al mondo,
+Questa fiamma staria senza piu scosse.
+Ma percioche giammai di questo fondo
+Non torno vivo alcun, s’i’odo il vero,
+Senza tema d’infamia ti rispondo.
+
+Let us go then, you and I,
+When the evening is spread out against the sky
+Like a patient etherized upon a table;
+Let us go, through certain half-deserted streets,
+The muttering retreats
+Of restless nights in one-night cheap hotels
+And sawdust restaurants with oyster-shells:
+St</code></pre>
             <p>Both <code>printf</code> and the <code>write</code> are
             to standard output, but <code>printf</code> is to a stream.
             The <em>buffered</em> <code>printf</code> output is not
@@ -6400,14 +6195,24 @@ hello world</code></pre>
 <span id="cb163-13"><a href="#cb163-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb163-14"><a href="#cb163-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-hello world
-hello world</code></pre>
+            <pre><code> The Love Song of J. Alfred Prufrock
+ T.S. Elliot
+
+S’io credesse che mia risposta fosse
+A persona che mai tornasse al mondo,
+Questa fiamma staria senza piu scosse.
+Ma percioche giammai di questo fondo
+Non torno vivo alcun, s’i’odo il vero,
+Senza tema d’infamia ti rispondo.
+
+Let us go then, you and I,
+When the evening is spread out against the sky
+Like a patient etherized upon a table;
+Let us go, through certain half-deserted streets,
+The muttering retreats
+Of restless nights in one-night cheap hotels
+And sawdust restaurants with oyster-shells:
+St</code></pre>
             <p>Even though we fault <em>after</em> the
             <code>printf</code>, we don’t see the <code>printf</code>’s
             output! We now know why: the <code>printf</code> wrote into
@@ -6444,13 +6249,7 @@ hello world</code></pre>
 <span id="cb165-17"><a href="#cb165-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb165-18"><a href="#cb165-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-hello world
+            <pre><code>hello world 
 hello world</code></pre>
             <div class="sourceCode" id="cb167"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
@@ -6467,13 +6266,7 @@ hello world</code></pre>
 <span id="cb167-12"><a href="#cb167-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb167-13"><a href="#cb167-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-hello world
+            <pre><code>hello world 
 hello world</code></pre>
             <p>A few other functions for streams that can be useful:</p>
             <ul>
@@ -6518,25 +6311,8 @@ hello world</code></pre>
 <span id="cb169-29"><a href="#cb169-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb169-30"><a href="#cb169-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-The new genre: abridged, tweet-worthy poetry...
-
- The Love Song of J. Alfred Prufrock
-Of restless nights in one-night cheap hotels
-Let fall upon its back the soot that falls from chimneys,
-And for a hundred visions and revisions,
-Disturb the universe?
-Then how should I begin
-Of lonely men in shirt-sleeves, leaning out of windows? ...
-And I have seen the eternal Footman hold my coat, and snicker,
-
-Am an attendant lord, one that will do
-</code></pre>
+            <pre><code>hello world 
+hello world</code></pre>
             <h2 data-number="6.4" id="accessing-directories"><span
             class="header-section-number">6.4</span> Accessing
             Directories</h2>
@@ -6645,25 +6421,8 @@ Am an attendant lord, one that will do
 <span id="cb171-56"><a href="#cb171-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> finfo<span class="op">.</span>st_size<span class="op">;</span></span>
 <span id="cb171-57"><a href="#cb171-57" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-The new genre: abridged, tweet-worthy poetry...
-
- The Love Song of J. Alfred Prufrock
-Of restless nights in one-night cheap hotels
-Let fall upon its back the soot that falls from chimneys,
-And for a hundred visions and revisions,
-Disturb the universe?
-Then how should I begin
-Of lonely men in shirt-sleeves, leaning out of windows? ...
-And I have seen the eternal Footman hold my coat, and snicker,
-
-Am an attendant lord, one that will do
-</code></pre>
+            <pre><code>hello world 
+hello world</code></pre>
             <p>To make <em>changes</em> in the first system hierarchy,
             we need an additional set of functions.</p>
             <ul>
@@ -6716,25 +6475,8 @@ Am an attendant lord, one that will do
 <span id="cb173-34"><a href="#cb173-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb173-35"><a href="#cb173-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-The new genre: abridged, tweet-worthy poetry...
-
- The Love Song of J. Alfred Prufrock
-Of restless nights in one-night cheap hotels
-Let fall upon its back the soot that falls from chimneys,
-And for a hundred visions and revisions,
-Disturb the universe?
-Then how should I begin
-Of lonely men in shirt-sleeves, leaning out of windows? ...
-And I have seen the eternal Footman hold my coat, and snicker,
-
-Am an attendant lord, one that will do
-</code></pre>
+            <pre><code>hello world 
+hello world</code></pre>
             <h2 data-number="6.5" id="exercises-2"><span
             class="header-section-number">6.5</span> Exercises</h2>
             <p>Write a <code>tree</code> clone, with disk usage
@@ -6855,25 +6597,8 @@ Am an attendant lord, one that will do
 <span id="cb177-87"><a href="#cb177-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> finfo<span class="op">.</span>st_size<span class="op">;</span></span>
 <span id="cb177-88"><a href="#cb177-88" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-The new genre: abridged, tweet-worthy poetry...
-
- The Love Song of J. Alfred Prufrock
-Of restless nights in one-night cheap hotels
-Let fall upon its back the soot that falls from chimneys,
-And for a hundred visions and revisions,
-Disturb the universe?
-Then how should I begin
-Of lonely men in shirt-sleeves, leaning out of windows? ...
-And I have seen the eternal Footman hold my coat, and snicker,
-
-Am an attendant lord, one that will do
-</code></pre>
+            <pre><code>hello world 
+hello world</code></pre>
             <h3 data-number="6.5.2"
             id="task-2-file-and-directory-sizes"><span
             class="header-section-number">6.5.2</span> Task 2: File and
@@ -7146,14 +6871,8 @@ Am an attendant lord, one that will do
 <span id="cb183-53"><a href="#cb183-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb183-54"><a href="#cb183-54" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-msg1: 
-msg2: </code></pre>
+            <pre><code>hello world 
+hello world</code></pre>
             <p>You can see that there are some problems here. If we run
             it many times, we can see that sometimes we don’t see any
             messages, sometimes we only see the first, sometimes we only
@@ -7276,14 +6995,7 @@ msg2: </code></pre>
 <span id="cb185-59"><a href="#cb185-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb185-60"><a href="#cb185-60" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-msg1: 
-msg2: </code></pre>
+            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
             <p>There is one very awkward named pipe behavior. Processes
             attempting to <code>open</code> a named pipe will block (the
             <code>open</code> will not return) until processes have
@@ -7414,14 +7126,7 @@ msg2: </code></pre>
 <span id="cb187-105"><a href="#cb187-105" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb187-106"><a href="#cb187-106" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-msg1: 
-msg2: </code></pre>
+            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
             <p>If executed many times, you see the expected result:</p>
             <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -7664,14 +7369,7 @@ msg2: </code></pre>
 <span id="cb191-101"><a href="#cb191-101" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb191-102"><a href="#cb191-102" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-msg1: 
-msg2: </code></pre>
+            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
             <p>The server’s call to <code>accept</code> is the key
             difference of domain sockets from named pipes. It enables us
             to have per-client descriptors we can use to separately
@@ -9408,14 +9106,7 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <span id="cb231-29"><a href="#cb231-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb231-30"><a href="#cb231-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-msg1: 
-msg2: </code></pre>
+            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
             <p>As <code>dlsym</code> returns a pointer to the symbol
             passed in (as a string), it means that you end up seeing a
             <em>lot</em> of function pointers when you’re using plugin
@@ -9447,13 +9138,7 @@ msg2: </code></pre>
 <span id="cb233-20"><a href="#cb233-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb233-21"><a href="#cb233-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Look at me! Diving into your dynamic libraries...pulling out the symbols</code></pre>
+            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
             <p>Though this example doesn’t have much of a point, as we
             can directly call <code>write</code>, thus have to go
             through the symbol we retrieved from <code>dlsym</code>, See
@@ -9697,13 +9382,7 @@ free(0x55fe6cd492a0)
 <span id="cb238-8"><a href="#cb238-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb238-9"><a href="#cb238-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Look at me! Diving into your dynamic libraries...pulling out the symbols</code></pre>
+            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
             <p>The C standard library even provides you a “generic” way
             to invoke <em>any</em> system call. The <code>syscall</code>
             function lets you make an integer-identified system call.
@@ -9721,13 +9400,7 @@ Look at me! Diving into your dynamic libraries...pulling out the symbols</code><
 <span id="cb240-9"><a href="#cb240-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb240-10"><a href="#cb240-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Look at me! Diving into your dynamic libraries...pulling out the symbols</code></pre>
+            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
             <p>Lets look at a few of these integer values to see what’s
             happening here:</p>
             <div class="sourceCode" id="cb242"><pre
@@ -9743,13 +9416,7 @@ Look at me! Diving into your dynamic libraries...pulling out the symbols</code><
 <span id="cb242-10"><a href="#cb242-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb242-11"><a href="#cb242-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-Look at me! Diving into your dynamic libraries...pulling out the symbols</code></pre>
+            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
             <p>Note, these integer values are <em>not</em> related to
             descriptors (e.g. <code>STDIN_FILENO == 0</code>). The
             system calls in Linux (and in all operating systems!) are
@@ -9962,16 +9629,10 @@ exit_group(0)                           = ?
 <span id="cb249-37"><a href="#cb249-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb249-38"><a href="#cb249-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
+            <pre><code>
+malloc + free overhead (cycles): 150
 
-malloc + free overhead (cycles): 153
-
-mmap + munmap overhead (cycles): 2791</code></pre>
+mmap + munmap overhead (cycles): 2845</code></pre>
             <blockquote>
             <p>What is a “cycle”? When you read that you have a 3GHz,
             that essentially says that the internal “clock” that drives
@@ -10031,16 +9692,10 @@ mmap + munmap overhead (cycles): 2791</code></pre>
 <span id="cb251-35"><a href="#cb251-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb251-36"><a href="#cb251-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
+            <pre><code>
+malloc + free overhead (cycles): 124
 
-malloc + free overhead (cycles): 125
-
-mmap + munmap overhead (cycles): 2436</code></pre>
+mmap + munmap overhead (cycles): 2414</code></pre>
             <h2 data-number="11.4"
             id="library-vs.-kernel-trade-offs-in-memory-allocation"><span
             class="header-section-number">11.4</span> Library vs. Kernel
@@ -10555,16 +10210,10 @@ chown: changing ownership of &#39;helloworld.bin&#39;: Operation not permitted</
 <span id="cb269-16"><a href="#cb269-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb269-17"><a href="#cb269-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-example.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[2]: *** [example.o] Error 1
-
+            <pre><code>
 malloc + free overhead (cycles): 124
 
-mmap + munmap overhead (cycles): 2518</code></pre>
+mmap + munmap overhead (cycles): 2398</code></pre>
             <p>Every user has different identifiers as does each group.
             If another user where to run the same program, they’d get a
             different value.</p>
