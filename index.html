@@ -941,11 +941,11 @@ Programming</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:6:7: error: variable has incomplete type &#39;void&#39;
-        void a;
-             ^
-1 error generated.
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+            <pre><code>inline_exec_tmp.c: In function main:
+inline_exec_tmp.c:6:14: error: variable or field a declared void
+    6 |         void a;
+      |              ^
+make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
             <ul>
             <li><code>enum</code> - an <code>int</code> or
             <code>short int</code> with some “named” values.</li>
@@ -965,21 +965,7 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>gcc -Wall -Wextra -fpic -I. -c -o example.o example.c
-gcc -Wall -Wextra -fpic -I. -c -o example2.o example2.c
-gcc -Wall -Wextra -fpic -I. -c -o example2b.o example2b.c
-gcc -o prog_naive prog.o example.o example2.o example2b.o
-gcc -Wall -Wextra -I. -c -o prog2.o prog2.c
-gcc -o prog2_naive prog2.o example.o example2.o example2b.o
-ar -crs libexample.a example.o
-ar -crs libexample2.a example2.o example2b.o
-gcc -o prog_static prog.o -L. -lexample -lexample2
-gcc -o prog2_static prog2.o -L. -lexample -lexample2
-gcc -shared -o libexample.so example.o
-gcc -shared -o libexample2.so example2.o example2b.o
-gcc -o prog_dynamic prog.o -L. -lexample -lexample2
-gcc -o prog2_dynamic prog2.o -L. -lexample -lexample2
-MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
             <p>You can choose the values explicitly
             (e.g. <code>enum grades { MON = 1, TUES = 2, WED = 3, THURS = 4, FRI = 5};</code>).</p>
             <p><strong>Modifiers</strong></p>
@@ -1141,10 +1127,9 @@ long:   8</code></pre>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>char:   1
-short:  2
-int:    4
-long:   8</code></pre>
+            <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
+Hex and pointers: 7fffffffffffffff, 0x557711f26149
+Strings: hello world</code></pre>
             <h3 data-number="2.2.4" id="compound-types-1"><span
             class="header-section-number">2.2.4</span> Compound
             types</h3>
@@ -1202,10 +1187,8 @@ long:   8</code></pre>
 <span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>char:   1
-short:  2
-int:    4
-long:   8</code></pre>
+            <pre><code>Size of union:  12
+Size of struct: 16</code></pre>
             <p>We can see the effect of the <code>union</code>: The size
             is <code>max(fields)</code> rather than
             <code>sum(fields)</code>. What other examples can you think
@@ -1279,10 +1262,8 @@ long:   8</code></pre>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> value <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>char:   1
-short:  2
-int:    4
-long:   8</code></pre>
+            <pre><code>value is initialized to 0
+value updated to 1</code></pre>
             <p>Pointers are <em>necessary</em> as they enable us to
             build <em>linked</em> data-structures (linked-lists, binary
             trees, etc…). Languages such as Java assume that <em>every
@@ -1312,10 +1293,8 @@ long:   8</code></pre>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>char:   1
-short:  2
-int:    4
-long:   8</code></pre>
+            <pre><code>0th index: 0x7ffe99e49e90 == 0x7ffe99e49e90; 6 == 6
+nth index: 0x7ffe99e49e94 == 0x7ffe99e49e94; 7 == 7</code></pre>
             <p>Making this a little more clear, lets understand how C
             accesses the <code>n</code>th item. Lets make a pointer
             <code>int *p = a + 1</code> (we’ll just simply and assume
@@ -1344,10 +1323,7 @@ a ---&gt; +---+---+---+---+
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>char:   1
-short:  2
-int:    4
-long:   8</code></pre>
+            <pre><code>nth index: 0x7ffc18c2e404 == 0x7ffc18c2e404; 7 == 7</code></pre>
             <p>We can see that <em>pointer arithmetic</em> (i.e. doing
             addition/subtraction on pointers) does the same thing as
             array indexing plus a dereference. That is,
@@ -1381,10 +1357,10 @@ long:   8</code></pre>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>char:   1
-short:  2
-int:    4
-long:   8</code></pre>
+            <pre><code>idx 0 @ 0x7ffc89f78330 &amp; 0x7ffc89f78344
+idx 1 @ 0x7ffc89f78334 &amp; 0x7ffc89f78345
+idx 2 @ 0x7ffc89f78338 &amp; 0x7ffc89f78346
+idx 3 @ 0x7ffc89f7833c &amp; 0x7ffc89f78347</code></pre>
             <p>Note that the pointer for the integer array
             (<code>a</code>) is being incremented by 4, while the
             character array (<code>b</code>) by 1. Focusing on the key
@@ -1444,10 +1420,8 @@ Adds 1 -----------+</code></pre>
 <span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>char:   1
-short:  2
-int:    4
-long:   8</code></pre>
+            <pre><code>Penny
+Gabe</code></pre>
             <h4 data-number="2.2.5.2" id="generic-pointer-types"><span
             class="header-section-number">2.2.5.2</span> Generic Pointer
             Types</h4>
@@ -1495,11 +1469,7 @@ long:   8</code></pre>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>intptr<span class="op">;</span></span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:1:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+            <pre><code></code></pre>
             <p>Data-structures often aim to store data of any type
             (think: a linked list of anything). Thus, in C, you often
             see <code>void *</code>s to reference the data they
@@ -1584,11 +1554,7 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:1:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+            <pre><code></code></pre>
             <ul>
             <li><em>Dangling pointer.</em> If you maintain a pointer to
             a chunk of memory that you <code>free</code>, and then
@@ -1613,11 +1579,7 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>a<span class="op">;</span></span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:1:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+            <pre><code>make[1]: *** [Makefile:30: inline_exec] Error 240</code></pre>
             <ul>
             <li><em>Memory leaks.</em> If you remove all references to
             memory, but <em>don’t</em> <code>free</code> it, then the
@@ -1638,11 +1600,7 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:1:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+            <pre><code></code></pre>
             <ul>
             <li><em>Double <code>free</code>.</em> If you
             <code>free</code> the memory twice, bad things can happen.
@@ -1665,11 +1623,8 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:1:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+            <pre><code>free(): double free detected in tcache 2
+make[1]: *** [Makefile:30: inline_exec] Aborted (core dumped)</code></pre>
             <p><code>valgrind</code> will help you debug the last three
             of these issues, and later in the class, we’ll develop a
             library to help debug the first.</p>
@@ -1773,18 +1728,18 @@ void *lfind(const void *key, const void *base, size_t *nmemb, size_t size, compa
 <span id="cb42-51"><a href="#cb42-51" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
             <pre><code>Addresses:
-a   @ 0x10266a000
-b   @ 0x10266a004
-c   @ 0x10266a008
-end @ 0x10266a020
-&amp;end - &amp;a = 32
+a   @ 0x564afee5f010
+b   @ 0x564afee5f014
+c   @ 0x564afee5f020
+end @ 0x564afee5f039
+&amp;end - &amp;a = 41
 
 Initial values:
 a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x10266a004
+c.c_c = 0x564afee5f014
 
 Print out the variables as raw memory
 
@@ -1911,9 +1866,9 @@ Post-`memset` values:</code></pre>
 <span id="cb44-77"><a href="#cb44-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb44-78"><a href="#cb44-78" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0: 4 @ 0x102f8301c
-1: 2 @ 0x102f83014
-2: 0 @ 0x0</code></pre>
+            <pre><code>0: 4 @ 0x562517a9a04c
+1: 2 @ 0x562517a9a044
+2: 0 @ (nil)</code></pre>
             <p>You want to implement a simple “key-value” store that is
             very similar in API to a hash-table (many key-value stores
             are implemented using hash-tables!).</p>
@@ -2004,9 +1959,7 @@ Post-`memset` values:</code></pre>
 <span id="cb46-38"><a href="#cb46-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb46-39"><a href="#cb46-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0: 4 @ 0x102a1201c
-1: 2 @ 0x102a12014
-2: 0 @ 0x0</code></pre>
+            <pre><code></code></pre>
             <p>One of the more interesting uses of internal allocation
             is in linked data-structures (e.g. like linked lists). It is
             common in languages like java to implement linked
@@ -2097,9 +2050,7 @@ Post-`memset` values:</code></pre>
 <span id="cb49-46"><a href="#cb49-46" aria-hidden="true" tabindex="-1"></a><span class="co"> *            +-------+         +-------+</span></span>
 <span id="cb49-47"><a href="#cb49-47" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0: 4 @ 0x102bca01c
-1: 2 @ 0x102bca014
-2: 0 @ 0x0</code></pre>
+            <pre><code>student added to list!</code></pre>
             <p>A few interesting things happened here:</p>
             <ol type="1">
             <li>We’re using <code>void *</code> pointers within the
@@ -2160,9 +2111,9 @@ Post-`memset` values:</code></pre>
 <span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0: 4 @ 0x104aad01c
-1: 2 @ 0x104aad014
-2: 0 @ 0x0</code></pre>
+            <pre><code>What is uninitialized global memory set to?
+Integer: 0
+Pointer: (nil) (as hex: 0)</code></pre>
             <p>Global variables are either initialized where they are
             defined, or are initialized to <code>0</code>. Note that
             they are intialized to all <code>0</code>s regardless their
@@ -2232,9 +2183,8 @@ Post-`memset` values:</code></pre>
 <span id="cb53-47"><a href="#cb53-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb53-48"><a href="#cb53-48" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0: 4 @ 0x102bc401c
-1: 2 @ 0x102bc4014
-2: 0 @ 0x0</code></pre>
+            <pre><code>Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>Key points to realize:</p>
             <ul>
             <li><code>fibs</code> in <code>fib</code> is allocated
@@ -2367,9 +2317,18 @@ Post-`memset` values:</code></pre>
 <span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0: 4 @ 0x104a6501c
-1: 2 @ 0x104a65014
-2: 0 @ 0x0</code></pre>
+            <pre><code>0: 0
+1: 0
+2: 0
+3: 0
+4: 0
+5: 0
+6: 0
+7: 0
+8: 0
+9: 0
+10: 0
+11: 0</code></pre>
             <p>Yikes. We’re getting random values in the array! Where do
             you think these values came from?</p>
             <p><strong>References to stack variables after function
@@ -2411,9 +2370,12 @@ Post-`memset` values:</code></pre>
 <span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0: 4 @ 0x10274601c
-1: 2 @ 0x102746014
-2: 0 @ 0x0</code></pre>
+            <pre><code>inline_exec_tmp.c: In function bar:
+inline_exec_tmp.c:10:16: warning: function returns address of local variable [-Wreturn-local-addr]
+   10 |         return &amp;a;            /* Return the address of a local variable. */
+      |                ^~
+Save address of local variable, and dereference it: 42
+make[1]: *** [Makefile:30: inline_exec] Segmentation fault (core dumped)</code></pre>
             <p>You can see a few interesting facts from the output.</p>
             <ol type="1">
             <li>The value referenced by <code>*ptr</code> after
@@ -2599,7 +2561,7 @@ str ---&gt; +---+---+---+---+
 <span id="cb67-16"><a href="#cb67-16" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
 <span id="cb67-17"><a href="#cb67-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>42 is the secret to everything</code></pre>
+            <pre><code>hi!</code></pre>
             <p>So strings aren’t really all that special in C. They’re
             just arrays with a special terminating character, and a
             little bit of syntax support to construct them
@@ -2673,7 +2635,7 @@ str ---&gt; +---+---+---+---+
 <span id="cb69-29"><a href="#cb69-29" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\&quot;%s\&quot;</span><span class="st"> has length </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> result<span class="op">,</span> ret<span class="op">);</span></span>
 <span id="cb69-30"><a href="#cb69-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>42 is the secret to everything</code></pre>
+            <pre><code>&quot;hello world and also 42&quot; has length 23</code></pre>
             <p>Many of these functions raise an important question: What
             happens if one of the strings is not large enough to hold
             the data being put into it? If you want to
@@ -2725,7 +2687,9 @@ str ---&gt; +---+---+---+---+
 <span id="cb71-33"><a href="#cb71-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb71-34"><a href="#cb71-34" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>42 is the secret to everything</code></pre>
+            <pre><code>zzz
+*** stack smashing detected ***: terminated
+make[1]: *** [Makefile:30: inline_exec] Aborted (core dumped)</code></pre>
             <h4 data-number="3.2.1.2" id="parsing-strings"><span
             class="header-section-number">3.2.1.2</span> Parsing
             Strings</h4>
@@ -2817,7 +2781,15 @@ str ---&gt; +---+---+---+---+
 <span id="cb73-37"><a href="#cb73-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb73-38"><a href="#cb73-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>42 is the secret to everything</code></pre>
+            <pre><code>extracted 1, remaining string: &quot; 42 the secret to everything&quot;
+extracted 42, remaining string: &quot; the secret to everything&quot;
+42 and &quot;secret&quot;
+Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
+[1 42 ]
+[e secre]
+[ ]
+[o every]
+[ing]</code></pre>
             <h3 data-number="3.2.2" id="bonus-explicit-strings"><span
             class="header-section-number">3.2.2</span> Bonus: Explicit
             Strings</h3>
@@ -2846,7 +2818,8 @@ str ---&gt; +---+---+---+---+
 <span id="cb75-18"><a href="#cb75-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb75-19"><a href="#cb75-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>42 is the secret to everything</code></pre>
+            <pre><code>blahblahblah
+0x55ac54ff1004 == 0x55ac54ff1004 != 0x55ac54ff3011</code></pre>
             <p>The C compiler and linker are smart enough to see that if
             you have already used a string with a specific value (in
             this case <code>"clone"</code>), it will avoid allocating a
@@ -2997,7 +2970,7 @@ str ---&gt; +---+---+---+---+
 <span id="cb77-119"><a href="#cb77-119" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb77-120"><a href="#cb77-120" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>42 is the secret to everything</code></pre>
+            <pre><code>no errors!</code></pre>
             <h3 data-number="3.3.2" id="errors"><span
             class="header-section-number">3.3.2</span> Errors</h3>
             <p>The first question is how we can detect that some error
@@ -3079,7 +3052,10 @@ ENOSPC 28 No space left on device</code></pre>
 <span id="cb81-22"><a href="#cb81-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb81-23"><a href="#cb81-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>42 is the secret to everything</code></pre>
+            <pre><code>Lets get greedy: allocate 9223372036854775807 bytes!
+Error: errno value 12 and description: Cannot allocate memory
+Error allocating memory: Cannot allocate memory
+make[1]: *** [Makefile:30: inline_exec] Error 255</code></pre>
             <p>(Note: when you return from a program with a non-zero
             value, it designates that your <em>program</em> had an
             error. This is why we see the <code>make</code> error when
@@ -3306,11 +3282,7 @@ ERRORS
 <span id="cb85-102"><a href="#cb85-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb85-103"><a href="#cb85-103" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:2:10: fatal error: &#39;malloc.h&#39; file not found
-#include &lt;malloc.h&gt;
-         ^~~~~~~~~~
-1 error generated.
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+            <pre><code>Looks like success!...but wait till we valgrind; then ;-(</code></pre>
             <p>The above code is hopelessly broken. Run it in valgrind
             to see.</p>
             <p><strong>Tasks:</strong></p>
@@ -3509,15 +3481,15 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb88-16"><a href="#cb88-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
             <pre><code>pre-fork:
-     parent pid 84867
+     parent pid 25586
 post-fork:
-    returned 84869,
-    current pid 84867
-    parent pid 84855
+    returned 25587,
+    current pid 25586
+    parent pid 25577
 post-fork:
     returned 0,
-    current pid 84869
-    parent pid 84867</code></pre>
+    current pid 25587
+    parent pid 25586</code></pre>
             <p>We can see the <code>fork</code> creates a new process
             that continues running the same code, but has a separate set
             of memory. A few observations:</p>
@@ -3646,16 +3618,14 @@ post-fork:
 <span id="cb90-35"><a href="#cb90-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb90-36"><a href="#cb90-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>pre-fork:
-     parent pid 84879
-post-fork:
-    returned 84880,
-    current pid 84879
-    parent pid 84875
-post-fork:
-    returned 0,
-    current pid 84880
-    parent pid 84879</code></pre>
+            <pre><code>Child 25606 exiting with 0
+Child 25607 exiting with -1
+Child 25608 exiting with -2
+Child 25609 exiting with -3
+Child 25606 exited with exit status 0
+Child 25607 exited with exit status -1
+Child 25608 exited with exit status -2
+Child 25609 exited with exit status -3</code></pre>
             <h3 data-number="4.2.2"
             id="non-determinism-everywhere-concurrency"><span
             class="header-section-number">4.2.2</span> Non-determinism
@@ -3781,16 +3751,8 @@ Child 4579 exited with exit status 0</code></pre>
 <span id="cb97-22"><a href="#cb97-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb97-23"><a href="#cb97-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>pre-fork:
-     parent pid 84890
-post-fork:
-    returned 84891,
-    current pid 84890
-    parent pid 84886
-post-fork:
-    returned 0,
-    current pid 84891
-    parent pid 84890</code></pre>
+            <pre><code>pre-exit
+post-exit: status 0, data 1</code></pre>
             <h3 data-number="4.2.4" id="fork-questions"><span
             class="header-section-number">4.2.4</span> <code>fork</code>
             Questions</h3>
@@ -3940,16 +3902,8 @@ post-fork:
 <span id="cb101-35"><a href="#cb101-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb101-36"><a href="#cb101-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>pre-fork:
-     parent pid 84901
-post-fork:
-    returned 84902,
-    current pid 84901
-    parent pid 84897
-post-fork:
-    returned 0,
-    current pid 84902
-    parent pid 84901</code></pre>
+            <pre><code>hello world!
+Parent: status 42</code></pre>
             <h2 data-number="4.4" id="command-line-arguments"><span
             class="header-section-number">4.4</span> Command Line
             Arguments</h2>
@@ -3998,16 +3952,11 @@ post-fork:
 <span id="cb104-23"><a href="#cb104-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb104-24"><a href="#cb104-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>pre-fork:
-     parent pid 84912
-post-fork:
-    returned 84913,
-    current pid 84912
-    parent pid 84908
-post-fork:
-    returned 0,
-    current pid 84913
-    parent pid 84912</code></pre>
+            <pre><code>First program, arg 1: ./inline_exec_tmp
+Inside ./03/args2.bin
+arg 0: ./03/args2.bin
+arg 1: hello
+arg 2: world</code></pre>
             <p><code>args1.c</code> is</p>
             <div class="sourceCode" id="cb106"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
@@ -4163,16 +4112,7 @@ penny</code></pre>
 <span id="cb109-15"><a href="#cb109-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb109-16"><a href="#cb109-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>pre-fork:
-     parent pid 84923
-post-fork:
-    returned 84924,
-    current pid 84923
-    parent pid 84919
-post-fork:
-    returned 0,
-    current pid 84924
-    parent pid 84923</code></pre>
+            <pre><code>I am sibin, and I live in /home/sibin</code></pre>
             <p>You can see all of the environmental variables available
             by default with:</p>
             <pre><code>$ env
@@ -4225,7 +4165,8 @@ DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 <span id="cb112-35"><a href="#cb112-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
             <pre><code>user: sibin
-user (forked child): penny</code></pre>
+user (forked child): penny
+Environment variable USER -&gt; penny</code></pre>
             <p><code>03/envtest.c</code> is</p>
             <div class="sourceCode" id="cb114"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
@@ -4520,9 +4461,8 @@ Environment variable BESTPUP -&gt; penny</code></pre>
 <span id="cb122-23"><a href="#cb122-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb122-24"><a href="#cb122-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>Current directory: /home/sibin/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023/gwu-cs-sysprog-latex_lectures
+New current dir: /home/sibin/Documents/Teaching/SystemsProgramming-CS2410-Fall_2023</code></pre>
             <p>The <code>cd</code> command in shells is actually <em>not
             a program</em>, and is instead a shell-internal function.
             You can confirm this using the <code>which</code> program,
@@ -4653,9 +4593,10 @@ $</code></pre>
 <span id="cb125-46"><a href="#cb125-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb125-47"><a href="#cb125-47" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>hello world
+hello world
+in: 0, out: 1, err: 2, new: 3
+New descriptor @ 0</code></pre>
             <p>You can run this, and redirect the standard error to a
             file to see that writing to standard error is a different
             operation than writing to standard output. For example:
@@ -4713,9 +4654,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb127-39"><a href="#cb127-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb127-40"><a href="#cb127-40" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>more complicated than you&#39;d think...</code></pre>
             <p>It is common to have a convention on how channel data is
             structured. UNIX pipeline encourage channels to be plain
             text, so that each program can read from their standard
@@ -4819,9 +4758,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb130-54"><a href="#cb130-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb130-55"><a href="#cb130-55" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>Successfully memcpyed through a pipe!</code></pre>
             <p>Pipes are really quite a bit more useful when they are
             used to coordinate between separate processes. Thus, lets
             combine them with <code>fork</code>:</p>
@@ -5002,8 +4939,7 @@ Parent got the message!</code></pre>
 <span id="cb134-58"><a href="#cb134-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb134-59"><a href="#cb134-59" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>42 + 2a</code></pre>
             <p><strong>Closing pipes.</strong> <code>read</code>ing from
             a pipe will return that there is no more data on the pipe
             (i.e. return <code>0</code>) <em>only if all
@@ -5111,8 +5047,9 @@ Parent got the message!</code></pre>
 <span id="cb136-43"><a href="#cb136-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb136-44"><a href="#cb136-44" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>Lets live dangerously
+My downfall is the forbidden fruit at address (nil).
+make[1]: *** [Makefile:30: inline_exec] Error 1</code></pre>
             <p>This is kind-of crazy. We can actually execute in the
             signal handler when we access invalid memory! We can write
             code to execute in response to a segmentation fault. This is
@@ -5237,8 +5174,16 @@ Parent got the message!</code></pre>
 <span id="cb138-52"><a href="#cb138-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb138-53"><a href="#cb138-53" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>0 milliseconds passed!
+1 milliseconds passed!
+2 milliseconds passed!
+3 milliseconds passed!
+4 milliseconds passed!
+5 milliseconds passed!
+6 milliseconds passed!
+7 milliseconds passed!
+8 milliseconds passed!
+9 milliseconds passed!</code></pre>
             <p><strong>Question</strong>: Track and explain the control
             flow through this program.</p>
             <p><code>SIGKILL</code> and <code>SIGSTOP</code> are unique
@@ -5344,8 +5289,9 @@ Parent got the message!</code></pre>
 <span id="cb140-86"><a href="#cb140-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb140-87"><a href="#cb140-87" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>25866: We&#39;ve been asked to terminate. Exit!
+25865: Parent asking child (25866) to terminate
+25865: Child process 25866 has exited.</code></pre>
             <p><em>Note:</em> You want to run this a few times on your
             system to see the output. The auto-execution scripts of the
             lectures might cause wonky effects here due to
@@ -5565,7 +5511,7 @@ Child has exited.</code></pre>
 <span id="cb144-51"><a href="#cb144-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb144-52"><a href="#cb144-52" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Success&quot;</code></pre>
             <p>The set of functions you <em>can</em> call in a signal
             handler (i.e. that are <em>re-entrant</em>) are listed in
             the manual page: <code>man 7 signal-safety</code>. Notably
@@ -5731,7 +5677,18 @@ Child has exited.</code></pre>
 <span id="cb146-36"><a href="#cb146-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb146-37"><a href="#cb146-37" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code>We want to say 6044 things...but the world doesn&#39;t value artistry.
+Lets cut down to 280 characters and tweet like it is 1915...
+
+ The Love Song of J. Alfred Prufrock
+ T.S. Elliot
+
+Sio credesse che mia risposta fosse
+A persona che mai tornasse al mondo,
+Questa fiamma staria senza piu scosse.
+Ma percioche giammai di questo fondo
+Non torno vivo alcun, siodo il vero,
+Senza tema dinfamia ti rispondo</code></pre>
             <blockquote>
             <p>It is <em>really</em> important that quite a few
             interesting functions operate on <em>descriptors</em>, which
@@ -5839,7 +5796,18 @@ Child has exited.</code></pre>
 <span id="cb151-34"><a href="#cb151-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb151-35"><a href="#cb151-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code>What lies beyond the tweet? Tweet 2/N:
+
+.
+
+Let us go then, you and I,
+When the evening is spread out against the sky
+Like a patient etherized upon a table;
+Let us go, through certain half-deserted streets,
+The muttering retreats
+Of restless nights in one-night cheap hotels
+And sawdust restaurants with oyster-shells:
+St</code></pre>
             <h2 data-number="6.2" id="mapping-files"><span
             class="header-section-number">6.2</span> Mapping Files</h2>
             <p>It is very common to access files with <code>read</code>
@@ -5928,12 +5896,12 @@ Child has exited.</code></pre>
             <pre><code> The Love Song of J. Alfred Prufrock
  T.S. Elliot
 
-S’io credesse che mia risposta fosse
+Sio credesse che mia risposta fosse
 A persona che mai tornasse al mondo,
 Questa fiamma staria senza piu scosse.
 Ma percioche giammai di questo fondo
-Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo.
+Non torno vivo alcun, siodo il vero,
+Senza tema dinfamia ti rispondo.
 
 Let us go then, you and I,
 When the evening is spread out against the sky
@@ -6036,12 +6004,12 @@ St</code></pre>
             <pre><code> The Love Song of J. Alfred Prufrock
  T.S. Elliot
 
-S’io credesse che mia risposta fosse
+Sio credesse che mia risposta fosse
 A persona che mai tornasse al mondo,
 Questa fiamma staria senza piu scosse.
 Ma percioche giammai di questo fondo
-Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo.
+Non torno vivo alcun, siodo il vero,
+Senza tema dinfamia ti rispondo.
 
 Let us go then, you and I,
 When the evening is spread out against the sky
@@ -6081,24 +6049,7 @@ St</code></pre>
 <span id="cb157-11"><a href="#cb157-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb157-12"><a href="#cb157-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code> The Love Song of J. Alfred Prufrock
- T.S. Elliot
-
-S’io credesse che mia risposta fosse
-A persona che mai tornasse al mondo,
-Questa fiamma staria senza piu scosse.
-Ma percioche giammai di questo fondo
-Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo.
-
-Let us go then, you and I,
-When the evening is spread out against the sky
-Like a patient etherized upon a table;
-Let us go, through certain half-deserted streets,
-The muttering retreats
-Of restless nights in one-night cheap hotels
-And sawdust restaurants with oyster-shells:
-St</code></pre>
+            <pre><code></code></pre>
             <p><code>_exit</code> exits from the process
             <em>immediately</em>, and without invoking any
             <code>atexit</code> functions. Flushing the
@@ -6118,24 +6069,8 @@ St</code></pre>
 <span id="cb159-11"><a href="#cb159-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb159-12"><a href="#cb159-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code> The Love Song of J. Alfred Prufrock
- T.S. Elliot
-
-S’io credesse che mia risposta fosse
-A persona che mai tornasse al mondo,
-Questa fiamma staria senza piu scosse.
-Ma percioche giammai di questo fondo
-Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo.
-
-Let us go then, you and I,
-When the evening is spread out against the sky
-Like a patient etherized upon a table;
-Let us go, through certain half-deserted streets,
-The muttering retreats
-Of restless nights in one-night cheap hotels
-And sawdust restaurants with oyster-shells:
-St</code></pre>
+            <pre><code>hello world
+hello world</code></pre>
             <p>Well that’s not good. The <em>buffered data</em> is
             copied into each process, then it is output when a
             <code>\n</code> is encountered.</p>
@@ -6154,24 +6089,7 @@ St</code></pre>
 <span id="cb161-12"><a href="#cb161-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb161-13"><a href="#cb161-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code> The Love Song of J. Alfred Prufrock
- T.S. Elliot
-
-S’io credesse che mia risposta fosse
-A persona che mai tornasse al mondo,
-Questa fiamma staria senza piu scosse.
-Ma percioche giammai di questo fondo
-Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo.
-
-Let us go then, you and I,
-When the evening is spread out against the sky
-Like a patient etherized upon a table;
-Let us go, through certain half-deserted streets,
-The muttering retreats
-Of restless nights in one-night cheap hotels
-And sawdust restaurants with oyster-shells:
-St</code></pre>
+            <pre><code>world hello </code></pre>
             <p>Both <code>printf</code> and the <code>write</code> are
             to standard output, but <code>printf</code> is to a stream.
             The <em>buffered</em> <code>printf</code> output is not
@@ -6195,24 +6113,7 @@ St</code></pre>
 <span id="cb163-13"><a href="#cb163-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb163-14"><a href="#cb163-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code> The Love Song of J. Alfred Prufrock
- T.S. Elliot
-
-S’io credesse che mia risposta fosse
-A persona che mai tornasse al mondo,
-Questa fiamma staria senza piu scosse.
-Ma percioche giammai di questo fondo
-Non torno vivo alcun, s’i’odo il vero,
-Senza tema d’infamia ti rispondo.
-
-Let us go then, you and I,
-When the evening is spread out against the sky
-Like a patient etherized upon a table;
-Let us go, through certain half-deserted streets,
-The muttering retreats
-Of restless nights in one-night cheap hotels
-And sawdust restaurants with oyster-shells:
-St</code></pre>
+            <pre><code>make[1]: *** [Makefile:30: inline_exec] Segmentation fault (core dumped)</code></pre>
             <p>Even though we fault <em>after</em> the
             <code>printf</code>, we don’t see the <code>printf</code>’s
             output! We now know why: the <code>printf</code> wrote into
@@ -6266,8 +6167,8 @@ hello world</code></pre>
 <span id="cb167-12"><a href="#cb167-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb167-13"><a href="#cb167-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>hello world 
-hello world</code></pre>
+            <pre><code>hello world
+</code></pre>
             <p>A few other functions for streams that can be useful:</p>
             <ul>
             <li><code>fileno</code> - Get the file descriptor number
@@ -6311,8 +6212,19 @@ hello world</code></pre>
 <span id="cb169-29"><a href="#cb169-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb169-30"><a href="#cb169-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>hello world 
-hello world</code></pre>
+            <pre><code>The new genre: abridged, tweet-worthy poetry...
+
+ The Love Song of J. Alfred Prufrock
+Of restless nights in one-night cheap hotels
+Let fall upon its back the soot that falls from chimneys,
+And for a hundred visions and revisions,
+Disturb the universe?
+Then how should I begin
+Of lonely men in shirt-sleeves, leaning out of windows? ...
+And I have seen the eternal Footman hold my coat, and snicker,
+
+Am an attendant lord, one that will do
+</code></pre>
             <h2 data-number="6.4" id="accessing-directories"><span
             class="header-section-number">6.4</span> Accessing
             Directories</h2>
@@ -6421,8 +6333,12 @@ hello world</code></pre>
 <span id="cb171-56"><a href="#cb171-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> finfo<span class="op">.</span>st_size<span class="op">;</span></span>
 <span id="cb171-57"><a href="#cb171-57" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>hello world 
-hello world</code></pre>
+            <pre><code>      File: 02_exercises.md (size: 2978)
+ Directory: .
+ Directory: test_directory
+ Directory: ..
+      File: prufrock.txt (size: 6044)
+      File: 01_lecture.md (size: 21580)</code></pre>
             <p>To make <em>changes</em> in the first system hierarchy,
             we need an additional set of functions.</p>
             <ul>
@@ -6475,8 +6391,12 @@ hello world</code></pre>
 <span id="cb173-34"><a href="#cb173-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb173-35"><a href="#cb173-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>hello world 
-hello world</code></pre>
+            <pre><code>If there were no errors, we
+    1. created a directory, 
+    2. a file in the directory, 
+    3. change the directory name,
+    4. removed the file, and
+    5. removed the directory</code></pre>
             <h2 data-number="6.5" id="exercises-2"><span
             class="header-section-number">6.5</span> Exercises</h2>
             <p>Write a <code>tree</code> clone, with disk usage
@@ -6597,8 +6517,37 @@ hello world</code></pre>
 <span id="cb177-87"><a href="#cb177-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> finfo<span class="op">.</span>st_size<span class="op">;</span></span>
 <span id="cb177-88"><a href="#cb177-88" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>hello world 
-hello world</code></pre>
+            <pre><code>- F aggregate.md (165031)
+- D 12
+- D 02
+- D figures
+- D 13
+- F title.md (333)
+- D .git
+- D 00
+- D 01
+- D 04
+- D 07
+- D 14
+- F output_tmp.dat (0)
+- F LICENSE (1522)
+- F README.md (35)
+- F .gitignore (890)
+- F inline_exec_tmp (62032)
+- F Makefile (1928)
+- F inline_exec_tmp.c (1658)
+- D tools
+- F theme.css (691)
+- D 10
+- D 09
+- D templates
+- D 11
+- D 08
+- D 99
+- D slides
+- D 06
+- D 03
+- D 05</code></pre>
             <h3 data-number="6.5.2"
             id="task-2-file-and-directory-sizes"><span
             class="header-section-number">6.5.2</span> Task 2: File and
@@ -6871,8 +6820,8 @@ hello world</code></pre>
 <span id="cb183-53"><a href="#cb183-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb183-54"><a href="#cb183-54" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>hello world 
-hello world</code></pre>
+            <pre><code>msg1: 
+msg2: </code></pre>
             <p>You can see that there are some problems here. If we run
             it many times, we can see that sometimes we don’t see any
             messages, sometimes we only see the first, sometimes we only
@@ -7126,7 +7075,8 @@ hello world</code></pre>
 <span id="cb187-105"><a href="#cb187-105" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb187-106"><a href="#cb187-106" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
+            <pre><code>26217: 26216
+26216: 26217</code></pre>
             <p>If executed many times, you see the expected result:</p>
             <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -7369,7 +7319,16 @@ hello world</code></pre>
 <span id="cb191-101"><a href="#cb191-101" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb191-102"><a href="#cb191-102" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
+            <pre><code>Server: New client connected with new file descriptor 4.
+1. Client 26237 connected to server.
+2. Client 26237 request sent message to server.
+Server received message (sz 36): &quot;Citizen 26237: Penny for Pawsident!&quot;. Replying!
+3. Client 26237 reply received from server: Citizen 26237: Penny for Pawsident!
+1. Client 26238 connected to server.
+Server: New client connected with new file descriptor 4.
+2. Client 26238 request sent message to server.
+Server received message (sz 36): &quot;Citizen 26238: Penny for Pawsident!&quot;. Replying!
+3. Client 26238 reply received from server: Citizen 26238: Penny for Pawsident!</code></pre>
             <p>The server’s call to <code>accept</code> is the key
             difference of domain sockets from named pipes. It enables us
             to have per-client descriptors we can use to separately
@@ -9106,7 +9065,7 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <span id="cb231-29"><a href="#cb231-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb231-30"><a href="#cb231-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
+            <pre><code>42</code></pre>
             <p>As <code>dlsym</code> returns a pointer to the symbol
             passed in (as a string), it means that you end up seeing a
             <em>lot</em> of function pointers when you’re using plugin
@@ -9138,7 +9097,7 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <span id="cb233-20"><a href="#cb233-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb233-21"><a href="#cb233-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
+            <pre><code>Look at me! Diving into your dynamic libraries...pulling out the symbols</code></pre>
             <p>Though this example doesn’t have much of a point, as we
             can directly call <code>write</code>, thus have to go
             through the symbol we retrieved from <code>dlsym</code>, See
@@ -9382,7 +9341,7 @@ free(0x55fe6cd492a0)
 <span id="cb238-8"><a href="#cb238-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb238-9"><a href="#cb238-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
+            <pre><code>hello world</code></pre>
             <p>The C standard library even provides you a “generic” way
             to invoke <em>any</em> system call. The <code>syscall</code>
             function lets you make an integer-identified system call.
@@ -9400,7 +9359,7 @@ free(0x55fe6cd492a0)
 <span id="cb240-9"><a href="#cb240-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb240-10"><a href="#cb240-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
+            <pre><code>hello world</code></pre>
             <p>Lets look at a few of these integer values to see what’s
             happening here:</p>
             <div class="sourceCode" id="cb242"><pre
@@ -9416,7 +9375,10 @@ free(0x55fe6cd492a0)
 <span id="cb242-10"><a href="#cb242-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb242-11"><a href="#cb242-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>What I hear at office hours is &quot;halp!&quot;.</code></pre>
+            <pre><code>write: 1
+read:  0
+open:  2
+close: 3</code></pre>
             <p>Note, these integer values are <em>not</em> related to
             descriptors (e.g. <code>STDIN_FILENO == 0</code>). The
             system calls in Linux (and in all operating systems!) are
@@ -9630,9 +9592,9 @@ exit_group(0)                           = ?
 <span id="cb249-38"><a href="#cb249-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
             <pre><code>
-malloc + free overhead (cycles): 150
+malloc + free overhead (cycles): 102
 
-mmap + munmap overhead (cycles): 2845</code></pre>
+mmap + munmap overhead (cycles): 8214</code></pre>
             <blockquote>
             <p>What is a “cycle”? When you read that you have a 3GHz,
             that essentially says that the internal “clock” that drives
@@ -9692,10 +9654,12 @@ mmap + munmap overhead (cycles): 2845</code></pre>
 <span id="cb251-35"><a href="#cb251-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb251-36"><a href="#cb251-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>
-malloc + free overhead (cycles): 124
-
-mmap + munmap overhead (cycles): 2414</code></pre>
+            <pre><code>                                                                                                                                                                                                                                                                
+write overhead (cycles): 2335
+                                                                                                                                                                                                                                                                
+fwrite (stream) overhead (cycles): 59
+                                                                                                                                                                                                                                                                
+fwrite + fflush overhead (cycles): 2463</code></pre>
             <h2 data-number="11.4"
             id="library-vs.-kernel-trade-offs-in-memory-allocation"><span
             class="header-section-number">11.4</span> Library vs. Kernel
@@ -10210,10 +10174,7 @@ chown: changing ownership of &#39;helloworld.bin&#39;: Operation not permitted</
 <span id="cb269-16"><a href="#cb269-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb269-17"><a href="#cb269-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>
-malloc + free overhead (cycles): 124
-
-mmap + munmap overhead (cycles): 2398</code></pre>
+            <pre><code>uid=1000 gid=1000</code></pre>
             <p>Every user has different identifiers as does each group.
             If another user where to run the same program, they’d get a
             different value.</p>
