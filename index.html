@@ -330,27 +330,31 @@ Programming</span>
         id="toc-understanding-memory-ownership"><span
         class="toc-section-number">4.4.2</span> Understanding Memory
         Ownership</a></li>
+        </ul></li>
+        <li><a href="#errors" id="toc-errors"><span
+        class="toc-section-number">4.5</span> Errors</a>
+        <ul>
         <li><a href="#return-vals-indicate-errors"
         id="toc-return-vals-indicate-errors"><span
-        class="toc-section-number">4.4.3</span> <strong>return</strong>
+        class="toc-section-number">4.5.1</span> <strong>return</strong>
         vals → indicate errors</a></li>
         <li><a href="#errno-variable-and-command"
         id="toc-errno-variable-and-command"><span
-        class="toc-section-number">4.4.4</span> <code>errno</code>
+        class="toc-section-number">4.5.2</span> <code>errno</code>
         variable and command</a></li>
         <li><a href="#additional-helper-functions"
         id="toc-additional-helper-functions"><span
-        class="toc-section-number">4.4.5</span> Additional Helper
+        class="toc-section-number">4.5.3</span> Additional Helper
         Functions</a></li>
         <li><a
         href="#understand-return-values-of-unix-library-functions"
         id="toc-understand-return-values-of-unix-library-functions"><span
-        class="toc-section-number">4.4.6</span> Understand Return Values
+        class="toc-section-number">4.5.4</span> Understand Return Values
         of UNIX library functions:</a></li>
         <li><a
         href="#in-class-exercise-printing-all-error-codesstrings-in-sequence"
         id="toc-in-class-exercise-printing-all-error-codesstrings-in-sequence"><span
-        class="toc-section-number">4.4.7</span> In-class Exercise |
+        class="toc-section-number">4.5.5</span> In-class Exercise |
         Printing <strong>all</strong> error codes/strings in
         sequence</a></li>
         </ul></li>
@@ -1385,7 +1389,7 @@ a ---&gt; +---+---+---+---+
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x30930b024 == 0x30930b024; 7 == 7</code></pre>
+            <pre><code>nth index: 0x308b7e024 == 0x308b7e024; 7 == 7</code></pre>
             <p>We can see that <em>pointer arithmetic</em> (i.e. doing
             addition/subtraction on pointers) does the same thing as
             array indexing plus a dereference. That is,
@@ -1419,7 +1423,7 @@ a ---&gt; +---+---+---+---+
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x3048de024 == 0x3048de024; 7 == 7</code></pre>
+            <pre><code>nth index: 0x30d860024 == 0x30d860024; 7 == 7</code></pre>
             <p>Note that the pointer for the integer array
             (<code>a</code>) is being incremented by 4, while the
             character array (<code>b</code>) by 1. Focusing on the key
@@ -1479,7 +1483,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x305aee024 == 0x305aee024; 7 == 7</code></pre>
+            <pre><code>nth index: 0x30dc22024 == 0x30dc22024; 7 == 7</code></pre>
             <h4 data-number="2.2.5.2" id="generic-pointer-types"><span
             class="header-section-number">2.2.5.2</span> Generic Pointer
             Types</h4>
@@ -1527,7 +1531,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>intptr<span class="op">;</span></span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x309f34024 == 0x309f34024; 7 == 7</code></pre>
+            <pre><code>nth index: 0x3062ef024 == 0x3062ef024; 7 == 7</code></pre>
             <p>Data-structures often aim to store data of any type
             (think: a linked list of anything). Thus, in C, you often
             see <code>void *</code>s to reference the data they
@@ -1612,7 +1616,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x30c716024 == 0x30c716024; 7 == 7</code></pre>
+            <pre><code>nth index: 0x30e11d024 == 0x30e11d024; 7 == 7</code></pre>
             <ul>
             <li><em>Dangling pointer.</em> If you maintain a pointer to
             a chunk of memory that you <code>free</code>, and then
@@ -1637,7 +1641,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>a<span class="op">;</span></span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x304c6a024 == 0x304c6a024; 7 == 7</code></pre>
+            <pre><code>nth index: 0x30956a024 == 0x30956a024; 7 == 7</code></pre>
             <ul>
             <li><em>Memory leaks.</em> If you remove all references to
             memory, but <em>don’t</em> <code>free</code> it, then the
@@ -1658,7 +1662,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x308821024 == 0x308821024; 7 == 7</code></pre>
+            <pre><code>nth index: 0x309bf6024 == 0x309bf6024; 7 == 7</code></pre>
             <ul>
             <li><em>Double <code>free</code>.</em> If you
             <code>free</code> the memory twice, bad things can happen.
@@ -1681,7 +1685,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x30a074024 == 0x30a074024; 7 == 7</code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p><code>valgrind</code> will help you debug the last three
             of these issues, and later in the class, we’ll develop a
             library to help debug the first.</p>
@@ -1747,24 +1751,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>           a<span class="op">,</span> b<span class="op">,</span> c<span class="op">.</span>c_a<span class="op">,</span> c<span class="op">.</span>c_b<span class="op">,</span> c<span class="op">.</span>c_c<span class="op">);</span></span>
 <span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Addresses:
-a   @ 0x102253000
-b   @ 0x102253004
-c   @ 0x102253008
-end @ 0x102253020
-&amp;end - &amp;a = 32
-
-Initial values:
-a     = 1
-b     = 2
-c.c_a = 3
-c.c_b = 0
-c.c_c = 0x102253004
-
-Print out the variables as raw memory
-
-
-Post-`memset` values:</code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p><strong>Question</strong> Answer <em>Q1-4</em> in the
             code, uncommenting and modifying where appropriate.</p>
             <h4 data-number="2.4.1.1" id="takeaways"><span
@@ -1886,24 +1873,7 @@ Post-`memset` values:</code></pre>
 <span id="cb42-77"><a href="#cb42-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb42-78"><a href="#cb42-78" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Addresses:
-a   @ 0x102480000
-b   @ 0x102480004
-c   @ 0x102480008
-end @ 0x102480020
-&amp;end - &amp;a = 32
-
-Initial values:
-a     = 1
-b     = 2
-c.c_a = 3
-c.c_b = 0
-c.c_c = 0x102480004
-
-Print out the variables as raw memory
-
-
-Post-`memset` values:</code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>You want to implement a simple “key-value” store that is
             very similar in API to a hash-table (many key-value stores
             are implemented using hash-tables!).</p>
@@ -3879,22 +3849,34 @@ str ---&gt; +---+---+---+---+
             values be used in <code>main</code>? Why?</li>
             <li>In which cases can <em>stack allocation</em> of the
             values in the key-value store (i.e. in
-            <code>get</code>/<code>set</code>) be used? Why? ##
-            Errors</li>
+            <code>get</code>/<code>set</code>) be used? Why?</li>
             </ul>
+            <h2 data-number="4.5" id="errors"><span
+            class="header-section-number">4.5</span> Errors</h2>
             <p><a
             href="https://sibin.github.io/teaching/csci2410-gwu-systems_programming/fall_2023/slides/reveal_slides/errors.html#/">Slides</a></p>
-            <p>Sometimes, errors happen… * <em>e.g.,</em> system is out
-            of memory * when we call <sc>malloc</sc></p>
+            <p>Sometimes, errors happen…</p>
+            <ul>
+            <li><em>e.g.,</em> system is out of memory</li>
+            <li>when we call <sc>malloc</sc></li>
+            </ul>
             <p>The first question is how we can detect that some error
             occurred within a function we have called?</p>
-            <p><strong>When errors occur</strong> * we want more
-            <strong>context</strong> * what was the <em>exact</em>
-            error? * <em>where</em> did the error occur? * programmers
-            can make <em>informed</em> choices * on how to respond</p>
-            <h3 data-number="4.4.3"
+            <p><strong>When errors occur</strong></p>
+            <ul>
+            <li>we want more <strong>context</strong>
+            <ul>
+            <li>what was the <em>exact</em> error?</li>
+            <li><em>where</em> did the error occur?</li>
+            </ul></li>
+            <li>programmers can make <em>informed</em> choices
+            <ul>
+            <li>on how to respond</li>
+            </ul></li>
+            </ul>
+            <h3 data-number="4.5.1"
             id="return-vals-indicate-errors"><span
-            class="header-section-number">4.4.3</span>
+            class="header-section-number">4.5.1</span>
             <strong>return</strong> vals → indicate errors</h3>
             <table>
             <thead>
@@ -3959,9 +3941,9 @@ str ---&gt; +---+---+---+---+
 <span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unsigned</span> <span class="dt">int</span> error_number <span class="op">;</span></span>
 <span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> error_name<span class="op">[</span><span class="dv">255</span><span class="op">]</span> <span class="op">;</span></span>
 <span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="op">;</span></span></code></pre></div>
-            <h3 data-number="4.4.4"
+            <h3 data-number="4.5.2"
             id="errno-variable-and-command"><span
-            class="header-section-number">4.4.4</span>
+            class="header-section-number">4.5.2</span>
             <code>errno</code> variable and command</h3>
             <p>UNIX/C have some mechanisms that actually help (instead
             of defining our own structs). They define a
@@ -4126,9 +4108,9 @@ str ---&gt; +---+---+---+---+
 <span id="cb89-132"><a href="#cb89-132" aria-hidden="true" tabindex="-1"></a>ERFKILL <span class="dv">132</span> Operation not possible due to RF<span class="op">-</span>kill</span>
 <span id="cb89-133"><a href="#cb89-133" aria-hidden="true" tabindex="-1"></a>EHWPOISON <span class="dv">133</span> Memory page has hardware error</span>
 <span id="cb89-134"><a href="#cb89-134" aria-hidden="true" tabindex="-1"></a>ENOTSUP <span class="dv">95</span> Operation not supported</span></code></pre></div>
-            <h3 data-number="4.4.5"
+            <h3 data-number="4.5.3"
             id="additional-helper-functions"><span
-            class="header-section-number">4.4.5</span> Additional Helper
+            class="header-section-number">4.5.3</span> Additional Helper
             Functions</h3>
             <p>The C standard library includes two additional helper
             functions for dealing with errors:</p>
@@ -4222,9 +4204,9 @@ str ---&gt; +---+---+---+---+
             with a non-zero value, it designates that your
             <em>program</em> had an error. This is why we see the
             <code>make</code> error when it runs your program.</p>
-            <h3 data-number="4.4.6"
+            <h3 data-number="4.5.4"
             id="understand-return-values-of-unix-library-functions"><span
-            class="header-section-number">4.4.6</span> Understand Return
+            class="header-section-number">4.5.4</span> Understand Return
             Values of UNIX library functions:</h3>
             <p>Look at the function return values to understand the type
             (and identify if it is returning an <code>int</code> or a
@@ -4251,9 +4233,9 @@ ERRORS
        ...
 </code></pre>
             <p>This explains why we got the error we did.</p>
-            <h3 data-number="4.4.7"
+            <h3 data-number="4.5.5"
             id="in-class-exercise-printing-all-error-codesstrings-in-sequence"><span
-            class="header-section-number">4.4.7</span> In-class Exercise
+            class="header-section-number">4.5.5</span> In-class Exercise
             | Printing <strong>all</strong> error codes/strings in
             sequence</h3>
             <p>Write a <em>function</em> named,
