@@ -1367,8 +1367,7 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> value <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
             <p>Pointers are <em>necessary</em> as they enable us to
             build <em>linked</em> data-structures (linked-lists, binary
             trees, etc…). Languages such as Java assume that <em>every
@@ -1398,8 +1397,8 @@ value updated to 1</code></pre>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x308514020 == 0x308514020; 6 == 6
+nth index: 0x308514024 == 0x308514024; 7 == 7</code></pre>
             <p>Making this a little more clear, lets understand how C
             accesses the <code>n</code>th item. Lets make a pointer
             <code>int *p = a + 1</code> (we’ll just simply and assume
@@ -1428,8 +1427,8 @@ a ---&gt; +---+---+---+---+
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x304d39020 == 0x304d39020; 6 == 6
+nth index: 0x304d39024 == 0x304d39024; 7 == 7</code></pre>
             <p>We can see that <em>pointer arithmetic</em> (i.e. doing
             addition/subtraction on pointers) does the same thing as
             array indexing plus a dereference. That is,
@@ -1463,8 +1462,8 @@ value updated to 1</code></pre>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x3050e5020 == 0x3050e5020; 6 == 6
+nth index: 0x3050e5024 == 0x3050e5024; 7 == 7</code></pre>
             <p>Note that the pointer for the integer array
             (<code>a</code>) is being incremented by 4, while the
             character array (<code>b</code>) by 1. Focusing on the key
@@ -1524,8 +1523,8 @@ Adds 1 -----------+</code></pre>
 <span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x3062e8020 == 0x3062e8020; 6 == 6
+nth index: 0x3062e8024 == 0x3062e8024; 7 == 7</code></pre>
             <h4 data-number="2.2.5.2" id="generic-pointer-types"><span
             class="header-section-number">2.2.5.2</span> Generic Pointer
             Types</h4>
@@ -1573,8 +1572,8 @@ value updated to 1</code></pre>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>intptr<span class="op">;</span></span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x309151020 == 0x309151020; 6 == 6
+nth index: 0x309151024 == 0x309151024; 7 == 7</code></pre>
             <p>Data-structures often aim to store data of any type
             (think: a linked list of anything). Thus, in C, you often
             see <code>void *</code>s to reference the data they
@@ -1659,8 +1658,8 @@ value updated to 1</code></pre>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x304e93020 == 0x304e93020; 6 == 6
+nth index: 0x304e93024 == 0x304e93024; 7 == 7</code></pre>
             <ul>
             <li><em>Dangling pointer.</em> If you maintain a pointer to
             a chunk of memory that you <code>free</code>, and then
@@ -1685,7 +1684,8 @@ value updated to 1</code></pre>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>a<span class="op">;</span></span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>0th index: 0x3050c1020 == 0x3050c1020; 6 == 6
+nth index: 0x3050c1024 == 0x3050c1024; 7 == 7</code></pre>
             <ul>
             <li><em>Memory leaks.</em> If you remove all references to
             memory, but <em>don’t</em> <code>free</code> it, then the
@@ -4749,7 +4749,8 @@ AFTER calling fork()</code></pre>
             pid | parent | child created| | <scb>0</scb> | child |
             inside child | || ## processes | <code>wait()</code> and
             <code>exit()</code></p>
-            <p><a href="TBD!">Slides</a></p>
+            <p><a
+            href="https://sibin.github.io/teaching/csci2410-gwu-systems_programming/fall_2023/slides/reveal_slides/processes-2-exit.html#/">Slides</a></p>
             <p>Parents are responsible for managing their children!</p>
             <p><img src="./figures/jackjack.gif" width="400"></p>
             <p>so, they…<code>wait()</code>!</p>
