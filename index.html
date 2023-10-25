@@ -1123,7 +1123,7 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
             <p>You might see all of these, but the common primitives,
             and their sizes:</p>
             <div class="sourceCode" id="cb7"><pre
@@ -1148,7 +1148,7 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
             <h3 data-number="2.2.2"
             id="common-posix-types-and-values"><span
             class="header-section-number">2.2.2</span> Common POSIX
@@ -1235,7 +1235,7 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
             <h3 data-number="2.2.4" id="compound-types-1"><span
             class="header-section-number">2.2.4</span> Compound
             types</h3>
@@ -1293,7 +1293,8 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>Size of union:  12
+Size of struct: 16</code></pre>
             <p>We can see the effect of the <code>union</code>: The size
             is <code>max(fields)</code> rather than
             <code>sum(fields)</code>. What other examples can you think
@@ -1367,7 +1368,8 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> value <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>Size of union:  12
+Size of struct: 16</code></pre>
             <p>Pointers are <em>necessary</em> as they enable us to
             build <em>linked</em> data-structures (linked-lists, binary
             trees, etc…). Languages such as Java assume that <em>every
@@ -1397,7 +1399,8 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>Size of union:  12
+Size of struct: 16</code></pre>
             <p>Making this a little more clear, lets understand how C
             accesses the <code>n</code>th item. Lets make a pointer
             <code>int *p = a + 1</code> (we’ll just simply and assume
@@ -1426,7 +1429,8 @@ a ---&gt; +---+---+---+---+
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x304bd2024 == 0x304bd2024; 7 == 7</code></pre>
+            <pre><code>Size of union:  12
+Size of struct: 16</code></pre>
             <p>We can see that <em>pointer arithmetic</em> (i.e. doing
             addition/subtraction on pointers) does the same thing as
             array indexing plus a dereference. That is,
@@ -1460,7 +1464,8 @@ a ---&gt; +---+---+---+---+
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x305ee3024 == 0x305ee3024; 7 == 7</code></pre>
+            <pre><code>Size of union:  12
+Size of struct: 16</code></pre>
             <p>Note that the pointer for the integer array
             (<code>a</code>) is being incremented by 4, while the
             character array (<code>b</code>) by 1. Focusing on the key
@@ -1520,7 +1525,8 @@ Adds 1 -----------+</code></pre>
 <span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x3050a8024 == 0x3050a8024; 7 == 7</code></pre>
+            <pre><code>Size of union:  12
+Size of struct: 16</code></pre>
             <h4 data-number="2.2.5.2" id="generic-pointer-types"><span
             class="header-section-number">2.2.5.2</span> Generic Pointer
             Types</h4>
@@ -1568,7 +1574,8 @@ Adds 1 -----------+</code></pre>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>intptr<span class="op">;</span></span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x309960024 == 0x309960024; 7 == 7</code></pre>
+            <pre><code>Size of union:  12
+Size of struct: 16</code></pre>
             <p>Data-structures often aim to store data of any type
             (think: a linked list of anything). Thus, in C, you often
             see <code>void *</code>s to reference the data they
@@ -1653,7 +1660,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x30930f024 == 0x30930f024; 7 == 7</code></pre>
+            <pre><code></code></pre>
             <ul>
             <li><em>Dangling pointer.</em> If you maintain a pointer to
             a chunk of memory that you <code>free</code>, and then
@@ -1678,7 +1685,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>a<span class="op">;</span></span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x308bb6024 == 0x308bb6024; 7 == 7</code></pre>
+            <pre><code></code></pre>
             <ul>
             <li><em>Memory leaks.</em> If you remove all references to
             memory, but <em>don’t</em> <code>free</code> it, then the
@@ -1699,7 +1706,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>nth index: 0x305919024 == 0x305919024; 7 == 7</code></pre>
+            <pre><code></code></pre>
             <ul>
             <li><em>Double <code>free</code>.</em> If you
             <code>free</code> the memory twice, bad things can happen.
@@ -1722,7 +1729,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
+            <pre><code></code></pre>
             <p><code>valgrind</code> will help you debug the last three
             of these issues, and later in the class, we’ll develop a
             library to help debug the first.</p>
@@ -1788,7 +1795,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>           a<span class="op">,</span> b<span class="op">,</span> c<span class="op">.</span>c_a<span class="op">,</span> c<span class="op">.</span>c_b<span class="op">,</span> c<span class="op">.</span>c_c<span class="op">);</span></span>
 <span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
+            <pre><code></code></pre>
             <p><strong>Question</strong> Answer <em>Q1-4</em> in the
             code, uncommenting and modifying where appropriate.</p>
             <h4 data-number="2.4.1.1" id="takeaways"><span
@@ -1910,7 +1917,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb42-77"><a href="#cb42-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb42-78"><a href="#cb42-78" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
+            <pre><code></code></pre>
             <p>You want to implement a simple “key-value” store that is
             very similar in API to a hash-table (many key-value stores
             are implemented using hash-tables!).</p>
@@ -4753,7 +4760,7 @@ AFTER calling fork()</code></pre>
             <td>child created</td>
             </tr>
             <tr class="even">
-            <td><scb>0</scb></td>
+            <td><code>0</code></td>
             <td>child</td>
             <td>inside child</td>
             </tr>
@@ -4973,8 +4980,8 @@ AFTER calling fork()</code></pre>
             class="sourceCode c"><code class="sourceCode c"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> exit<span class="op">(</span><span class="dt">int</span> status<span class="op">);</span></span></code></pre></div>
             <p>as defined in <code>&lt;stdlib.h</code>. The input
             argument is the <strong>exit status</strong>: |value|
-            meaning | |——–|——–| | <scb>0</scb>|
-            <code>EXIT_SUCCESS</code>| | <scb>1</scb>|
+            meaning | |——–|——–| | <code>0</code>|
+            <code>EXIT_SUCCESS</code>| | <code>1</code>|
             <code>EXIT_FAILURE</code>| ||</p>
             <p>And note that <code>exit()</code> does not
             <em>explicitly</em> return any value. All the information is
@@ -5185,14 +5192,14 @@ Inside :::PARENT::: where child 2568616 exited with status: 5</code></pre>
             connections, write some debug information to a file,
             <em>etc.</em> Hence, the following functions <em>can be</em>
             are called once <code>exit()</code> is invoked: |function|
-            defined in | |——–|——–| | <scb>on_exit</scb>|
-            <code>&lt;stdlib.h&gt;</code>| | <scb>atexit</scb>|
-            <code>&lt;stdlib.h&gt;</code>| | <scb>_exit</scb>|
+            defined in | |——–|——–| | <code>on_exit</code>|
+            <code>&lt;stdlib.h&gt;</code>| | <code>atexit</code>|
+            <code>&lt;stdlib.h&gt;</code>| | <code>_exit</code>|
             <code>&lt;unistd.h&gt;</code>| ||</p>
             <p>Let’s look at these in more details.</p>
             <h4 data-number="5.5.3.1" id="on_exit"><span
             class="header-section-number">5.5.3.1</span>
-            <scb>on_exit()</scb></h4>
+            <code>on_exit()</code></h4>
             <div class="sourceCode" id="cb116"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>typdef <span class="dt">void</span> <span class="op">(*</span>function<span class="op">)(</span> <span class="dt">int</span> <span class="op">,</span> <span class="dt">void</span> <span class="op">*</span> <span class="op">)</span> <span class="op">;</span></span>
 <span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> on_exit<span class="op">(</span> function my_func<span class="op">,</span> <span class="dt">void</span> <span class="op">*</span>arg <span class="op">)</span> <span class="op">;</span></span></code></pre></div>
@@ -5208,7 +5215,7 @@ Inside :::PARENT::: where child 2568616 exited with status: 5</code></pre>
             </ul>
             <h4 data-number="5.5.3.2" id="atexit"><span
             class="header-section-number">5.5.3.2</span>
-            <scb>atexit()</scb></h4>
+            <code>atexit()</code></h4>
             <div class="sourceCode" id="cb117"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">void</span> <span class="op">(*</span>function<span class="op">)(</span><span class="dt">void</span><span class="op">)</span> <span class="op">;</span></span>
 <span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> atexit<span class="op">(</span>function my_func<span class="op">);</span></span></code></pre></div>
@@ -5229,11 +5236,11 @@ Inside :::PARENT::: where child 2568616 exited with status: 5</code></pre>
             <strong>multiple</strong> functions using either one; these
             are called in <strong>reverse</strong> order of
             registrations 3. <code>atexit()</code> is <em>standard</em>
-            <scb>c</scb>, while <code>on_exit()</code> <em>may not</em>
-            be!</p>
+            <code>c</code>, while <code>on_exit()</code> <em>may
+            not</em> be!</p>
             <h4 data-number="5.5.3.3" id="exit-1"><span
             class="header-section-number">5.5.3.3</span>
-            <scb>_exit()<scb></h4>
+            <code>_exit()</code></h4>
             <p><code>void _exit(int status);</code></p>
             <ul>
             <li><strong>immediate</strong> termination of process!</li>
