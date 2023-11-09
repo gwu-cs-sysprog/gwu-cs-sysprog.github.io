@@ -1389,7 +1389,8 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> value <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>value is initialized to 0
+value updated to 1</code></pre>
             <p>Pointers are <em>necessary</em> as they enable us to
             build <em>linked</em> data-structures (linked-lists, binary
             trees, etc…). Languages such as Java assume that <em>every
@@ -1419,8 +1420,8 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0th index: 0x30defa020 == 0x30defa020; 6 == 6
-nth index: 0x30defa024 == 0x30defa024; 7 == 7</code></pre>
+            <pre><code>value is initialized to 0
+value updated to 1</code></pre>
             <p>Making this a little more clear, lets understand how C
             accesses the <code>n</code>th item. Lets make a pointer
             <code>int *p = a + 1</code> (we’ll just simply and assume
@@ -1449,8 +1450,8 @@ a ---&gt; +---+---+---+---+
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0th index: 0x304666020 == 0x304666020; 6 == 6
-nth index: 0x304666024 == 0x304666024; 7 == 7</code></pre>
+            <pre><code>value is initialized to 0
+value updated to 1</code></pre>
             <p>We can see that <em>pointer arithmetic</em> (i.e. doing
             addition/subtraction on pointers) does the same thing as
             array indexing plus a dereference. That is,
@@ -1484,8 +1485,8 @@ nth index: 0x304666024 == 0x304666024; 7 == 7</code></pre>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0th index: 0x309351020 == 0x309351020; 6 == 6
-nth index: 0x309351024 == 0x309351024; 7 == 7</code></pre>
+            <pre><code>value is initialized to 0
+value updated to 1</code></pre>
             <p>Note that the pointer for the integer array
             (<code>a</code>) is being incremented by 4, while the
             character array (<code>b</code>) by 1. Focusing on the key
@@ -1545,8 +1546,8 @@ Adds 1 -----------+</code></pre>
 <span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0th index: 0x3054f6020 == 0x3054f6020; 6 == 6
-nth index: 0x3054f6024 == 0x3054f6024; 7 == 7</code></pre>
+            <pre><code>value is initialized to 0
+value updated to 1</code></pre>
             <h4 data-number="2.2.5.2" id="generic-pointer-types"><span
             class="header-section-number">2.2.5.2</span> Generic Pointer
             Types</h4>
@@ -1594,8 +1595,8 @@ nth index: 0x3054f6024 == 0x3054f6024; 7 == 7</code></pre>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>intptr<span class="op">;</span></span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0th index: 0x30616a020 == 0x30616a020; 6 == 6
-nth index: 0x30616a024 == 0x30616a024; 7 == 7</code></pre>
+            <pre><code>value is initialized to 0
+value updated to 1</code></pre>
             <p>Data-structures often aim to store data of any type
             (think: a linked list of anything). Thus, in C, you often
             see <code>void *</code>s to reference the data they
@@ -1680,8 +1681,7 @@ nth index: 0x30616a024 == 0x30616a024; 7 == 7</code></pre>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0th index: 0x305f8a020 == 0x305f8a020; 6 == 6
-nth index: 0x305f8a024 == 0x305f8a024; 7 == 7</code></pre>
+            <pre><code></code></pre>
             <ul>
             <li><em>Dangling pointer.</em> If you maintain a pointer to
             a chunk of memory that you <code>free</code>, and then
@@ -1706,8 +1706,7 @@ nth index: 0x305f8a024 == 0x305f8a024; 7 == 7</code></pre>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>a<span class="op">;</span></span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>0th index: 0x304b21020 == 0x304b21020; 6 == 6
-nth index: 0x304b21024 == 0x304b21024; 7 == 7</code></pre>
+            <pre><code></code></pre>
             <ul>
             <li><em>Memory leaks.</em> If you remove all references to
             memory, but <em>don’t</em> <code>free</code> it, then the
@@ -5042,10 +5041,29 @@ AFTER calling fork()</code></pre>
             <div class="sourceCode" id="cb111"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> exit<span class="op">(</span><span class="dt">int</span> status<span class="op">);</span></span></code></pre></div>
             <p>as defined in <code>&lt;stdlib.h</code>. The input
-            argument is the <strong>exit status</strong>: |value|
-            meaning | |——–|——–| | <code>0</code>|
-            <code>EXIT_SUCCESS</code>| | <code>1</code>|
-            <code>EXIT_FAILURE</code>| ||</p>
+            argument is the <strong>exit status</strong>:</p>
+            <table>
+            <thead>
+            <tr class="header">
+            <th>value</th>
+            <th>meaning</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>0</code></td>
+            <td><code>EXIT_SUCCESS</code></td>
+            </tr>
+            <tr class="even">
+            <td><code>1</code></td>
+            <td><code>EXIT_FAILURE</code></td>
+            </tr>
+            <tr class="odd">
+            <td></td>
+            <td></td>
+            </tr>
+            </tbody>
+            </table>
             <p>And note that <code>exit()</code> does not
             <em>explicitly</em> return any value. All the information is
             passed via the <code>status</code> field.</p>
