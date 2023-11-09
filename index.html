@@ -1257,7 +1257,9 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
+Hex and pointers: 7fffffffffffffff, 0x1025ebf00
+Strings: hello world</code></pre>
             <h3 data-number="2.2.4" id="compound-types-1"><span
             class="header-section-number">2.2.4</span> Compound
             types</h3>
@@ -1315,7 +1317,9 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
+Hex and pointers: 7fffffffffffffff, 0x100f04f00
+Strings: hello world</code></pre>
             <p>We can see the effect of the <code>union</code>: The size
             is <code>max(fields)</code> rather than
             <code>sum(fields)</code>. What other examples can you think
@@ -1389,8 +1393,9 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> value <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
+Hex and pointers: 7fffffffffffffff, 0x100dc6f00
+Strings: hello world</code></pre>
             <p>Pointers are <em>necessary</em> as they enable us to
             build <em>linked</em> data-structures (linked-lists, binary
             trees, etc…). Languages such as Java assume that <em>every
@@ -1420,8 +1425,9 @@ value updated to 1</code></pre>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
+Hex and pointers: 7fffffffffffffff, 0x100897f00
+Strings: hello world</code></pre>
             <p>Making this a little more clear, lets understand how C
             accesses the <code>n</code>th item. Lets make a pointer
             <code>int *p = a + 1</code> (we’ll just simply and assume
@@ -1450,8 +1456,9 @@ a ---&gt; +---+---+---+---+
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
+Hex and pointers: 7fffffffffffffff, 0x1049aef00
+Strings: hello world</code></pre>
             <p>We can see that <em>pointer arithmetic</em> (i.e. doing
             addition/subtraction on pointers) does the same thing as
             array indexing plus a dereference. That is,
@@ -1485,8 +1492,9 @@ value updated to 1</code></pre>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
+Hex and pointers: 7fffffffffffffff, 0x10093bf00
+Strings: hello world</code></pre>
             <p>Note that the pointer for the integer array
             (<code>a</code>) is being incremented by 4, while the
             character array (<code>b</code>) by 1. Focusing on the key
@@ -1546,8 +1554,9 @@ Adds 1 -----------+</code></pre>
 <span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
+Hex and pointers: 7fffffffffffffff, 0x102f1af00
+Strings: hello world</code></pre>
             <h4 data-number="2.2.5.2" id="generic-pointer-types"><span
             class="header-section-number">2.2.5.2</span> Generic Pointer
             Types</h4>
@@ -1595,8 +1604,7 @@ value updated to 1</code></pre>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>intptr<span class="op">;</span></span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code></code></pre>
             <p>Data-structures often aim to store data of any type
             (think: a linked list of anything). Thus, in C, you often
             see <code>void *</code>s to reference the data they
@@ -6638,9 +6646,9 @@ $</code></pre>
             <pre><code>$ ps aux | tr -s &#39; &#39; | cut -d &#39; &#39; -f 11 | sort | uniq</code></pre>
             <p>(look up each of those commands).</p>
             <p>Not what we’re talking about…well, not exactly!</p>
-            <p>(short for “<em>pipelines</em>”)</p>
             <h3 data-number="6.1.1" id="unix-pipes"><span
             class="header-section-number">6.1.1</span> unix ‘pipes’</h3>
+            <p>(short for “<em>pipelines</em>”)</p>
             <p>A finite <em>channel</em> → a sequence of bytes:</p>
             <p><img src="figures/pipes4.png" height="75"></p>
             <p>A pipe is accessed using <strong>two (file)
