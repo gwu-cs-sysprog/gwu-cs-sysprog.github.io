@@ -1409,8 +1409,7 @@ make[1]: *** [inline_exec_tmp] Error 1</code></pre>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> value <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
             <p>Pointers are <em>necessary</em> as they enable us to
             build <em>linked</em> data-structures (linked-lists, binary
             trees, etc…). Languages such as Java assume that <em>every
@@ -1440,8 +1439,8 @@ value updated to 1</code></pre>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x304c65fe0 == 0x304c65fe0; 6 == 6
+nth index: 0x304c65fe4 == 0x304c65fe4; 7 == 7</code></pre>
             <p>Making this a little more clear, lets understand how C
             accesses the <code>n</code>th item. Lets make a pointer
             <code>int *p = a + 1</code> (we’ll just simply and assume
@@ -1470,8 +1469,8 @@ a ---&gt; +---+---+---+---+
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x304e6afe0 == 0x304e6afe0; 6 == 6
+nth index: 0x304e6afe4 == 0x304e6afe4; 7 == 7</code></pre>
             <p>We can see that <em>pointer arithmetic</em> (i.e. doing
             addition/subtraction on pointers) does the same thing as
             array indexing plus a dereference. That is,
@@ -1505,8 +1504,8 @@ value updated to 1</code></pre>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x304785fe0 == 0x304785fe0; 6 == 6
+nth index: 0x304785fe4 == 0x304785fe4; 7 == 7</code></pre>
             <p>Note that the pointer for the integer array
             (<code>a</code>) is being incremented by 4, while the
             character array (<code>b</code>) by 1. Focusing on the key
@@ -1566,8 +1565,8 @@ Adds 1 -----------+</code></pre>
 <span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x30cf80fe0 == 0x30cf80fe0; 6 == 6
+nth index: 0x30cf80fe4 == 0x30cf80fe4; 7 == 7</code></pre>
             <h4 data-number="2.2.5.2" id="generic-pointer-types"><span
             class="header-section-number">2.2.5.2</span> Generic Pointer
             Types</h4>
@@ -1615,8 +1614,8 @@ value updated to 1</code></pre>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>intptr<span class="op">;</span></span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x30d4a9fe0 == 0x30d4a9fe0; 6 == 6
+nth index: 0x30d4a9fe4 == 0x30d4a9fe4; 7 == 7</code></pre>
             <p>Data-structures often aim to store data of any type
             (think: a linked list of anything). Thus, in C, you often
             see <code>void *</code>s to reference the data they
@@ -1701,8 +1700,8 @@ value updated to 1</code></pre>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>value is initialized to 0
-value updated to 1</code></pre>
+            <pre><code>0th index: 0x3086bbfe0 == 0x3086bbfe0; 6 == 6
+nth index: 0x3086bbfe4 == 0x3086bbfe4; 7 == 7</code></pre>
             <ul>
             <li><em>Dangling pointer.</em> If you maintain a pointer to
             a chunk of memory that you <code>free</code>, and then
@@ -1727,7 +1726,8 @@ value updated to 1</code></pre>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span>a<span class="op">;</span></span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>0th index: 0x309d8ffe0 == 0x309d8ffe0; 6 == 6
+nth index: 0x309d8ffe4 == 0x309d8ffe4; 7 == 7</code></pre>
             <ul>
             <li><em>Memory leaks.</em> If you remove all references to
             memory, but <em>don’t</em> <code>free</code> it, then the
@@ -2760,7 +2760,7 @@ value updated to 1</code></pre>
 <span id="cb68-46"><a href="#cb68-46" aria-hidden="true" tabindex="-1"></a><span class="co"> *            +-------+         +-------+</span></span>
 <span id="cb68-47"><a href="#cb68-47" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>student added to list!</code></pre>
+            <pre><code></code></pre>
             <p>A few interesting things happened here:</p>
             <ol type="1">
             <li>We’re using <code>void *</code> pointers within the
@@ -2821,7 +2821,7 @@ value updated to 1</code></pre>
 <span id="cb70-25"><a href="#cb70-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb70-26"><a href="#cb70-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>student added to list!</code></pre>
+            <pre><code></code></pre>
             <p>Global variables are either initialized where they are
             defined, or are initialized to <code>0</code>. Note that
             they are intialized to all <code>0</code>s regardless their
@@ -2891,7 +2891,8 @@ value updated to 1</code></pre>
 <span id="cb72-47"><a href="#cb72-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb72-48"><a href="#cb72-48" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>student added to list!</code></pre>
+            <pre><code>Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>Key points to realize:</p>
             <ul>
             <li><code>fibs</code> in <code>fib</code> is allocated
@@ -3024,7 +3025,8 @@ value updated to 1</code></pre>
 <span id="cb79-20"><a href="#cb79-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb79-21"><a href="#cb79-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>student added to list!</code></pre>
+            <pre><code>Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>Yikes. We’re getting random values in the array! Where do
             you think these values came from?</p>
             <p><strong>References to stack variables after function
@@ -3066,7 +3068,8 @@ value updated to 1</code></pre>
 <span id="cb81-34"><a href="#cb81-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb81-35"><a href="#cb81-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>student added to list!</code></pre>
+            <pre><code>Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>You can see a few interesting facts from the output.</p>
             <ol type="1">
             <li>The value referenced by <code>*ptr</code> after
@@ -3164,7 +3167,8 @@ value updated to 1</code></pre>
 <span id="cb83-62"><a href="#cb83-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb83-63"><a href="#cb83-63" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>student added to list!</code></pre>
+            <pre><code>Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>In this program you might notice that we’ve used <em>no
             dynamic memory allocation at all</em>! The cost of this is
             that we had to create a key-value store of only a fixed size
@@ -3252,7 +3256,8 @@ str ---&gt; +---+---+---+---+
 <span id="cb86-16"><a href="#cb86-16" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
 <span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>student added to list!</code></pre>
+            <pre><code>Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>So strings aren’t really all that special in C. They’re
             just arrays with a special terminating character, and a
             little bit of syntax support to construct them
@@ -3326,7 +3331,8 @@ str ---&gt; +---+---+---+---+
 <span id="cb88-29"><a href="#cb88-29" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\&quot;%s\&quot;</span><span class="st"> has length </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> result<span class="op">,</span> ret<span class="op">);</span></span>
 <span id="cb88-30"><a href="#cb88-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <p>Many of these functions raise an important question: What
             happens if one of the strings is not large enough to hold
             the data being put into it? If you want to
@@ -3378,7 +3384,8 @@ str ---&gt; +---+---+---+---+
 <span id="cb90-33"><a href="#cb90-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb90-34"><a href="#cb90-34" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>Should find 8 @ 6: 6
+Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
             <h4 data-number="4.2.1.2" id="parsing-strings"><span
             class="header-section-number">4.2.1.2</span> Parsing
             Strings</h4>
@@ -3470,7 +3477,15 @@ str ---&gt; +---+---+---+---+
 <span id="cb92-37"><a href="#cb92-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb92-38"><a href="#cb92-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>extracted 1, remaining string: &quot; 42 the secret to everything&quot;
+extracted 42, remaining string: &quot; the secret to everything&quot;
+42 and &quot;secret&quot;
+Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
+[1 42 ]
+[e secre]
+[ ]
+[o every]
+[ing]</code></pre>
             <h3 data-number="4.2.2" id="bonus-explicit-strings"><span
             class="header-section-number">4.2.2</span> Bonus: Explicit
             Strings</h3>
@@ -3499,7 +3514,15 @@ str ---&gt; +---+---+---+---+
 <span id="cb94-18"><a href="#cb94-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb94-19"><a href="#cb94-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>extracted 1, remaining string: &quot; 42 the secret to everything&quot;
+extracted 42, remaining string: &quot; the secret to everything&quot;
+42 and &quot;secret&quot;
+Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
+[1 42 ]
+[e secre]
+[ ]
+[o every]
+[ing]</code></pre>
             <p>The C compiler and linker are smart enough to see that if
             you have already used a string with a specific value (in
             this case <code>"clone"</code>), it will avoid allocating a
@@ -3652,7 +3675,15 @@ str ---&gt; +---+---+---+---+
 <span id="cb96-119"><a href="#cb96-119" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb96-120"><a href="#cb96-120" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>extracted 1, remaining string: &quot; 42 the secret to everything&quot;
+extracted 42, remaining string: &quot; the secret to everything&quot;
+42 and &quot;secret&quot;
+Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
+[1 42 ]
+[e secre]
+[ ]
+[o every]
+[ing]</code></pre>
             <!-- COMBINED ERROR NOTES WITH NEW MATERIAL IN ANOTHER FILE BY SIBIN in OCT 2023!
 
             ### Errors
@@ -3728,7 +3759,15 @@ str ---&gt; +---+---+---+---+
 
             Program output:
             ```
-            "hello world and also 42" has length 23
+            extracted 1, remaining string: " 42 the secret to everything"
+            extracted 42, remaining string: " the secret to everything"
+            42 and "secret"
+            Using strtok to parse through a string finding substrings separated by 'h' or 't':
+            [1 42 ]
+            [e secre]
+            [ ]
+            [o every]
+            [ing]
             ```
 
             (Note: when you return from a program with a non-zero value, it designates that your *program* had an error.
@@ -3955,7 +3994,15 @@ str ---&gt; +---+---+---+---+
 <span id="cb98-102"><a href="#cb98-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb98-103"><a href="#cb98-103" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>&quot;hello world and also 42&quot; has length 23</code></pre>
+            <pre><code>extracted 1, remaining string: &quot; 42 the secret to everything&quot;
+extracted 42, remaining string: &quot; the secret to everything&quot;
+42 and &quot;secret&quot;
+Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
+[1 42 ]
+[e secre]
+[ ]
+[o every]
+[ing]</code></pre>
             <p>The above code is hopelessly broken. Run it in valgrind
             to see.</p>
             <p><strong>Tasks:</strong></p>
@@ -4317,11 +4364,15 @@ str ---&gt; +---+---+---+---+
 <span id="cb105-42"><a href="#cb105-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span> <span class="op">;</span></span>
 <span id="cb105-43"><a href="#cb105-43" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>inline_exec_tmp.c:9:10: fatal error: &#39;error.h&#39; file not found
-#include &lt;error.h&gt;
-         ^~~~~~~~~
-1 error generated.
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+            <pre><code>extracted 1, remaining string: &quot; 42 the secret to everything&quot;
+extracted 42, remaining string: &quot; the secret to everything&quot;
+42 and &quot;secret&quot;
+Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
+[1 42 ]
+[e secre]
+[ ]
+[o every]
+[ing]</code></pre>
             <p><strong>Note:</strong> look up <a
             href="https://www.tutorialspoint.com/c_standard_library/limits_h.htm"><code>&lt;limits.h&gt;</code></a>
             that defines some useful constants such as
@@ -5363,12 +5414,15 @@ Inside :::PARENT::: where child 2568616 exited with status: 5</code></pre>
             class="sourceCode c"><code class="sourceCode c"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">void</span> <span class="op">(*</span>function<span class="op">)(</span><span class="dt">void</span><span class="op">)</span> <span class="op">;</span></span>
 <span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> atexit<span class="op">(</span>function my_func<span class="op">);</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Undefined symbols for architecture x86_64:
-  &quot;_main&quot;, referenced from:
-     implicit entry/start for main executable
-ld: symbol(s) not found for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-make[1]: *** [inline_exec_tmp] Error 1</code></pre>
+            <pre><code>extracted 1, remaining string: &quot; 42 the secret to everything&quot;
+extracted 42, remaining string: &quot; the secret to everything&quot;
+42 and &quot;secret&quot;
+Using strtok to parse through a string finding substrings separated by &#39;h&#39; or &#39;t&#39;:
+[1 42 ]
+[e secre]
+[ ]
+[o every]
+[ing]</code></pre>
             <ul>
             <li>register a <em>user-defined</em> <strong>function
             pointer</strong></li>
@@ -7099,8 +7153,11 @@ AFTER
 <span id="cb184-57"><a href="#cb184-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb184-58"><a href="#cb184-58" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>First program, arg 1: ./inline_exec_tmp
+Inside ./03/args2.bin
+arg 0: ./03/args2.bin
+arg 1: hello
+arg 2: world</code></pre>
             <p>The <em>concurrency</em> of the system enables separate
             processes to be active at the same time, thus for the
             <code>write</code> and <code>read</code> to be transferring
@@ -7214,8 +7271,11 @@ Parent got the message!</code></pre>
 <span id="cb186-56"><a href="#cb186-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb186-57"><a href="#cb186-57" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>First program, arg 1: ./inline_exec_tmp
+Inside ./03/args2.bin
+arg 0: ./03/args2.bin
+arg 1: hello
+arg 2: world</code></pre>
             <p><strong>Closing pipes.</strong> <code>read</code>ing from
             a pipe will return that there is no more data on the pipe
             (i.e. return <code>0</code>) <em>only if all
@@ -7368,8 +7428,11 @@ Parent got the message!</code></pre>
 <span id="cb190-42"><a href="#cb190-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb190-43"><a href="#cb190-43" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>First program, arg 1: ./inline_exec_tmp
+Inside ./03/args2.bin
+arg 0: ./03/args2.bin
+arg 1: hello
+arg 2: world</code></pre>
             <p>We can actually execute in the signal handler when we
             access invalid memory! We can write code to execute in
             response to a segmentation fault. This is how Java prints
@@ -7510,8 +7573,14 @@ Parent got the message!</code></pre>
 <span id="cb194-6"><a href="#cb194-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span>     <span class="op">(*</span>sa_restorer<span class="op">)(</span><span class="dt">void</span><span class="op">);</span></span>
 <span id="cb194-7"><a href="#cb194-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>inline_exec_tmp.c:3:35: error: unknown type name &#39;siginfo_t&#39;
+    void     (*sa_sigaction)(int, siginfo_t *, void *);
+                                  ^
+inline_exec_tmp.c:4:5: error: unknown type name &#39;sigset_t&#39;
+    sigset_t   sa_mask;
+    ^
+2 errors generated.
+make[1]: *** [inline_exec_tmp] Error 1</code></pre>
             <p>Why <strong>two</strong> function pointers? -
             <code>(*sa_handler)</code> -
             <code>(*sa_sigaction)</code></p>
@@ -7521,8 +7590,11 @@ Parent got the message!</code></pre>
             class="sourceCode c"><code class="sourceCode c"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span>     <span class="op">(*</span>sa_handler<span class="op">)(</span><span class="dt">int</span><span class="op">);</span>`</span>
 <span id="cb196-2"><a href="#cb196-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span>     <span class="op">(*</span>sa_sigaction<span class="op">)(</span><span class="dt">int</span><span class="op">,</span> siginfo_t <span class="op">*,</span> <span class="dt">void</span> <span class="op">*);</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>inline_exec_tmp.c:1:29: error: expected identifier or &#39;(&#39;
+void     (*sa_handler)(int);`
+                            ^
+1 error generated.
+make[1]: *** [inline_exec_tmp] Error 1</code></pre>
             <p>choice of which → depends on a <strong>flag</strong> that
             is set.</p>
             <h4 data-number="6.2.4.1" id="flags"><span
@@ -7757,8 +7829,9 @@ Parent got the message!</code></pre>
 <span id="cb199-83"><a href="#cb199-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb199-84"><a href="#cb199-84" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>24570: We&#39;ve been asked to terminate. Exit!
+24568: Parent asking child (24570) to terminate
+24568: Child process 24570 has exited.</code></pre>
             <p><em>Note:</em> You want to run this a few times on your
             system to see the output. The auto-execution scripts of the
             lectures might cause wonky effects here due to
@@ -7938,8 +8011,10 @@ Parent got the message!</code></pre>
 <span id="cb201-93"><a href="#cb201-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span> <span class="op">;</span></span>
 <span id="cb201-94"><a href="#cb201-94" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>Child sent whole message!
-Parent got the message!</code></pre>
+            <pre><code>24580: Parent asking child (24581) to terminate
+24580: Child process 24581 has exited.
+Assertion failed: (WIFEXITED(status)), function main, file inline_exec_tmp.c, line 81.
+make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>Comment out one of the other of the
             <code>setup_signal</code> function calls in
             <code>main()</code> to see very different behaviors.</p>
@@ -8016,7 +8091,10 @@ Parent got the message!</code></pre>
 <span id="cb203-48"><a href="#cb203-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb203-49"><a href="#cb203-49" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code>24593: Parent asking child (24594) to terminate
+24593: Child process 24594 has exited.
+Assertion failed: (WIFEXITED(status)), function main, file inline_exec_tmp.c, line 81.
+make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>The set of functions you <em>can</em> call in a signal
             handler (i.e. that are <em>re-entrant</em>) are listed in
             the manual page: <code>man 7 signal-safety</code>.</p>
@@ -8830,7 +8908,10 @@ Parent got the message!</code></pre>
 <span id="cb214-27"><a href="#cb214-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb214-28"><a href="#cb214-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code>24607: Parent asking child (24608) to terminate
+24607: Child process 24608 has exited.
+Assertion failed: (WIFEXITED(status)), function main, file inline_exec_tmp.c, line 81.
+make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <h4 data-number="7.3.2.2" id="streams-as-buffered-io"><span
             class="header-section-number">7.3.2.2</span> Streams as
             buffered I/O</h4>
@@ -8868,7 +8949,7 @@ Parent got the message!</code></pre>
 <span id="cb216-10"><a href="#cb216-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb216-11"><a href="#cb216-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code></code></pre>
             <p>Well that’s not good!</p>
             <p>The <em>buffered data</em> is copied into each process,
             then it is output when an <code>\n</code> is
@@ -8887,7 +8968,7 @@ Parent got the message!</code></pre>
 <span id="cb218-11"><a href="#cb218-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb218-12"><a href="#cb218-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code></code></pre>
             <p>Both <code>printf</code> and the <code>write</code> are,
             technically, to the standard output, but <code>printf</code>
             is to a <em>stream</em>. The <em>buffered</em>
@@ -8912,7 +8993,7 @@ Parent got the message!</code></pre>
 <span id="cb220-12"><a href="#cb220-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb220-13"><a href="#cb220-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code></code></pre>
             <p>Even though we fault <em>after</em> the
             <code>printf</code>, we don’t see the <code>printf</code>’s
             output!</p>
@@ -8952,7 +9033,7 @@ Parent got the message!</code></pre>
 <span id="cb222-16"><a href="#cb222-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb222-17"><a href="#cb222-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code></code></pre>
             <div class="sourceCode" id="cb224"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb224-1"><a href="#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
 <span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
@@ -8967,7 +9048,7 @@ Parent got the message!</code></pre>
 <span id="cb224-11"><a href="#cb224-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb224-12"><a href="#cb224-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>errno should be &quot;Bad file descriptor&quot;, but has value &quot;Undefined error: 0&quot;</code></pre>
+            <pre><code></code></pre>
             <h4 data-number="7.3.2.4"
             id="other-useful-stream-functions"><span
             class="header-section-number">7.3.2.4</span> Other Useful
@@ -9893,19 +9974,11 @@ Am an attendant lord, one that will do
 <span id="cb244-105"><a href="#cb244-105" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb244-106"><a href="#cb244-106" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>The new genre: abridged, tweet-worthy poetry...
-
- The Love Song of J. Alfred Prufrock
-Of restless nights in one-night cheap hotels
-Let fall upon its back the soot that falls from chimneys,
-And for a hundred visions and revisions,
-Disturb the universe?
-Then how should I begin
-Of lonely men in shirt-sleeves, leaning out of windows? ...
-And I have seen the eternal Footman hold my coat, and snicker,
-
-Am an attendant lord, one that will do
-</code></pre>
+            <pre><code>inline_exec_tmp.c:102:26: error: call to undeclared function &#39;kill&#39;; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+        for (i = 0; i &lt; 3; i++) kill(pids[i], SIGTERM);
+                                ^
+1 error generated.
+make[1]: *** [inline_exec_tmp] Error 1</code></pre>
             <p>If executed many times, you see the expected result:</p>
             <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -12417,7 +12490,10 @@ exit_group(0)                           = ?
 <span id="cb306-37"><a href="#cb306-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb306-38"><a href="#cb306-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>42</code></pre>
+            <pre><code>
+malloc + free overhead (cycles): 148
+
+mmap + munmap overhead (cycles): 2942</code></pre>
             <blockquote>
             <p>What is a “cycle”? When you read that you have a 3GHz,
             that essentially says that the internal “clock” that drives
@@ -12477,12 +12553,10 @@ exit_group(0)                           = ?
 <span id="cb308-35"><a href="#cb308-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb308-36"><a href="#cb308-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>                                                                                                                                                                                                                                                                
-write overhead (cycles): 3169
-                                                                                                                                                                                                                                                                
-fwrite (stream) overhead (cycles): 82
-                                                                                                                                                                                                                                                                
-fwrite + fflush overhead (cycles): 3226</code></pre>
+            <pre><code>
+malloc + free overhead (cycles): 126
+
+mmap + munmap overhead (cycles): 2448</code></pre>
             <h2 data-number="12.4"
             id="library-vs.-kernel-trade-offs-in-memory-allocation"><span
             class="header-section-number">12.4</span> Library vs. Kernel
@@ -12997,12 +13071,10 @@ chown: changing ownership of &#39;helloworld.bin&#39;: Operation not permitted</
 <span id="cb326-16"><a href="#cb326-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb326-17"><a href="#cb326-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>                                                                                                                                                                                                                                                                
-write overhead (cycles): 2468
-                                                                                                                                                                                                                                                                
-fwrite (stream) overhead (cycles): 62
-                                                                                                                                                                                                                                                                
-fwrite + fflush overhead (cycles): 2452</code></pre>
+            <pre><code>
+malloc + free overhead (cycles): 127
+
+mmap + munmap overhead (cycles): 2515</code></pre>
             <p>Every user has different identifiers as does each group.
             If another user where to run the same program, they’d get a
             different value.</p>
