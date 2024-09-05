@@ -976,9 +976,13 @@ Programming</span>
             <h2 data-number="2.1" id="computer-memory"><span
             class="header-section-number">2.1</span> Computer
             memory</h2>
-            <p>different shapes, sizes and <strong>speeds</strong> *
-            registers * caches (L1, L2, L3) * main memory/RAM * disk
-            (hard disks, flash)</p>
+            <p>different shapes, sizes and <strong>speeds</strong></p>
+            <ul>
+            <li>registers</li>
+            <li>caches (L1, L2, L3)</li>
+            <li>main memory/RAM</li>
+            <li>disk (hard disks, flash)</li>
+            </ul>
             <h3 data-number="2.1.1" id="registers"><span
             class="header-section-number">2.1.1</span> Registers</h3>
             <ul>
@@ -1951,7 +1955,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p><code>valgrind</code> will help you debug the last three
             of these issues, and later in the class, we’ll develop a
             library to help debug the first.</p>
@@ -2017,7 +2021,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>           a<span class="op">,</span> b<span class="op">,</span> c<span class="op">.</span>c_a<span class="op">,</span> c<span class="op">.</span>c_b<span class="op">,</span> c<span class="op">.</span>c_c<span class="op">);</span></span>
 <span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p><strong>Question</strong> Answer <em>Q1-4</em> in the
             code, uncommenting and modifying where appropriate.</p>
             <h4 data-number="3.4.1.1" id="takeaways"><span
@@ -2139,7 +2143,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb42-77"><a href="#cb42-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb42-78"><a href="#cb42-78" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>You want to implement a simple “key-value” store that is
             very similar in API to a hash-table (many key-value stores
             are implemented using hash-tables!).</p>
@@ -2358,7 +2362,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb47-41"><a href="#cb47-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span> <span class="op">;</span></span>
 <span id="cb47-42"><a href="#cb47-42" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>MON = 0, TUES = 1, ..., FRI = 4</code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>This works for an array of <code>int</code>s. But what if
             I want to sort an array of <code>double</code>?</p>
             <p>Maybe, write a new function to do that?</p>
@@ -2849,7 +2853,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb65-38"><a href="#cb65-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb65-39"><a href="#cb65-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>One of the more interesting uses of internal allocation
             is in linked data-structures (e.g. like linked lists). It is
             common in languages like java to implement linked
@@ -2940,7 +2944,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb68-46"><a href="#cb68-46" aria-hidden="true" tabindex="-1"></a><span class="co"> *            +-------+         +-------+</span></span>
 <span id="cb68-47"><a href="#cb68-47" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>A few interesting things happened here:</p>
             <ol type="1">
             <li>We’re using <code>void *</code> pointers within the
@@ -3001,7 +3005,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb70-25"><a href="#cb70-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb70-26"><a href="#cb70-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>Global variables are either initialized where they are
             defined, or are initialized to <code>0</code>. Note that
             they are intialized to all <code>0</code>s regardless their
@@ -3071,7 +3075,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb72-47"><a href="#cb72-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb72-48"><a href="#cb72-48" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>Key points to realize:</p>
             <ul>
             <li><code>fibs</code> in <code>fib</code> is allocated
@@ -3204,7 +3208,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb79-20"><a href="#cb79-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb79-21"><a href="#cb79-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>Yikes. We’re getting random values in the array! Where do
             you think these values came from?</p>
             <p><strong>References to stack variables after function
@@ -3246,7 +3250,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb81-34"><a href="#cb81-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb81-35"><a href="#cb81-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>You can see a few interesting facts from the output.</p>
             <ol type="1">
             <li>The value referenced by <code>*ptr</code> after
@@ -3344,7 +3348,7 @@ Adds 1 -----------+</code></pre>
 <span id="cb83-62"><a href="#cb83-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb83-63"><a href="#cb83-63" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>In this program you might notice that we’ve used <em>no
             dynamic memory allocation at all</em>! The cost of this is
             that we had to create a key-value store of only a fixed size
@@ -3432,7 +3436,7 @@ str ---&gt; +---+---+---+---+
 <span id="cb86-16"><a href="#cb86-16" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
 <span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>So strings aren’t really all that special in C. They’re
             just arrays with a special terminating character, and a
             little bit of syntax support to construct them
@@ -3506,7 +3510,7 @@ str ---&gt; +---+---+---+---+
 <span id="cb88-29"><a href="#cb88-29" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\&quot;%s\&quot;</span><span class="st"> has length </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> result<span class="op">,</span> ret<span class="op">);</span></span>
 <span id="cb88-30"><a href="#cb88-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <p>Many of these functions raise an important question: What
             happens if one of the strings is not large enough to hold
             the data being put into it? If you want to
@@ -3558,7 +3562,7 @@ str ---&gt; +---+---+---+---+
 <span id="cb90-33"><a href="#cb90-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb90-34"><a href="#cb90-34" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <h4 data-number="5.2.1.2" id="parsing-strings"><span
             class="header-section-number">5.2.1.2</span> Parsing
             Strings</h4>
@@ -3650,7 +3654,7 @@ str ---&gt; +---+---+---+---+
 <span id="cb92-37"><a href="#cb92-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb92-38"><a href="#cb92-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>make[1]: *** [inline_exec] Abort trap: 6</code></pre>
             <h3 data-number="5.2.2" id="bonus-explicit-strings"><span
             class="header-section-number">5.2.2</span> Bonus: Explicit
             Strings</h3>
@@ -3679,7 +3683,8 @@ str ---&gt; +---+---+---+---+
 <span id="cb94-18"><a href="#cb94-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb94-19"><a href="#cb94-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>blahblahblah
+0x104f0ff88 == 0x104f0ff88 != 0x104f14000</code></pre>
             <p>The C compiler and linker are smart enough to see that if
             you have already used a string with a specific value (in
             this case <code>"clone"</code>), it will avoid allocating a
@@ -3832,7 +3837,8 @@ str ---&gt; +---+---+---+---+
 <span id="cb96-119"><a href="#cb96-119" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb96-120"><a href="#cb96-120" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>blahblahblah
+0x104b2bf88 == 0x104b2bf88 != 0x104b30000</code></pre>
             <!-- COMBINED ERROR NOTES WITH NEW MATERIAL IN ANOTHER FILE BY SIBIN in OCT 2023!
 
             ### Errors
@@ -3908,6 +3914,8 @@ str ---&gt; +---+---+---+---+
 
             Program output:
             ```
+            blahblahblah
+            0x10261ff88 == 0x10261ff88 != 0x102624000
             ```
 
             (Note: when you return from a program with a non-zero value, it designates that your *program* had an error.
@@ -4134,7 +4142,8 @@ str ---&gt; +---+---+---+---+
 <span id="cb98-102"><a href="#cb98-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb98-103"><a href="#cb98-103" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>blahblahblah
+0x1001a7f88 == 0x1001a7f88 != 0x1001ac000</code></pre>
             <p>The above code is hopelessly broken. Run it in valgrind
             to see.</p>
             <p><strong>Tasks:</strong></p>
@@ -4496,7 +4505,8 @@ str ---&gt; +---+---+---+---+
 <span id="cb105-42"><a href="#cb105-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span> <span class="op">;</span></span>
 <span id="cb105-43"><a href="#cb105-43" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>blahblahblah
+0x104677f88 == 0x104677f88 != 0x10467c000</code></pre>
             <p><strong>Note:</strong> look up <a
             href="https://www.tutorialspoint.com/c_standard_library/limits_h.htm"><code>&lt;limits.h&gt;</code></a>
             that defines some useful constants such as
@@ -5538,7 +5548,8 @@ Inside :::PARENT::: where child 2568616 exited with status: 5</code></pre>
             class="sourceCode c"><code class="sourceCode c"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">void</span> <span class="op">(*</span>function<span class="op">)(</span><span class="dt">void</span><span class="op">)</span> <span class="op">;</span></span>
 <span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> atexit<span class="op">(</span>function my_func<span class="op">);</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>blahblahblah
+0x10008bf88 == 0x10008bf88 != 0x100090000</code></pre>
             <ul>
             <li>register a <em>user-defined</em> <strong>function
             pointer</strong></li>
@@ -5736,7 +5747,8 @@ Goodbye cruel world!</code></pre>
 <span id="cb144-23"><a href="#cb144-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb144-24"><a href="#cb144-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>blahblahblah
+0x100d47f88 == 0x100d47f88 != 0x100d4c000</code></pre>
             <p><code>args1.c</code> is</p>
             <div class="sourceCode" id="cb146"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
@@ -5892,7 +5904,8 @@ penny</code></pre>
 <span id="cb149-15"><a href="#cb149-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb149-16"><a href="#cb149-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code></code></pre>
+            <pre><code>blahblahblah
+0x1023b7f88 == 0x1023b7f88 != 0x1023bc000</code></pre>
             <p>You can see all of the environmental variables available
             by default with:</p>
             <pre><code>$ env
@@ -5944,8 +5957,8 @@ DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 <span id="cb152-34"><a href="#cb152-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb152-35"><a href="#cb152-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny</code></pre>
+            <pre><code>blahblahblah
+0x100c97f88 == 0x100c97f88 != 0x100c9c000</code></pre>
             <p><code>03/envtest.c</code> is</p>
             <div class="sourceCode" id="cb154"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
@@ -7258,8 +7271,8 @@ AFTER
 <span id="cb184-57"><a href="#cb184-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb184-58"><a href="#cb184-58" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny</code></pre>
+            <pre><code>blahblahblah
+0x100147f88 == 0x100147f88 != 0x10014c000</code></pre>
             <p>The <em>concurrency</em> of the system enables separate
             processes to be active at the same time, thus for the
             <code>write</code> and <code>read</code> to be transferring
@@ -7373,8 +7386,8 @@ user (forked child): penny</code></pre>
 <span id="cb186-56"><a href="#cb186-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb186-57"><a href="#cb186-57" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny</code></pre>
+            <pre><code>blahblahblah
+0x1047c7f88 == 0x1047c7f88 != 0x1047cc000</code></pre>
             <p><strong>Closing pipes.</strong> <code>read</code>ing from
             a pipe will return that there is no more data on the pipe
             (i.e. return <code>0</code>) <em>only if all
@@ -7527,9 +7540,8 @@ user (forked child): penny</code></pre>
 <span id="cb190-42"><a href="#cb190-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb190-43"><a href="#cb190-43" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>blahblahblah
+0x104573f88 == 0x104573f88 != 0x104578000</code></pre>
             <p>We can actually execute in the signal handler when we
             access invalid memory! We can write code to execute in
             response to a segmentation fault. This is how Java prints
@@ -7670,9 +7682,8 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb194-6"><a href="#cb194-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span>     <span class="op">(*</span>sa_restorer<span class="op">)(</span><span class="dt">void</span><span class="op">);</span></span>
 <span id="cb194-7"><a href="#cb194-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>blahblahblah
+0x10216bf88 == 0x10216bf88 != 0x102170000</code></pre>
             <p>Why <strong>two</strong> function pointers? -
             <code>(*sa_handler)</code> -
             <code>(*sa_sigaction)</code></p>
@@ -7682,9 +7693,8 @@ Environment variable USER -&gt; penny</code></pre>
             class="sourceCode c"><code class="sourceCode c"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span>     <span class="op">(*</span>sa_handler<span class="op">)(</span><span class="dt">int</span><span class="op">);</span>`</span>
 <span id="cb196-2"><a href="#cb196-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span>     <span class="op">(*</span>sa_sigaction<span class="op">)(</span><span class="dt">int</span><span class="op">,</span> siginfo_t <span class="op">*,</span> <span class="dt">void</span> <span class="op">*);</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>blahblahblah
+0x102be7f88 == 0x102be7f88 != 0x102bec000</code></pre>
             <p>choice of which → depends on a <strong>flag</strong> that
             is set.</p>
             <h4 data-number="7.2.4.1" id="flags"><span
@@ -7919,9 +7929,8 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb199-83"><a href="#cb199-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb199-84"><a href="#cb199-84" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>blahblahblah
+0x1002dff88 == 0x1002dff88 != 0x1002e4000</code></pre>
             <p><em>Note:</em> You want to run this a few times on your
             system to see the output. The auto-execution scripts of the
             lectures might cause wonky effects here due to
@@ -8101,9 +8110,8 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb201-93"><a href="#cb201-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span> <span class="op">;</span></span>
 <span id="cb201-94"><a href="#cb201-94" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>blahblahblah
+0x100e73f88 == 0x100e73f88 != 0x100e78000</code></pre>
             <p>Comment out one of the other of the
             <code>setup_signal</code> function calls in
             <code>main()</code> to see very different behaviors.</p>
@@ -8180,9 +8188,8 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb203-48"><a href="#cb203-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb203-49"><a href="#cb203-49" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>blahblahblah
+0x100ba7f88 == 0x100ba7f88 != 0x100bac000</code></pre>
             <p>The set of functions you <em>can</em> call in a signal
             handler (i.e. that are <em>re-entrant</em>) are listed in
             the manual page: <code>man 7 signal-safety</code>.</p>
@@ -8996,9 +9003,8 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb214-27"><a href="#cb214-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb214-28"><a href="#cb214-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code>blahblahblah
+0x104e4bf88 == 0x104e4bf88 != 0x104e50000</code></pre>
             <h4 data-number="8.3.2.2" id="streams-as-buffered-io"><span
             class="header-section-number">8.3.2.2</span> Streams as
             buffered I/O</h4>
@@ -9036,9 +9042,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb216-10"><a href="#cb216-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb216-11"><a href="#cb216-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code></code></pre>
             <p>Well that’s not good!</p>
             <p>The <em>buffered data</em> is copied into each process,
             then it is output when an <code>\n</code> is
@@ -9057,9 +9061,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb218-11"><a href="#cb218-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb218-12"><a href="#cb218-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code></code></pre>
             <p>Both <code>printf</code> and the <code>write</code> are,
             technically, to the standard output, but <code>printf</code>
             is to a <em>stream</em>. The <em>buffered</em>
@@ -9084,9 +9086,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb220-12"><a href="#cb220-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb220-13"><a href="#cb220-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code></code></pre>
             <p>Even though we fault <em>after</em> the
             <code>printf</code>, we don’t see the <code>printf</code>’s
             output!</p>
@@ -9126,9 +9126,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb222-16"><a href="#cb222-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb222-17"><a href="#cb222-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code></code></pre>
             <div class="sourceCode" id="cb224"><pre
             class="sourceCode c"><code class="sourceCode c"><span id="cb224-1"><a href="#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
 <span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
@@ -9143,9 +9141,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb224-11"><a href="#cb224-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb224-12"><a href="#cb224-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code></code></pre>
             <h4 data-number="8.3.2.4"
             id="other-useful-stream-functions"><span
             class="header-section-number">8.3.2.4</span> Other Useful
@@ -9192,9 +9188,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb226-28"><a href="#cb226-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb226-29"><a href="#cb226-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code></code></pre>
             <h2 data-number="8.4" id="accessing-directories"><span
             class="header-section-number">8.4</span> Accessing
             Directories</h2>
@@ -9301,9 +9295,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb228-54"><a href="#cb228-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> finfo<span class="op">.</span>st_size<span class="op">;</span></span>
 <span id="cb228-55"><a href="#cb228-55" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code></code></pre>
             <p>To make <em>changes</em> in the first system hierarchy,
             we need an additional set of functions.</p>
             <ul>
@@ -9355,9 +9347,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb230-33"><a href="#cb230-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb230-34"><a href="#cb230-34" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code></code></pre>
             <h2 data-number="8.5" id="exercises-2"><span
             class="header-section-number">8.5</span> Exercises</h2>
             <p>Write a <code>tree</code> clone, with disk usage
@@ -9478,9 +9468,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb234-87"><a href="#cb234-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> finfo<span class="op">.</span>st_size<span class="op">;</span></span>
 <span id="cb234-88"><a href="#cb234-88" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>user: sibin
-user (forked child): penny
-Environment variable USER -&gt; penny</code></pre>
+            <pre><code></code></pre>
             <h3 data-number="8.5.2"
             id="task-2-file-and-directory-sizes"><span
             class="header-section-number">8.5.2</span> Task 2: File and
@@ -9753,8 +9741,7 @@ Environment variable USER -&gt; penny</code></pre>
 <span id="cb240-53"><a href="#cb240-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb240-54"><a href="#cb240-54" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code></code></pre>
             <p>You can see that there are some problems here. If we run
             it many times, we can see that sometimes we don’t see any
             messages, sometimes we only see the first, sometimes we only
@@ -9877,8 +9864,7 @@ msg2: </code></pre>
 <span id="cb242-59"><a href="#cb242-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb242-60"><a href="#cb242-60" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code></code></pre>
             <p>There is one very awkward named pipe behavior. Processes
             attempting to <code>open</code> a named pipe will block (the
             <code>open</code> will not return) until processes have
@@ -10009,8 +9995,7 @@ msg2: </code></pre>
 <span id="cb244-105"><a href="#cb244-105" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb244-106"><a href="#cb244-106" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code></code></pre>
             <p>If executed many times, you see the expected result:</p>
             <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -10253,8 +10238,7 @@ msg2: </code></pre>
 <span id="cb248-101"><a href="#cb248-101" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb248-102"><a href="#cb248-102" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code></code></pre>
             <p>The server’s call to <code>accept</code> is the key
             difference of domain sockets from named pipes. It enables us
             to have per-client descriptors we can use to separately
@@ -11992,8 +11976,7 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <span id="cb288-29"><a href="#cb288-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb288-30"><a href="#cb288-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code></code></pre>
             <p>As <code>dlsym</code> returns a pointer to the symbol
             passed in (as a string), it means that you end up seeing a
             <em>lot</em> of function pointers when you’re using plugin
@@ -12025,8 +12008,7 @@ msg2: </code></pre>
 <span id="cb290-20"><a href="#cb290-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb290-21"><a href="#cb290-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code></code></pre>
             <p>Though this example doesn’t have much of a point, as we
             can directly call <code>write</code>, thus have to go
             through the symbol we retrieved from <code>dlsym</code>, See
@@ -12270,8 +12252,7 @@ free(0x55fe6cd492a0)
 <span id="cb295-8"><a href="#cb295-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb295-9"><a href="#cb295-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code></code></pre>
             <p>The C standard library even provides you a “generic” way
             to invoke <em>any</em> system call. The <code>syscall</code>
             function lets you make an integer-identified system call.
@@ -12289,8 +12270,7 @@ msg2: </code></pre>
 <span id="cb297-9"><a href="#cb297-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb297-10"><a href="#cb297-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code></code></pre>
             <p>Lets look at a few of these integer values to see what’s
             happening here:</p>
             <div class="sourceCode" id="cb299"><pre
@@ -12306,8 +12286,7 @@ msg2: </code></pre>
 <span id="cb299-10"><a href="#cb299-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb299-11"><a href="#cb299-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code></code></pre>
             <p>Note, these integer values are <em>not</em> related to
             descriptors (e.g. <code>STDIN_FILENO == 0</code>). The
             system calls in Linux (and in all operating systems!) are
@@ -12520,8 +12499,12 @@ exit_group(0)                           = ?
 <span id="cb306-37"><a href="#cb306-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb306-38"><a href="#cb306-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code>In file included from inline_exec_tmp.c:1:
+./10/timer.h:14:33: error: invalid output constraint &#39;=a&#39; in asm
+        __asm__ __volatile__(&quot;rdtsc&quot; : &quot;=a&quot; (a), &quot;=d&quot; (d), &quot;=c&quot; (c) : : );
+                                       ^
+1 error generated.
+make[1]: *** [inline_exec_tmp] Error 1</code></pre>
             <blockquote>
             <p>What is a “cycle”? When you read that you have a 3GHz,
             that essentially says that the internal “clock” that drives
@@ -12581,8 +12564,12 @@ msg2: </code></pre>
 <span id="cb308-35"><a href="#cb308-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb308-36"><a href="#cb308-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code>In file included from inline_exec_tmp.c:1:
+./10/timer.h:14:33: error: invalid output constraint &#39;=a&#39; in asm
+        __asm__ __volatile__(&quot;rdtsc&quot; : &quot;=a&quot; (a), &quot;=d&quot; (d), &quot;=c&quot; (c) : : );
+                                       ^
+1 error generated.
+make[1]: *** [inline_exec_tmp] Error 1</code></pre>
             <h2 data-number="13.4"
             id="library-vs.-kernel-trade-offs-in-memory-allocation"><span
             class="header-section-number">13.4</span> Library vs. Kernel
@@ -13097,8 +13084,7 @@ chown: changing ownership of &#39;helloworld.bin&#39;: Operation not permitted</
 <span id="cb326-16"><a href="#cb326-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb326-17"><a href="#cb326-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
             <p>Program output:</p>
-            <pre><code>msg1: 
-msg2: </code></pre>
+            <pre><code>uid=501 gid=20</code></pre>
             <p>Every user has different identifiers as does each group.
             If another user where to run the same program, they’d get a
             different value.</p>
