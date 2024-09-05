@@ -516,14 +516,6 @@ Find the [slides](https://sibin.github.io/teaching/csci2410-gwu-systems_programm
 <p><br> or, at least the programs “<em>think</em>” so!</p>
 <p>Hence, <strong>programmers need </strong>not** worry about other programs!**</p>
 <h1 id="intro-to-c"><span class="header-section-number">3</span> Intro to C</h1>
-<details>
-<p><summary>[Notes]</summary></p>
-<blockquote>
-<ul>
-<li>Start by talking through slides</li>
-</ul>
-</blockquote>
-</details>
 <p><strong>You already know </strong>C<strong>!</strong></p>
 <p>well, some of it anyways…</p>
 <h3 id="c-constructs-if-youre-familiar-with-java-python-etc."><span class="header-section-number">3.0.1</span> C constructs [if you’re familiar with Java, Python, etc.]</h3>
@@ -683,15 +675,6 @@ Find the [slides](https://sibin.github.io/teaching/csci2410-gwu-systems_programm
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb1-1" title="1">man <span class="dv">3</span> printf</a></code></pre></div>
 <p>The <em>initial</em> part of the output will look something like this (run the above command in a terminal for the full output):</p>
 <p><img src="figures/man_printf_output.png" width="500"></p>
-<details>
-<p><summary>[Notes]</summary></p>
-<blockquote>
-<ul>
-<li>show man 3 printf example</li>
-<li>compare against just man printf</li>
-</ul>
-</blockquote>
-</details>
 <h3 id="header-files"><span class="header-section-number">3.0.4</span> Header Files</h3>
 <ul>
 <li>include libraries in your program</li>
@@ -838,15 +821,6 @@ Find the [slides](https://sibin.github.io/teaching/csci2410-gwu-systems_programm
 </ul></li>
 <li>* Similarly, the size of the <code>float</code> and <code>double</code> data types are not defined by C. Different compilers (and platforms) implement them with different sizes.</li>
 </ul>
-<details>
-<p><summary>[Notes]</summary></p>
-<blockquote>
-<ul>
-<li>stop with slides here</li>
-<li>switch to code examples</li>
-</ul>
-</blockquote>
-</details>
 <h3 id="code-samples" class="unnumbered">Code Samples</h3>
 <p>Now, let’s look at some code!</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -899,15 +873,6 @@ Find the [slides](https://sibin.github.io/teaching/csci2410-gwu-systems_programm
 <p>What happens when you try: <code>man sizeof</code>?</p>
 </blockquote>
 <h3 id="compound-types-struct-enum-unions"><span class="header-section-number">3.0.7</span> Compound types | <code>struct</code>, <code>enum</code>, <code>unions</code></h3>
-<details>
-<p><summary>[Notes]</summary></p>
-<blockquote>
-<ul>
-<li>switch to slides for the compound types</li>
-<li>switch back to code examples</li>
-</ul>
-</blockquote>
-</details>
 <p>The C standard defines multiple <strong>compound</strong> data types, <em>viz.</em>,</p>
 <table>
 <thead>
@@ -1157,15 +1122,6 @@ make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
 <pre><code>size of struct calendar: 24
 date: 9/5/2024   day: thursday
 </code></pre>
-<details>
-<p><summary>[Notes]</summary></p>
-<blockquote>
-<ul>
-<li>switch to slides for the C string/array slides</li>
-<li>switch back to code examples</li>
-</ul>
-</blockquote>
-</details>
 <p>strings in <code>C</code> → an <strong>array</strong> of characters that are <code>null</code> terminated, <em>i.e.</em>, <code>\0</code>. So the `day_of_week’ field looks like this.</p>
 <p><img src="figures/string_array_basic.png" width="700"></p>
 <p>There’s a reason I’ve used the arrow in the above image. :wink:</p>
@@ -1370,7 +1326,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb28-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x55bbeaaba149
+Hex and pointers: 7fffffffffffffff, 0x5580f3a30149
 Strings: hello world</code></pre>
 <h3 id="compound-types-1"><span class="header-section-number">4.2.4</span> Compound types</h3>
 <ul>
@@ -1490,8 +1446,8 @@ value updated to 1</code></pre>
 <a class="sourceLine" id="cb39-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb39-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffe7125c1f0 == 0x7ffe7125c1f0; 6 == 6
-nth index: 0x7ffe7125c1f4 == 0x7ffe7125c1f4; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffeca42e270 == 0x7ffeca42e270; 6 == 6
+nth index: 0x7ffeca42e274 == 0x7ffeca42e274; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -1514,7 +1470,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb42-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb42-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffd0db89994 == 0x7ffd0db89994; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffda95b8ee4 == 0x7ffda95b8ee4; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb44-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1538,10 +1494,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb44-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb44-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffe0f32ae70 &amp; 0x7ffe0f32ae84
-idx 1 @ 0x7ffe0f32ae74 &amp; 0x7ffe0f32ae85
-idx 2 @ 0x7ffe0f32ae78 &amp; 0x7ffe0f32ae86
-idx 3 @ 0x7ffe0f32ae7c &amp; 0x7ffe0f32ae87</code></pre>
+<pre><code>idx 0 @ 0x7ffd0e90e2c0 &amp; 0x7ffd0e90e2d4
+idx 1 @ 0x7ffd0e90e2c4 &amp; 0x7ffd0e90e2d5
+idx 2 @ 0x7ffd0e90e2c8 &amp; 0x7ffd0e90e2d6
+idx 3 @ 0x7ffd0e90e2cc &amp; 0x7ffd0e90e2d7</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -1767,10 +1723,10 @@ make[1]: *** [Makefile:30: inline_exec] Aborted</code></pre>
 <a class="sourceLine" id="cb59-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x55c388805010
-b   @ 0x55c388805014
-c   @ 0x55c388805020
-end @ 0x55c388805039
+a   @ 0x55caed23a010
+b   @ 0x55caed23a014
+c   @ 0x55caed23a020
+end @ 0x55caed23a039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -1778,7 +1734,7 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x55c388805014
+c.c_c = 0x55caed23a014
 
 Print out the variables as raw memory
 
@@ -1873,8 +1829,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb61-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb61-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x558a79c7104c
-1: 2 @ 0x558a79c71044
+<pre><code>0: 4 @ 0x55e2f581204c
+1: 2 @ 0x55e2f5812044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -2038,7 +1994,7 @@ inline_exec_tmp.c:36:5: warning: implicit declaration of function bubble_sort; d
    36 |     bubble_sort( my_array, array_size ) ;
       |     ^~~~~~~~~~~
       |     bubble_sort_int
-/usr/bin/ld: /tmp/ccJP3rA2.o: in function `main&#39;:
+/usr/bin/ld: /tmp/ccuRsICj.o: in function `main&#39;:
 /home/sibin/Teaching/CSCI_2401/lectures/inline_exec_tmp.c:36: undefined reference to `bubble_sort&#39;
 collect2: error: ld returned 1 exit status
 make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
@@ -2631,16 +2587,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: -1713494585
-3: 32766
-4: -1713494586
-5: 32766
-6: 947651133
-7: 22019
-8: 310096616
-9: 32754
-10: 947651056
-11: 22019</code></pre>
+2: -1112695753
+3: 32767
+4: -1112695754
+5: 32767
+6: 472777277
+7: 22030
+8: 205705960
+9: 32578
+10: 472777200
+11: 22030</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb100-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -2981,7 +2937,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb113-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x561f11337004 == 0x561f11337004 != 0x561f11339011</code></pre>
+0x563b26211004 == 0x563b26211004 != 0x563b26213011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">6.3</span> API Design and Concerns</h2>
 <p><a href="https://sibin.github.io/teaching/csci2410-gwu-systems_programming/fall_2023/slides/reveal_slides/api_design.html#/">Slides</a></p>
@@ -5635,8 +5591,8 @@ AFTER
 <a class="sourceLine" id="cb203-57" title="57">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb203-58" title="58">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Parent got the message!
-Child sent whole message!</code></pre>
+<pre><code>Child sent whole message!
+Parent got the message!</code></pre>
 <p>The <em>concurrency</em> of the system enables separate processes to be active at the same time, thus for the <code>write</code> and <code>read</code> to be transferring data through the pipe <em>at the same time</em>. This simplifies our code as we don’t need to worry about sending chunks of our data.</p>
 <p>Note that we’re <code>close</code>ing the end of the pipe that we aren’t using in the corresponding processes. Though the file descriptors are identical in each process following <code>fork</code>, each process does have a <em>separate</em> set of those descriptors. Thus closing in one, doesn’t impact the other.</p>
 <p>Remember, processes provide <strong>isolation</strong>!</p>
@@ -6109,9 +6065,9 @@ make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
 <a class="sourceLine" id="cb218-83" title="83">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb218-84" title="84">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>3498761: We&#39;ve been asked to terminate. Exit!
-3498760: Parent asking child (3498761) to terminate
-3498760: Child process 3498761 has exited.</code></pre>
+<pre><code>3536040: We&#39;ve been asked to terminate. Exit!
+3536039: Parent asking child (3536040) to terminate
+3536039: Child process 3536040 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -7326,7 +7282,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - F output_tmp.dat (0)
 - D 01
 - F Makefile (1971)
-- F lectures.html (967897)
+- F lectures.html (968122)
 - D 99
 - D 00
 - D 11
@@ -7349,7 +7305,7 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - D figures
 - F title.md (333)
 - F README.md (35)
-- F aggregate.md (251632)
+- F aggregate.md (251065)
 - D 08
 - D slides
 - D 05</code></pre>
@@ -7680,8 +7636,8 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb263-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb263-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>3499046: 3499046
-3499047: 3499047</code></pre>
+<pre><code>3536326: 3536326
+3536327: 3536327</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -7834,15 +7790,15 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb267-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 3499067 connected to server.
-2. Client 3499067 request sent message to server.
-Server received message (sz 38): &quot;Citizen 3499067: Penny for Pawsident!&quot;. Replying!
-3. Client 3499067 reply received from server: Citizen 3499067: Penny for Pawsident!
+1. Client 3536347 connected to server.
+2. Client 3536347 request sent message to server.
+Server received message (sz 38): &quot;Citizen 3536347: Penny for Pawsident!&quot;. Replying!
+1. Client 3536348 connected to server.
+3. Client 3536347 reply received from server: Citizen 3536347: Penny for Pawsident!
 Server: New client connected with new file descriptor 4.
-1. Client 3499068 connected to server.
-2. Client 3499068 request sent message to server.
-Server received message (sz 38): &quot;Citizen 3499068: Penny for Pawsident!&quot;. Replying!
-3. Client 3499068 reply received from server: Citizen 3499068: Penny for Pawsident!</code></pre>
+2. Client 3536348 request sent message to server.
+Server received message (sz 38): &quot;Citizen 3536348: Penny for Pawsident!&quot;. Replying!
+3. Client 3536348 reply received from server: Citizen 3536348: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -9074,9 +9030,9 @@ exit_group(0)                           = ?
 <a class="sourceLine" id="cb325-38" title="38">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>
-malloc + free overhead (cycles): 1314
+malloc + free overhead (cycles): 1128
 
-mmap + munmap overhead (cycles): 36381</code></pre>
+mmap + munmap overhead (cycles): 30272</code></pre>
 <blockquote>
 <p>What is a “cycle”? When you read that you have a 3GHz, that essentially says that the internal “clock” that drives the logic in the processor cycles by at 3 billion cycles per second. That’s a <em>lot</em>. Each cycle is 1/3 a nanosecond. A cycle is the smallest unit of measurement on a processor, and the <code>cycles</code> function we implement here gives us how many cycles have elapsed since the system boots.</p>
 </blockquote>
@@ -9124,11 +9080,11 @@ mmap + munmap overhead (cycles): 36381</code></pre>
 <a class="sourceLine" id="cb327-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>                                                                                                                                                                                                                                                                
-write overhead (cycles): 15574
+write overhead (cycles): 15675
                                                                                                                                                                                                                                                                 
-fwrite (stream) overhead (cycles): 148
+fwrite (stream) overhead (cycles): 147
                                                                                                                                                                                                                                                                 
-fwrite + fflush overhead (cycles): 15423</code></pre>
+fwrite + fflush overhead (cycles): 15512</code></pre>
 <h2 id="library-vs.-kernel-trade-offs-in-memory-allocation"><span class="header-section-number">14.4</span> Library vs. Kernel Trade-offs in Memory Allocation</h2>
 <p>We’ve seen that</p>
 <ol type="1">
