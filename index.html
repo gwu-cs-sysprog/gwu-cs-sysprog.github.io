@@ -173,23 +173,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li><a href="#what-happens-when-we-declare-a-variable"><span class="toc-section-number">4.0.2</span> What happens when we <em>declare</em> a variable?</a></li>
         <li><a href="#how-do-we-declareuse-pointers"><span class="toc-section-number">4.0.3</span> How do we declare/use pointers?</a></li>
         <li><a href="#pointers-and-modifiers"><span class="toc-section-number">4.1</span> Pointers and Modifiers</a></li>
-        <li><a href="#arrays"><span class="toc-section-number">4.2</span> Arrays</a><ul>
-        <li><a href="#static-memory-allocation"><span class="toc-section-number">4.2.1</span> Static Memory Allocation</a></li>
-        <li><a href="#dynamic-memory-allocation"><span class="toc-section-number">4.2.2</span> Dynamic Memory Allocation</a></li>
-        <li><a href="#c-standard-library-functions-for-memory-allocation"><span class="toc-section-number">4.2.3</span> <code>C</code> Standard Library Functions for Memory Allocation</a></li>
-        <li><a href="#common-memory-allocation-errors"><span class="toc-section-number">4.2.4</span> Common Memory Allocation Errors</a></li>
+        <li><a href="#arrays"><span class="toc-section-number">4.2</span> Arrays</a></li>
+        <li><a href="#pointers-memory-allocation"><span class="toc-section-number">4.3</span> Pointers | Memory Allocation</a><ul>
+        <li><a href="#static-memory-allocation"><span class="toc-section-number">4.3.1</span> Static Memory Allocation</a></li>
+        <li><a href="#dynamic-memory-allocation"><span class="toc-section-number">4.3.2</span> Dynamic Memory Allocation</a></li>
+        <li><a href="#c-standard-library-functions-for-memory-allocation"><span class="toc-section-number">4.3.3</span> <code>C</code> Standard Library Functions for Memory Allocation</a></li>
+        <li><a href="#common-memory-allocation-errors"><span class="toc-section-number">4.3.4</span> Common Memory Allocation Errors</a></li>
         </ul></li>
-        <li><a href="#exercises"><span class="toc-section-number">4.3</span> Exercises</a><ul>
-        <li><a href="#c-is-a-thin-language-layer-on-top-of-memory"><span class="toc-section-number">4.3.1</span> C is a Thin Language Layer on Top of Memory</a></li>
-        <li><a href="#quick-and-dirty-key-value-store"><span class="toc-section-number">4.3.2</span> Quick-and-dirty Key-Value Store</a></li>
+        <li><a href="#exercises"><span class="toc-section-number">4.4</span> Exercises</a><ul>
+        <li><a href="#c-is-a-thin-language-layer-on-top-of-memory"><span class="toc-section-number">4.4.1</span> C is a Thin Language Layer on Top of Memory</a></li>
+        <li><a href="#quick-and-dirty-key-value-store"><span class="toc-section-number">4.4.2</span> Quick-and-dirty Key-Value Store</a></li>
         </ul></li>
-        <li><a href="#pointers-and-arrays-1"><span class="toc-section-number">4.4</span> Pointers and Arrays</a></li>
-        <li><a href="#pointer-arithmetic"><span class="toc-section-number">4.5</span> Pointer Arithmetic</a></li>
-        <li><a href="#pointer-casting"><span class="toc-section-number">4.6</span> Pointer Casting!</a><ul>
-        <li><a href="#casting-from-int-to-char"><span class="toc-section-number">4.6.1</span> Casting from <code>int*</code> to <code>char*</code></a></li>
-        <li><a href="#example-2"><span class="toc-section-number">4.6.2</span> Example</a></li>
+        <li><a href="#pointers-and-arrays-1"><span class="toc-section-number">4.5</span> Pointers and Arrays</a></li>
+        <li><a href="#pointer-arithmetic"><span class="toc-section-number">4.6</span> Pointer Arithmetic</a></li>
+        <li><a href="#pointer-casting"><span class="toc-section-number">4.7</span> Pointer Casting!</a><ul>
+        <li><a href="#casting-from-int-to-char"><span class="toc-section-number">4.7.1</span> Casting from <code>int*</code> to <code>char*</code></a></li>
+        <li><a href="#example-2"><span class="toc-section-number">4.7.2</span> Example</a></li>
         </ul></li>
-        <li><a href="#pointer-casting-void"><span class="toc-section-number">4.7</span> Pointer Casting | <code>void*</code></a></li>
+        <li><a href="#pointer-casting-void"><span class="toc-section-number">4.8</span> Pointer Casting | <code>void*</code></a></li>
         </ul></li>
         <li><a href="#function-pointers"><span class="toc-section-number">5</span> Function Pointers</a><ul>
         <li><a href="#example-bubble-sort"><span class="toc-section-number">5.0.1</span> Example | Bubble Sort</a></li>
@@ -1360,7 +1361,7 @@ long:   8</code></pre>
 <a class="sourceLine" id="cb25-15" title="15">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Integers: 2147483647, 9223372036854775807, 4294967295, *
-Hex and pointers: 7fffffffffffffff, 0x560d88506149
+Hex and pointers: 7fffffffffffffff, 0x55df710d7149
 Strings: hello world</code></pre>
 <h3 id="more-about-compound-types-struct-and-union"><span class="header-section-number">3.3.3</span> More about Compound types (<code>struct</code> and <code>union</code>)</h3>
 <!--
@@ -1512,8 +1513,8 @@ Languages such as Java assume that *every single* object variable is a pointer, 
 <a class="sourceLine" id="cb32-10" title="10">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb32-11" title="11">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0th index: 0x7ffcf90a1540 == 0x7ffcf90a1540; 6 == 6
-nth index: 0x7ffcf90a1544 == 0x7ffcf90a1544; 7 == 7</code></pre>
+<pre><code>0th index: 0x7ffdeb3412c0 == 0x7ffdeb3412c0; 6 == 6
+nth index: 0x7ffdeb3412c4 == 0x7ffdeb3412c4; 7 == 7</code></pre>
 <p>Making this a little more clear, lets understand how C accesses the <code>n</code>th item. Lets make a pointer <code>int *p = a + 1</code> (we’ll just simply and assume that <code>n == 1</code> here), we should have this:</p>
 <pre><code>p ---------+
            |
@@ -1536,7 +1537,7 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb35-12" title="12">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb35-13" title="13">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>nth index: 0x7ffeb28b0724 == 0x7ffeb28b0724; 7 == 7</code></pre>
+<pre><code>nth index: 0x7ffe9911fb34 == 0x7ffe9911fb34; 7 == 7</code></pre>
 <p>We can see that <em>pointer arithmetic</em> (i.e. doing addition/subtraction on pointers) does the same thing as array indexing plus a dereference. That is, <code>*(a + 1) == a[1]</code>. For the most part, arrays and pointers can be viewed as very similar, with only a few exceptions<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
 <p><em>Pointer arithmetic should generally be avoided in favor of using the array syntax.</em> One complication for pointer arithmetic is that it does not fit our intuition for addition:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb37-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -1560,10 +1561,10 @@ a ---&gt; +---+---+---+---+
 <a class="sourceLine" id="cb37-19" title="19">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb37-20" title="20">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>idx 0 @ 0x7ffe2771f0d0 &amp; 0x7ffe2771f0e4
-idx 1 @ 0x7ffe2771f0d4 &amp; 0x7ffe2771f0e5
-idx 2 @ 0x7ffe2771f0d8 &amp; 0x7ffe2771f0e6
-idx 3 @ 0x7ffe2771f0dc &amp; 0x7ffe2771f0e7</code></pre>
+<pre><code>idx 0 @ 0x7fff51087e50 &amp; 0x7fff51087e64
+idx 1 @ 0x7fff51087e54 &amp; 0x7fff51087e65
+idx 2 @ 0x7fff51087e58 &amp; 0x7fff51087e66
+idx 3 @ 0x7fff51087e5c &amp; 0x7fff51087e67</code></pre>
 <p>Note that the pointer for the integer array (<code>a</code>) is being incremented by 4, while the character array (<code>b</code>) by 1. Focusing on the key part:</p>
 <pre><code>idx 0 @ ...0 &amp; ...4
 idx 1 @ ...4 &amp; ...5
@@ -1883,8 +1884,8 @@ make[1]: *** [Makefile:30: inline_exec] Aborted
 inline_exec_tmp.c:8:5: warning: p_int is used uninitialized in this function [-Wuninitialized]
     8 |     printf( &quot;i = %d\t p_int = %p\n&quot;, i, p_int ) ;
       |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-i = 100  p_int = 0x7ffc7724dc10
-i = 100  p_int = 0x7ffc7724db0c  address of i = 0x7ffc7724db0c
+i = 100  p_int = 0x7ffccdd085d0
+i = 100  p_int = 0x7ffccdd084cc  address of i = 0x7ffccdd084cc
 
 </code></pre>
 <p>To <em>follow the arrow</em>, <em>i.e.</em>, get the value in the location <em>pointed to</em> by it (or to modify the actual value), you must <strong>dereference</strong> the pointer as follows: <code>*ptr</code>.</p>
@@ -2010,21 +2011,31 @@ i = 100  p_int = 0x7ffc7724db0c  address of i = 0x7ffc7724db0c
 </tbody>
 </table>
 <p>A simple example of using pointers vs array name:</p>
-<p>```c #include &lt;stdio.h&gt;</p>
-<p>int main() { int a[5] = { 100, 200, 300, 400, 500 } ; int* p_a = a ;</p>
-<pre><code>printf( &quot;%d\n&quot;, *(a+2) ) ;
-printf( &quot;%d\n&quot;, *(p_a++) ) ;
-
-printf( &quot;\n&quot; ) ;
-return 0 ;</code></pre>
-<p>} ```## Pointers | Memory Allocation</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb57-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb57-2" title="2"></a>
+<a class="sourceLine" id="cb57-3" title="3"><span class="dt">int</span> main()</a>
+<a class="sourceLine" id="cb57-4" title="4">{</a>
+<a class="sourceLine" id="cb57-5" title="5">    <span class="dt">int</span> a[<span class="dv">5</span>] = { <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span> } ;</a>
+<a class="sourceLine" id="cb57-6" title="6">    <span class="dt">int</span>* p_a = a ;</a>
+<a class="sourceLine" id="cb57-7" title="7"></a>
+<a class="sourceLine" id="cb57-8" title="8">    printf( <span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, *(a+<span class="dv">2</span>) ) ;</a>
+<a class="sourceLine" id="cb57-9" title="9">    printf( <span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, *(p_a++) ) ;</a>
+<a class="sourceLine" id="cb57-10" title="10"></a>
+<a class="sourceLine" id="cb57-11" title="11">    printf( <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span> ) ;</a>
+<a class="sourceLine" id="cb57-12" title="12">    <span class="cf">return</span> <span class="dv">0</span> ;</a>
+<a class="sourceLine" id="cb57-13" title="13">}</a></code></pre></div>
+<p>Program output:</p>
+<pre><code>300
+100
+</code></pre>
+<h2 id="pointers-memory-allocation"><span class="header-section-number">4.3</span> Pointers | Memory Allocation</h2>
 <p><a href="https://sibin.github.io/teaching/csci2410-gwu-systems_programming/fall_2024/slides/reveal_slides/memory_allocation.html">Slides</a></p>
 <p>Typically, in <code>C</code>, there are <strong>two</strong> types of memory allocations:</p>
 <ul>
 <li>static</li>
 <li>dynamic</li>
 </ul>
-<h3 id="static-memory-allocation"><span class="header-section-number">4.2.1</span> Static Memory Allocation</h3>
+<h3 id="static-memory-allocation"><span class="header-section-number">4.3.1</span> Static Memory Allocation</h3>
 <ul>
 <li>most <strong>definitions</strong> we encounter</li>
 <li>all local, global, file scope variables</li>
@@ -2065,7 +2076,7 @@ return 0 ;</code></pre>
 <li><p><strong>before</strong> the array is defined</p></li>
 </ul>
 <p>[caveat: newer <code>C</code> compilers may allow it. Avoid doing this.]</p>
-<h3 id="dynamic-memory-allocation"><span class="header-section-number">4.2.2</span> Dynamic Memory Allocation</h3>
+<h3 id="dynamic-memory-allocation"><span class="header-section-number">4.3.2</span> Dynamic Memory Allocation</h3>
 <ul>
 <li>everything allocated using <code>malloc</code> [and other calls as we shall see]</li>
 <li><p>memory allocated at <strong><font style="background-color: #FFEC8B;">run time</font></strong> <code>char* pc = (char*) malloc( 128*sizeof(char) ) ;</code></p></li>
@@ -2073,7 +2084,7 @@ return 0 ;</code></pre>
 <li>this is completely <strong>legal</strong>: (char<em>) malloc( <font style="color:white ; background-color: darkgreen; font-weight: bold;">n</font></em>sizeof(char) )`</li>
 <li><p>value of <em>n</em> <strong>can</strong> change at run time</p></li>
 </ul>
-<h3 id="c-standard-library-functions-for-memory-allocation"><span class="header-section-number">4.2.3</span> <code>C</code> Standard Library Functions for Memory Allocation</h3>
+<h3 id="c-standard-library-functions-for-memory-allocation"><span class="header-section-number">4.3.3</span> <code>C</code> Standard Library Functions for Memory Allocation</h3>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -2111,7 +2122,7 @@ return 0 ;</code></pre>
 </tbody>
 </table>
 <p>all defined in <code>&lt;stdlib.h&gt;</code>.</p>
-<h4 id="size_t"><span class="header-section-number">4.2.3.1</span> <code>size_t</code></h4>
+<h4 id="size_t"><span class="header-section-number">4.3.3.1</span> <code>size_t</code></h4>
 <ul>
 <li>unsigned integer data type</li>
 <li>lots of system calls use <code>size_t</code></li>
@@ -2136,7 +2147,7 @@ return 0 ;</code></pre>
 </tr>
 </tbody>
 </table>
-<h4 id="malloc"><span class="header-section-number">4.2.3.2</span> <code>malloc</code></h4>
+<h4 id="malloc"><span class="header-section-number">4.3.3.2</span> <code>malloc</code></h4>
 <p>Signature: <code>void *malloc(size_t size);</code></p>
 <ul>
 <li>allocate <strong>raw memory</strong> of <code>size_t size</code> bytes</li>
@@ -2145,350 +2156,36 @@ return 0 ;</code></pre>
 <li>use <code>memset()</code> to set memory to <code>0</code></li>
 <li>returns → <strong>pointer to newly allocated memory</strong></li>
 </ul>
-<div class="sourceCode" id="cb58"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb58-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb58-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb58-3" title="3"><span class="pp">#include </span><span class="im">&lt;assert.h&gt;</span></a>
-<a class="sourceLine" id="cb58-4" title="4"></a>
-<a class="sourceLine" id="cb58-5" title="5"><span class="co">// ALWAYS good to define array sizes as such constants</span></a>
-<a class="sourceLine" id="cb58-6" title="6"><span class="pp">#define ARRAY_SIZE 16</span></a>
-<a class="sourceLine" id="cb58-7" title="7"></a>
-<a class="sourceLine" id="cb58-8" title="8"><span class="dt">int</span> main()</a>
-<a class="sourceLine" id="cb58-9" title="9">{</a>
-<a class="sourceLine" id="cb58-10" title="10">    <span class="co">// random size</span></a>
-<a class="sourceLine" id="cb58-11" title="11">    <span class="dt">int</span>* temp = (<span class="dt">int</span>*) malloc( <span class="dv">12323445</span> ) ;</a>
-<a class="sourceLine" id="cb58-12" title="12"></a>
-<a class="sourceLine" id="cb58-13" title="13">    <span class="dt">int</span>* pi = (<span class="dt">int</span>*) malloc( <span class="kw">sizeof</span>(<span class="dt">int</span>) * ARRAY_SIZE ) ;</a>
-<a class="sourceLine" id="cb58-14" title="14">    assert(pi) ; <span class="co">// check that a valid address was returned</span></a>
-<a class="sourceLine" id="cb58-15" title="15"></a>
-<a class="sourceLine" id="cb58-16" title="16">    pi[<span class="dv">0</span>] = <span class="dv">233</span> ;</a>
-<a class="sourceLine" id="cb58-17" title="17"></a>
-<a class="sourceLine" id="cb58-18" title="18">    printf( <span class="st">&quot;After malloc</span><span class="sc">\n</span><span class="st">&quot;</span>) ;</a>
-<a class="sourceLine" id="cb58-19" title="19">    <span class="cf">for</span>( <span class="dt">unsigned</span> <span class="dt">int</span> i = <span class="dv">0</span> ; i &lt; ARRAY_SIZE ; ++i )</a>
-<a class="sourceLine" id="cb58-20" title="20">        printf( <span class="st">&quot;pi[%d] = %d</span><span class="sc">\t</span><span class="st">&quot;</span>, i, pi[i] ) ;</a>
-<a class="sourceLine" id="cb58-21" title="21">    printf( <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span> ) ;</a>
-<a class="sourceLine" id="cb58-22" title="22"></a>
-<a class="sourceLine" id="cb58-23" title="23">    <span class="co">// remember to release the memory!</span></a>
-<a class="sourceLine" id="cb58-24" title="24">    free(pi) ;</a>
-<a class="sourceLine" id="cb58-25" title="25">    free(temp) ;</a>
-<a class="sourceLine" id="cb58-26" title="26"></a>
-<a class="sourceLine" id="cb58-27" title="27">    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>) ;</a>
-<a class="sourceLine" id="cb58-28" title="28">    <span class="cf">return</span> <span class="dv">0</span> ;</a>
-<a class="sourceLine" id="cb58-29" title="29">}</a></code></pre></div>
-<p>Program output:</p>
-<pre><code>inline_exec_tmp.c:14:1: error: stray ` in program
-   14 | ```## Pointers | Memory Allocation
-      | ^
-inline_exec_tmp.c:14:2: error: stray ` in program
-   14 | ```## Pointers | Memory Allocation
-      |  ^
-inline_exec_tmp.c:14:3: error: stray ` in program
-   14 | ```## Pointers | Memory Allocation
-      |   ^
-inline_exec_tmp.c:14:4: error: stray ## in program
-   14 | ```## Pointers | Memory Allocation
-      |    ^~
-inline_exec_tmp.c:14:16: error: expected =, ,, ;, asm or __attribute__ before | token
-   14 | ```## Pointers | Memory Allocation
-      |                ^
-inline_exec_tmp.c:19:15: error: stray ` in program
-   19 | Typically, in `C`, there are **two** types of memory allocations:
-      |               ^
-inline_exec_tmp.c:19:17: error: stray ` in program
-   19 | Typically, in `C`, there are **two** types of memory allocations:
-      |                 ^
-inline_exec_tmp.c:26:1: error: stray ## in program
-   26 | ### Static Memory Allocation
-      | ^~
-inline_exec_tmp.c:26:3: error: stray # in program
-   26 | ### Static Memory Allocation
-      |   ^
-inline_exec_tmp.c:33:3: error: stray ` in program
-   33 | | `int i ;`|
-      |   ^
-inline_exec_tmp.c:33:11: error: stray ` in program
-   33 | | `int i ;`|
-      |           ^
-inline_exec_tmp.c:33:12: error: expected identifier or ( before | token
-   33 | | `int i ;`|
-      |            ^
-inline_exec_tmp.c:34:3: error: stray ` in program
-   34 | | `struct student st ;`|
-      |   ^
-inline_exec_tmp.c:34:23: error: stray ` in program
-   34 | | `struct student st ;`|
-      |                       ^
-inline_exec_tmp.c:34:24: error: expected identifier or ( before | token
-   34 | | `struct student st ;`|
-      |                        ^
-inline_exec_tmp.c:35:3: error: stray ` in program
-   35 | | `char name[128] ;`|
-      |   ^
-inline_exec_tmp.c:35:20: error: stray ` in program
-   35 | | `char name[128] ;`|
-      |                    ^
-inline_exec_tmp.c:35:21: error: expected identifier or ( before | token
-   35 | | `char name[128] ;`|
-      |                     ^
-inline_exec_tmp.c:36:3: error: stray ` in program
-   36 | | `const double* pd ;`|
-      |   ^
-inline_exec_tmp.c:36:22: error: stray ` in program
-   36 | | `const double* pd ;`|
-      |                      ^
-inline_exec_tmp.c:36:23: error: expected identifier or ( before | token
-   36 | | `const double* pd ;`|
-      |                       ^
-inline_exec_tmp.c:45:7: error: expected =, ,, ;, asm or __attribute__ before value
-   45 | * the value of *n* can **change at run time**
-      |       ^~~~~
-inline_exec_tmp.c:45:7: error: unknown type name value
-inline_exec_tmp.c:46:21: error: stray ` in program
-   46 | * *e.g.*, we can do `n = 200 ;`
-      |                     ^
-inline_exec_tmp.c:46:31: error: stray ` in program
-   46 | * *e.g.*, we can do `n = 200 ;`
-      |                               ^
-inline_exec_tmp.c:47:11: error: expected =, ,, ;, asm or __attribute__ before * token
-   47 | * **before** the array is defined
-      |           ^
-inline_exec_tmp.c:49:16: error: stray ` in program
-   49 | [caveat: newer `C` compilers may allow it. Avoid doing this.]
-      |                ^
-inline_exec_tmp.c:49:18: error: stray ` in program
-   49 | [caveat: newer `C` compilers may allow it. Avoid doing this.]
-      |                  ^
-inline_exec_tmp.c:51:1: error: stray ## in program
-   51 | ### Dynamic Memory Allocation
-      | ^~
-inline_exec_tmp.c:51:3: error: stray # in program
-   51 | ### Dynamic Memory Allocation
-      |   ^
-inline_exec_tmp.c:53:30: error: stray ` in program
-   53 | * everything allocated using `malloc` [and other calls as we shall see]
-      |                              ^
-inline_exec_tmp.c:53:37: error: stray ` in program
-   53 | * everything allocated using `malloc` [and other calls as we shall see]
-      |                                     ^
-inline_exec_tmp.c:55:2: error: stray ` in program
-   55 |  `char* pc = (char*) malloc( 128*sizeof(char) ) ;`
-      |  ^
-inline_exec_tmp.c:55:50: error: stray ` in program
-   55 |  `char* pc = (char*) malloc( 128*sizeof(char) ) ;`
-      |                                                  ^
-inline_exec_tmp.c:57:3: error: stray ` in program
-   57 | * `128 bytes` of memory allocated **dynamically**
-      |   ^
-inline_exec_tmp.c:57:4: error: expected identifier or ( before numeric constant
-   57 | * `128 bytes` of memory allocated **dynamically**
-      |    ^~~
-inline_exec_tmp.c:57:13: error: stray ` in program
-   57 | * `128 bytes` of memory allocated **dynamically**
-      |             ^
-inline_exec_tmp.c:59:116: error: stray ` in program
-   59 | (char*) malloc( &lt;font style=&quot;color:white ; background-color: darkgreen; font-weight: bold;&quot;&gt;n&lt;/font&gt;*sizeof(char) )`
-      |                                                                                                                    ^
-inline_exec_tmp.c:63:1: error: stray ## in program
-   63 | ### `C` Standard Library Functions for Memory Allocation
-      | ^~
-inline_exec_tmp.c:63:3: error: stray # in program
-   63 | ### `C` Standard Library Functions for Memory Allocation
-      |   ^
-inline_exec_tmp.c:63:5: error: stray ` in program
-   63 | ### `C` Standard Library Functions for Memory Allocation
-      |     ^
-inline_exec_tmp.c:63:7: error: stray ` in program
-   63 | ### `C` Standard Library Functions for Memory Allocation
-      |       ^
-inline_exec_tmp.c:67:2: error: stray ` in program
-   67 | |`malloc(size)`|`size`| no|
-      |  ^
-inline_exec_tmp.c:67:15: error: stray ` in program
-   67 | |`malloc(size)`|`size`| no|
-      |               ^
-inline_exec_tmp.c:67:17: error: stray ` in program
-   67 | |`malloc(size)`|`size`| no|
-      |                 ^
-inline_exec_tmp.c:67:22: error: stray ` in program
-   67 | |`malloc(size)`|`size`| no|
-      |                      ^
-inline_exec_tmp.c:68:2: error: stray ` in program
-   68 | |`calloc&lt;br&gt;(nmemb,size)`|`nmemb*size`&lt;br&gt;|`0`|
-      |  ^
-inline_exec_tmp.c:68:25: error: stray ` in program
-   68 | |`calloc&lt;br&gt;(nmemb,size)`|`nmemb*size`&lt;br&gt;|`0`|
-      |                         ^
-inline_exec_tmp.c:68:27: error: stray ` in program
-   68 | |`calloc&lt;br&gt;(nmemb,size)`|`nmemb*size`&lt;br&gt;|`0`|
-      |                           ^
-inline_exec_tmp.c:68:38: error: stray ` in program
-   68 | |`calloc&lt;br&gt;(nmemb,size)`|`nmemb*size`&lt;br&gt;|`0`|
-      |                                      ^
-inline_exec_tmp.c:68:44: error: stray ` in program
-   68 | |`calloc&lt;br&gt;(nmemb,size)`|`nmemb*size`&lt;br&gt;|`0`|
-      |                                            ^
-inline_exec_tmp.c:68:46: error: stray ` in program
-   68 | |`calloc&lt;br&gt;(nmemb,size)`|`nmemb*size`&lt;br&gt;|`0`|
-      |                                              ^
-inline_exec_tmp.c:69:2: error: stray ` in program
-   69 | |`realloc&lt;br&gt;(*ptr,size)`|grow/shrink&lt;br&gt;`*ptr` to `size&lt;Scb&gt;|orig `*ptr`|
-      |  ^
-inline_exec_tmp.c:69:25: error: stray ` in program
-   69 | |`realloc&lt;br&gt;(*ptr,size)`|grow/shrink&lt;br&gt;`*ptr` to `size&lt;Scb&gt;|orig `*ptr`|
-      |                         ^
-inline_exec_tmp.c:69:42: error: stray ` in program
-   69 | |`realloc&lt;br&gt;(*ptr,size)`|grow/shrink&lt;br&gt;`*ptr` to `size&lt;Scb&gt;|orig `*ptr`|
-      |                                          ^
-inline_exec_tmp.c:69:47: error: stray ` in program
-   69 | |`realloc&lt;br&gt;(*ptr,size)`|grow/shrink&lt;br&gt;`*ptr` to `size&lt;Scb&gt;|orig `*ptr`|
-      |                                               ^
-inline_exec_tmp.c:69:52: error: stray ` in program
-   69 | |`realloc&lt;br&gt;(*ptr,size)`|grow/shrink&lt;br&gt;`*ptr` to `size&lt;Scb&gt;|orig `*ptr`|
-      |                                                    ^
-inline_exec_tmp.c:69:68: error: stray ` in program
-   69 | |`realloc&lt;br&gt;(*ptr,size)`|grow/shrink&lt;br&gt;`*ptr` to `size&lt;Scb&gt;|orig `*ptr`|
-      |                                                                    ^
-inline_exec_tmp.c:69:73: error: stray ` in program
-   69 | |`realloc&lt;br&gt;(*ptr,size)`|grow/shrink&lt;br&gt;`*ptr` to `size&lt;Scb&gt;|orig `*ptr`|
-      |                                                                         ^
-inline_exec_tmp.c:70:2: error: stray ` in program
-   70 | |`free(*ptr)`|n/a| n/a|
-      |  ^
-inline_exec_tmp.c:70:13: error: stray ` in program
-   70 | |`free(*ptr)`|n/a| n/a|
-      |             ^
-inline_exec_tmp.c:73:16: error: stray ` in program
-   73 | all defined in `&lt;stdlib.h&gt;`.
-      |                ^
-inline_exec_tmp.c:73:27: error: stray ` in program
-   73 | all defined in `&lt;stdlib.h&gt;`.
-      |                           ^
-inline_exec_tmp.c:75:1: error: stray ## in program
-   75 | #### `size_t`
-      | ^~
-inline_exec_tmp.c:75:3: error: stray ## in program
-   75 | #### `size_t`
-      |   ^~
-inline_exec_tmp.c:75:6: error: stray ` in program
-   75 | #### `size_t`
-      |      ^
-inline_exec_tmp.c:75:13: error: stray ` in program
-   75 | #### `size_t`
-      |             ^
-inline_exec_tmp.c:78:28: error: stray ` in program
-   78 | * lots of system calls use `size_t`
-      |                            ^
-inline_exec_tmp.c:78:35: error: stray ` in program
-   78 | * lots of system calls use `size_t`
-      |                                   ^
-inline_exec_tmp.c:80:3: error: stray ` in program
-   80 | * `typedef` is used &amp;rarr; depends on platform!
-      |   ^
-inline_exec_tmp.c:80:11: error: stray ` in program
-   80 | * `typedef` is used &amp;rarr; depends on platform!
-      |           ^
-inline_exec_tmp.c:80:28: error: unknown type name depends
-   80 | * `typedef` is used &amp;rarr; depends on platform!
-      |                            ^~~~~~~
-inline_exec_tmp.c:80:39: error: expected =, ,, ;, asm or __attribute__ before platform
-   80 | * `typedef` is used &amp;rarr; depends on platform!
-      |                                       ^~~~~~~~
-inline_exec_tmp.c:82:11: error: stray ` in program
-   82 | |platform|`size_t`|
-      |           ^
-inline_exec_tmp.c:82:18: error: stray ` in program
-   82 | |platform|`size_t`|
-      |                  ^
-inline_exec_tmp.c:84:9: error: stray ` in program
-   84 | |32 bit|`unsigned int`|
-      |         ^
-inline_exec_tmp.c:84:22: error: stray ` in program
-   84 | |32 bit|`unsigned int`|
-      |                      ^
-inline_exec_tmp.c:85:9: error: stray ` in program
-   85 | |64 bit|`unsigned long long int`|
-      |         ^
-inline_exec_tmp.c:85:32: error: stray ` in program
-   85 | |64 bit|`unsigned long long int`|
-      |                                ^
-inline_exec_tmp.c:87:1: error: stray ## in program
-   87 | #### `malloc`
-      | ^~
-inline_exec_tmp.c:87:3: error: stray ## in program
-   87 | #### `malloc`
-      |   ^~
-inline_exec_tmp.c:87:6: error: stray ` in program
-   87 | #### `malloc`
-      |      ^
-inline_exec_tmp.c:87:13: error: stray ` in program
-   87 | #### `malloc`
-      |             ^
-inline_exec_tmp.c:89:12: error: stray ` in program
-   89 | Signature: `void *malloc(size_t size);`
-      |            ^
-inline_exec_tmp.c:89:39: error: stray ` in program
-   89 | Signature: `void *malloc(size_t size);`
-      |                                       ^
-inline_exec_tmp.c:91:12: error: expected =, ,, ;, asm or __attribute__ before * token
-   91 | * allocate **raw memory** of `size_t size` bytes
-      |            ^
-inline_exec_tmp.c:91:30: error: stray ` in program
-   91 | * allocate **raw memory** of `size_t size` bytes
-      |                              ^
-inline_exec_tmp.c:91:42: error: stray ` in program
-   91 | * allocate **raw memory** of `size_t size` bytes
-      |                                          ^
-inline_exec_tmp.c:94:7: error: stray ` in program
-   94 | * use `memset()` to set memory to `0`
-      |       ^
-inline_exec_tmp.c:94:16: error: stray ` in program
-   94 | * use `memset()` to set memory to `0`
-      |                ^
-inline_exec_tmp.c:94:35: error: stray ` in program
-   94 | * use `memset()` to set memory to `0`
-      |                                   ^
-inline_exec_tmp.c:94:37: error: stray ` in program
-   94 | * use `memset()` to set memory to `0`
-      |                                     ^
-inline_exec_tmp.c:95:28: error: expected =, ,, ;, asm or __attribute__ before to
-   95 | * returns &amp;rarr; **pointer to newly allocated memory**
-      |                            ^~
-inline_exec_tmp.c:95:28: error: unknown type name to
-inline_exec_tmp.c:98:1: error: stray ` in program
-   98 | ```C
-      | ^
-inline_exec_tmp.c:98:2: error: stray ` in program
-   98 | ```C
-      |  ^
-inline_exec_tmp.c:98:3: error: stray ` in program
-   98 | ```C
-      |   ^
-In file included from inline_exec_tmp.c:100:
-/usr/include/stdlib.h:925:20: error: unknown type name wchar_t
-  925 | extern int mbtowc (wchar_t *__restrict __pwc,
-      |                    ^~~~~~~
-/usr/include/stdlib.h:569:1: note: wchar_t is defined in header &lt;stddef.h&gt;; did you forget to #include &lt;stddef.h&gt;?
-  568 | # include &lt;alloca.h&gt;
-  +++ |+#include &lt;stddef.h&gt;
-  569 | #endif /* Use misc.  */
-/usr/include/stdlib.h:929:31: error: unknown type name wchar_t
-  929 | extern int wctomb (char *__s, wchar_t __wchar) __THROW;
-      |                               ^~~~~~~
-/usr/include/stdlib.h:929:31: note: wchar_t is defined in header &lt;stddef.h&gt;; did you forget to #include &lt;stddef.h&gt;?
-/usr/include/stdlib.h:933:25: error: unknown type name wchar_t
-  933 | extern size_t mbstowcs (wchar_t *__restrict  __pwcs,
-      |                         ^~~~~~~
-/usr/include/stdlib.h:933:25: note: wchar_t is defined in header &lt;stddef.h&gt;; did you forget to #include &lt;stddef.h&gt;?
-/usr/include/stdlib.h:937:10: error: unknown type name wchar_t
-  937 |    const wchar_t *__restrict __pwcs, size_t __n)
-      |          ^~~~~~~
-inline_exec_tmp.c:106:5: error: redefinition of main
-  106 | int main()
-      |     ^~~~
-inline_exec_tmp.c:3:5: note: previous definition of main was here
-    3 | int main()
-      |     ^~~~
-make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
-<h4 id="calloc"><span class="header-section-number">4.2.3.3</span> <code>calloc</code></h4>
+<div class="sourceCode" id="cb59"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb59-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb59-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb59-3" title="3"><span class="pp">#include </span><span class="im">&lt;assert.h&gt;</span></a>
+<a class="sourceLine" id="cb59-4" title="4"></a>
+<a class="sourceLine" id="cb59-5" title="5"><span class="co">// ALWAYS good to define array sizes as such constants</span></a>
+<a class="sourceLine" id="cb59-6" title="6"><span class="pp">#define ARRAY_SIZE 16</span></a>
+<a class="sourceLine" id="cb59-7" title="7"></a>
+<a class="sourceLine" id="cb59-8" title="8"><span class="dt">int</span> main()</a>
+<a class="sourceLine" id="cb59-9" title="9">{</a>
+<a class="sourceLine" id="cb59-10" title="10">    <span class="co">// random size</span></a>
+<a class="sourceLine" id="cb59-11" title="11">    <span class="dt">int</span>* temp = (<span class="dt">int</span>*) malloc( <span class="dv">12323445</span> ) ;</a>
+<a class="sourceLine" id="cb59-12" title="12"></a>
+<a class="sourceLine" id="cb59-13" title="13">    <span class="dt">int</span>* pi = (<span class="dt">int</span>*) malloc( <span class="kw">sizeof</span>(<span class="dt">int</span>) * ARRAY_SIZE ) ;</a>
+<a class="sourceLine" id="cb59-14" title="14">    assert(pi) ; <span class="co">// check that a valid address was returned</span></a>
+<a class="sourceLine" id="cb59-15" title="15"></a>
+<a class="sourceLine" id="cb59-16" title="16">    pi[<span class="dv">0</span>] = <span class="dv">233</span> ;</a>
+<a class="sourceLine" id="cb59-17" title="17"></a>
+<a class="sourceLine" id="cb59-18" title="18">    printf( <span class="st">&quot;After malloc</span><span class="sc">\n</span><span class="st">&quot;</span>) ;</a>
+<a class="sourceLine" id="cb59-19" title="19">    <span class="cf">for</span>( <span class="dt">unsigned</span> <span class="dt">int</span> i = <span class="dv">0</span> ; i &lt; ARRAY_SIZE ; ++i )</a>
+<a class="sourceLine" id="cb59-20" title="20">        printf( <span class="st">&quot;pi[%d] = %d</span><span class="sc">\t</span><span class="st">&quot;</span>, i, pi[i] ) ;</a>
+<a class="sourceLine" id="cb59-21" title="21">    printf( <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span> ) ;</a>
+<a class="sourceLine" id="cb59-22" title="22"></a>
+<a class="sourceLine" id="cb59-23" title="23">    <span class="co">// remember to release the memory!</span></a>
+<a class="sourceLine" id="cb59-24" title="24">    free(pi) ;</a>
+<a class="sourceLine" id="cb59-25" title="25">    free(temp) ;</a>
+<a class="sourceLine" id="cb59-26" title="26"></a>
+<a class="sourceLine" id="cb59-27" title="27">    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>) ;</a>
+<a class="sourceLine" id="cb59-28" title="28">    <span class="cf">return</span> <span class="dv">0</span> ;</a>
+<a class="sourceLine" id="cb59-29" title="29">}</a></code></pre></div>
+<h4 id="calloc"><span class="header-section-number">4.3.3.3</span> <code>calloc</code></h4>
 <p>Signature: <code>void* calloc(size_t nmemb, size_t size);</code></p>
 <ul>
 <li>allocate <strong>raw memory</strong> of <code>nmemb*size</code> bytes</li>
@@ -2525,7 +2222,7 @@ make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
 <a class="sourceLine" id="cb60-23" title="23">    <span class="cf">return</span> <span class="dv">0</span> ;</a>
 <a class="sourceLine" id="cb60-24" title="24">}</a></code></pre></div>
 <p>Compare the differences, <em>if any</em>, in the outputs of the above two pieces of code.</p>
-<h4 id="realloc"><span class="header-section-number">4.2.3.4</span> <code>realloc</code></h4>
+<h4 id="realloc"><span class="header-section-number">4.3.3.4</span> <code>realloc</code></h4>
 <p>Signature: <code>void* realloc(void *ptr, size_t size);</code></p>
 <ul>
 <li><strong>reallocate</strong> the memory pointed to by <code>ptr</code></li>
@@ -2586,7 +2283,7 @@ make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
 <a class="sourceLine" id="cb61-30" title="30">    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>) ;</a>
 <a class="sourceLine" id="cb61-31" title="31">    <span class="cf">return</span> <span class="dv">0</span> ;</a>
 <a class="sourceLine" id="cb61-32" title="32">}</a></code></pre></div>
-<h4 id="free"><span class="header-section-number">4.2.3.5</span> <code>free()</code></h4>
+<h4 id="free"><span class="header-section-number">4.3.3.5</span> <code>free()</code></h4>
 <p>Signature: <code>void free(void *ptr);</code></p>
 <ul>
 <li><strong>releases</strong> memory block referenced by <code>ptr</code>
@@ -2643,7 +2340,7 @@ make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
 <li><code>malloc</code> is <strong>not guaranteed</strong> to initialize its memory to <code>0</code>. <em>You</em> must make sure that your array gets initialized. It is not uncommon to do a <code>memset(arr, 0, sizeof(int) * n);</code> to set the memory <code>0</code>.</li>
 <li><code>calloc</code> is guaranteed to initialize all its allocated memory to <code>0</code>.</li>
 </ol>
-<h3 id="common-memory-allocation-errors"><span class="header-section-number">4.2.4</span> Common Memory Allocation Errors</h3>
+<h3 id="common-memory-allocation-errors"><span class="header-section-number">4.3.4</span> Common Memory Allocation Errors</h3>
 <p>Be aware of these issues as you use pointers and memory allocation/free.</p>
 <p>Note: <code>valgrind</code> will help you debug the last three of these issues.</p>
 <ol type="1">
@@ -2737,8 +2434,8 @@ make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
 <p>Program output:</p>
 <pre><code>free(): double free detected in tcache 2
 make[1]: *** [Makefile:30: inline_exec] Aborted</code></pre>
-<h2 id="exercises"><span class="header-section-number">4.3</span> Exercises</h2>
-<h3 id="c-is-a-thin-language-layer-on-top-of-memory"><span class="header-section-number">4.3.1</span> C is a Thin Language Layer on Top of Memory</h3>
+<h2 id="exercises"><span class="header-section-number">4.4</span> Exercises</h2>
+<h3 id="c-is-a-thin-language-layer-on-top-of-memory"><span class="header-section-number">4.4.1</span> C is a Thin Language Layer on Top of Memory</h3>
 <p>We’re going to look at a set of variables as memory. When variables are created globally, they are simply allocated into subsequent addresses.</p>
 <div class="sourceCode" id="cb71"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb71-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
 <a class="sourceLine" id="cb71-2" title="2"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
@@ -2793,10 +2490,10 @@ make[1]: *** [Makefile:30: inline_exec] Aborted</code></pre>
 <a class="sourceLine" id="cb71-51" title="51">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Addresses:
-a   @ 0x559005859010
-b   @ 0x559005859014
-c   @ 0x559005859020
-end @ 0x559005859039
+a   @ 0x55c817f9a010
+b   @ 0x55c817f9a014
+c   @ 0x55c817f9a020
+end @ 0x55c817f9a039
 &amp;end - &amp;a = 41
 
 Initial values:
@@ -2804,21 +2501,21 @@ a     = 1
 b     = 2
 c.c_a = 3
 c.c_b = 0
-c.c_c = 0x559005859014
+c.c_c = 0x55c817f9a014
 
 Print out the variables as raw memory
 
 
 Post-`memset` values:</code></pre>
 <p><strong>Question</strong> Answer <em>Q1-4</em> in the code, uncommenting and modifying where appropriate.</p>
-<h4 id="takeaways"><span class="header-section-number">4.3.1.1</span> Takeaways</h4>
+<h4 id="takeaways"><span class="header-section-number">4.4.1.1</span> Takeaways</h4>
 <ol type="1">
 <li>Each variable in C (including fields in structs) want to be aligned on a boundary equal to the variable’s type’s size. This means that a variable (<code>b</code>) with an integer type (<code>sizeof(int) == 4</code>) should always have an address that is a multiple of its size (<code>&amp;b % sizeof(b) == 0</code>, so an <code>int</code>’s address is always divisible by <code>4</code>, a <code>long</code>’s by <code>8</code>).</li>
 <li>The operation to figure out the size of all the variables, <code>&amp;end - &amp;a</code>, is <em>crazy</em>. We’re used to performing math operations values on things of the same type, but not on <em>pointers</em>. This is only possible because C sees the variables are chunks of memory that happen to be laid out in memory, one after the other.</li>
 <li>The <em>crazy</em> increases with <code>mem = &amp;a</code>, and our iteration through <code>mem[i]</code>. We’re able to completely ignore the types in C, and access memory directly!</li>
 </ol>
 <p><strong>Question</strong>: What would break if we changed <code>char a;</code> into <code>int a;</code>? C doesn’t let us do math on variables of <em>any type</em>. If you fixed compilation problems, would you still get the same output?</p>
-<h3 id="quick-and-dirty-key-value-store"><span class="header-section-number">4.3.2</span> Quick-and-dirty Key-Value Store</h3>
+<h3 id="quick-and-dirty-key-value-store"><span class="header-section-number">4.4.2</span> Quick-and-dirty Key-Value Store</h3>
 <p>Please read the <code>man</code> pages for <code>lsearch</code> and <code>lfind</code>. <code>man</code> pages can be pretty cryptic, and you are aiming to get <em>some idea</em> where to start with an implementation. An simplistic, and incomplete initial implementation:</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb73-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
 <a class="sourceLine" id="cb73-2" title="2"><span class="pp">#include </span><span class="im">&lt;assert.h&gt;</span></a>
@@ -2899,8 +2596,8 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb73-77" title="77">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb73-78" title="78">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>0: 4 @ 0x5619a0e3404c
-1: 2 @ 0x5619a0e34044
+<pre><code>0: 4 @ 0x562539f1904c
+1: 2 @ 0x562539f19044
 2: 0 @ (nil)</code></pre>
 <p>You want to implement a simple “key-value” store that is very similar in API to a hash-table (many key-value stores are implemented using hash-tables!).</p>
 <p><strong>Questions/Tasks:</strong></p>
@@ -2910,7 +2607,7 @@ Post-`memset` values:</code></pre>
 <li><em>Q3</em>: Encapsulate the key-value store behind the <code>put</code> and <code>get</code> functions.</li>
 <li><em>Q4</em>: Add testing into the <code>main</code> for the relevant conditions and failures in <code>get</code> and <code>put</code>. # Pointers | Casting <a href="https://sibin.github.io/teaching/csci2410-gwu-systems_programming/fall_2023/slides/reveal_slides/pointer_casting.html/">Slides</a></li>
 </ul>
-<h2 id="pointers-and-arrays-1"><span class="header-section-number">4.4</span> Pointers and Arrays</h2>
+<h2 id="pointers-and-arrays-1"><span class="header-section-number">4.5</span> Pointers and Arrays</h2>
 <p>..are the same thing!</p>
 <ul>
 <li>just different conventions to <strong>access memory</strong></li>
@@ -2921,7 +2618,7 @@ Post-`memset` values:</code></pre>
 <li>only <strong>whole ints</strong></li>
 </ul></li>
 </ul>
-<h2 id="pointer-arithmetic"><span class="header-section-number">4.5</span> Pointer Arithmetic</h2>
+<h2 id="pointer-arithmetic"><span class="header-section-number">4.6</span> Pointer Arithmetic</h2>
 <ul>
 <li>consider an integer array → <code>int a[5]</code></li>
 <li><code>5</code> ints, <strong>each</strong> of <code>4</code> bytes <img src="./figures/07.01.pointer_cast/pointer_cast.1.png" alt="array of integers" /></li>
@@ -2940,7 +2637,7 @@ Post-`memset` values:</code></pre>
 </ul>
 <p><br></p>
 <p>what if we <strong>want</strong> to access the individual bytes?</p>
-<h2 id="pointer-casting"><span class="header-section-number">4.6</span> Pointer Casting!</h2>
+<h2 id="pointer-casting"><span class="header-section-number">4.7</span> Pointer Casting!</h2>
 <ul>
 <li>can cast from one pointer type to another!</li>
 <li>between <strong>any two pointers</strong>!</li>
@@ -2951,7 +2648,7 @@ Post-`memset` values:</code></pre>
 <li>but, <strong>changes pointer arithmetic</strong>!</li>
 </ul></li>
 </ul>
-<h3 id="casting-from-int-to-char"><span class="header-section-number">4.6.1</span> Casting from <code>int*</code> to <code>char*</code></h3>
+<h3 id="casting-from-int-to-char"><span class="header-section-number">4.7.1</span> Casting from <code>int*</code> to <code>char*</code></h3>
 <ul>
 <li>now, as before, if we have → <code>int a[5]</code></li>
 <li>and we do, <strong><code>char* pc = (char*) a ;</code></strong></li>
@@ -2964,7 +2661,7 @@ Post-`memset` values:</code></pre>
 <ul>
 <li>so <code>pc[1]</code> is → same as <code>++pc</code>! <img src="./figures/07.01.pointer_cast/pointer_cast.6.png" alt="array of integers" /></li>
 </ul>
-<h3 id="example-2"><span class="header-section-number">4.6.2</span> Example</h3>
+<h3 id="example-2"><span class="header-section-number">4.7.2</span> Example</h3>
 <p>Consider the following code:</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb75-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
 <a class="sourceLine" id="cb75-2" title="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
@@ -2986,7 +2683,7 @@ Post-`memset` values:</code></pre>
 <a class="sourceLine" id="cb75-18" title="18">    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>) ;</a>
 <a class="sourceLine" id="cb75-19" title="19">    <span class="cf">return</span> <span class="dv">0</span> ;</a>
 <a class="sourceLine" id="cb75-20" title="20">}</a></code></pre></div>
-<h2 id="pointer-casting-void"><span class="header-section-number">4.7</span> Pointer Casting | <code>void*</code></h2>
+<h2 id="pointer-casting-void"><span class="header-section-number">4.8</span> Pointer Casting | <code>void*</code></h2>
 <ul>
 <li>can cast <strong>any</strong> point to a <code>void*</code></li>
 <li>all of these are valid:</li>
@@ -3064,7 +2761,7 @@ inline_exec_tmp.c:36:5: warning: implicit declaration of function bubble_sort; d
    36 |     bubble_sort( my_array, array_size ) ;
       |     ^~~~~~~~~~~
       |     bubble_sort_int
-/usr/bin/ld: /tmp/ccgEx1fv.o: in function `main&#39;:
+/usr/bin/ld: /tmp/ccibvE8q.o: in function `main&#39;:
 /home/sibin/Teaching/CSCI_2401/lectures-private/inline_exec_tmp.c:36: undefined reference to `bubble_sort&#39;
 collect2: error: ld returned 1 exit status
 make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
@@ -3657,16 +3354,16 @@ Should find 8 @ 6: 6 (-1 is wrong here)</code></pre>
 <p>Program output:</p>
 <pre><code>0: 194
 1: 0
-2: 2117600615
+2: -1318969769
 3: 32767
-4: 2117600614
+4: -1318969770
 5: 32767
-6: 1668108861
-7: 21912
-8: -297639192
-9: 32532
-10: 1668108784
-11: 21912</code></pre>
+6: -968129987
+7: 21879
+8: -918928664
+9: 32525
+10: -968130064
+11: 21879</code></pre>
 <p>Yikes. We’re getting random values in the array! Where do you think these values came from?</p>
 <p><strong>References to stack variables after function return.</strong></p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb112-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
@@ -4007,7 +3704,7 @@ Using strtok to parse through a string finding substrings separated by &#39;h&#3
 <a class="sourceLine" id="cb125-19" title="19">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>blahblahblah
-0x55c834f44004 == 0x55c834f44004 != 0x55c834f46011</code></pre>
+0x5577d7f0b004 == 0x5577d7f0b004 != 0x5577d7f0d011</code></pre>
 <p>The C compiler and linker are smart enough to see that if you have already used a string with a specific value (in this case <code>"clone"</code>), it will avoid allocating a copy of that string, and will just reuse the previous value. Generally, it doesn’t make much sense to look at the address of strings, and certainly you should not compare them. You can see in this example how you must compare strings for equality using <code>strncmp</code>, and <em>not</em> to compare pointers.</p>
 <h2 id="api-design-and-concerns"><span class="header-section-number">6.3</span> API Design and Concerns</h2>
 <p><a href="https://sibin.github.io/teaching/csci2410-gwu-systems_programming/fall_2023/slides/reveal_slides/api_design.html#/">Slides</a></p>
@@ -6661,8 +6358,8 @@ AFTER
 <a class="sourceLine" id="cb215-57" title="57">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb215-58" title="58">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>Parent got the message!
-Child sent whole message!</code></pre>
+<pre><code>Child sent whole message!
+Parent got the message!</code></pre>
 <p>The <em>concurrency</em> of the system enables separate processes to be active at the same time, thus for the <code>write</code> and <code>read</code> to be transferring data through the pipe <em>at the same time</em>. This simplifies our code as we don’t need to worry about sending chunks of our data.</p>
 <p>Note that we’re <code>close</code>ing the end of the pipe that we aren’t using in the corresponding processes. Though the file descriptors are identical in each process following <code>fork</code>, each process does have a <em>separate</em> set of those descriptors. Thus closing in one, doesn’t impact the other.</p>
 <p>Remember, processes provide <strong>isolation</strong>!</p>
@@ -7135,9 +6832,9 @@ make[1]: *** [Makefile:33: inline_exec_tmp] Error 1</code></pre>
 <a class="sourceLine" id="cb230-83" title="83">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb230-84" title="84">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>2019416: We&#39;ve been asked to terminate. Exit!
-2019415: Parent asking child (2019416) to terminate
-2019415: Child process 2019416 has exited.</code></pre>
+<pre><code>2032470: We&#39;ve been asked to terminate. Exit!
+2032469: Parent asking child (2032470) to terminate
+2032469: Child process 2032470 has exited.</code></pre>
 <p><em>Note:</em> You want to run this a few times on your system to see the output. The auto-execution scripts of the lectures might cause wonky effects here due to concurrency.</p>
 <p>We now see a couple of new features:</p>
 <ul>
@@ -8351,8 +8048,8 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - D 04
 - F output_tmp.dat (0)
 - D 01
-- F Makefile (1971)
-- F lectures.html (988421)
+- F Makefile (2007)
+- F lectures.html (1025101)
 - D 99
 - D 00
 - D 11
@@ -8369,13 +8066,14 @@ The two main ones we care about are directories and files. Subsequent calls to <
 - D 07
 - F inline_exec_tmp (60168)
 - F LICENSE (1522)
+- D code
 - D tools
 - D .git
 - D 06
 - D figures
 - F title.md (333)
 - F README.md (35)
-- F aggregate.md (284981)
+- F aggregate.md (271275)
 - D 08
 - D slides
 - D 05</code></pre>
@@ -8706,8 +8404,8 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb275-105" title="105">    <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb275-106" title="106">}</a></code></pre></div>
 <p>Program output:</p>
-<pre><code>2019729: 2019729
-2019730: 2019730</code></pre>
+<pre><code>2032758: 2032757
+2032757: 2032758</code></pre>
 <p>If executed many times, you see the expected result:</p>
 <pre><code>167907: 167907
 167908: 167908</code></pre>
@@ -8860,15 +8558,15 @@ msg2: america for good doggies</code></pre>
 <a class="sourceLine" id="cb279-102" title="102">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>Server: New client connected with new file descriptor 4.
-1. Client 2019769 connected to server.
-2. Client 2019769 request sent message to server.
-Server received message (sz 38): &quot;Citizen 2019769: Penny for Pawsident!&quot;. Replying!
-3. Client 2019769 reply received from server: Citizen 2019769: Penny for Pawsident!
-1. Client 2019770 connected to server.
+1. Client 2032796 connected to server.
+2. Client 2032796 request sent message to server.
+Server received message (sz 38): &quot;Citizen 2032796: Penny for Pawsident!&quot;. Replying!
+1. Client 2032797 connected to server.
+2. Client 2032797 request sent message to server.
+3. Client 2032796 reply received from server: Citizen 2032796: Penny for Pawsident!
 Server: New client connected with new file descriptor 4.
-2. Client 2019770 request sent message to server.
-Server received message (sz 38): &quot;Citizen 2019770: Penny for Pawsident!&quot;. Replying!
-3. Client 2019770 reply received from server: Citizen 2019770: Penny for Pawsident!</code></pre>
+Server received message (sz 38): &quot;Citizen 2032797: Penny for Pawsident!&quot;. Replying!
+3. Client 2032797 reply received from server: Citizen 2032797: Penny for Pawsident!</code></pre>
 <p>The server’s call to <code>accept</code> is the key difference of domain sockets from named pipes. It enables us to have per-client descriptors we can use to separately communicate (via <code>read</code>/<code>write</code>) to each client.</p>
 <ul>
 <li>✗ <strong>Transparent IPC.</strong> - We have to explicitly use the socket APIs.</li>
@@ -10100,9 +9798,9 @@ exit_group(0)                           = ?
 <a class="sourceLine" id="cb337-38" title="38">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>
-malloc + free overhead (cycles): 1335
+malloc + free overhead (cycles): 1351
 
-mmap + munmap overhead (cycles): 36194</code></pre>
+mmap + munmap overhead (cycles): 36403</code></pre>
 <blockquote>
 <p>What is a “cycle”? When you read that you have a 3GHz, that essentially says that the internal “clock” that drives the logic in the processor cycles by at 3 billion cycles per second. That’s a <em>lot</em>. Each cycle is 1/3 a nanosecond. A cycle is the smallest unit of measurement on a processor, and the <code>cycles</code> function we implement here gives us how many cycles have elapsed since the system boots.</p>
 </blockquote>
@@ -10150,11 +9848,11 @@ mmap + munmap overhead (cycles): 36194</code></pre>
 <a class="sourceLine" id="cb339-36" title="36">}</a></code></pre></div>
 <p>Program output:</p>
 <pre><code>                                                                                                                                                                                                                                                                
-write overhead (cycles): 15595
+write overhead (cycles): 15384
                                                                                                                                                                                                                                                                 
-fwrite (stream) overhead (cycles): 148
+fwrite (stream) overhead (cycles): 147
                                                                                                                                                                                                                                                                 
-fwrite + fflush overhead (cycles): 15391</code></pre>
+fwrite + fflush overhead (cycles): 16141</code></pre>
 <h2 id="library-vs.-kernel-trade-offs-in-memory-allocation"><span class="header-section-number">14.4</span> Library vs. Kernel Trade-offs in Memory Allocation</h2>
 <p>We’ve seen that</p>
 <ol type="1">
